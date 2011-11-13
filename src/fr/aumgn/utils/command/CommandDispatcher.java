@@ -1,6 +1,6 @@
 package fr.aumgn.utils.command;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -10,11 +10,11 @@ public class CommandDispatcher extends CommandExecutor {
 	
 	private String name;
 	private CommandExecutor defaultExecutor;
-	private HashMap<String, PluginCommand> commands;
+	private HashSet<String> commands;
 	
 	public CommandDispatcher(String name) {
 		this.name = name;
-		this.commands = new HashMap<String, PluginCommand>();
+		this.commands = new HashSet<String>();
 	}
 	
 	public CommandDispatcher(String name, CommandExecutor defaultExecutor) {
@@ -38,7 +38,7 @@ public class CommandDispatcher extends CommandExecutor {
 		String subCommandName = getSubCommandName(cmdName);
 		PluginCommand cmd = Bukkit.getPluginCommand(subCommandName);
 		cmd.setExecutor(executor);
-		commands.put(subCommandName, cmd);
+		commands.add(subCommandName);
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class CommandDispatcher extends CommandExecutor {
 		}
 		
 		Command subCmd = Bukkit.getPluginCommand(getSubCommandName(args[0]));
-		if (subCmd != null && commands.containsKey(subCmd.getName())) {
+		if (subCmd != null && commands.contains(subCmd.getName())) {
 			String[] subArgs = new String[args.length-1];
 			System.arraycopy(args, 1, subArgs, 0, args.length-1);
 			String subLabel = context.getLabel() + " " + args[0];
