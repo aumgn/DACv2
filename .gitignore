@@ -1,5 +1,5 @@
-win.jardesc
-win-19.jardesc
 bin
 .classpath
 .project
+.settings
+target
