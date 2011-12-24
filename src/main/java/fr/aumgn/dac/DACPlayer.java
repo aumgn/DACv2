@@ -1,11 +1,30 @@
 package fr.aumgn.dac;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class DACPlayer {
 
+	public static class DelayedTp implements Runnable {
+		
+		private Player player;
+		private Location location;
+		
+		public DelayedTp(Player player, Location location) {
+			this.player = player;
+			this.location = location;
+		}
+		
+		@Override
+		public void run() {
+			player.teleport(location);
+		}
+		
+	}
+	
+	private DAC plugin;
 	private Player player;
 	private DACColor color;
 	private String displayName;
@@ -15,6 +34,7 @@ public class DACPlayer {
 	private int index;
 
 	public DACPlayer(DAC plugin, Player player, DACColor color) {
+		this.plugin = plugin;
 		this.player = player;
 		this.color = color;
 		this.lives = 0;
@@ -47,9 +67,18 @@ public class DACPlayer {
 	public Player getPlayer() {
 		return player;
 	}
-
+	
 	public void tpToStart() {
-		player.teleport(startLocation);
+		tpToStart(0);
+	}
+
+	public void tpToStart(long delay) {
+		DelayedTp tp = new DelayedTp(player, startLocation);
+		if (delay > 0) {
+			Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new DelayedTp(player, startLocation), delay);		
+		} else {
+			tp.run();
+		}
 	}
 
 	public boolean hasLost() {

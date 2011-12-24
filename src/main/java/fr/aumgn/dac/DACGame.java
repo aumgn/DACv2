@@ -138,6 +138,7 @@ public class DACGame {
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a confirmé.");
 				}
+				dacPlayer.tpToStart();
 				onPlayerWin(dacPlayer);
 			} else {
 				if (dac) {
@@ -186,11 +187,11 @@ public class DACGame {
 				if (dacPlayer.hasLost()) {
 					playersWhoLostLastTurn.put(dacPlayer, player.getLocation());
 					onPlayerLoss(dacPlayer, false);
-					dacPlayer.tpToStart();
+					dacPlayer.tpToStart(60);
 				} else {
-					send(F + " il/elle a donc perdu une vie" + G + " (" + N + 
+					send(F + " Il/elle a donc perdu une vie" + G + " (" + N + 
 						dacPlayer.getLives() + G + " restante(s).");
-					dacPlayer.tpToStart();
+					dacPlayer.tpToStart(60);
 					nextTurn();
 				}
 			}
@@ -200,7 +201,7 @@ public class DACGame {
 	public void onPlayerQuit(Player player) {
 		DACPlayer dacPlayer = wrapPlayer(player);
 		if (!dacPlayer.hasLost()) {
-			send(dacPlayer.getDisplayName() + F + " a quitté le serveur, il/elle a perdu.");
+			send(dacPlayer.getDisplayName() + F + " a quitté la partie.");
 			dacPlayer.looseAllLives();
 			onPlayerLoss(dacPlayer, true);
 		}
@@ -212,13 +213,12 @@ public class DACGame {
 			if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
 				lastPlayer.setMustConfirmate(true);
 				send(lastPlayer.getDisplayName() + G + " doit confirmer.");
-				if (isPlayerTurn(player))
-					nextTurn();
+				nextTurn();
 			} else {
 				onPlayerWin(lastPlayer);
 			}
 		} else {
-			nextTurn();
+			if (isPlayerTurn(player)) { nextTurn(); }
 		}
 	}
 	
