@@ -16,15 +16,17 @@ public class DACJoinStep {
 	private HashSet<DACColor> colors;
 	private ArrayList<DACPlayer> players;
 
+	private ChatColor G = ChatColor.DARK_PURPLE;
+	
 	public DACJoinStep(DAC plugin, DACArena arena) {
 		this.plugin = plugin;
 		this.arena = arena;
 		colors = new HashSet<DACColor>();
 		players = new ArrayList<DACPlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			player.sendMessage(ChatColor.DARK_PURPLE + 
+			player.sendMessage(G + 
 					"Une nouvelle partie de Dé à coudre dans " + arena.getName() + " a été débutée.");
-			player.sendMessage(ChatColor.DARK_PURPLE +
+			player.sendMessage(G +
 					"Utilisez \"/dac join\" dans la zone de départ pour la rejoindre.");
 		}
 	}
@@ -48,7 +50,7 @@ public class DACJoinStep {
 	}
 	
 	public boolean isMaxReached() {
-		return (players.size() > 8);
+		return (players.size() > 10);
 	}
 	
 	private boolean isColorAvailable(String name) {
@@ -71,7 +73,7 @@ public class DACJoinStep {
 			}
 		}
 		// Should never be reached;
-		return DACColor.BLEU;
+		return DACColor.VIOLET;
 	}
 
 	public void addPlayer(Player player, String[] names) {
@@ -88,7 +90,7 @@ public class DACJoinStep {
 
 	private void addPlayer(Player player, DACColor color) {
 		if (players.size() > 0) {
-			player.sendMessage(ChatColor.DARK_PURPLE + "Joueurs Actuels :");
+			player.sendMessage(G + "Joueurs Actuels :");
 			for (DACPlayer dacPlayer : players) {
 				player.sendMessage("  " + dacPlayer.getDisplayName());
 			}
@@ -96,7 +98,7 @@ public class DACJoinStep {
 		DACPlayer dacPlayer = new DACPlayer(plugin, player, color);
 		players.add(dacPlayer);
 		colors.add(color);
-		notify(dacPlayer.getDisplayName() + ChatColor.DARK_PURPLE + " a rejoint la partie");
+		notify(dacPlayer.getDisplayName() + G + " a rejoint la partie");
 	}
 
 	public boolean contains(Player player) {
@@ -121,9 +123,8 @@ public class DACJoinStep {
 
 	public void stop() {
 		for (DACPlayer player : players) {
-			player.getPlayer().sendMessage(
-				ChatColor.DARK_PURPLE + "La partie a été arretée."
-			);
+			player.getPlayer().sendMessage(G +
+				"La partie a été arretée.");
 		}
 	}
 
