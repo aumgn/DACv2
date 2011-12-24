@@ -60,7 +60,7 @@ public class CommandDispatcher extends CommandExecutor {
 					context.success("Description :");
 					context.send("  " + subCmd.getDescription());
 					String usage = subCmd.getUsage();
-					usage = usage.replaceAll("<command>", context.getLabel() + " " + args[1]);
+					usage = usage.replaceAll("<command>", name);
 					context.success(usage);
 				} else {
 					context.error("Aucune commande ne porte ce nom.");

@@ -23,23 +23,23 @@ public class SetCommand extends PlayerCommandExecutor {
 		if (args.length != 2) { return false; }
 		DACArena arena = plugin.getDACConfig().get(args[0]);
 		if (arena == null) {
-			context.error("Arene inconnu.");
+			context.error("Arène inconnu.");
 			return true;
 		}
 		if (arena.getWorld().getName() != context.getPlayer().getWorld().getName()) {
-			context.error("L'arene est defini dans un autre monde.");
+			context.error("L'arène est défini dans un autre monde.");
 			return true;
 		}
 		if (args[1].equalsIgnoreCase("diving")) {
 			arena.getDivingBoard().update(context.getPlayer().getLocation());
-			context.success("La position sur le plongeoir a ete mise a jour.");
+			context.success("La position sur le plongeoir a été mise à jour.");
 			return true;
 		}
 		if (args[1].equalsIgnoreCase("pool")) {
 			CuboidRegion region = getRegion(context);
 			if (region != null) {
 				arena.getPool().update(getRegion(context));
-				context.success("La zone du bassin a ete mise a jour.");
+				context.success("La zone du bassin a été mise a jour.");
 			}
 			return true;
 		}
@@ -47,7 +47,7 @@ public class SetCommand extends PlayerCommandExecutor {
 			CuboidRegion region = getRegion(context);
 			if (region != null) {
 				arena.getStartArea().update(region);
-				context.success("La zone de depart a ete mise a jour.");
+				context.success("La zone de départ a été mise a jour.");
 			}
 			return true;
 		}
@@ -61,11 +61,11 @@ public class SetCommand extends PlayerCommandExecutor {
 			Region region;
 			region = worldEdit.getSession(context.getPlayer()).getRegionSelector(world).getRegion();
 			if (!(region instanceof CuboidRegion))
-				context.error("La selection WorldEdit actuelle n'est pas un cuboid");
+				context.error("La sélection WorldEdit actuelle n'est pas un cuboid");
 			else
 				return (CuboidRegion)region;
 		} catch (IncompleteRegionException e) {
-			context.error("La selection WorldEdit est incomplete");
+			context.error("La sélection WorldEdit est incomplète");
 		}
 		return null;
 	}

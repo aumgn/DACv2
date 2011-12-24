@@ -19,7 +19,7 @@ public class StopCommand extends PlayerCommandExecutor {
 		if (game == null) {
 			DACJoinStep joinStep = plugin.getJoinStep(context.getPlayer());
 			if (joinStep == null) {
-				context.error("Aucune partie en cours a arreté");
+				context.error("Aucune partie en cours à arrêté");
 				return true;
 			}
 			joinStep.stop();

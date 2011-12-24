@@ -17,14 +17,14 @@ public class LivesCommand extends PlayerCommandExecutor {
 		if (args.length > 2) { return false; }
 		DACGame game = plugin.getGame(context.getPlayer());
 		if (game == null) {
-			context.error("Cette commande ne peut etre utilisée que durant une partie de DAC.");
+			context.error("Cette commande ne peut être utilisée que durant une partie de DAC.");
 			return true;
 		}
 		if (args.length == 0) {
 			game.displayLives(context.getPlayer());
 		} else {
 			if (!game.displayLives(context.getPlayer(), args[0])) {			
-				context.error("Aucun joueur dans la partie en cour ne porte ce nom");
+				context.error("Aucun joueur dans la partie en cours ne porte ce nom");
 			}
 		}
 		return true;

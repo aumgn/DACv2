@@ -31,7 +31,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 			game.onPlayerQuit(player);
 			return true;
 		}
-		context.error("Vous n'etes pas dans une partie en cours.");
+		context.error("Vous n'êtes pas dans une partie en cours.");
 		return true;
 	}
 

@@ -1,4 +1,4 @@
-name: DAC
+name: ${project.name}
 version: ${project.version}
 author: aumgn
 website: aumgn.fr

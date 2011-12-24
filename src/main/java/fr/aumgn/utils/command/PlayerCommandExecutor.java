@@ -9,7 +9,7 @@ public abstract class PlayerCommandExecutor extends CommandExecutor {
 		if (context.isPlayerCommand()) {
 			return onPlayerCommand(context, args);
 		} else {
-			context.getSender().sendMessage("Commande Utilisable seulement en tant que joueur.");
+			context.getSender().sendMessage("Cette commande est utilisable seulement en tant que joueur.");
 			return true;
 		}
 	}

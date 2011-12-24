@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.aumgn</groupId>
 	<artifactId>dac</artifactId>
-	<version>1.1.1</version>
+	<version>1.1.2</version>
 	<name>DAC</name>
 	<url>http://aumgn.fr</url>
 

@@ -17,7 +17,7 @@ public class GotoCommand extends PlayerCommandExecutor {
 		if (args.length != 1) { return false; }
 		DACGame game = plugin.getGame(context.getPlayer());
 		if (game == null) {
-			context.error("Cette commande ne peut etre utilisé que durant une parite de DAC.");
+			context.error("Cette commande ne peut être utilisé que durant une partie de DAC.");
 			return true;
 		}
 		if (args[0].equalsIgnoreCase("diving")) {

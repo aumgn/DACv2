@@ -81,6 +81,10 @@ public class DACGame {
 		player.getPlayer().teleport(arena.getDivingBoard());
 	}
 
+	private boolean isPlayerTurn(DACPlayer player) {
+		return isPlayerTurn(player.getPlayer());
+	}
+
 	private boolean isPlayerTurn(Player player) {
 		return players[turn].getPlayer().equals(player);
 	}
@@ -129,7 +133,7 @@ public class DACGame {
 			player.setFallDistance(0.0f);
 			if (dacPlayer.mustConfirmate()) {
 				if (dac) {
-					send(dacPlayer.getDisplayName() + D + " a confirmé avec un Dé a coudre.");
+					send(dacPlayer.getDisplayName() + D + " a confirmé avec un Dé à coudre.");
 					send(dacPlayer.getDisplayName() + D + "Quelle classe !");
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a confirmé.");
@@ -137,11 +141,11 @@ public class DACGame {
 				onPlayerWin(dacPlayer);
 			} else {
 				if (dac) {
-					send(dacPlayer.getDisplayName() + D + " a reussi un dé a coudre.");
+					send(dacPlayer.getDisplayName() + D + " a reussi un dé à coudre.");
 					dacPlayer.winLive();
-					send(G + "Il a maintenant " + N + dacPlayer.getLives() + G + " vie(s).");
+					send(G + "Il/Elle a maintenant " + N + dacPlayer.getLives() + G + " vie(s).");
 				} else {
-					send(dacPlayer.getDisplayName() + S + " a reussi son saut.");
+					send(dacPlayer.getDisplayName() + S + " a réussi son saut.");
 				}
 				dacPlayer.tpToStart();
 				if (dac) {
@@ -161,7 +165,7 @@ public class DACGame {
 			event.setCancelled(true);
 			send(dacPlayer.getDisplayName() + F + " a manqué son saut.");
 			if (dacPlayer.mustConfirmate()) {
-				send("Il n'a donc pas pu confirmer sa victoire.");
+				send("Il/elle n'a donc pas pu confirmer sa victoire.");
 				for (DACPlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
 					playerWhoLost.resetLives();
 				}
@@ -175,7 +179,7 @@ public class DACGame {
 					playersWhoLostLastTurn.put(dacPlayer, player.getLocation());
 					onPlayerLoss(dacPlayer, false);
 				} else {
-					send(F + " il a donc perdu une vie" + G + " (" + N + 
+					send(F + " il/elle a donc perdu une vie" + G + " (" + N + 
 						dacPlayer.getLives() + G + " restante(s).");
 					dacPlayer.tpToStart();
 					nextTurn();
@@ -186,9 +190,11 @@ public class DACGame {
 
 	public void onPlayerQuit(Player player) {
 		DACPlayer dacPlayer = wrapPlayer(player);
-		send(dacPlayer.getDisplayName() + F + " a quitté le serveur, il a perdu.");
-		dacPlayer.looseAllLives();
-		onPlayerLoss(dacPlayer, true);
+		if (!dacPlayer.hasLost()) {
+			send(dacPlayer.getDisplayName() + F + " a quitté le serveur, il/elle a perdu.");
+			dacPlayer.looseAllLives();
+			onPlayerLoss(dacPlayer, true);
+		}
 	}
 	
 	public void onPlayerLoss(DACPlayer player, boolean force) {
@@ -197,7 +203,8 @@ public class DACGame {
 			if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
 				lastPlayer.setMustConfirmate(true);
 				send(lastPlayer.getDisplayName() + G + " doit confirmer.");
-				nextTurn();
+				if (isPlayerTurn(player))
+					nextTurn();
 			} else {
 				onPlayerWin(lastPlayer);
 			}

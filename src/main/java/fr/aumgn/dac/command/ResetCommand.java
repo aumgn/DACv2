@@ -17,15 +17,15 @@ public class ResetCommand extends PlayerCommandExecutor {
 		if (args.length != 1) { return false; }
 		DACArena arena = plugin.getDACConfig().get(args[0]);
 		if (arena == null) {
-			context.error("Cette arene n'existe pas.");
+			context.error("Cette arène n'existe pas.");
 			return true;
 		}
 		if (plugin.getGame(arena) != null) {
-			context.error("Cette commande ne peut pas etre utilisée durant une partie");
+			context.error("Cette commande ne peut pas être utilisée durant une partie");
 			return true;
 		}
 		arena.getPool().reset();
-		context.success("Bassin reinitialisé.");
+		context.success("Bassin réinitialisé.");
 		return true;
 	}
 

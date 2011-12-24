@@ -23,7 +23,7 @@ public class DACJoinStep {
 		players = new ArrayList<DACPlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.sendMessage(ChatColor.DARK_PURPLE + 
-					"Une nouvelle partie de Dé a coudre dans " + arena.getName() + " a été debutée.");
+					"Une nouvelle partie de Dé à coudre dans " + arena.getName() + " a été débutée.");
 			player.sendMessage(ChatColor.DARK_PURPLE +
 					"Utilisez \"/dac join\" dans la zone de départ pour la rejoindre.");
 		}

@@ -24,11 +24,11 @@ public class JoinCommand extends PlayerCommandExecutor {
 		}
 		DACArena arena = plugin.getDACConfig().get(player.getLocation());
 		if (arena == null) {
-			context.error("Vous devez vous trouvez dans la zone de départ d'un DAC pour utiliser cette commande.");
+			context.error("Vous devez vous trouver dans la zone de départ d'un DAC pour utiliser cette commande.");
 			return true;
 		}
 		if (plugin.getGame(arena) != null) {
-			context.error("Une partie est deja en cours dans cette arene.");
+			context.error("Une partie est déjà en cours dans cette arène.");
 			return true;
 		}
 		DACJoinStep joinStep = plugin.getJoinStep(arena);
@@ -37,7 +37,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 			plugin.setJoinStep(joinStep);
 		}
 		if (joinStep.isMaxReached()) {
-			context.error("Il y a deja 8 joueurs dans la partie");
+			context.error("Il y a déjà 8 joueurs dans la partie");
 			return true;
 		}
 		joinStep.addPlayer(player, args);

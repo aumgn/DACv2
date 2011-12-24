@@ -18,11 +18,11 @@ public class DeleteCommand extends PlayerCommandExecutor {
 		if (args.length != 1) { return false; }
 		DACArena arena = plugin.getDACConfig().get(args[0]);
 		if (arena == null) {
-			context.error("Aucune arene ne porte ce nom");
+			context.error("Aucune arène ne porte ce nom");
 			return true;
 		}
 		if (plugin.getGame(arena) != null) {
-			context.error("Une partie est en cours dans cette arene.");
+			context.error("Une partie est en cours dans cette arène.");
 			return true;
 		}
 		DACJoinStep joinStep = plugin.getJoinStep(arena);
@@ -31,7 +31,7 @@ public class DeleteCommand extends PlayerCommandExecutor {
 			joinStep.stop();
 		}
 		plugin.getDACConfig().removeArena(arena);
-		context.success("Arene supprimé avec succés.");
+		context.success("Arène supprimée avec succés.");
 		return true;
 	}
 

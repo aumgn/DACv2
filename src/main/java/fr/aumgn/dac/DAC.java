@@ -29,7 +29,7 @@ public class DAC extends JavaPlugin {
 	private DACConfig config; 
 	private HashMap<String, DACJoinStep> joinSteps;
 	private HashMap<String, DACGame> games;
-	private WorldEditPlugin worldEdit;	
+	private WorldEditPlugin worldEdit;
 	
 	private final EntityListener entityListener = new EntityListener() {
 		
@@ -47,13 +47,19 @@ public class DAC extends JavaPlugin {
 	private final PlayerListener playerListener = new PlayerListener() {
 		
 		public void onPlayerMove(PlayerMoveEvent event) {
-			DACGame game = getGame((Player)event.getPlayer());
+			DACGame game = getGame(event.getPlayer());
 			if (game != null) { game.onPlayerMove(event); }
 		}
 		
 		public void onPlayerQuit(PlayerQuitEvent event) {
-			DACGame game = getGame((Player)event.getPlayer());
-			if (game != null) { game.onPlayerQuit(event.getPlayer()); }
+			Player player = event.getPlayer();
+			DACJoinStep joinStep = getJoinStep(player);
+			if (joinStep != null) {
+				joinStep.remove(player);
+				return;
+			}
+			DACGame game = getGame(player);
+			if (game != null) { game.onPlayerQuit(player); }
 		}
 		
 	};
@@ -68,7 +74,7 @@ public class DAC extends JavaPlugin {
 		
 		Plugin plugin = pm.getPlugin("WorldEdit");
 	    if (plugin == null || !(plugin instanceof WorldEditPlugin)) {
-	    	throw new RuntimeException("WorldGuard is not loaded !");
+	    	throw new RuntimeException("Fail ! WorldGuard is not loaded !");
 	    } else {
 	    	worldEdit =(WorldEditPlugin)plugin;
 	    }
