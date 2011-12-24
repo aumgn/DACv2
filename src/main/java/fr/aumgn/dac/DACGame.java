@@ -161,8 +161,16 @@ public class DACGame {
 	public void onPlayerDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
 		if (isPlayerTurn(player)) {
-			DACPlayer dacPlayer = wrapPlayer(player);
+			int health = player.getHealth(); 
+			if (health == 20) {
+				player.damage(1);
+				player.setHealth(20);
+			} else {
+				player.setHealth(health + 1);
+				player.damage(1);
+			}
 			event.setCancelled(true);
+			DACPlayer dacPlayer = wrapPlayer(player);
 			send(dacPlayer.getDisplayName() + F + " a manqué son saut.");
 			if (dacPlayer.mustConfirmate()) {
 				send("Il/elle n'a donc pas pu confirmer sa victoire.");
@@ -178,6 +186,7 @@ public class DACGame {
 				if (dacPlayer.hasLost()) {
 					playersWhoLostLastTurn.put(dacPlayer, player.getLocation());
 					onPlayerLoss(dacPlayer, false);
+					dacPlayer.tpToStart();
 				} else {
 					send(F + " il/elle a donc perdu une vie" + G + " (" + N + 
 						dacPlayer.getLives() + G + " restante(s).");
