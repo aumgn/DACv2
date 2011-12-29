@@ -16,7 +16,7 @@ public class DACJoinStep {
 	private HashSet<DACColor> colors;
 	private ArrayList<DACPlayer> players;
 
-	private ChatColor G = ChatColor.DARK_PURPLE;
+	private ChatColor G = ChatColor.AQUA;
 	
 	public DACJoinStep(DAC plugin, DACArena arena) {
 		this.plugin = plugin;
@@ -50,7 +50,7 @@ public class DACJoinStep {
 	}
 	
 	public boolean isMaxReached() {
-		return (players.size() > 10);
+		return (players.size() == 12);
 	}
 	
 	private boolean isColorAvailable(String name) {

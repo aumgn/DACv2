@@ -17,7 +17,7 @@ import fr.aumgn.dac.config.Pool;
 
 public class DACGame {
 	
-	private static final ChatColor G = ChatColor.DARK_PURPLE;
+	private static final ChatColor G = ChatColor.AQUA;
 	private static final ChatColor S = ChatColor.GREEN;
 	private static final ChatColor F = ChatColor.RED;
 	private static final ChatColor N = ChatColor.GRAY;
