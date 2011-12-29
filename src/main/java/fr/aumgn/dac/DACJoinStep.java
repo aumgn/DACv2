@@ -16,7 +16,7 @@ public class DACJoinStep {
 	private HashSet<DACColor> colors;
 	private ArrayList<DACPlayer> players;
 
-	private ChatColor G = ChatColor.AQUA;
+	private ChatColor G = ChatColor.BLUE;
 	
 	public DACJoinStep(DAC plugin, DACArena arena) {
 		this.plugin = plugin;
@@ -73,7 +73,7 @@ public class DACJoinStep {
 			}
 		}
 		// Should never be reached;
-		return DACColor.VIOLET;
+		return DACColor.first();
 	}
 
 	public void addPlayer(Player player, String[] names) {
@@ -113,7 +113,7 @@ public class DACJoinStep {
 	public void remove(Player player) {
 		for (DACPlayer dacPlayer : players) {
 			if (dacPlayer.getPlayer().equals(player)) {
-				notify(dacPlayer.getDisplayName() + " a quitté la partie.");				
+				notify(dacPlayer.getDisplayName() + G + " a quitté la partie.");				
 				players.remove(dacPlayer);
 				colors.remove(dacPlayer.getColor());
 				return;

@@ -5,17 +5,16 @@ import org.bukkit.ChatColor;
 public enum DACColor {
 	
 
-	VIOLET (ChatColor.LIGHT_PURPLE, 2),
+	VIOLET (ChatColor.DARK_PURPLE, 10),
 	ORANGE (ChatColor.GOLD, 1),
 	BLANC (ChatColor.WHITE, 0),
-	GRIS (ChatColor.DARK_GRAY, 8),
+	GRIS (ChatColor.DARK_GRAY, 7),
 	JAUNE (ChatColor.YELLOW, 4),
 	VERT (ChatColor.GREEN, 5),
 	ROUGE (ChatColor.DARK_RED, 14),
-	ROSE (ChatColor.LIGHT_PURPLE, 6),
-	VIOLET2 (ChatColor.DARK_PURPLE, 10),
+	ROSE (ChatColor.RED, 6),
 	VERT2 (ChatColor.DARK_GREEN, 13),
-	GRIS2 (ChatColor.DARK_GRAY, 7),
+	GRIS2 (ChatColor.GRAY, 8),
 	NOIR (ChatColor.BLACK, 15);
 	
 	private ChatColor chatColor;
@@ -24,7 +23,6 @@ public enum DACColor {
 	private DACColor(ChatColor chatColor, int woolColor) {
 		this.chatColor = chatColor;
 		this.woolColor = (byte)woolColor;
-		
 	}
 	
 	public ChatColor getChatColor() {
@@ -41,6 +39,14 @@ public enum DACColor {
 		} catch (IllegalArgumentException exc) {
 			return null;
 		}
+	}
+	
+	public static DACColor get(int index) {
+		return values()[index]; 
+	}
+	
+	public static DACColor first() {
+		return values()[0];
 	}
 
 }

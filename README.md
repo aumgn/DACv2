@@ -13,7 +13,7 @@ Le code est libre, vous etes donc libre de l'utiliser et de le modifier mais auc
 Dépendances
 ----
 
-DAC requiert l'utilisation de WorldEdit http://wiki.sk89q.com/wiki/WorldEdit pour la definition des differentes zones.
+DAC requiert l'utilisation de WorldEdit (version 5.0) http://wiki.sk89q.com/wiki/WorldEdit pour la definition des differentes zones.
 
 Mise en place
 ----
