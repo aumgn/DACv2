@@ -1,10 +1,15 @@
 package fr.aumgn.dac.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
-public class DACArena {
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+
+public class DACArena implements ConfigurationSerializable {
 	
 	private String name;
 	private boolean updated;
@@ -22,15 +27,6 @@ public class DACArena {
 		startArea = new StartArea(this);
 	}
 
-	public DACArena(String name, ConfigurationSection section) {
-		this.name = name;
-		updated = false;
-		world = Bukkit.getWorld(section.getString("world", "world"));
-		divingBoard = new DivingBoard(this, section.getConfigurationSection("diving-board"));
-		pool = new Pool(this, section.getConfigurationSection("pool"));
-		startArea = new StartArea(this, section.getConfigurationSection("start-area"));
-	}
-
 	public void updated() {
 		updated = true;
 	}
@@ -41,6 +37,10 @@ public class DACArena {
 
 	public World getWorld() {
 		return world;
+	}
+	
+	public BukkitWorld getWEWorld() {
+		return new BukkitWorld(getWorld());
 	}
 
 	public String getName() {
@@ -59,15 +59,25 @@ public class DACArena {
 		return startArea;
 	}
 
-	public void dump(ConfigurationSection arenaSection) {
-		ConfigurationSection section;
-		arenaSection.set("world", world.getName());
-		section = arenaSection.createSection("diving-board");
-		divingBoard.dump(section);
-		section = arenaSection.createSection("pool");
-		pool.dump(section);
-		section = arenaSection.createSection("start-area");
-		startArea.dump(section);
+	public static DACArena deserialize(Map<String, Object> map) {
+		String name = (String)map.get("name");
+		String world = (String)map.get("world");
+		DACArena arena = new DACArena(name, Bukkit.getWorld(world));
+		arena.getDivingBoard().load(map.get("diving-board"));
+		arena.getPool().load(map.get("pool"));
+		arena.getStartArea().load(map.get("start-area"));
+		return arena;
+	}
+	
+	@Override
+	public Map<String, Object> serialize() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("world", world.getName());
+		map.put("diving-board", divingBoard);
+		map.put("pool", pool);
+		map.put("start-area", startArea);
+		return map;
 	}
 
 }

@@ -7,9 +7,9 @@ import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import fr.aumgn.dac.DAC;
 
@@ -19,6 +19,10 @@ public class DACConfig {
 	private YamlConfiguration yaml;
 	private boolean updated;
 	private HashMap<String, DACArena> arenas;
+	
+	static {
+		ConfigurationSerialization.registerClass(DACArena.class);
+	}
 	
 	public DACConfig(DAC dac) {
 		plugin = dac;
@@ -36,11 +40,9 @@ public class DACConfig {
 		arenas = new HashMap<String, DACArena>();
 		Set<String> arena_names = yaml.getKeys(false);
 		for (String name : arena_names) {
-			if (yaml.isConfigurationSection(name)) {
-				ConfigurationSection section = yaml.getConfigurationSection(name);
-				arenas.put(name, new DACArena(name, section));
-			}
+			arenas.put(name, (DACArena)yaml.get(name));
 		}
+		
 	}
 	
 	private void ensureDirectoryExists() {
@@ -85,8 +87,7 @@ public class DACConfig {
 		for (DACArena arena : arenas.values()) {
 			if (arena.isUpdated()) {
 				needSave = true;
-				ConfigurationSection section = yaml.createSection(arena.getName());
-				arena.dump(section);
+				yaml.set(arena.getName(), arena);
 			}
 		}
 		if (needSave) {

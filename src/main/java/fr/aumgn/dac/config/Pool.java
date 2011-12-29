@@ -1,9 +1,10 @@
 package fr.aumgn.dac.config;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.block.Sign;
 
 import com.sk89q.worldedit.BlockVector;
 
@@ -17,12 +18,8 @@ public class Pool extends DACArea {
 		super(arena);
 	}
 	
-	public Pool(DACArena arena, ConfigurationSection section) {
-		super(arena, section);
-	}
-
 	public void reset() {
-		for (BlockVector vec : this) {
+		for (BlockVector vec : region) {
 			arena.getWorld().getBlockAt(
 				vec.getBlockX(), 
 				vec.getBlockY(), 
@@ -32,8 +29,8 @@ public class Pool extends DACArea {
 	}
 	
 	public void putColumn(int x, int z, byte color) {
-		int y = getMinimumPoint().getBlockY();
-		int yMax = getMaximumPoint().getBlockY();
+		int y = region.getMinimumPoint().getBlockY();
+		int yMax = region.getMaximumPoint().getBlockY();
 		World world = arena.getWorld();
 		for (; y<=yMax; y++) { 
 			Block block = world.getBlockAt(x, y, z);
@@ -43,8 +40,8 @@ public class Pool extends DACArea {
 	}
 	
 	public void putDACColumn(int x, int z, byte color) {
-		int y = getMinimumPoint().getBlockY();
-		int yMax = getMaximumPoint().getBlockY();
+		int y = region.getMinimumPoint().getBlockY();
+		int yMax = region.getMaximumPoint().getBlockY();
 		World world = arena.getWorld();
 		for (; y<yMax; y++) { 
 			Block block = world.getBlockAt(x, y, z);
@@ -55,8 +52,31 @@ public class Pool extends DACArea {
 		block.setType(dacMaterial);
 	}
 	
+	public void putRIPSign(Location location, String name) {
+		int yMax = region.getMaximumPoint().getBlockY();
+		Block block = arena.getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
+		block.setType(Material.SIGN_POST);
+		Sign sign = (Sign)block.getState();
+		sign.setLine(0, "RIP");
+	}
+	
+	public void rip(Location location, String name) {
+		int yMax = region.getMaximumPoint().getBlockY();
+		Block block = arena.getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
+		if (block.getType() != Material.SIGN_POST) {
+			putRIPSign(location, name);
+		}
+		for (int i=1; i<4; i++) {
+			Sign sign = (Sign)block.getState();
+			if (sign.getLine(i).isEmpty()) {
+				sign.setLine(i, name);
+				break;
+			}
+		}
+	}
+	
 	private boolean isColumnAt(int x, int z) {
-		Block blk = arena.getWorld().getBlockAt(x, getMinimumPoint().getBlockY(), z);
+		Block blk = arena.getWorld().getBlockAt(x, region.getMinimumPoint().getBlockY(), z);
 		return !blk.getType().equals(defaultMaterial);
 	}
 	

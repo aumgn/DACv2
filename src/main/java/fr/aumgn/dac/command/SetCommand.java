@@ -3,10 +3,10 @@ package fr.aumgn.dac.command;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.config.DACArea.InvalidRegionType;
 import fr.aumgn.dac.config.DACArena;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
@@ -35,35 +35,38 @@ public class SetCommand extends PlayerCommandExecutor {
 			context.success("La position sur le plongeoir a été mise à jour.");
 			return true;
 		}
-		if (args[1].equalsIgnoreCase("pool")) {
-			CuboidRegion region = getRegion(context);
-			if (region != null) {
-				arena.getPool().update(getRegion(context));
-				context.success("La zone du bassin a été mise a jour.");
+		try {
+			if (args[1].equalsIgnoreCase("pool")) {
+				Region region = getRegion(context);
+				if (region != null) {
+					arena.getPool().update(getRegion(context));
+					context.success("La zone du bassin a été mise a jour.");
+				}
+				return true;
 			}
-			return true;
-		}
-		if (args[1].equalsIgnoreCase("start")) {
-			CuboidRegion region = getRegion(context);
-			if (region != null) {
-				arena.getStartArea().update(region);
-				context.success("La zone de départ a été mise a jour.");
+			if (args[1].equalsIgnoreCase("start")) {
+				Region region = getRegion(context);
+				if (region != null) {
+					arena.getStartArea().update(region);
+					context.success("La zone de départ a été mise a jour.");
+				}
+				return true;
 			}
+		} catch (InvalidRegionType exc) {
+			context.error("Une erreur est survenu durant la mise a jour de la zone.");
+			context.error(exc.getMessage());
 			return true;
 		}
 		return false;
 	}
 
-	private CuboidRegion getRegion(Context context) {
+	private Region getRegion(Context context) {
 		try {
 			WorldEditPlugin worldEdit = plugin.getWorldEdit();
-			BukkitWorld world = new BukkitWorld(context.getPlayer().getWorld()); 
+			BukkitWorld world = new BukkitWorld(context.getPlayer().getWorld());
 			Region region;
 			region = worldEdit.getSession(context.getPlayer()).getRegionSelector(world).getRegion();
-			if (!(region instanceof CuboidRegion))
-				context.error("La sélection WorldEdit actuelle n'est pas un cuboid");
-			else
-				return (CuboidRegion)region;
+			return region;
 		} catch (IncompleteRegionException e) {
 			context.error("La sélection WorldEdit est incomplète");
 		}
