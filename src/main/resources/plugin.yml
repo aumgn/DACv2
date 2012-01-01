@@ -21,6 +21,10 @@ commands:
         description: 'Assigne une zone ou un emplacement.'
         usage: 'Usage: /<command> #arene pool|start|diving'
         permission: 'dac.config'
+    dac-select:
+        description: 'Charge la zone en tant que selection WorldEdit.'
+        Utilisation: 'Utilisation: /<command> #arene pool|start'
+        permission: 'dac.config'
     dac-join:
         description: "Permets de rejoindre une nouvelle partie ou d'en creer une nouvelle."
         usage: 'Usage: /<command> [#color [#color2 [...]]]'

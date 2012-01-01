@@ -12,6 +12,9 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
+import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
+import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
@@ -131,7 +134,7 @@ public class DACArea implements ConfigurationSerializable {
 		public Region getRegion() {
 			return polygonal;
 		}
-
+		
 		@SuppressWarnings("unchecked")
 		public static Polygonal2DSerialization deserialize(DACArena arena, Map<String, Object> map) {
 			int i = 1, yMin = 0, yMax = 0;
@@ -165,9 +168,19 @@ public class DACArea implements ConfigurationSerializable {
 	
 	public static class InvalidRegionType extends RuntimeException {
 		private static final long serialVersionUID = 1L;
+		
 		public InvalidRegionType(String message) {
 			super(message);
 		}
+		
+		public InvalidRegionType(String expected1, String expected2, String given) {
+			this("Expected " + expected1 + " or " + expected2 + " got " + given);
+		}
+		
+		public InvalidRegionType(String expected1, String expected2, Class<? extends Region> given) {
+			this(expected1, expected2, given.getSimpleName());
+		}
+		
 	}
 	
 	protected DACArena arena;
@@ -194,8 +207,7 @@ public class DACArea implements ConfigurationSerializable {
 				polygonSerialization = Polygonal2DSerialization.deserialize(arena, map); 
 				regionSerialization = polygonSerialization; 
 			} else {
-				String msg = "Expected cuboid or polygonal got ";
-				throw new InvalidRegionType(msg + type);
+				throw new InvalidRegionType("cuboid", "polygonal", type);
 			}
 			this.region = regionSerialization.getRegion(); 
 		}
@@ -216,11 +228,29 @@ public class DACArea implements ConfigurationSerializable {
 				poly.getMaximumPoint().getBlockY()
 			);
 		} else {
-			String msg = "Expected CuboidRegion or Polygonal2DRegion got ";
-			msg += region.getClass().getSimpleName();
-			throw new InvalidRegionType(msg);			
+			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
 		}
 		arena.updated();
+	}
+	
+	public Selection getSelection() {
+		Selection selection;
+		if (region instanceof CuboidRegion) {
+			CuboidRegion cuboid = (CuboidRegion)region;
+			selection = new CuboidSelection(arena.getWorld(), cuboid.getMinimumPoint(), cuboid.getMaximumPoint());
+		} else if (region instanceof Polygonal2DRegion) {
+			//throw new InvalidRegionType("Les zones polygonales ne sont pour le moment pas supportées pour les selections a cause d'un bug de WorldEdit");
+			Polygonal2DRegion poly = (Polygonal2DRegion)region;
+			selection = new Polygonal2DSelection(
+				arena.getWorld(),
+				poly.getPoints(),
+				poly.getMinimumPoint().getBlockY(),
+				poly.getMaximumPoint().getBlockY()
+			);			
+		} else {
+			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
+		}
+		return selection;
 	}
 	
 	@Override
@@ -236,9 +266,7 @@ public class DACArea implements ConfigurationSerializable {
 			 */
 			map = polygonSerialization.serialize();
 		} else {
-			String msg = "Expected CuboidRegion or Polygonal2DRegion got ";
-			msg += region.getClass().getSimpleName();
-			throw new InvalidRegionType(msg);
+			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());
 		}
 		return map;
 	}
@@ -257,5 +285,5 @@ public class DACArea implements ConfigurationSerializable {
 	public boolean contains(org.bukkit.util.Vector v) {
 		return region.contains(new BlockVector(v.getX(), v.getY(), v.getZ()));
 	}
-	
+
 }

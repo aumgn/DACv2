@@ -10,6 +10,7 @@ public class DACCommand extends CommandDispatcher {
 		registerCommand("define", new DefineCommand(plugin));
 		registerCommand("delete", new DeleteCommand(plugin));
 		registerCommand("set", new SetCommand(plugin));
+		registerCommand("select", new SelectCommand(plugin));
 		registerCommand("join", new JoinCommand(plugin));
 		registerCommand("start", new StartCommand(plugin));
 		registerCommand("stop", new StopCommand(plugin));
