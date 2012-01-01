@@ -42,7 +42,6 @@ public class DACConfig {
 		for (String name : arena_names) {
 			arenas.put(name, (DACArena)yaml.get(name));
 		}
-		
 	}
 	
 	private void ensureDirectoryExists() {

@@ -20,7 +20,7 @@ public class DACArena implements ConfigurationSerializable {
 	
 	public DACArena(String name, World world) {
 		this.name = name;
-		updated = true;
+		updated = false;
 		this.world = world;
 		divingBoard = new DivingBoard(this);
 		pool = new Pool(this);
