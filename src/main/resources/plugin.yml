@@ -8,54 +8,62 @@ depend: [WorldEdit]
 
 commands:
     dac:
-        usage: "Usage: /<command> join | start | stop | reset | quit | lives | goto"
+        Utilisation: "Utilisation: /<command> join | start | stop | reset | quit | lives | goto"
     dac-define:
         description: 'Defini une nouvelle arene de jeu dans le monde actuel.'
-        usage: "Usage: /<command> #arene"
+        Utilisation: "Utilisation: /<command> <arene>"
         permission: 'dac.config'
+        aliases: ["dac-def"]
     dac-delete:
         description: 'Supprime une arene'
-        usage: "Usage: /<command> #arene"
+        Utilisation: "Utilisation: /<command> <arene>"
         permission: 'dac.config'
+        aliases: ["dac-del", "dac-rm"]
     dac-set:
         description: 'Assigne une zone ou un emplacement.'
-        usage: 'Usage: /<command> #arene pool|start|diving'
+        Utilisation: 'Utilisation: /<command> <arene> pool|start|diving'
         permission: 'dac.config'
     dac-select:
         description: 'Charge la zone en tant que selection WorldEdit.'
-        Utilisation: 'Utilisation: /<command> #arene pool|start'
+        Utilisation: 'Utilisation: /<command> <arene> pool|start'
         permission: 'dac.config'
+        aliases: ["dac-sel"]
     dac-join:
         description: "Permets de rejoindre une nouvelle partie ou d'en creer une nouvelle."
-        usage: 'Usage: /<command> [#color [#color2 [...]]]'
+        Utilisation: 'Utilisation: /<command> [<color> [<color2> [...]]]'
         permission: 'dac.game.play'
+        aliases: ["dac-j"]
     dac-start: 
         description: 'Debute une nouvelle partie avec les joueurs presents dans la zone de depart.'
-        usage: 'Usage: /<command>'
+        Utilisation: 'Utilisation: /<command>'
         permission: 'dac.game.play'
+        aliases: ["dac-s"]
     dac-stop:
         description: 'Arrete la partie en cours si partie il y a.'
-        usage: 'Usage: /<command>'
+        Utilisation: 'Utilisation: /<command>'
         permission: 'dac.game.manage'
     dac-reset:
         description: "Remplis le bassin d'eau"
-        usage: 'Usage: /<command> #arene'
+        Utilisation: 'Utilisation: /<command> <arene>'
         permission: 'dac.game.manage'
+        aliases: ["dac-r"]
     dac-quit:
         description: "Quitter la partie en cours"
-        usage: 'Usage: /<command>'
+        Utilisation: 'Utilisation: /<command>'
         permission: 'dac.game.play'
+        aliases: ["dac-q"]
     dac-lives:
         description: 'Affiche le nombre de vies du joueur selectionne ou de tous les joueurs'
-        usage: 'Usage: /<command> [#joueur]'
+        Utilisation: 'Utilisation: /<command> [<joueur>]'
         permission: 'dac.game.play'
     dac-goto:
         description: 'Teleporte le joueur sur le plongeoir ou a sa position de depart'
-        usage: 'Usage: /<command> diving|start'
+        Utilisation: 'Utilisation: /<command> diving|start'
         permission: 'dac.game.play'
+        aliases: ["dac-g"]
     dac-colors:
         description: "Liste l'ensemble des couleurs disponibles"
-        usage: 'Usage: /<command>'
+        Utilisation: 'Utilisation: /<command>'
         permission: 'dac.game.play'
         
 permissions:

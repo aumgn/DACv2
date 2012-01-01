@@ -56,11 +56,11 @@ public class CommandDispatcher extends CommandExecutor {
 			} else {
 				String name = getSubCommandName(args[1]);
 				Command subCmd = Bukkit.getPluginCommand(name);
-				if (subCmd != null) {
+				if (subCmd != null && context.getSender().hasPermission(subCmd.getPermission())) {
 					context.success("Description :");
 					context.send("  " + subCmd.getDescription());
 					String usage = subCmd.getUsage();
-					usage = usage.replaceAll("<command>", name);
+					usage = usage.replaceAll("<command>", context.getLabel() + " " + args[1]);
 					context.success(usage);
 				} else {
 					context.error("Aucune commande ne porte ce nom.");
