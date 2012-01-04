@@ -6,7 +6,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
-import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.blocks.BaseBlock;
 
 public class Pool extends DACArea {
 
@@ -19,13 +21,10 @@ public class Pool extends DACArea {
 	}
 	
 	public void reset() {
-		for (BlockVector vec : region) {
-			arena.getWorld().getBlockAt(
-				vec.getBlockX(), 
-				vec.getBlockY(), 
-				vec.getBlockZ()
-			).setType(defaultMaterial);
-		}
+		EditSession editSession = new EditSession(arena.getWEWorld(), -1);
+		try {
+			editSession.setBlocks(region, new BaseBlock(defaultMaterial.getId())); 
+		} catch (MaxChangedBlocksException e) {}
 	}
 	
 	public void putColumn(int x, int z, byte color) {
