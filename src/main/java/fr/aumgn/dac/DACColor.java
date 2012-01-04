@@ -5,16 +5,17 @@ import org.bukkit.ChatColor;
 public enum DACColor {
 	
 
+	ROUGE (ChatColor.DARK_RED, 14),
+	VERT (ChatColor.DARK_GREEN, 13),
+	ARGENT (ChatColor.GRAY, 8),
 	VIOLET (ChatColor.DARK_PURPLE, 10),
 	ORANGE (ChatColor.GOLD, 1),
 	BLANC (ChatColor.WHITE, 0),
-	GRIS (ChatColor.DARK_GRAY, 7),
 	JAUNE (ChatColor.YELLOW, 4),
-	VERT (ChatColor.GREEN, 5),
-	ROUGE (ChatColor.DARK_RED, 14),
+	MAUVE (ChatColor.LIGHT_PURPLE, 2),
+	GRIS (ChatColor.DARK_GRAY, 7),
+	CITRON (ChatColor.GREEN, 5),
 	ROSE (ChatColor.RED, 6),
-	VERT2 (ChatColor.DARK_GREEN, 13),
-	GRIS2 (ChatColor.GRAY, 8),
 	NOIR (ChatColor.BLACK, 15);
 	
 	private ChatColor chatColor;
