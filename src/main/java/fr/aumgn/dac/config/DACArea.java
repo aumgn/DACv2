@@ -13,7 +13,7 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
-//import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
+import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
@@ -239,16 +239,20 @@ public class DACArea implements ConfigurationSerializable {
 			CuboidRegion cuboid = (CuboidRegion)region;
 			selection = new CuboidSelection(arena.getWorld(), cuboid.getMinimumPoint(), cuboid.getMaximumPoint());
 		} else if (region instanceof Polygonal2DRegion) {
-			throw new InvalidRegionType(
-				"Les zones polygonales ne sont pour le moment pas supportées pour les selections a cause d'un bug de WorldEdit"
-			);
-			/*Polygonal2DRegion poly = (Polygonal2DRegion)region;
-			selection = new Polygonal2DSelection(
-				arena.getWorld(),
-				poly.getPoints(),
-				poly.getMinimumPoint().getBlockY(),
-				poly.getMaximumPoint().getBlockY()
-			);*/			
+			Polygonal2DRegion poly = (Polygonal2DRegion)region;
+			try {
+				selection = new Polygonal2DSelection(
+					arena.getWorld(),
+					poly.getPoints(),
+					poly.getMinimumPoint().getBlockY(),
+					poly.getMaximumPoint().getBlockY()
+				);	
+			} catch (IndexOutOfBoundsException exc) {
+				throw new InvalidRegionType(
+					"La reselection des zones polygonales n'est pas supportée "
+					+ "avec votre version de WorldEdit a cause d'un bug (resolu dans les builds plus récent)."
+				);
+			}
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
 		}
