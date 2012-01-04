@@ -82,9 +82,9 @@ public class DAC extends JavaPlugin {
 	    DACCommand dacCommand = new DACCommand(this);
 	    Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
 		
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Normal, this);
+		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.High, this);
+		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Event.Priority.Monitor, this);
+		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Monitor, this);
 		
 		logger.info(getDescription().getFullName() + " is enabled.");
 	}
