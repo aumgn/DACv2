@@ -1,0 +1,4 @@
+auto-reset: start
+tp:
+    after-jump: 60    
+    after-fail: 60

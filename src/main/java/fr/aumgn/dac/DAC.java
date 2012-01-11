@@ -34,6 +34,7 @@ public class DAC extends JavaPlugin {
 
 	private static final Logger logger = Logger.getLogger("Minecraft.DAC");
 	
+	private DACConfig config;
 	private DACArenas arenas; 
 	private Map<String, DACJoinStep> joinSteps;
 	private Map<String, DACGame> games;
@@ -90,6 +91,9 @@ public class DAC extends JavaPlugin {
 	    	worldEdit = (WorldEditPlugin)plugin;
 	    }
 	    
+	    saveDefaultConfig();
+	    config = new DACConfig(getConfig());
+	    
 	    DACCommand dacCommand = new DACCommand(this);
 	    Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
 		
@@ -104,6 +108,10 @@ public class DAC extends JavaPlugin {
 	public void onDisable() {
 		arenas.dump();
 		logger.info(getDescription().getFullName() + " is disabled.");
+	}
+	
+	public DACConfig getDACConfig() {
+		return config;
 	}
 	
 	public DACArenas getArenas() {

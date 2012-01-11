@@ -44,7 +44,9 @@ public class DACGame {
 		}
 		lostOrder = new ArrayList<Integer>();
 		playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
-		arena.getPool().reset();
+		if (plugin.getDACConfig().getResetOnStart()) {
+			arena.getPool().reset();
+		}
 		send(G + "La partie commence !");
 		send(G + "Joueurs :");
 		for (DACPlayer player : players) {
@@ -140,7 +142,9 @@ public class DACGame {
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a confirmé.");
 				}
-				dacPlayer.tpToStart();
+				if (plugin.getDACConfig().getTpAfterJump()) {
+					dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+				}
 				onPlayerWin(dacPlayer);
 			} else {
 				if (dac) {
@@ -150,7 +154,9 @@ public class DACGame {
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a réussi son saut.");
 				}
-				dacPlayer.tpToStart();
+				if (plugin.getDACConfig().getTpAfterJump()) {
+					dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+				}
 				if (dac) {
 					pool.putDACColumn(x, z, dacPlayer.getColor().getWoolColor());
 				} else {
@@ -182,18 +188,24 @@ public class DACGame {
 				}
 				playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
 				dacPlayer.setMustConfirmate(false);
-				dacPlayer.tpToStart();
+				if (plugin.getDACConfig().getTpAfterJump()) {
+					dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+				}
 				nextTurn();
 			} else {
 				dacPlayer.looseLive();
 				if (dacPlayer.hasLost()) {
 					playersWhoLostLastTurn.put(dacPlayer, player.getLocation());
 					onPlayerLoss(dacPlayer, false);
-					dacPlayer.tpToStart(60);
+					if (plugin.getDACConfig().getTpAfterFail()) {
+						dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterFailDelay());
+					}
 				} else {
 					send(F + " Il/elle a donc perdu une vie" + G + " (" + N + 
 						dacPlayer.getLives() + G + " restante(s).");
-					dacPlayer.tpToStart(60);
+					if (plugin.getDACConfig().getTpAfterJump()) {
+						dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+					}
 					nextTurn();
 				}
 			}
@@ -238,9 +250,15 @@ public class DACGame {
 			i++;
 		}
 		plugin.removeGame(this);
+		if (plugin.getDACConfig().getResetOnEnd()) {
+			arena.getPool().reset();
+		}
 	}
 	
 	public void stop() {
+		if (plugin.getDACConfig().getResetOnEnd()) {
+			arena.getPool().reset();
+		}
 		send(G + "La partie a été arretée.");
 	}
 
