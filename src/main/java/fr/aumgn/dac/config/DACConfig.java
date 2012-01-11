@@ -3,6 +3,7 @@ package fr.aumgn.dac.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Location;
@@ -14,11 +15,11 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import fr.aumgn.dac.DAC;
 
 public class DACConfig {
-
+	
 	private DAC plugin;
 	private YamlConfiguration yaml;
 	private boolean updated;
-	private HashMap<String, DACArena> arenas;
+	private Map<String, DACArena> arenas;
 	
 	static {
 		ConfigurationSerialization.registerClass(DACArena.class);
@@ -33,21 +34,25 @@ public class DACConfig {
 		try {
 			yaml.load(getConfigFileName());
 		} catch (IOException exc) {
-			plugin.logger.warning("Unable to find " + getConfigFileName() + " config file");
+			DAC.getLogger().warning("Unable to find " + getConfigFileName() + " config file");
 		} catch (InvalidConfigurationException exception) {
-			plugin.logger.warning("Unable to load " + getConfigFileName() + " config file");
+			DAC.getLogger().warning("Unable to load " + getConfigFileName() + " config file");
 		}		
 		arenas = new HashMap<String, DACArena>();
-		Set<String> arena_names = yaml.getKeys(false);
-		for (String name : arena_names) {
+		Set<String> arenaNames = yaml.getKeys(false);
+		for (String name : arenaNames) {
 			arenas.put(name, (DACArena)yaml.get(name));
 		}
 	}
 	
 	private void ensureDirectoryExists() {
 		if (!plugin.getDataFolder().exists()) {
-			plugin.getDataFolder().mkdir();
-		}		
+			try {
+				plugin.getDataFolder().mkdir();
+			} catch (SecurityException exc) {
+				DAC.getLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
+			}
+		}
 	}
 	
 	public DAC getPlugin() {
@@ -94,7 +99,7 @@ public class DACConfig {
 				ensureDirectoryExists();
 				yaml.save(getConfigFileName());
 			} catch (IOException e) {
-				plugin.logger.severe("Unable to save " + getConfigFileName() + " config file");
+				DAC.getLogger().severe("Unable to save " + getConfigFileName() + " config file");
 			}
 		}
 	}

@@ -26,7 +26,7 @@ public class SetCommand extends PlayerCommandExecutor {
 			context.error("Arène inconnu.");
 			return true;
 		}
-		if (arena.getWorld().getName() != context.getPlayer().getWorld().getName()) {
+		if (!arena.getWorld().getUID().equals(context.getPlayer().getWorld().getUID())) {
 			context.error("L'arène est défini dans un autre monde.");
 			return true;
 		}

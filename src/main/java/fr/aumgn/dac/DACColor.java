@@ -1,5 +1,7 @@
 package fr.aumgn.dac;
 
+import java.util.Locale;
+
 import org.bukkit.ChatColor;
 
 public enum DACColor {
@@ -36,7 +38,7 @@ public enum DACColor {
 	
 	public static DACColor get(String name) {
 		try {
-			return valueOf(name.toUpperCase());
+			return valueOf(name.toUpperCase(Locale.FRENCH));
 		} catch (IllegalArgumentException exc) {
 			return null;
 		}

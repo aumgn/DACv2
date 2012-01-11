@@ -2,6 +2,8 @@ package fr.aumgn.dac;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,13 +13,13 @@ import fr.aumgn.dac.config.DACArena;
 
 public class DACJoinStep {
 	
+	private static final ChatColor G = ChatColor.BLUE;
+	
 	private DAC plugin;
 	private DACArena arena;
-	private HashSet<DACColor> colors;
-	private ArrayList<DACPlayer> players;
+	private Set<DACColor> colors;
+	private List<DACPlayer> players;
 
-	private ChatColor G = ChatColor.BLUE;
-	
 	public DACJoinStep(DAC plugin, DACArena arena) {
 		this.plugin = plugin;
 		this.arena = arena;
@@ -35,7 +37,7 @@ public class DACJoinStep {
 		return arena;
 	}
 
-	public ArrayList<DACPlayer> getPlayers() {
+	public List<DACPlayer> getPlayers() {
 		return players;
 	}
 

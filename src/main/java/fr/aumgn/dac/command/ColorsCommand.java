@@ -1,5 +1,7 @@
 package fr.aumgn.dac.command;
 
+import java.util.Locale;
+
 import fr.aumgn.dac.DACColor;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
@@ -19,7 +21,7 @@ public class ColorsCommand extends PlayerCommandExecutor {
 	}
 	
 	private String getColorMessage(DACColor color) {
-		return color.getChatColor() + color.toString().toLowerCase();
+		return color.getChatColor() + color.toString().toLowerCase(Locale.FRENCH);
 	}
 
 }

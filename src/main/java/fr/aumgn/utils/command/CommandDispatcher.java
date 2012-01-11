@@ -1,32 +1,33 @@
 package fr.aumgn.utils.command;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
 
-public class CommandDispatcher extends CommandExecutor {
+public class CommandDispatcher extends BasicCommandExecutor {
 	
 	private String name;
-	private CommandExecutor defaultExecutor;
-	private HashSet<String> commands;
+	private BasicCommandExecutor defaultExecutor;
+	private Set<String> commands;
 	
 	public CommandDispatcher(String name) {
 		this.name = name;
 		this.commands = new HashSet<String>();
 	}
 	
-	public CommandDispatcher(String name, CommandExecutor defaultExecutor) {
+	public CommandDispatcher(String name, BasicCommandExecutor defaultExecutor) {
 		this(name);
-		setDefaultExecutor(defaultExecutor);
+		this.defaultExecutor = defaultExecutor;
 	}
 	
-	public CommandExecutor getDefaultExecutor() {
+	public BasicCommandExecutor getDefaultExecutor() {
 		return defaultExecutor;
 	}
 
-	public void setDefaultExecutor(CommandExecutor defaultExecutor) {
+	public void setDefaultExecutor(BasicCommandExecutor defaultExecutor) {
 		this.defaultExecutor = defaultExecutor;
 	}
 	
@@ -34,7 +35,7 @@ public class CommandDispatcher extends CommandExecutor {
 		return (name + "-" + cmdName);
 	}
 
-	public void registerCommand(String cmdName, CommandExecutor executor) {
+	public void registerCommand(String cmdName, BasicCommandExecutor executor) {
 		String subCommandName = getSubCommandName(cmdName);
 		PluginCommand cmd = Bukkit.getPluginCommand(subCommandName);
 		cmd.setExecutor(executor);
@@ -44,18 +45,19 @@ public class CommandDispatcher extends CommandExecutor {
 	@Override
 	public boolean onCommand(Context context, String[] args) {
 		if (args.length < 1) {
-			if (defaultExecutor == null)
+			if (defaultExecutor == null) {
 				return false;
-			else
+			} else {
 				return defaultExecutor.onCommand(context, args);
+			}
 		}
 		
 		if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("?")) {
 			if (args.length == 1) {
 				context.send("Usage: /" + context.getLabel() + " " + args[0] + " #command");
 			} else {
-				String name = getSubCommandName(args[1]);
-				Command subCmd = Bukkit.getPluginCommand(name);
+				String subName = getSubCommandName(args[1]);
+				Command subCmd = Bukkit.getPluginCommand(subName);
 				if (subCmd != null && context.getSender().hasPermission(subCmd.getPermission())) {
 					context.success("Description :");
 					context.send("  " + subCmd.getDescription());

@@ -6,9 +6,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public abstract class CommandExecutor implements org.bukkit.command.CommandExecutor {
+public abstract class BasicCommandExecutor implements org.bukkit.command.CommandExecutor {
 
-	public class Context {
+	public static class Context {
 	
 		private CommandSender sender;
 		private Command command;

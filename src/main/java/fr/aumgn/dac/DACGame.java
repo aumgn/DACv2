@@ -3,6 +3,7 @@ package fr.aumgn.dac;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -28,12 +29,12 @@ public class DACGame {
 	private DACPlayer[] players;
 	private int turn;
 	private List<Integer> lostOrder;
-	private LinkedHashMap<DACPlayer, Location> playersWhoLostLastTurn;
+	private Map<DACPlayer, Location> playersWhoLostLastTurn;
 	
 	public DACGame(DAC plugin, DACJoinStep joinStep) {
 		this.plugin = plugin;
 		this.arena = joinStep.getArena();
-		ArrayList<DACPlayer> roulette = joinStep.getPlayers();
+		List<DACPlayer> roulette = joinStep.getPlayers();
 		players = new DACPlayer[roulette.size()];
 		Random rand = new Random();
 		for (int i=0; i< players.length; i++) {
@@ -47,7 +48,7 @@ public class DACGame {
 		send(G + "La partie commence !");
 		send(G + "Joueurs :");
 		for (DACPlayer player : players) {
-			send(N + String.valueOf(player.getPosition()) + ChatColor.WHITE + ". " + player.getDisplayName());
+			send(N.toString() + player.getPosition() + ChatColor.WHITE + ". " + player.getDisplayName());
 		}
 		send(G + "Enjoy !");
 		turn = -1;
@@ -92,11 +93,12 @@ public class DACGame {
 	public DACPlayer getLastPlayer() {
 		int i = 0;
 		DACPlayer playerLeft = null;
-		for (DACPlayer player : players)
+		for (DACPlayer player : players) {
 			if (!player.hasLost()) {
 				playerLeft = player;
 				i++; 
 			}
+		}
 		return (i == 1) ? playerLeft : null;
 	}
 	
@@ -257,14 +259,10 @@ public class DACGame {
 	}
 
 	public boolean displayLives(Player player, String name) {
-		List<Player> players = Bukkit.getServer().matchPlayer(name);
-		if (players.size() != 1) {
-			return false;
-		}
-		DACPlayer dacPlayer = wrapPlayer(players.get(0));
-		if (dacPlayer == null) {
-			return false;
-		}
+		List<Player> list = Bukkit.getServer().matchPlayer(name);
+		if (list.size() != 1) { return false; }
+		DACPlayer dacPlayer = wrapPlayer(list.get(0));
+		if (dacPlayer == null) { return false; }
 		displayLives(player, dacPlayer);
 		return true;
 	}

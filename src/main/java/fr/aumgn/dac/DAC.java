@@ -1,6 +1,7 @@
 package fr.aumgn.dac;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -24,21 +25,27 @@ import fr.aumgn.dac.config.DACConfig;
 
 public class DAC extends JavaPlugin {
 	
-	public final Logger logger = Logger.getLogger("Minecraft.DAC");
+	public static class DACWorldEditNotLoaded extends RuntimeException {
+		private static final long serialVersionUID = 1L;
+		public DACWorldEditNotLoaded() {
+			super("Fail ! WorldEdit is not loaded !");
+		}
+	}
+
+	private static final Logger logger = Logger.getLogger("Minecraft.DAC");
 	
 	private DACConfig config; 
-	private HashMap<String, DACJoinStep> joinSteps;
-	private HashMap<String, DACGame> games;
+	private Map<String, DACJoinStep> joinSteps;
+	private Map<String, DACGame> games;
 	private WorldEditPlugin worldEdit;
 	
 	private final EntityListener entityListener = new EntityListener() {
 		
 		public void onEntityDamage(EntityDamageEvent event) {
-			if (event.getEntity() instanceof Player) {
-				if (event.getCause() == DamageCause.FALL) {
-					DACGame game = getGame((Player)event.getEntity());
-					if (game != null) { game.onPlayerDamage(event); }
-				}
+			DamageCause cause = event.getCause();
+			if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
+				DACGame game = getGame((Player)event.getEntity());
+				if (game != null) { game.onPlayerDamage(event); }
 			}
 		}
 		
@@ -63,6 +70,10 @@ public class DAC extends JavaPlugin {
 		}
 		
 	};
+	
+	public static Logger getLogger() {
+		return logger;
+	}
 
 	@Override
 	public void onEnable() {
@@ -73,10 +84,10 @@ public class DAC extends JavaPlugin {
 		games = new HashMap<String, DACGame>();
 		
 		Plugin plugin = pm.getPlugin("WorldEdit");
-	    if (plugin == null || !(plugin instanceof WorldEditPlugin)) {
-	    	throw new RuntimeException("Fail ! WorldGuard is not loaded !");
+	    if (!(plugin instanceof WorldEditPlugin)) {
+	    	throw new DACWorldEditNotLoaded();
 	    } else {
-	    	worldEdit =(WorldEditPlugin)plugin;
+	    	worldEdit = (WorldEditPlugin)plugin;
 	    }
 	    
 	    DACCommand dacCommand = new DACCommand(this);
@@ -94,7 +105,7 @@ public class DAC extends JavaPlugin {
 		config.dump();
 		logger.info(getDescription().getFullName() + " is disabled.");
 	}
-
+	
 	public DACConfig getDACConfig() {
 		return config;
 	}

@@ -183,11 +183,11 @@ public class DACArea implements ConfigurationSerializable {
 		
 	}
 	
-	protected DACArena arena;
-	protected Region region;
+	private DACArena arena;
+	private Region region;
 	
 	// Workaround
-	protected Polygonal2DSerialization polygonSerialization;
+	private Polygonal2DSerialization polygonSerialization;
 	
 	public DACArea(DACArena arena) {
 		this.arena = arena;
@@ -233,6 +233,14 @@ public class DACArea implements ConfigurationSerializable {
 		arena.updated();
 	}
 	
+	public DACArena getArena() {
+		return arena;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
 	public Selection getSelection() {
 		Selection selection;
 		if (region instanceof CuboidRegion) {
@@ -248,10 +256,12 @@ public class DACArea implements ConfigurationSerializable {
 					poly.getMaximumPoint().getBlockY()
 				);	
 			} catch (IndexOutOfBoundsException exc) {
-				throw new InvalidRegionType(
+				InvalidRegionType newExc = new InvalidRegionType(
 					"La reselection des zones polygonales n'est pas supportée "
 					+ "avec votre version de WorldEdit a cause d'un bug (resolu dans les builds plus récent)."
 				);
+				newExc.setStackTrace(exc.getStackTrace());
+				throw newExc;
 			}
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
