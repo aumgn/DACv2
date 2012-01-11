@@ -1,7 +1,7 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.config.DACArena;
+import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ResetCommand extends PlayerCommandExecutor {
@@ -15,7 +15,7 @@ public class ResetCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 1) { return false; }
-		DACArena arena = plugin.getDACConfig().get(args[0]);
+		DACArena arena = plugin.getArenas().get(args[0]);
 		if (arena == null) {
 			context.error("Cette arène n'existe pas.");
 			return true;

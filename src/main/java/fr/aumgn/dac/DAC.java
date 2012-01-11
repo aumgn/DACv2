@@ -19,9 +19,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
+import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.command.DACCommand;
-import fr.aumgn.dac.config.DACArena;
-import fr.aumgn.dac.config.DACConfig;
 
 public class DAC extends JavaPlugin {
 	
@@ -34,7 +34,7 @@ public class DAC extends JavaPlugin {
 
 	private static final Logger logger = Logger.getLogger("Minecraft.DAC");
 	
-	private DACConfig config; 
+	private DACArenas config; 
 	private Map<String, DACJoinStep> joinSteps;
 	private Map<String, DACGame> games;
 	private WorldEditPlugin worldEdit;
@@ -79,7 +79,7 @@ public class DAC extends JavaPlugin {
 	public void onEnable() {
 		PluginManager pm = Bukkit.getPluginManager();
 
-		config = new DACConfig(this);
+		config = new DACArenas(this);
 		joinSteps = new HashMap<String, DACJoinStep>();
 		games = new HashMap<String, DACGame>();
 		
@@ -106,7 +106,7 @@ public class DAC extends JavaPlugin {
 		logger.info(getDescription().getFullName() + " is disabled.");
 	}
 	
-	public DACConfig getDACConfig() {
+	public DACArenas getArenas() {
 		return config;
 	}
 

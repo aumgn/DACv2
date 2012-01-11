@@ -13,8 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import fr.aumgn.dac.config.DACArena;
-import fr.aumgn.dac.config.Pool;
+import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arenas.Pool;
 
 public class DACGame {
 	

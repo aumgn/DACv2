@@ -14,11 +14,11 @@ public class DefineCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 1) { return false; }
-		if (plugin.getDACConfig().get(args[0]) != null) {
+		if (plugin.getArenas().get(args[0]) != null) {
 			context.error("Une arène portant ce nom existe deja");
 			return true;
 		}
-		plugin.getDACConfig().createArena(args[0], context.getPlayer().getWorld());
+		plugin.getArenas().createArena(args[0], context.getPlayer().getWorld());
 		context.success("Arène créée avec succés");
 		return true;
 	}

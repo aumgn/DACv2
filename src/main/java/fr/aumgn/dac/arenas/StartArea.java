@@ -1,4 +1,4 @@
-package fr.aumgn.dac.config;
+package fr.aumgn.dac.arenas;
 
 public class StartArea extends DACArea {
 

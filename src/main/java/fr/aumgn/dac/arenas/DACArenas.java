@@ -1,4 +1,4 @@
-package fr.aumgn.dac.config;
+package fr.aumgn.dac.arenas;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 import fr.aumgn.dac.DAC;
 
-public class DACConfig {
+public class DACArenas {
 	
 	private DAC plugin;
 	private YamlConfiguration yaml;
@@ -25,7 +25,7 @@ public class DACConfig {
 		ConfigurationSerialization.registerClass(DACArena.class);
 	}
 	
-	public DACConfig(DAC dac) {
+	public DACArenas(DAC dac) {
 		plugin = dac;
 		yaml = new YamlConfiguration();
 		updated = false; 

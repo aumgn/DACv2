@@ -1,4 +1,4 @@
-package fr.aumgn.dac.config;
+package fr.aumgn.dac.arenas;
 
 import java.util.HashMap;
 import java.util.Map;

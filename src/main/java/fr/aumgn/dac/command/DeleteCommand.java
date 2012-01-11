@@ -2,7 +2,7 @@ package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACJoinStep;
-import fr.aumgn.dac.config.DACArena;
+import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class DeleteCommand extends PlayerCommandExecutor {
@@ -16,7 +16,7 @@ public class DeleteCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 1) { return false; }
-		DACArena arena = plugin.getDACConfig().get(args[0]);
+		DACArena arena = plugin.getArenas().get(args[0]);
 		if (arena == null) {
 			context.error("Aucune arène ne porte ce nom");
 			return true;
@@ -30,7 +30,7 @@ public class DeleteCommand extends PlayerCommandExecutor {
 			plugin.removeJoinStep(joinStep);
 			joinStep.stop();
 		}
-		plugin.getDACConfig().removeArena(arena);
+		plugin.getArenas().removeArena(arena);
 		context.success("Arène supprimée avec succés.");
 		return true;
 	}

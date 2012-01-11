@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACJoinStep;
-import fr.aumgn.dac.config.DACArena;
+import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class JoinCommand extends PlayerCommandExecutor {
@@ -22,7 +22,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 			context.error("Vous ne pouvez pas rejoindre plusieurs parties.");
 			return true;	
 		}
-		DACArena arena = plugin.getDACConfig().get(player.getLocation());
+		DACArena arena = plugin.getArenas().get(player.getLocation());
 		if (arena == null) {
 			context.error("Vous devez vous trouver dans la zone de départ d'un DAC pour utiliser cette commande.");
 			return true;

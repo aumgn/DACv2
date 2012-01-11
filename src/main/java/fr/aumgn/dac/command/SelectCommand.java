@@ -1,9 +1,9 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.config.DACArea;
-import fr.aumgn.dac.config.DACArea.InvalidRegionType;
-import fr.aumgn.dac.config.DACArena;
+import fr.aumgn.dac.arenas.DACArea;
+import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arenas.DACArea.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SelectCommand extends PlayerCommandExecutor {
@@ -17,7 +17,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 2) { return false; }
-		DACArena arena = plugin.getDACConfig().get(args[0]);
+		DACArena arena = plugin.getArenas().get(args[0]);
 		if (arena == null) {
 			context.error("Arène inconnu.");
 			return true;

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.config;
+package fr.aumgn.dac.arenas;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
