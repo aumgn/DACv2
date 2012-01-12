@@ -1,5 +1,6 @@
 package fr.aumgn.dac;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -91,8 +92,9 @@ public class DAC extends JavaPlugin {
 	    	worldEdit = (WorldEditPlugin)plugin;
 	    }
 	    
-	    saveDefaultConfig();
-	    config = new DACConfig(getConfig());
+	    if (!new File(getDataFolder(), "config.yml").exists()) {
+			config = new DACConfig(getConfig());
+	    }
 	    
 	    DACCommand dacCommand = new DACCommand(this);
 	    Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
@@ -108,6 +110,11 @@ public class DAC extends JavaPlugin {
 	public void onDisable() {
 		arenas.dump();
 		logger.info(getDescription().getFullName() + " is disabled.");
+	}
+	
+	public void reloadDACConfig() {
+		reloadConfig();
+		config = new DACConfig(getConfig());
 	}
 	
 	public DACConfig getDACConfig() {

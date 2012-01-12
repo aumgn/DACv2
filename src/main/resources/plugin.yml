@@ -9,6 +9,10 @@ depend: [WorldEdit]
 commands:
     dac:
         usage: "Utilisation: /<command> join | start | stop | reset | quit | lives | goto"
+    dac-reload:
+        description: 'Recharge la configuration du plugin.'
+        uasge: "Utilisation: /<command>"
+        permission: 'dac.config'
     dac-define:
         description: 'Defini une nouvelle arene de jeu dans le monde actuel.'
         uasge: "Utilisation: /<command> <arene>"
