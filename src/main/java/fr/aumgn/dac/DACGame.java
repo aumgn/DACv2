@@ -156,9 +156,9 @@ public class DACGame {
 					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
 				}
 				if (dac) {
-					pool.putDACColumn(x, z, dacPlayer.getColor().getWoolColor());
+					pool.putDACColumn(x, z, dacPlayer.getColor());
 				} else {
-					pool.putColumn(x, z, dacPlayer.getColor().getWoolColor());
+					pool.putColumn(x, z, dacPlayer.getColor());
 				}
 				nextTurn();
 			}

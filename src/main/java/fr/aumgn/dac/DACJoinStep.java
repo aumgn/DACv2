@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.dac.DACColors.DACColor;
 import fr.aumgn.dac.arenas.DACArena;
 
 public class DACJoinStep {
@@ -16,12 +17,14 @@ public class DACJoinStep {
 	private static final ChatColor G = ChatColor.BLUE;
 	
 	private DACArena arena;
-	private Set<DACColor> colors;
+	private DACColors colors;
+	private Set<DACColor> colorsMap;
 	private List<DACPlayer> players;
 
 	public DACJoinStep(DACArena arena) {
 		this.arena = arena;
-		colors = new HashSet<DACColor>();
+		colors = DAC.getDACConfig().getColors();
+		colorsMap = new HashSet<DACColor>();
 		players = new ArrayList<DACPlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.sendMessage(G + 
@@ -54,7 +57,7 @@ public class DACJoinStep {
 	}
 	
 	private boolean isColorAvailable(String name) {
-		DACColor color = DACColor.get(name);
+		DACColor color = colors.get(name);
 		if (color == null) {
 			return false;
 		} else {
@@ -63,17 +66,17 @@ public class DACJoinStep {
 	}
 	
 	private boolean isColorAvailable(DACColor color) {
-		return !colors.contains(color);
+		return !colorsMap.contains(color);
 	}
 	
 	private DACColor getFirstColorAvailable() {
-		for (DACColor color : DACColor.values()) {
-			if (!colors.contains(color)) {
+		for (DACColor color : colors) {
+			if (!colorsMap.contains(color)) {
 				return color;
 			}
 		}
 		// Should never be reached;
-		return DACColor.first();
+		return colors.defaut();
 	}
 
 	public void addPlayer(Player player, String[] names) {
@@ -83,7 +86,7 @@ public class DACJoinStep {
 		if (i == names.length) {
 			color = getFirstColorAvailable();
 		} else {
-			color = DACColor.get(names[i]);
+			color = colors.get(names[i]);
 		}
 		addPlayer(player, color);
 	}
@@ -97,7 +100,7 @@ public class DACJoinStep {
 		}
 		DACPlayer dacPlayer = new DACPlayer(player, color);
 		players.add(dacPlayer);
-		colors.add(color);
+		colorsMap.add(color);
 		notify(dacPlayer.getDisplayName() + G + " a rejoint la partie");
 	}
 
@@ -115,7 +118,7 @@ public class DACJoinStep {
 			if (dacPlayer.getPlayer().equals(player)) {
 				notify(dacPlayer.getDisplayName() + G + " a quitté la partie.");				
 				players.remove(dacPlayer);
-				colors.remove(dacPlayer.getColor());
+				colorsMap.remove(dacPlayer.getColor());
 				return;
 			}
 		}

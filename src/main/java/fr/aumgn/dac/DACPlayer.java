@@ -5,6 +5,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.dac.DACColors.DACColor;
+
 public class DACPlayer {
 
 	public static class DelayedTp implements Runnable {

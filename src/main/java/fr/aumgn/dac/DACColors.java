@@ -1,8 +1,8 @@
 package fr.aumgn.dac;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
@@ -59,7 +59,7 @@ public class DACColors implements Iterable<DACColors.DACColor>{
 
 	}
 	
-	private List<DACColor> colors;
+	private Map<String, DACColor> colors;
 
 	public DACColors(ConfigurationSection section, ConfigurationSection defColorsConfig) {
 		colors = parseColors(section);
@@ -75,13 +75,13 @@ public class DACColors implements Iterable<DACColors.DACColor>{
 		}
 	}
 	
-	private List<DACColor> parseColors(ConfigurationSection section) {
+	private Map<String, DACColor> parseColors(ConfigurationSection section) {
 		Set<String> keys = section.getKeys(false);
-		List<DACColor> colors = new LinkedList<DACColor>();
+		Map<String, DACColor> colors = new LinkedHashMap<String, DACColor>();
 		for (String key : keys) {
 			if (section.isConfigurationSection(key)) {
 				DACColor color = parseColor(key, section.getConfigurationSection(key));
-				if (color != null) { colors.add(color); }
+				if (color != null) { colors.put(key, color); }
 			}
 		}
 		return colors;
@@ -116,10 +116,18 @@ public class DACColors implements Iterable<DACColors.DACColor>{
 			return null;
 		}
 	}
+	
+	public DACColor get(String name) {
+		return colors.get(name);
+	}
+	
+	public DACColor defaut() {
+		return colors.values().iterator().next();
+	}
 
 	@Override
 	public Iterator<DACColor> iterator() {
-		return colors.iterator();
+		return colors.values().iterator();
 	}
 	
 }

@@ -11,10 +11,10 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACColors.DACColor;
 
 public class Pool extends DACArea {
 
-	private static final Material ColumnMaterial = Material.WOOL; 
 	private static final Material DefaultMaterial = Material.STATIONARY_WATER;
 	private static final Material DacMaterial = Material.GLASS;
 
@@ -33,25 +33,25 @@ public class Pool extends DACArea {
 		}
 	}
 	
-	public void putColumn(int x, int z, byte color) {
+	public void putColumn(int x, int z, DACColor color) {
 		int y = getRegion().getMinimumPoint().getBlockY();
 		int yMax = getRegion().getMaximumPoint().getBlockY();
 		World world = getArena().getWorld();
 		for (; y<=yMax; y++) { 
 			Block block = world.getBlockAt(x, y, z);
-			block.setType(ColumnMaterial);
-			block.setData(color);
+			block.setType(color.getMaterial());
+			block.setData(color.getData());
 		}
 	}
 	
-	public void putDACColumn(int x, int z, byte color) {
+	public void putDACColumn(int x, int z, DACColor color) {
 		int y = getRegion().getMinimumPoint().getBlockY();
 		int yMax = getRegion().getMaximumPoint().getBlockY();
 		World world = getArena().getWorld();
 		for (; y<yMax; y++) { 
 			Block block = world.getBlockAt(x, y, z);
-			block.setType(ColumnMaterial);
-			block.setData(color);
+			block.setType(color.getMaterial());
+			block.setData(color.getData());
 		}
 		Block block = world.getBlockAt(x, y, z);
 		block.setType(DacMaterial);
