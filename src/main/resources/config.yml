@@ -2,3 +2,52 @@ auto-reset: start
 tp:
     after-jump: 60    
     after-fail: 60
+colors:
+    rouge:
+        chat: dark_red 
+        block: 35
+        data: 14
+    vert:
+        chat: dark_green
+        block: 35
+        data: 13
+    argent:
+        chat: gray
+        block: 35
+        data: 8
+    violet:
+        chat: dark_purple
+        block: 35
+        data: 10
+    orange:
+        chat: gold
+        block: 35
+        data: 1
+    blanc:
+        chat: white
+        block: 35
+        data: 0
+    jaune: 
+        chat: jaune
+        block: 35
+        data: 4
+    mauve: 
+        chat: light_purple
+        block: 35
+        data: 2
+    gris:
+        chat: dark_gray
+        block: 35
+        data: 7
+    citron:
+        chat: green
+        block: 35
+        data: 5
+    rose:
+        chat: red
+        block: 35
+        data: 6
+    noir: 
+        chat: black
+        block: 35
+        data: 15

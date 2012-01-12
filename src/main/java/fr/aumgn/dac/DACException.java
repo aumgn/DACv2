@@ -5,11 +5,19 @@ import com.sk89q.worldedit.regions.Region;
 public class DACException {
 
 	public static class WorldEditNotLoaded extends RuntimeException {
-		
 		private static final long serialVersionUID = 1L;
 		
 		public WorldEditNotLoaded() {
 			super("Fail ! WorldEdit is not loaded !");
+		}
+		
+	}
+	
+	public static class InvalidColorsConfig extends RuntimeException {
+		private static final long serialVersionUID = 1L;
+
+		public InvalidColorsConfig() {
+			super("Invalid colors configuration.");
 		}
 		
 	}

@@ -11,6 +11,7 @@ public class DACConfig {
 	private boolean tpAfterFail;
 	private int tpAfterJumpDelay = 0;
 	private int tpAfterFailDelay = 0;
+	private DACColors colors;
 	
 	public DACConfig(Configuration config) {
 		String autoReset = config.getString("auto-reset");
@@ -29,6 +30,9 @@ public class DACConfig {
 		tpAfterFail = _tpAfterFail >= 0;
 		if (tpAfterJump) { tpAfterJumpDelay = _tpAfterJump; }
 		if (tpAfterFail) { tpAfterFailDelay = _tpAfterFail; }
+		ConfigurationSection colorsConfig = config.getConfigurationSection("colors");
+		ConfigurationSection defColorsConfig = config.getDefaults().getConfigurationSection("colors");
+		colors = new DACColors(colorsConfig, defColorsConfig);
 	}
 	
 	public boolean getResetOnStart() {
@@ -53,6 +57,10 @@ public class DACConfig {
 
 	public int getTpAfterFailDelay() {
 		return tpAfterFailDelay;
+	}
+	
+	public DACColors getColors() {
+		return colors;
 	}
 
 }
