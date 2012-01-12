@@ -24,7 +24,6 @@ public class DACPlayer {
 		
 	}
 	
-	private DAC plugin;
 	private Player player;
 	private DACColor color;
 	private String displayName;
@@ -33,8 +32,7 @@ public class DACPlayer {
 	private boolean mustConfirmate;
 	private int index;
 
-	public DACPlayer(DAC plugin, Player player, DACColor color) {
-		this.plugin = plugin;
+	public DACPlayer(Player player, DACColor color) {
 		this.player = player;
 		this.color = color;
 		this.lives = 0;
@@ -75,7 +73,7 @@ public class DACPlayer {
 	public void tpToStart(long delay) {
 		DelayedTp tp = new DelayedTp(player, startLocation);
 		if (delay > 0) {
-			Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, new DelayedTp(player, startLocation), delay);		
+			Bukkit.getScheduler().scheduleAsyncDelayedTask(DAC.getPlugin(), new DelayedTp(player, startLocation), delay);		
 		} else {
 			tp.run();
 		}

@@ -15,13 +15,11 @@ public class DACJoinStep {
 	
 	private static final ChatColor G = ChatColor.BLUE;
 	
-	private DAC plugin;
 	private DACArena arena;
 	private Set<DACColor> colors;
 	private List<DACPlayer> players;
 
-	public DACJoinStep(DAC plugin, DACArena arena) {
-		this.plugin = plugin;
+	public DACJoinStep(DACArena arena) {
 		this.arena = arena;
 		colors = new HashSet<DACColor>();
 		players = new ArrayList<DACPlayer>();
@@ -97,7 +95,7 @@ public class DACJoinStep {
 				player.sendMessage("  " + dacPlayer.getDisplayName());
 			}
 		}
-		DACPlayer dacPlayer = new DACPlayer(plugin, player, color);
+		DACPlayer dacPlayer = new DACPlayer(player, color);
 		players.add(dacPlayer);
 		colors.add(color);
 		notify(dacPlayer.getDisplayName() + G + " a rejoint la partie");

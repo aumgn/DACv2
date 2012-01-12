@@ -24,15 +24,13 @@ public class DACGame {
 	private static final ChatColor N = ChatColor.GRAY;
 	private static final ChatColor D = ChatColor.GOLD;
 	
-	private DAC plugin;
 	private DACArena arena;
 	private DACPlayer[] players;
 	private int turn;
 	private List<Integer> lostOrder;
 	private Map<DACPlayer, Location> playersWhoLostLastTurn;
 	
-	public DACGame(DAC plugin, DACJoinStep joinStep) {
-		this.plugin = plugin;
+	public DACGame(DACJoinStep joinStep) {
 		this.arena = joinStep.getArena();
 		List<DACPlayer> roulette = joinStep.getPlayers();
 		players = new DACPlayer[roulette.size()];
@@ -44,7 +42,7 @@ public class DACGame {
 		}
 		lostOrder = new ArrayList<Integer>();
 		playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
-		if (plugin.getDACConfig().getResetOnStart()) {
+		if (DAC.getDACConfig().getResetOnStart()) {
 			arena.getPool().reset();
 		}
 		send(G + "La partie commence !");
@@ -142,8 +140,8 @@ public class DACGame {
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a confirmé.");
 				}
-				if (plugin.getDACConfig().getTpAfterJump()) {
-					dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+				if (DAC.getDACConfig().getTpAfterJump()) {
+					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
 				}
 				onPlayerWin(dacPlayer);
 			} else {
@@ -154,8 +152,8 @@ public class DACGame {
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a réussi son saut.");
 				}
-				if (plugin.getDACConfig().getTpAfterJump()) {
-					dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+				if (DAC.getDACConfig().getTpAfterJump()) {
+					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
 				}
 				if (dac) {
 					pool.putDACColumn(x, z, dacPlayer.getColor().getWoolColor());
@@ -188,8 +186,8 @@ public class DACGame {
 				}
 				playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
 				dacPlayer.setMustConfirmate(false);
-				if (plugin.getDACConfig().getTpAfterJump()) {
-					dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+				if (DAC.getDACConfig().getTpAfterJump()) {
+					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
 				}
 				nextTurn();
 			} else {
@@ -197,14 +195,14 @@ public class DACGame {
 				if (dacPlayer.hasLost()) {
 					playersWhoLostLastTurn.put(dacPlayer, player.getLocation());
 					onPlayerLoss(dacPlayer, false);
-					if (plugin.getDACConfig().getTpAfterFail()) {
-						dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterFailDelay());
+					if (DAC.getDACConfig().getTpAfterFail()) {
+						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterFailDelay());
 					}
 				} else {
 					send(F + " Il/elle a donc perdu une vie" + G + " (" + N + 
 						dacPlayer.getLives() + G + " restante(s).");
-					if (plugin.getDACConfig().getTpAfterJump()) {
-						dacPlayer.tpToStart(plugin.getDACConfig().getTpAfterSuccessDelay());
+					if (DAC.getDACConfig().getTpAfterJump()) {
+						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
 					}
 					nextTurn();
 				}
@@ -249,14 +247,14 @@ public class DACGame {
 			send(N.toString() + i + ChatColor.WHITE + ". " + players[lostOrder.get(index)].getDisplayName());
 			i++;
 		}
-		plugin.removeGame(this);
-		if (plugin.getDACConfig().getResetOnEnd()) {
+		DAC.removeGame(this);
+		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
 	}
 	
 	public void stop() {
-		if (plugin.getDACConfig().getResetOnEnd()) {
+		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
 		send(G + "La partie a été arretée.");

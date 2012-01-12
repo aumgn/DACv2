@@ -6,22 +6,16 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.dac.arenas.DACArena;
-import fr.aumgn.dac.arenas.DACArea.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SetCommand extends PlayerCommandExecutor {
 	
-	private DAC plugin;
-	
-	public SetCommand(DAC plugin) {
-		this.plugin = plugin; 
-	}
-
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 2) { return false; }
-		DACArena arena = plugin.getArenas().get(args[0]);
+		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
 			context.error("Arène inconnu.");
 			return true;
@@ -62,7 +56,7 @@ public class SetCommand extends PlayerCommandExecutor {
 
 	private Region getRegion(Context context) {
 		try {
-			WorldEditPlugin worldEdit = plugin.getWorldEdit();
+			WorldEditPlugin worldEdit = DAC.getWorldEdit();
 			BukkitWorld world = new BukkitWorld(context.getPlayer().getWorld());
 			Region region;
 			region = worldEdit.getSession(context.getPlayer()).getRegionSelector(world).getRegion();

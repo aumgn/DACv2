@@ -6,16 +6,10 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class LivesCommand extends PlayerCommandExecutor {
 	
-	private DAC plugin;
-	
-	public LivesCommand(DAC plugin) {
-		this.plugin = plugin;
-	}
-
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length > 2) { return false; }
-		DACGame game = plugin.getGame(context.getPlayer());
+		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
 			context.error("Cette commande ne peut être utilisée que durant une partie de DAC.");
 			return true;

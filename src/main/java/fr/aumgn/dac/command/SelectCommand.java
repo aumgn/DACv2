@@ -3,21 +3,15 @@ package fr.aumgn.dac.command;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArea;
 import fr.aumgn.dac.arenas.DACArena;
-import fr.aumgn.dac.arenas.DACArea.InvalidRegionType;
+import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SelectCommand extends PlayerCommandExecutor {
 	
-	private DAC plugin;
-	
-	public SelectCommand(DAC plugin) {
-		this.plugin = plugin; 
-	}
-
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 2) { return false; }
-		DACArena arena = plugin.getArenas().get(args[0]);
+		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
 			context.error("Arène inconnu.");
 			return true;
@@ -34,7 +28,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 			return false;
 		}
 		try {
-			plugin.getWorldEdit().setSelection(context.getPlayer(), area.getSelection());
+			DAC.getWorldEdit().setSelection(context.getPlayer(), area.getSelection());
 			context.success(areaName + " a été sélectionné");
 			return true;
 		} catch (InvalidRegionType exc) {

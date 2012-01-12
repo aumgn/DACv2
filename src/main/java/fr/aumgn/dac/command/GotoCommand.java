@@ -6,16 +6,10 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class GotoCommand extends PlayerCommandExecutor {
 	
-	private DAC plugin;
-	
-	public GotoCommand(DAC plugin) {
-		this.plugin = plugin;
-	}
-
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 1) { return false; }
-		DACGame game = plugin.getGame(context.getPlayer());
+		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
 			context.error("Cette commande ne peut être utilisé que durant une partie de DAC.");
 			return true;

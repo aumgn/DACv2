@@ -7,27 +7,21 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class StopCommand extends PlayerCommandExecutor {
 
-	private DAC plugin;
-	
-	public StopCommand(DAC plugin) {
-		this.plugin = plugin;
-	}
-	
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
-		DACGame game = plugin.getGame(context.getPlayer());
+		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
-			DACJoinStep joinStep = plugin.getJoinStep(context.getPlayer());
+			DACJoinStep joinStep = DAC.getJoinStep(context.getPlayer());
 			if (joinStep == null) {
-				context.error("Aucune partie en cours à arrêté");
+				context.error("Aucune partie en cours a arrêté");
 				return true;
 			}
 			joinStep.stop();
-			plugin.removeJoinStep(joinStep);
+			DAC.removeJoinStep(joinStep);
 			return true;
 		}
 		game.stop();
-		plugin.removeGame(game);
+		DAC.removeGame(game);
 		return true;
 	}
 
