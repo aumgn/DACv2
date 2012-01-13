@@ -41,8 +41,8 @@ colors:
         chat: jaune
         block: 35
         data: 4
-    mauve: 
-        chat: light_purple
+    magenta: 
+        chat: red
         block: 35
         data: 2
     gris:
@@ -54,7 +54,7 @@ colors:
         block: 35
         data: 5
     rose:
-        chat: red
+        chat: light_purple
         block: 35
         data: 6
     noir: 
