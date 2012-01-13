@@ -180,7 +180,7 @@ public class DACGame {
 			DACPlayer dacPlayer = wrapPlayer(player);
 			send(dacPlayer.getDisplayName() + F + " a manqué son saut.");
 			if (dacPlayer.mustConfirmate()) {
-				send("Il/elle n'a donc pas pu confirmer sa victoire.");
+				send(F + "Il/elle n'a donc pas pu confirmer sa victoire.");
 				for (DACPlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
 					playerWhoLost.resetLives();
 				}
