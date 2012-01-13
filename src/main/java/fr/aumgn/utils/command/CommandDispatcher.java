@@ -5,12 +5,13 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 
 public class CommandDispatcher extends BasicCommandExecutor {
 	
 	private String name;
-	private BasicCommandExecutor defaultExecutor;
+	private CommandExecutor defaultExecutor;
 	private Set<String> commands;
 	
 	public CommandDispatcher(String name) {
@@ -18,16 +19,16 @@ public class CommandDispatcher extends BasicCommandExecutor {
 		this.commands = new HashSet<String>();
 	}
 	
-	public CommandDispatcher(String name, BasicCommandExecutor defaultExecutor) {
+	public CommandDispatcher(String name, CommandExecutor defaultExecutor) {
 		this(name);
 		this.defaultExecutor = defaultExecutor;
 	}
 	
-	public BasicCommandExecutor getDefaultExecutor() {
+	public CommandExecutor getDefaultExecutor() {
 		return defaultExecutor;
 	}
 
-	public void setDefaultExecutor(BasicCommandExecutor defaultExecutor) {
+	public void setDefaultExecutor(CommandExecutor defaultExecutor) {
 		this.defaultExecutor = defaultExecutor;
 	}
 	
@@ -45,10 +46,12 @@ public class CommandDispatcher extends BasicCommandExecutor {
 	@Override
 	public boolean onCommand(Context context, String[] args) {
 		if (args.length < 1) {
-			if (defaultExecutor == null) {
-				return false;
+			if (defaultExecutor instanceof BasicCommandExecutor) {
+				return ((BasicCommandExecutor)defaultExecutor).onCommand(context, args);
+			} else if (defaultExecutor instanceof CommandExecutor) {
+				return defaultExecutor.onCommand(context.getSender(), context.getCommand(), context.getLabel(), args);
 			} else {
-				return defaultExecutor.onCommand(context, args);
+				return false;
 			}
 		}
 		
