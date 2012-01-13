@@ -283,8 +283,4 @@ public class DACArea implements ConfigurationSerializable {
 		return region.contains(new BlockVector(x, y, z));
 	}
 	
-	public boolean contains(org.bukkit.util.Vector v) {
-		return region.contains(new BlockVector(v.getX(), v.getY(), v.getZ()));
-	}
-
 }

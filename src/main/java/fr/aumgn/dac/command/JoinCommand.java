@@ -16,7 +16,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 			context.error("Vous ne pouvez pas rejoindre plusieurs parties.");
 			return true;	
 		}
-		DACArena arena = DAC.getArenas().get(player.getLocation());
+		DACArena arena = DAC.getArenas().get(player);
 		if (arena == null) {
 			context.error("Vous devez vous trouver dans la zone de départ d'un DAC pour utiliser cette commande.");
 			return true;

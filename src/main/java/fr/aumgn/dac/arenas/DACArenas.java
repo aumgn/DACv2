@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 
@@ -77,9 +78,13 @@ public class DACArenas {
 		return arenas.get(name);
 	}
 	
+	public DACArena get(Player player) {
+		return get(player.getLocation());
+	}
+	
 	public DACArena get(Location location) {
 		for (DACArena arena : arenas.values()) {
-			if (arena.getStartArea().contains(location.toVector())) {
+			if (arena.getStartArea().contains(location)) {
 				return arena;				
 			}
 		}
