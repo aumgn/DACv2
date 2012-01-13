@@ -129,5 +129,9 @@ public class DACColors implements Iterable<DACColors.DACColor>{
 	public Iterator<DACColor> iterator() {
 		return colors.values().iterator();
 	}
+
+	public int size() {
+		return colors.size();
+	}
 	
 }

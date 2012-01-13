@@ -59,6 +59,10 @@ public class DACConfig {
 		return tpAfterFailDelay;
 	}
 	
+	public int getMaxPlayers() {
+		return colors.size();
+	}
+	
 	public DACColors getColors() {
 		return colors;
 	}
