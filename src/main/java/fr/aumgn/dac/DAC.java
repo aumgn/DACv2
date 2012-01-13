@@ -17,6 +17,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.command.DACCommand;
+import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.listener.DACEntityListener;
 import fr.aumgn.dac.listener.DACPlayerListener;
 

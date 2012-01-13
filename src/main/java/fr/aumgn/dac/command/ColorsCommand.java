@@ -1,7 +1,7 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACColors.DACColor;
+import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ColorsCommand extends PlayerCommandExecutor {

@@ -9,8 +9,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.dac.DACColors.DACColor;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.config.DACColors;
+import fr.aumgn.dac.config.DACColor;
 
 public class DACJoinStep {
 	

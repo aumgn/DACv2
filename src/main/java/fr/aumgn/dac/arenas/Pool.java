@@ -11,7 +11,7 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACColors.DACColor;
+import fr.aumgn.dac.config.DACColor;
 
 public class Pool extends DACArea {
 

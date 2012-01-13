@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.dac.DACColors.DACColor;
+import fr.aumgn.dac.config.DACColor;
 
 public class DACPlayer {
 
