@@ -2,9 +2,8 @@
 auto-reset: start
 
 # Tp Delay (ticks). Negative values mean deactivated 
-tp:
-    after-jump: 60    
-    after-fail: 60
+tp-after-jump: 20    
+tp-after-fail: 60
 
 # Colors available
 # Example: 

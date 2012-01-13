@@ -23,9 +23,8 @@ public class DACConfig {
 			resetOnStart = true;
 			resetOnEnd = true;
 		}
-		ConfigurationSection tp = config.getConfigurationSection("tp");
-		int _tpAfterJump = tp.getInt("after-jump");
-		int _tpAfterFail = tp.getInt("after-fail");
+		int _tpAfterJump = config.getInt("tp-after-jump");
+		int _tpAfterFail = config.getInt("tp-after-fail");
 		tpAfterJump = _tpAfterJump >= 0;
 		tpAfterFail = _tpAfterFail >= 0;
 		if (tpAfterJump) { tpAfterJumpDelay = _tpAfterJump; }
