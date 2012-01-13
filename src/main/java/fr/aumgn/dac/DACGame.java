@@ -136,7 +136,7 @@ public class DACGame {
 			if (dacPlayer.mustConfirmate()) {
 				if (dac) {
 					send(dacPlayer.getDisplayName() + D + " a confirmé avec un Dé à coudre.");
-					send(dacPlayer.getDisplayName() + D + "Quelle classe !");
+					send(D + "Quelle classe !");
 				} else {
 					send(dacPlayer.getDisplayName() + S + " a confirmé.");
 				}
