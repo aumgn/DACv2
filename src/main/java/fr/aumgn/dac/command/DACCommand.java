@@ -12,6 +12,7 @@ public class DACCommand extends CommandDispatcher {
 			@Override
 			public boolean onCommand(Context context, String[] args) {
 				DAC.reloadDACConfig();
+				DAC.reloadLang();
 				context.success("Configuration mise a jour.");
 				return true;
 			}

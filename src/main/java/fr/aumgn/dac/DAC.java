@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
@@ -37,10 +39,28 @@ public class DAC extends JavaPlugin {
 	public static void reloadDACConfig() {
 		plugin.reloadConfig();
 		plugin.config = new DACConfig(plugin.getConfig());
+	}	
+	
+	public static void reloadLang() {
+		YamlConfiguration newLang = new YamlConfiguration();
+		YamlConfiguration defaultLang = new YamlConfiguration();
+		try {
+			newLang.load(new File(plugin.getDataFolder(), "lang.yml"));
+			defaultLang.load(plugin.getResource("lang.yml"));
+			newLang.setDefaults(defaultLang);
+			plugin.lang = newLang;
+		} catch (Exception e) {
+			getLogger().severe("Unable to load lang.yml file.");
+			getLogger().severe(e.getClass().getSimpleName() + " exception raised");
+		}
 	}
 	
 	public static DACConfig getDACConfig() {
 		return plugin.config;
+	}
+	
+	public static Configuration getLang() {
+		return plugin.lang;
 	}
 	
 	public static DACArenas getArenas() {
@@ -100,6 +120,7 @@ public class DAC extends JavaPlugin {
 	}
 	
 	private DACConfig config;
+	private Configuration lang;
 	private DACArenas arenas; 
 	private Map<String, DACJoinStep> joinSteps;
 	private Map<String, DACGame> games;
@@ -127,7 +148,11 @@ public class DAC extends JavaPlugin {
 	    if (!new File(getDataFolder(), "config.yml").exists()) {
 	    	saveDefaultConfig();
 	    }
-	    config = new DACConfig(getConfig());
+	    if (!new File(getDataFolder(), "lang.yml").exists()) {
+	    	saveResource("lang.yml", false);
+	    }
+	    DAC.reloadDACConfig();
+	    DAC.reloadLang();
 	    
 	    DACCommand dacCommand = new DACCommand();
 	    Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
