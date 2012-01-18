@@ -24,7 +24,7 @@ import fr.aumgn.dac.DACException.InvalidRegionType;;
 public class DACArea implements ConfigurationSerializable {
 	
 	public interface RegionSerialization extends ConfigurationSerializable {
-		public Region getRegion();
+		Region getRegion();
 	}
 	
 	public static class CuboidSerialization implements RegionSerialization {
@@ -241,12 +241,10 @@ public class DACArea implements ConfigurationSerializable {
 					poly.getMaximumPoint().getBlockY()
 				);	
 			} catch (IndexOutOfBoundsException exc) {
-				InvalidRegionType newExc = new InvalidRegionType(
+				throw new InvalidRegionType(
 					"La reselection des zones polygonales n'est pas supportée "
 					+ "avec votre version de WorldEdit a cause d'un bug (resolu dans les builds plus récent)."
 				);
-				newExc.setStackTrace(exc.getStackTrace());
-				throw newExc;
 			}
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			

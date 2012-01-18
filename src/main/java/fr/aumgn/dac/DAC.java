@@ -1,11 +1,13 @@
 package fr.aumgn.dac;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -25,6 +27,7 @@ import fr.aumgn.dac.listener.DACPlayerListener;
 
 public class DAC extends JavaPlugin {
 	
+	private static final String MessagesFile = "messages.yml";
 	private static final Logger logger = Logger.getLogger("Minecraft.DAC");
 	private static DAC plugin;
 	
@@ -45,12 +48,15 @@ public class DAC extends JavaPlugin {
 		YamlConfiguration newMessages = new YamlConfiguration();
 		YamlConfiguration defaultMessages = new YamlConfiguration();
 		try {
-			newMessages.load(new File(plugin.getDataFolder(), "messages.yml"));
-			defaultMessages.load(plugin.getResource("messages.yml"));
+			newMessages.load(new File(plugin.getDataFolder(), MessagesFile));
+			defaultMessages.load(plugin.getResource(MessagesFile));
 			DACMessage.load(newMessages, defaultMessages);
-		} catch (Exception e) {
-			getLogger().severe("Unable to load messages.yml file.");
-			getLogger().severe(e.getClass().getSimpleName() + " exception raised");
+		} catch (IOException exc) {
+			getLogger().severe("Unable to read " + MessagesFile + " file.");
+			getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
+		} catch (InvalidConfigurationException exc) {
+			getLogger().severe("Unable to load " + MessagesFile + " file.");
+			getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
 		}
 	}
 	

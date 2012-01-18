@@ -24,12 +24,12 @@ public class DACConfig {
 			resetOnStart = true;
 			resetOnEnd = true;
 		}
-		int _tpAfterJump = config.getInt("tp-after-jump");
-		int _tpAfterFail = config.getInt("tp-after-fail");
-		tpAfterJump = _tpAfterJump >= 0;
-		tpAfterFail = _tpAfterFail >= 0;
-		if (tpAfterJump) { tpAfterJumpDelay = _tpAfterJump; }
-		if (tpAfterFail) { tpAfterFailDelay = _tpAfterFail; }
+		int tpAfterJumpConfig = config.getInt("tp-after-jump");
+		int tpAfterFailConfig = config.getInt("tp-after-fail");
+		tpAfterJump = tpAfterJumpConfig >= 0;
+		tpAfterFail = tpAfterFailConfig >= 0;
+		if (tpAfterJump) { tpAfterJumpDelay = tpAfterJumpConfig; }
+		if (tpAfterFail) { tpAfterFailDelay = tpAfterFailConfig; }
 		ConfigurationSection colorsConfig = config.getConfigurationSection("colors");
 		ConfigurationSection defColorsConfig = config.getDefaults().getConfigurationSection("colors");
 		colors = new DACColors(colorsConfig, defColorsConfig);

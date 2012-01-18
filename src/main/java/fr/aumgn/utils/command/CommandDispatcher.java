@@ -46,34 +46,44 @@ public class CommandDispatcher extends BasicCommandExecutor {
 	@Override
 	public boolean onCommand(Context context, String[] args) {
 		if (args.length < 1) {
-			if (defaultExecutor instanceof BasicCommandExecutor) {
-				return ((BasicCommandExecutor)defaultExecutor).onCommand(context, args);
-			} else if (defaultExecutor instanceof CommandExecutor) {
-				return defaultExecutor.onCommand(context.getSender(), context.getCommand(), context.getLabel(), args);
-			} else {
-				return false;
-			}
+			return callDefaultExecutor(context, args);
 		}
-		
 		if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("?")) {
-			if (args.length == 1) {
-				context.send("Usage: /" + context.getLabel() + " " + args[0] + " #command");
-			} else {
-				String subName = getSubCommandName(args[1]);
-				Command subCmd = Bukkit.getPluginCommand(subName);
-				if (subCmd != null && context.getSender().hasPermission(subCmd.getPermission())) {
-					context.success("Description :");
-					context.send("  " + subCmd.getDescription());
-					String usage = subCmd.getUsage();
-					usage = usage.replaceAll("<command>", context.getLabel() + " " + args[1]);
-					context.success(usage);
-				} else {
-					context.error("Aucune commande ne porte ce nom.");
-				}
-			}
-			return true;
+			return callHelp(context, args);
 		}
-		
+		return callSubCommand(context, args);
+	}
+	
+	private boolean callDefaultExecutor(Context context, String[] args) {
+		if (defaultExecutor instanceof BasicCommandExecutor) {
+			return ((BasicCommandExecutor)defaultExecutor).onCommand(context, args);
+		} else if (defaultExecutor != null) {
+			return defaultExecutor.onCommand(context.getSender(), context.getCommand(), context.getLabel(), args);
+		} else {
+			return false;
+		}		
+	}
+
+	private boolean callHelp(Context context, String[] args) {
+		if (args.length == 1) {
+			context.send("Utilisation: /" + context.getLabel() + " " + args[0] + " #command");
+		} else {
+			String subName = getSubCommandName(args[1]);
+			Command subCmd = Bukkit.getPluginCommand(subName);
+			if (subCmd != null && context.getSender().hasPermission(subCmd.getPermission())) {
+				context.success("Description :");
+				context.send("  " + subCmd.getDescription());
+				String usage = subCmd.getUsage();
+				usage = usage.replaceAll("<command>", context.getLabel() + " " + args[1]);
+				context.success(usage);
+			} else {
+				context.error("Aucune commande ne porte ce nom.");
+			}
+		}
+		return true;
+	}
+	
+	private boolean callSubCommand(Context context, String[] args) {
 		Command subCmd = Bukkit.getPluginCommand(getSubCommandName(args[0]));
 		if (subCmd != null && commands.contains(subCmd.getName())) {
 			String[] subArgs = new String[args.length-1];
@@ -83,7 +93,7 @@ public class CommandDispatcher extends BasicCommandExecutor {
 			return true;
 		} else {
 			return false;
-		}
+		}		
 	}
 
 }

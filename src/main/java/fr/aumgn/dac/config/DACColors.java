@@ -11,7 +11,11 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import fr.aumgn.dac.DAC;
 
-public class DACColors implements Iterable<DACColor>{
+public class DACColors implements Iterable<DACColor> {
+	
+	private static final String ChatKey = "chat";
+	private static final String BlockKey = "chat";
+	private static final String DataKey = "data";
 	
 	private Map<String, DACColor> colors;
 
@@ -46,22 +50,22 @@ public class DACColors implements Iterable<DACColor>{
 			ChatColor chat;
 			Material material;
 			byte data;
-			if (section.isString("chat")) {
-				chat = ChatColor.valueOf(section.getString("chat").toUpperCase());
+			if (section.isString(ChatKey)) {
+				chat = ChatColor.valueOf(section.getString(ChatKey).toUpperCase());
 			} else {
 				return null;
 			}
-			if (section.isInt("block")) {
-				int block = section.getInt("block");
+			if (section.isInt(BlockKey)) {
+				int block = section.getInt(BlockKey);
 				material = Material.getMaterial(block);
-			} else if (section.isString("block")) {
-				String block = section.getString("block");
+			} else if (section.isString(BlockKey)) {
+				String block = section.getString(BlockKey);
 				material = Material.valueOf(block.toUpperCase());
 			} else { 
 				material = Material.WOOL;
 			}
-			if (section.isInt("data")) {
-				data = (byte) section.getInt("data");
+			if (section.isInt(DataKey)) {
+				data = (byte) section.getInt(DataKey);
 			} else {
 				data = 0;
 			}
