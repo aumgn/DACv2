@@ -53,8 +53,12 @@ public class DACJoinStep {
 		return (players.size() > 1);
 	}
 
+	public int getMaxPlayers() {
+		return colors.size();
+	}
+
 	public boolean isMaxReached() {
-		return (players.size() == DAC.getDACConfig().getMaxPlayers());
+		return (players.size() == getMaxPlayers());
 	}
 
 	private boolean isColorAvailable(String name) {
