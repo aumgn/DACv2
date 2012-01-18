@@ -10,22 +10,22 @@ import fr.aumgn.dac.config.DACColor;
 public class DACPlayer {
 
 	public static class DelayedTp implements Runnable {
-		
+
 		private Player player;
 		private Location location;
-		
+
 		public DelayedTp(Player player, Location location) {
 			this.player = player;
 			this.location = location;
 		}
-		
+
 		@Override
 		public void run() {
 			player.teleport(location);
 		}
-		
+
 	}
-	
+
 	private Player player;
 	private DACColor color;
 	private String displayName;
@@ -42,16 +42,16 @@ public class DACPlayer {
 		displayName = this.color.getChatColor() + name + ChatColor.WHITE; 
 		startLocation = player.getLocation(); 
 	}
-	
+
 	public void init(DACGame dacGame, int i) {
 		this.index = i;
 		mustConfirmate = false;
 	}
-	
+
 	public int getIndex() {
 		return index;
 	}
-	
+
 	public int getPosition() {
 		return index + 1;
 	}
@@ -67,7 +67,7 @@ public class DACPlayer {
 	public Player getPlayer() {
 		return player;
 	}
-	
+
 	public void tpToStart() {
 		tpToStart(0);
 	}
@@ -84,23 +84,23 @@ public class DACPlayer {
 	public boolean hasLost() {
 		return lives < 0;
 	}
-	
+
 	public int getLives() {
 		return lives;
 	}
-	
+
 	public void resetLives() {
 		lives =  0; 
 	}
-	
+
 	public void winLive() {
 		lives++;
 	}
-	
+
 	public void looseLive() {
 		lives--;
 	}
-	
+
 	public void looseAllLives() {
 		lives = -1;
 	}

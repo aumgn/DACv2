@@ -8,7 +8,7 @@ import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SelectCommand extends PlayerCommandExecutor {
-	
+
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 2) { return false; }
@@ -38,5 +38,5 @@ public class SelectCommand extends PlayerCommandExecutor {
 			return true;
 		}
 	}
-	
+
 }

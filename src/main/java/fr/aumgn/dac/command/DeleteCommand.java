@@ -7,7 +7,7 @@ import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class DeleteCommand extends PlayerCommandExecutor {
-	
+
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 1) { return false; }

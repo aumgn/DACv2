@@ -21,7 +21,7 @@ public class Pool extends DACArea {
 	public Pool(DACArena arena) {
 		super(arena);
 	}
-	
+
 	public void reset() {
 		EditSession editSession = new EditSession(getArena().getWEWorld(), -1);
 		try {
@@ -32,7 +32,7 @@ public class Pool extends DACArea {
 			DAC.getLogger().warning(warning);
 		}
 	}
-	
+
 	public void putColumn(int x, int z, DACColor color) {
 		int y = getRegion().getMinimumPoint().getBlockY();
 		int yMax = getRegion().getMaximumPoint().getBlockY();
@@ -43,7 +43,7 @@ public class Pool extends DACArea {
 			block.setData(color.getData());
 		}
 	}
-	
+
 	public void putDACColumn(int x, int z, DACColor color) {
 		int y = getRegion().getMinimumPoint().getBlockY();
 		int yMax = getRegion().getMaximumPoint().getBlockY();
@@ -56,7 +56,7 @@ public class Pool extends DACArea {
 		Block block = world.getBlockAt(x, y, z);
 		block.setType(DacMaterial);
 	}
-	
+
 	public void putRIPSign(Location location, String name) {
 		int yMax = getRegion().getMaximumPoint().getBlockY();
 		Block block = getArena().getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
@@ -64,7 +64,7 @@ public class Pool extends DACArea {
 		Sign sign = (Sign)block.getState();
 		sign.setLine(0, "RIP");
 	}
-	
+
 	public void rip(Location location, String name) {
 		int yMax = getRegion().getMaximumPoint().getBlockY();
 		Block block = getArena().getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
@@ -79,12 +79,12 @@ public class Pool extends DACArea {
 			}
 		}
 	}
-	
+
 	private boolean isColumnAt(int x, int z) {
 		Block blk = getArena().getWorld().getBlockAt(x, getRegion().getMinimumPoint().getBlockY(), z);
 		return !blk.getType().equals(DefaultMaterial);
 	}
-	
+
 	public boolean isADACPattern(int x, int z) {
 		boolean dac;
 		dac =  isColumnAt(x-1, z);

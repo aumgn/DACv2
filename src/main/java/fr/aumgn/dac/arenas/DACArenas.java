@@ -16,21 +16,21 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 
 public class DACArenas {
-	
+
 	private DAC plugin;
 	private YamlConfiguration yaml;
 	private boolean updated;
 	private Map<String, DACArena> arenas;
-	
+
 	static {
 		ConfigurationSerialization.registerClass(DACArena.class);
 	}
-	
+
 	public DACArenas(DAC dac) {
 		plugin = dac;
 		yaml = new YamlConfiguration();
 		updated = false; 
-		
+
 		ensureDirectoryExists();
 		try {
 			yaml.load(getConfigFileName());
@@ -45,7 +45,7 @@ public class DACArenas {
 			arenas.put(name, (DACArena)yaml.get(name));
 		}
 	}
-	
+
 	private void ensureDirectoryExists() {
 		if (!plugin.getDataFolder().exists()) {
 			try {
@@ -55,7 +55,7 @@ public class DACArenas {
 			}
 		}
 	}
-	
+
 	public DAC getPlugin() {
 		return plugin;
 	}
@@ -63,25 +63,25 @@ public class DACArenas {
 	private String getConfigFileName() {
 		return plugin.getDataFolder() + File.separator + "DAC.yml";
 	}
-	
+
 	public void createArena(String name, World world) {
 		arenas.put(name, new DACArena(name, world));
 	}
-	
+
 	public void removeArena(DACArena arena) {
 		yaml.set(arena.getName(), null);
 		arenas.remove(arena.getName());
 		updated = true;
 	}
-	
+
 	public DACArena get(String name) {
 		return arenas.get(name);
 	}
-	
+
 	public DACArena get(Player player) {
 		return get(player.getLocation());
 	}
-	
+
 	public DACArena get(Location location) {
 		for (DACArena arena : arenas.values()) {
 			if (arena.getStartArea().contains(location)) {
@@ -90,7 +90,7 @@ public class DACArenas {
 		}
 		return null;
 	}
-	
+
 	public void dump() {
 		boolean needSave = updated;
 		for (DACArena arena : arenas.values()) {

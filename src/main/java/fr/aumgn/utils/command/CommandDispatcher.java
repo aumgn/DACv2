@@ -9,21 +9,21 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 
 public class CommandDispatcher extends BasicCommandExecutor {
-	
+
 	private String name;
 	private CommandExecutor defaultExecutor;
 	private Set<String> commands;
-	
+
 	public CommandDispatcher(String name) {
 		this.name = name;
 		this.commands = new HashSet<String>();
 	}
-	
+
 	public CommandDispatcher(String name, CommandExecutor defaultExecutor) {
 		this(name);
 		this.defaultExecutor = defaultExecutor;
 	}
-	
+
 	public CommandExecutor getDefaultExecutor() {
 		return defaultExecutor;
 	}
@@ -31,7 +31,7 @@ public class CommandDispatcher extends BasicCommandExecutor {
 	public void setDefaultExecutor(CommandExecutor defaultExecutor) {
 		this.defaultExecutor = defaultExecutor;
 	}
-	
+
 	private String getSubCommandName(String cmdName) {
 		return (name + "-" + cmdName);
 	}
@@ -42,7 +42,7 @@ public class CommandDispatcher extends BasicCommandExecutor {
 		cmd.setExecutor(executor);
 		commands.add(subCommandName);
 	}
-	
+
 	@Override
 	public boolean onCommand(Context context, String[] args) {
 		if (args.length < 1) {
@@ -53,7 +53,7 @@ public class CommandDispatcher extends BasicCommandExecutor {
 		}
 		return callSubCommand(context, args);
 	}
-	
+
 	private boolean callDefaultExecutor(Context context, String[] args) {
 		if (defaultExecutor instanceof BasicCommandExecutor) {
 			return ((BasicCommandExecutor)defaultExecutor).onCommand(context, args);
@@ -82,7 +82,7 @@ public class CommandDispatcher extends BasicCommandExecutor {
 		}
 		return true;
 	}
-	
+
 	private boolean callSubCommand(Context context, String[] args) {
 		Command subCmd = Bukkit.getPluginCommand(getSubCommandName(args[0]));
 		if (subCmd != null && commands.contains(subCmd.getName())) {

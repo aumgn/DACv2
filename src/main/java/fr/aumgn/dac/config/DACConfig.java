@@ -5,7 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 
 public class DACConfig {
-	
+
 	private boolean resetOnStart = false;
 	private boolean resetOnEnd = false;
 	private boolean tpAfterJump;
@@ -13,7 +13,7 @@ public class DACConfig {
 	private int tpAfterJumpDelay = 0;
 	private int tpAfterFailDelay = 0;
 	private DACColors colors;
-	
+
 	public DACConfig(Configuration config) {
 		String autoReset = config.getString("auto-reset");
 		if (autoReset.equals("start")) {
@@ -34,7 +34,7 @@ public class DACConfig {
 		ConfigurationSection defColorsConfig = config.getDefaults().getConfigurationSection("colors");
 		colors = new DACColors(colorsConfig, defColorsConfig);
 	}
-	
+
 	public boolean getResetOnStart() {
 		return resetOnStart;
 	}
@@ -46,11 +46,11 @@ public class DACConfig {
 	public boolean getTpAfterJump() {
 		return tpAfterJump;
 	}
-	
+
 	public boolean getTpAfterFail() {
 		return tpAfterFail;
 	}
-	
+
 	public int getTpAfterSuccessDelay() {
 		return tpAfterJumpDelay;
 	}
@@ -58,11 +58,11 @@ public class DACConfig {
 	public int getTpAfterFailDelay() {
 		return tpAfterFailDelay;
 	}
-	
+
 	public int getMaxPlayers() {
 		return colors.size();
 	}
-	
+
 	public DACColors getColors() {
 		return colors;
 	}

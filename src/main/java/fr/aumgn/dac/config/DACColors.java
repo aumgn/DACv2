@@ -12,11 +12,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import fr.aumgn.dac.DAC;
 
 public class DACColors implements Iterable<DACColor> {
-	
+
 	private static final String ChatKey = "chat";
 	private static final String BlockKey = "chat";
 	private static final String DataKey = "data";
-	
+
 	private Map<String, DACColor> colors;
 
 	public DACColors(ConfigurationSection section, ConfigurationSection defColorsConfig) {
@@ -32,7 +32,7 @@ public class DACColors implements Iterable<DACColor> {
 			DAC.getLogger().warning("Using " + colors.size() + " of " + keys.size());
 		}
 	}
-	
+
 	private Map<String, DACColor> parseColors(ConfigurationSection section) {
 		Set<String> keys = section.getKeys(false);
 		Map<String, DACColor> colors = new LinkedHashMap<String, DACColor>();
@@ -44,7 +44,7 @@ public class DACColors implements Iterable<DACColor> {
 		}
 		return colors;
 	}
-	
+
 	private DACColor parseColor(String name, ConfigurationSection section) {
 		try {
 			ChatColor chat;
@@ -74,11 +74,11 @@ public class DACColors implements Iterable<DACColor> {
 			return null;
 		}
 	}
-	
+
 	public DACColor get(String name) {
 		return colors.get(name);
 	}
-	
+
 	public DACColor defaut() {
 		return colors.values().iterator().next();
 	}
@@ -91,5 +91,5 @@ public class DACColors implements Iterable<DACColor> {
 	public int size() {
 		return colors.size();
 	}
-	
+
 }

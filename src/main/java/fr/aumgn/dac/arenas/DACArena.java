@@ -10,14 +10,14 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 
 public class DACArena implements ConfigurationSerializable {
-	
+
 	private String name;
 	private boolean updated;
 	private World world;
 	private DivingBoard divingBoard;
 	private Pool pool;
 	private StartArea startArea;
-	
+
 	public DACArena(String name, World world) {
 		this.name = name;
 		updated = false;
@@ -30,7 +30,7 @@ public class DACArena implements ConfigurationSerializable {
 	public void updated() {
 		updated = true;
 	}
-	
+
 	public boolean isUpdated() {
 		return updated;
 	}
@@ -38,7 +38,7 @@ public class DACArena implements ConfigurationSerializable {
 	public World getWorld() {
 		return world;
 	}
-	
+
 	public BukkitWorld getWEWorld() {
 		return new BukkitWorld(getWorld());
 	}
@@ -68,7 +68,7 @@ public class DACArena implements ConfigurationSerializable {
 		arena.getStartArea().load(map.get("start-area"));
 		return arena;
 	}
-	
+
 	@Override
 	public Map<String, Object> serialize() {
 		HashMap<String, Object> map = new HashMap<String, Object>();

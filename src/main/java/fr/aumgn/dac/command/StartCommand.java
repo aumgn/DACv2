@@ -9,7 +9,7 @@ import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class StartCommand extends PlayerCommandExecutor {
-	
+
 	@Override
 	public boolean onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();

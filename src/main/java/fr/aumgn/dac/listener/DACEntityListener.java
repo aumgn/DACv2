@@ -9,7 +9,7 @@ import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACGame;
 
 public class DACEntityListener extends EntityListener {
-	
+
 	public void onEntityDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
@@ -17,5 +17,5 @@ public class DACEntityListener extends EntityListener {
 			if (game != null) { game.onPlayerDamage(event); }
 		}
 	}
-	
+
 }

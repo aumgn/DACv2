@@ -22,25 +22,25 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.DACException.InvalidRegionType;;
 
 public class DACArea implements ConfigurationSerializable {
-	
+
 	public interface RegionSerialization extends ConfigurationSerializable {
 		Region getRegion();
 	}
-	
+
 	public static class CuboidSerialization implements RegionSerialization {
-		
+
 		public static class VectorSerialization implements ConfigurationSerializable {
-			
+
 			private Vector vector;
-			
+
 			public VectorSerialization(Vector vector) {
 				this.vector = vector; 
 			}
-			
+
 			public Vector getVector() {
 				return vector; 
 			}
-			
+
 			public static VectorSerialization deserialize(Map<String, Object> map) {
 				int x, y, z;
 				x = (Integer) map.get("x");
@@ -48,7 +48,7 @@ public class DACArea implements ConfigurationSerializable {
 				z = (Integer) map.get("z");
 				return new VectorSerialization(new Vector(x, y, z));
 			}
-			
+
 			public Map<String, Object> serialize() {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("x", vector.getBlockX());
@@ -56,15 +56,15 @@ public class DACArea implements ConfigurationSerializable {
 				map.put("z", vector.getBlockZ());
 				return map;
 			}
-			
+
 		}
-		
+
 		private CuboidRegion cuboid;
 
 		public CuboidSerialization(CuboidRegion cuboid) {
 			this.cuboid = cuboid;
 		}
-		
+
 		@Override
 		public Region getRegion() {
 			return cuboid;
@@ -87,43 +87,43 @@ public class DACArea implements ConfigurationSerializable {
 			map.put("max", new VectorSerialization(cuboid.getMaximumPoint()));
 			return map;
 		}
-	
+
 	}
-	
+
 	public static class Polygonal2DSerialization implements RegionSerialization {
-		
+
 		public static class BlockVector2DSerialization implements ConfigurationSerializable {
-			
+
 			private int x, z;
-			
+
 			public BlockVector2DSerialization(BlockVector2D vector) {
 				x = vector.getBlockX();
 				z = vector.getBlockZ();
 			}
-			
+
 			public BlockVector2D getVector() {
 				return new BlockVector2D(x, z);
 			}
-			
+
 			public static BlockVector2DSerialization deserialize(Map<String, Object> map) {
 				int x, z;
 				x = (Integer) map.get("x");
 				z = (Integer) map.get("z");
 				return new BlockVector2DSerialization(new BlockVector2D(x, z));
 			}
-			
+
 			public Map<String, Object> serialize() {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("x", x);
 				map.put("z", z);
 				return map;
 			}
-			
+
 		}
 
 		private Polygonal2DRegion polygonal;
 		private List<BlockVector2DSerialization> points;
-		
+
 		public Polygonal2DSerialization(Polygonal2DRegion polygonal) {
 			this.polygonal = polygonal;
 			points = new ArrayList<BlockVector2DSerialization>();
@@ -131,12 +131,12 @@ public class DACArea implements ConfigurationSerializable {
 				points.add(new BlockVector2DSerialization(point));
 			}
 		}
-		
+
 		@Override
 		public Region getRegion() {
 			return polygonal;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public static Polygonal2DSerialization deserialize(DACArena arena, Map<String, Object> map) {
 			int i = 1, yMin = 0, yMax = 0;
@@ -152,7 +152,7 @@ public class DACArea implements ConfigurationSerializable {
 			Polygonal2DRegion polygonal = new Polygonal2DRegion(arena.getWEWorld(), points, yMin, yMax);
 			return new Polygonal2DSerialization(polygonal);
 		}
-		
+
 		public Map<String, Object> serialize() {
 			int i = 1;
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -165,20 +165,20 @@ public class DACArea implements ConfigurationSerializable {
 			}
 			return map;
 		}
-		
+
 	}
-	
+
 	private DACArena arena;
 	private Region region;
-	
+
 	// Workaround
 	private Polygonal2DSerialization polygonSerialization;
-	
+
 	public DACArea(DACArena arena) {
 		this.arena = arena;
 		this.region = new CuboidRegion(new BlockVector(0,0,0), new BlockVector(0,0,0));
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void load(Object data) {
 		if (data instanceof Map) {
@@ -197,7 +197,7 @@ public class DACArea implements ConfigurationSerializable {
 			this.region = regionSerialization.getRegion(); 
 		}
 	}
-	
+
 	public void update(Region region) {
 		if (region instanceof CuboidRegion) {
 			CuboidRegion cuboid = (CuboidRegion)region;
@@ -207,17 +207,17 @@ public class DACArea implements ConfigurationSerializable {
 			// Workaround
 			polygonSerialization = new Polygonal2DSerialization(poly);
 			this.region = new Polygonal2DRegion(
-				arena.getWEWorld(),
-				poly.getPoints(),
-				poly.getMinimumPoint().getBlockY(),
-				poly.getMaximumPoint().getBlockY()
-			);
+					arena.getWEWorld(),
+					poly.getPoints(),
+					poly.getMinimumPoint().getBlockY(),
+					poly.getMaximumPoint().getBlockY()
+					);
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
 		}
 		arena.updated();
 	}
-	
+
 	public DACArena getArena() {
 		return arena;
 	}
@@ -235,23 +235,23 @@ public class DACArea implements ConfigurationSerializable {
 			Polygonal2DRegion poly = (Polygonal2DRegion)region;
 			try {
 				selection = new Polygonal2DSelection(
-					arena.getWorld(),
-					poly.getPoints(),
-					poly.getMinimumPoint().getBlockY(),
-					poly.getMaximumPoint().getBlockY()
-				);	
+						arena.getWorld(),
+						poly.getPoints(),
+						poly.getMinimumPoint().getBlockY(),
+						poly.getMaximumPoint().getBlockY()
+						);	
 			} catch (IndexOutOfBoundsException exc) {
 				throw new InvalidRegionType(
-					"La reselection des zones polygonales n'est pas supportée "
-					+ "avec votre version de WorldEdit a cause d'un bug (resolu dans les builds plus récent)."
-				);
+						"La reselection des zones polygonales n'est pas supportée "
+								+ "avec votre version de WorldEdit a cause d'un bug (resolu dans les builds plus récent)."
+						);
 			}
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
 		}
 		return selection;
 	}
-	
+
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map;
@@ -269,16 +269,16 @@ public class DACArea implements ConfigurationSerializable {
 		}
 		return map;
 	}
-	
+
 	public boolean contains(Player player) {
 		return contains(player.getLocation());
 	}
-	
+
 	public boolean contains(Location location) {
 		int x = location.getBlockX();
 		int y = location.getBlockY();
 		int z = location.getBlockZ();
 		return region.contains(new BlockVector(x, y, z));
 	}
-	
+
 }

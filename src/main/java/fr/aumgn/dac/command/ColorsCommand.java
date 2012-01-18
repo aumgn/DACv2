@@ -24,7 +24,7 @@ public class ColorsCommand extends PlayerCommandExecutor {
 		if (i!=0) { context.send(msg); }
 		return true;
 	}
-	
+
 	private String getColorMessage(DACColor color) {
 		return color.getChatColor() + color.getName();
 	}

@@ -3,7 +3,7 @@ package fr.aumgn.dac.command;
 import fr.aumgn.utils.command.CommandDispatcher;
 
 public class DACCommand extends CommandDispatcher {
-	
+
 	public DACCommand() {
 		super("dac");
 		registerCommand("reload", new ReloadCommand());

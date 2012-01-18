@@ -17,13 +17,13 @@ import fr.aumgn.dac.arenas.Pool;
 import fr.aumgn.dac.config.DACMessage;
 
 public class DACGame {
-	
+
 	private DACArena arena;
 	private DACPlayer[] players;
 	private int turn;
 	private List<Integer> lostOrder;
 	private Map<DACPlayer, Location> playersWhoLostLastTurn;
-	
+
 	public DACGame(DACJoinStep joinStep) {
 		this.arena = joinStep.getArena();
 		List<DACPlayer> roulette = joinStep.getPlayers();
@@ -48,13 +48,13 @@ public class DACGame {
 		turn = -1;
 		nextTurn();
 	}
-	
+
 	private void send(String message) {
 		for (DACPlayer player : players) {
 			player.getPlayer().sendMessage(message);
 		}
 	}
-	
+
 	private void send(DACMessage lang) {
 		send(lang.getValue());
 	}
@@ -69,7 +69,7 @@ public class DACGame {
 			playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
 		}
 	}
-	
+
 	private void nextTurn() {
 		DACPlayer player;
 		do {
@@ -99,7 +99,7 @@ public class DACGame {
 		}
 		return (i == 1) ? playerLeft : null;
 	}
-	
+
 	public DACArena getArena() {
 		return arena;
 	}
@@ -112,7 +112,7 @@ public class DACGame {
 		}
 		return false;
 	}
-	
+
 	public DACPlayer wrapPlayer(Player player) {
 		for (DACPlayer dacPlayer : players) {
 			if (dacPlayer.getPlayer().equals(player)) {
@@ -215,7 +215,7 @@ public class DACGame {
 			onPlayerLoss(dacPlayer, true);
 		}
 	}
-	
+
 	public void onPlayerLoss(DACPlayer player, boolean force) {
 		DACPlayer lastPlayer = getLastPlayer();
 		if (lastPlayer != null) {
@@ -230,15 +230,15 @@ public class DACGame {
 			if (isPlayerTurn(player)) { nextTurn(); }
 		}
 	}
-	
+
 	public void onPlayerWin(DACPlayer player) {
 		send(DACMessage.GameFinished);
 		for (DACPlayer dacPlayer : playersWhoLostLastTurn.keySet()) {
 			lostOrder.add(dacPlayer.getIndex());
 		}
-		
+
 		send(DACMessage.GameWinner.format(player.getDisplayName()));
-		
+
 		int i=2;
 		for (int index=lostOrder.size()-1 ; index>=0; index--) {
 			String name = players[lostOrder.get(index)].getDisplayName();
@@ -250,7 +250,7 @@ public class DACGame {
 			arena.getPool().reset();
 		}
 	}
-	
+
 	public void stop() {
 		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();

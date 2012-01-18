@@ -7,14 +7,14 @@ import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class DivingBoard extends Location implements ConfigurationSerializable {
-	
+
 	private DACArena arena;
-	
+
 	public DivingBoard(DACArena arena) {
 		super(arena.getWorld(), 0.0, 0.0, 0.0, 0.0f, 0.0f);
 		this.arena = arena;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public void load(Object data) {
 		if (data instanceof Map) {
@@ -28,7 +28,7 @@ public class DivingBoard extends Location implements ConfigurationSerializable {
 			setPitch((float)pitch);
 		}
 	}
-	
+
 	public void update(Location loc) {
 		setX(loc.getX());
 		setY(loc.getY());

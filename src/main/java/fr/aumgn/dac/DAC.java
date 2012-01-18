@@ -26,15 +26,15 @@ import fr.aumgn.dac.listener.DACEntityListener;
 import fr.aumgn.dac.listener.DACPlayerListener;
 
 public class DAC extends JavaPlugin {
-	
+
 	private static final String MessagesFile = "messages.yml";
 	private static final Logger logger = Logger.getLogger("Minecraft.DAC");
 	private static DAC plugin;
-	
+
 	public static DAC getPlugin() {
 		return plugin;
 	}
-	
+
 	public static Logger getLogger() {
 		return logger;
 	}
@@ -43,7 +43,7 @@ public class DAC extends JavaPlugin {
 		plugin.reloadConfig();
 		plugin.config = new DACConfig(plugin.getConfig());
 	}	
-	
+
 	public static void reloadMessages() {
 		YamlConfiguration newMessages = new YamlConfiguration();
 		YamlConfiguration defaultMessages = new YamlConfiguration();
@@ -59,11 +59,11 @@ public class DAC extends JavaPlugin {
 			getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
 		}
 	}
-	
+
 	public static DACConfig getDACConfig() {
 		return plugin.config;
 	}
-	
+
 	public static DACArenas getArenas() {
 		return plugin.arenas;
 	}
@@ -71,7 +71,7 @@ public class DAC extends JavaPlugin {
 	public static DACJoinStep getJoinStep(DACArena arena) {
 		return plugin.joinSteps.get(arena.getName());
 	}
-	
+
 	public static DACJoinStep getJoinStep(Player player) {
 		for (DACJoinStep joinStep : plugin.joinSteps.values()) {
 			if (joinStep.contains(player)) { return joinStep; }
@@ -86,7 +86,7 @@ public class DAC extends JavaPlugin {
 	public static DACGame getGame(DACArena arena) {
 		return plugin.games.get(arena.getName());
 	}
-	
+
 	public static DACGame getGame(Player player) {
 		for (DACGame game : plugin.games.values()) {
 			if (game.contains(player)) { return game; }
@@ -111,7 +111,7 @@ public class DAC extends JavaPlugin {
 	public static void removeJoinStep(DACJoinStep joinStep) {
 		plugin.joinSteps.remove(joinStep.getArena().getName());
 	}
-	
+
 	public static void removeGame(DACGame game) {
 		plugin.games.remove(game.getArena().getName());
 	}
@@ -119,54 +119,54 @@ public class DAC extends JavaPlugin {
 	public static WorldEditPlugin getWorldEdit() {
 		return plugin.worldEdit;
 	}
-	
+
 	private DACConfig config;
 	private DACArenas arenas; 
 	private Map<String, DACJoinStep> joinSteps;
 	private Map<String, DACGame> games;
 	private WorldEditPlugin worldEdit;
-	
+
 	@Override
 	public void onEnable() {
 		if (DAC.plugin != null) {
 			throw new UnsupportedOperationException("DAC seems to have been loaded twice.");
 		}
 		DAC.plugin = this;
-				
+
 		PluginManager pm = Bukkit.getPluginManager();
 
 		arenas = new DACArenas(this);
 		joinSteps = new HashMap<String, DACJoinStep>();
 		games = new HashMap<String, DACGame>();
-		
+
 		Plugin plugin = pm.getPlugin("WorldEdit");
-	    if (!(plugin instanceof WorldEditPlugin)) {
-	    	throw new DACException.WorldEditNotLoaded();
-	    } else {
-	    	worldEdit = (WorldEditPlugin)plugin;
-	    }
-	    
-	    if (!new File(getDataFolder(), "config.yml").exists()) {
-	    	saveDefaultConfig();
-	    }
-	    if (!new File(getDataFolder(), "messages.yml").exists()) {
-	    	saveResource("messages.yml", false);
-	    }
-	    DAC.reloadDACConfig();
-	    DAC.reloadMessages();
-	    
-	    DACCommand dacCommand = new DACCommand();
-	    Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
-		
-	    DACEntityListener entityListener = new DACEntityListener();
-	    DACPlayerListener playerListener = new DACPlayerListener();
+		if (!(plugin instanceof WorldEditPlugin)) {
+			throw new DACException.WorldEditNotLoaded();
+		} else {
+			worldEdit = (WorldEditPlugin)plugin;
+		}
+
+		if (!new File(getDataFolder(), "config.yml").exists()) {
+			saveDefaultConfig();
+		}
+		if (!new File(getDataFolder(), "messages.yml").exists()) {
+			saveResource("messages.yml", false);
+		}
+		DAC.reloadDACConfig();
+		DAC.reloadMessages();
+
+		DACCommand dacCommand = new DACCommand();
+		Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
+
+		DACEntityListener entityListener = new DACEntityListener();
+		DACPlayerListener playerListener = new DACPlayerListener();
 		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.High, this);
 		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Event.Priority.Monitor, this);
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Monitor, this);
-		
+
 		logger.info(getDescription().getFullName() + " is enabled.");
 	}
-	
+
 	@Override
 	public void onDisable() {
 		arenas.dump();

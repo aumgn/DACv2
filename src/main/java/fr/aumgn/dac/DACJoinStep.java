@@ -14,7 +14,7 @@ import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.dac.config.DACMessage;
 
 public class DACJoinStep {
-	
+
 	private DACArena arena;
 	private DACColors colors;
 	private Set<DACColor> colorsMap;
@@ -30,7 +30,7 @@ public class DACJoinStep {
 			player.sendMessage(DACMessage.JoinNewGame2.getValue());
 		}
 	}
-	
+
 	public DACArena getArena() {
 		return arena;
 	}
@@ -44,19 +44,19 @@ public class DACJoinStep {
 			player.getPlayer().sendMessage(message);
 		}
 	}
-	
+
 	public void notify(DACMessage message) {
 		notify(message.getValue());
 	}
-	
+
 	public boolean isMinReached() {
 		return (players.size() > 1);
 	}
-	
+
 	public boolean isMaxReached() {
 		return (players.size() == DAC.getDACConfig().getMaxPlayers());
 	}
-	
+
 	private boolean isColorAvailable(String name) {
 		DACColor color = colors.get(name);
 		if (color == null) {
@@ -65,11 +65,11 @@ public class DACJoinStep {
 			return isColorAvailable(color);
 		}
 	}
-	
+
 	private boolean isColorAvailable(DACColor color) {
 		return !colorsMap.contains(color);
 	}
-	
+
 	private DACColor getFirstColorAvailable() {
 		for (DACColor color : colors) {
 			if (!colorsMap.contains(color)) {

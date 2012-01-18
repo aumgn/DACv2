@@ -10,12 +10,12 @@ import fr.aumgn.dac.DACGame;
 import fr.aumgn.dac.DACJoinStep;
 
 public class DACPlayerListener extends PlayerListener {
-	
+
 	public void onPlayerMove(PlayerMoveEvent event) {
 		DACGame game = DAC.getGame(event.getPlayer());
 		if (game != null) { game.onPlayerMove(event); }
 	}
-	
+
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		DACJoinStep joinStep = DAC.getJoinStep(player);

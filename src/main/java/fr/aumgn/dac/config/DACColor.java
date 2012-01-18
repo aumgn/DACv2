@@ -4,19 +4,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public class DACColor {
-	
+
 	private String name;
 	private ChatColor chatColor;
 	private Material material; 
 	private byte data;
-	
+
 	public DACColor(String name, ChatColor chatColor, Material material, byte data) {
 		this.name = name;
 		this.chatColor = chatColor;
 		this.material = material;
 		this.data = data;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
