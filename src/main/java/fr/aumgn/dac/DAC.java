@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -20,6 +19,7 @@ import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.config.DACConfig;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.listener.DACEntityListener;
 import fr.aumgn.dac.listener.DACPlayerListener;
 
@@ -41,14 +41,13 @@ public class DAC extends JavaPlugin {
 		plugin.config = new DACConfig(plugin.getConfig());
 	}	
 	
-	public static void reloadLang() {
-		YamlConfiguration newLang = new YamlConfiguration();
-		YamlConfiguration defaultLang = new YamlConfiguration();
+	public static void reloadMessages() {
+		YamlConfiguration newMessages = new YamlConfiguration();
+		YamlConfiguration defaultMessages = new YamlConfiguration();
 		try {
-			newLang.load(new File(plugin.getDataFolder(), "lang.yml"));
-			defaultLang.load(plugin.getResource("lang.yml"));
-			newLang.setDefaults(defaultLang);
-			plugin.lang = newLang;
+			newMessages.load(new File(plugin.getDataFolder(), "lang.yml"));
+			defaultMessages.load(plugin.getResource("lang.yml"));
+			DACMessage.load(newMessages, defaultMessages);
 		} catch (Exception e) {
 			getLogger().severe("Unable to load lang.yml file.");
 			getLogger().severe(e.getClass().getSimpleName() + " exception raised");
@@ -57,10 +56,6 @@ public class DAC extends JavaPlugin {
 	
 	public static DACConfig getDACConfig() {
 		return plugin.config;
-	}
-	
-	public static Configuration getLang() {
-		return plugin.lang;
 	}
 	
 	public static DACArenas getArenas() {
@@ -120,7 +115,6 @@ public class DAC extends JavaPlugin {
 	}
 	
 	private DACConfig config;
-	private Configuration lang;
 	private DACArenas arenas; 
 	private Map<String, DACJoinStep> joinSteps;
 	private Map<String, DACGame> games;
@@ -148,11 +142,11 @@ public class DAC extends JavaPlugin {
 	    if (!new File(getDataFolder(), "config.yml").exists()) {
 	    	saveDefaultConfig();
 	    }
-	    if (!new File(getDataFolder(), "lang.yml").exists()) {
-	    	saveResource("lang.yml", false);
+	    if (!new File(getDataFolder(), "messages.yml").exists()) {
+	    	saveResource("messages.yml", false);
 	    }
 	    DAC.reloadDACConfig();
-	    DAC.reloadLang();
+	    DAC.reloadMessages();
 	    
 	    DACCommand dacCommand = new DACCommand();
 	    Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
@@ -174,5 +168,5 @@ public class DAC extends JavaPlugin {
 		DAC.plugin = null;
 		logger.info(getDescription().getFullName() + " is disabled.");
 	}
-	
+
 }

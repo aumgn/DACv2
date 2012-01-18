@@ -1,0 +1,62 @@
+command:
+    define:
+        exists: "Une arène portant ce nom existe deja"
+        success: "Arène créée avec succés"
+    delete:
+        unknown: "Aucune arène ne porte ce nom"
+        in-game: "Une partie est en cours dans cette arène."
+        success: "Arène supprimée avec succés."
+    goto:
+        not-in-game: "Cette commande ne peut être utilisé que durant une partie de DAC."
+        success: "Poof !"
+    join:
+        already-playing: "Vous ne pouvez pas rejoindre plusieurs parties."
+        not-in-start: "Vous devez vous trouver dans la zone de départ d'un DAC pour utiliser cette commande."
+        in-game: "Une partie est déjà en cours dans cette arène."
+        max-reached: "Il y a déjà 8 joueurs dans la partie"
+    lives:
+        not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
+        unknown-player: "Aucun joueur dans la partie en cours ne porte ce nom"
+    quit:
+        not-in-game: "Vous n'êtes pas dans une partie en cours."
+    reload:
+        success: "Configuration mise a jour."
+    reset:
+        unknown: "Cette arène n'existe pas."
+        in-game: "Cette commande ne peut pas être utilisée durant une partie."
+        success: "Bassin réinitialisé."
+    select:
+        unknown: "Arène inconnu."
+        success-pool: "La zone du bassin a été selectionné."
+        success-start: "La zone de départ a été selectionné."
+        error: "Une erreur est survenu durant la selection de la zone."
+    set:
+        unknown: "Arène inconnu."
+        wrong-world: "L'arène est défini dans un autre monde."
+        success-diving: "La position sur le plongeoir a été mise à jour."
+        success-pool: "La zone du bassin a été mise a jour."
+        success-start: "La zone de départ a été mise a jour."
+        error: "Une erreur est survenu durant la mise a jour de la zone."
+        incomplete-selection: "La sélection WorldEdit est incomplète"
+    start:
+        not-in-game: "Vous devez avoir rejoint une partie avec \"dac join\" avant de la débuter."
+        min-not-reached: "Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter."
+    stop:
+        no-game-to-stop: "Aucune partie en cours a arrêté"
+
+join:
+    new-game: "Une nouvelle partie de Dé à coudre dans %1$ a été débutée."
+    new-game2: "Utilisez \"/dac join\" dans la zone de départ pour la rejoindre."
+    current-players: "Joueurs Actuels :"
+    player-list: "  %1$"
+    player-join: "%1$ a rejoint la partie"
+    player-quit: "%1$ a quitté la partie."
+    stopped: "La partie a été arretée."
+    
+game:
+    start: "La partie commence !"
+    players: "Joueurs :"
+    player-list: "%1$. %2$"
+    enjoy: "Enjoy !"
+    
+            
