@@ -14,7 +14,7 @@ import fr.aumgn.dac.DAC;
 public class DACColors implements Iterable<DACColor> {
 
 	private static final String ChatKey = "chat";
-	private static final String BlockKey = "chat";
+	private static final String BlockKey = "block";
 	private static final String DataKey = "data";
 
 	private Map<String, DACColor> colors;
