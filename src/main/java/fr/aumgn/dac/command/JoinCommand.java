@@ -32,7 +32,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 			DAC.setJoinStep(joinStep);
 		}
 		if (joinStep.isMaxReached()) {
-			context.error(DACMessage.CmdJoinMaxReached);
+			context.error(DACMessage.CmdJoinMaxReached.format(joinStep.getMaxPlayers()));
 			return true;
 		}
 		joinStep.addPlayer(player, args);
