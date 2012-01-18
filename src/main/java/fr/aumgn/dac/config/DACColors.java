@@ -24,12 +24,12 @@ public class DACColors implements Iterable<DACColor> {
 		Set<String> keys = section.getKeys(false);
 		if (colors.size() < 2) {
 			if (keys.size() > 0) {
-				DAC.getLogger().warning("Unable to parse colors config, using defaults");
+				DAC.getDACLogger().warning("Unable to parse colors config, using defaults");
 			}
 			colors = parseColors(defColorsConfig);
 		} else if (colors.size() < keys.size()) {
-			DAC.getLogger().warning("Unable to parse all colors");
-			DAC.getLogger().warning("Using " + colors.size() + " of " + keys.size());
+			DAC.getDACLogger().warning("Unable to parse all colors");
+			DAC.getDACLogger().warning("Using " + colors.size() + " of " + keys.size());
 		}
 	}
 

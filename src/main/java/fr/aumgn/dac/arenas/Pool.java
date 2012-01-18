@@ -29,7 +29,7 @@ public class Pool extends DACArea {
 		} catch (MaxChangedBlocksException e) {
 			String warning = "A weird exception has occured while trying to reset ;";
 			warning += getArena().getName() + " pool. Maybe the pool is too Big ?";
-			DAC.getLogger().warning(warning);
+			DAC.getDACLogger().warning(warning);
 		}
 	}
 

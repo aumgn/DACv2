@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.InvalidConfigurationException;
+//import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
@@ -32,13 +32,13 @@ public class DACArenas {
 		updated = false; 
 
 		ensureDirectoryExists();
-		try {
+		/*try {
 			yaml.load(getConfigFileName());
 		} catch (IOException exc) {
-			DAC.getLogger().warning("Unable to find " + getConfigFileName() + " config file");
+			DAC.getDACLogger().warning("Unable to find " + getConfigFileName() + " config file");
 		} catch (InvalidConfigurationException exception) {
-			DAC.getLogger().warning("Unable to load " + getConfigFileName() + " config file");
-		}		
+			DAC.getDACLogger().warning("Unable to load " + getConfigFileName() + " config file");
+		}*/		
 		arenas = new HashMap<String, DACArena>();
 		Set<String> arenaNames = yaml.getKeys(false);
 		for (String name : arenaNames) {
@@ -51,7 +51,7 @@ public class DACArenas {
 			try {
 				plugin.getDataFolder().mkdir();
 			} catch (SecurityException exc) {
-				DAC.getLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
+				DAC.getDACLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
 			}
 		}
 	}
@@ -104,7 +104,7 @@ public class DACArenas {
 				ensureDirectoryExists();
 				yaml.save(getConfigFileName());
 			} catch (IOException e) {
-				DAC.getLogger().severe("Unable to save " + getConfigFileName() + " config file");
+				DAC.getDACLogger().severe("Unable to save " + getConfigFileName() + " config file");
 			}
 		}
 	}

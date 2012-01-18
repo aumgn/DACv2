@@ -98,7 +98,7 @@ public enum DACMessage {
 			} catch (IllegalArgumentException exc) {
 				String error = "Invalid color identifier in ";
 				error += node + " : " + matcher.group(1);
-				DAC.getLogger().warning(error);
+				DAC.getDACLogger().warning(error);
 			}
 		}
 		matcher.appendTail(parsed);

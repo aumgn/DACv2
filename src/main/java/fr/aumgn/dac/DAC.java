@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,21 +21,19 @@ import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.listener.DACEntityListener;
 import fr.aumgn.dac.listener.DACPlayerListener;
 
 public class DAC extends JavaPlugin {
 
 	private static final String MessagesFile = "messages.yml";
-	private static final Logger logger = Logger.getLogger("Minecraft.DAC");
 	private static DAC plugin;
 
 	public static DAC getPlugin() {
 		return plugin;
 	}
 
-	public static Logger getLogger() {
-		return logger;
+	public static Logger getDACLogger() {
+		return plugin.getLogger();
 	}
 
 	public static void reloadDACConfig() {
@@ -52,11 +49,11 @@ public class DAC extends JavaPlugin {
 			defaultMessages.load(plugin.getResource(MessagesFile));
 			DACMessage.load(newMessages, defaultMessages);
 		} catch (IOException exc) {
-			getLogger().severe("Unable to read " + MessagesFile + " file.");
-			getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
+			getDACLogger().severe("Unable to read " + MessagesFile + " file.");
+			getDACLogger().severe(exc.getClass().getSimpleName() + " exception raised");
 		} catch (InvalidConfigurationException exc) {
-			getLogger().severe("Unable to load " + MessagesFile + " file.");
-			getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
+			getDACLogger().severe("Unable to load " + MessagesFile + " file.");
+			getDACLogger().severe(exc.getClass().getSimpleName() + " exception raised");
 		}
 	}
 
@@ -158,20 +155,17 @@ public class DAC extends JavaPlugin {
 		DACCommand dacCommand = new DACCommand();
 		Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
 
-		DACEntityListener entityListener = new DACEntityListener();
-		DACPlayerListener playerListener = new DACPlayerListener();
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.High, this);
-		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Event.Priority.Monitor, this);
-		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Monitor, this);
+		DACPlayerListener dacPlayerListener = new DACPlayerListener();
+		pm.registerEvents(dacPlayerListener, this);
 
-		logger.info(getDescription().getFullName() + " is enabled.");
+		getLogger().info(getDescription().getName() + " loaded.");
 	}
 
 	@Override
 	public void onDisable() {
-		arenas.dump();
+		//arenas.dump();
 		DAC.plugin = null;
-		logger.info(getDescription().getFullName() + " is disabled.");
+		getLogger().info(getDescription().getName() + " unloaded.");
 	}
 
 }
