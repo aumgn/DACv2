@@ -2,6 +2,7 @@ package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACGame;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class GotoCommand extends PlayerCommandExecutor {
@@ -11,20 +12,18 @@ public class GotoCommand extends PlayerCommandExecutor {
 		if (args.length != 1) { return false; }
 		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
-			context.error("Cette commande ne peut être utilisé que durant une partie de DAC.");
+			context.error(DACMessage.CmdGotoNotInGame);
 			return true;
 		}
 		if (args[0].equalsIgnoreCase("diving")) {
 			context.getPlayer().teleport(game.getArena().getDivingBoard());
-			context.success("Poof !");
-			return true;
-		}
-		if (args[0].equalsIgnoreCase("start")) {
+		} else if (args[0].equalsIgnoreCase("start")) {
 			game.wrapPlayer(context.getPlayer()).tpToStart();
-			context.success("Poof !");
-			return true;
+		} else {
+			return false;
 		}
-		return false;
+		context.success(DACMessage.CmdGotoSuccess);
+		return true;
 	}
 
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -15,14 +14,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
+import fr.aumgn.dac.config.DACMessage;
 
 public class DACGame {
-	
-	private static final ChatColor G = ChatColor.BLUE;
-	private static final ChatColor S = ChatColor.GREEN;
-	private static final ChatColor F = ChatColor.RED;
-	private static final ChatColor N = ChatColor.GRAY;
-	private static final ChatColor D = ChatColor.GOLD;
 	
 	private DACArena arena;
 	private DACPlayer[] players;
@@ -45,12 +39,12 @@ public class DACGame {
 		if (DAC.getDACConfig().getResetOnStart()) {
 			arena.getPool().reset();
 		}
-		send(G + "La partie commence !");
-		send(G + "Joueurs :");
+		send(DACMessage.GameStart);
+		send(DACMessage.GamePlayers);
 		for (DACPlayer player : players) {
-			send(N.toString() + player.getPosition() + ChatColor.WHITE + ". " + player.getDisplayName());
+			send(DACMessage.GamePlayerList.format(player.getPosition(), player.getDisplayName()));
 		}
-		send(G + "Enjoy !");
+		send(DACMessage.GameEnjoy);
 		turn = -1;
 		nextTurn();
 	}
@@ -59,6 +53,10 @@ public class DACGame {
 		for (DACPlayer player : players) {
 			player.getPlayer().sendMessage(message);
 		}
+	}
+	
+	private void send(DACMessage lang) {
+		send(lang.getValue());
 	}
 
 	private void increaseTurn() {		
@@ -78,7 +76,7 @@ public class DACGame {
 			increaseTurn();
 			player = players[turn];
 		} while (player.hasLost());
-		send(G + "C'est au tour de " + player.getDisplayName());
+		send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 		player.getPlayer().teleport(arena.getDivingBoard());
 	}
 
@@ -135,10 +133,10 @@ public class DACGame {
 			player.setFallDistance(0.0f);
 			if (dacPlayer.mustConfirmate()) {
 				if (dac) {
-					send(dacPlayer.getDisplayName() + D + " a confirmé avec un Dé à coudre.");
-					send(D + "Quelle classe !");
+					send(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
+					send(DACMessage.GameDACConfirmation2);
 				} else {
-					send(dacPlayer.getDisplayName() + S + " a confirmé.");
+					send(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
 				}
 				if (DAC.getDACConfig().getTpAfterJump()) {
 					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
@@ -146,11 +144,11 @@ public class DACGame {
 				onPlayerWin(dacPlayer);
 			} else {
 				if (dac) {
-					send(dacPlayer.getDisplayName() + D + " a reussi un dé à coudre.");
+					send(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
 					dacPlayer.winLive();
-					send(G + "Il/Elle a maintenant " + N + dacPlayer.getLives() + G + " vie(s).");
+					send(DACMessage.GameLivesAfterDAC.format(dacPlayer.getLives()));
 				} else {
-					send(dacPlayer.getDisplayName() + S + " a réussi son saut.");
+					send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
 				}
 				if (DAC.getDACConfig().getTpAfterJump()) {
 					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
@@ -178,9 +176,9 @@ public class DACGame {
 			}
 			event.setCancelled(true);
 			DACPlayer dacPlayer = wrapPlayer(player);
-			send(dacPlayer.getDisplayName() + F + " a manqué son saut.");
+			send(DACMessage.GameJumpFail.format(dacPlayer.getDisplayName()));
 			if (dacPlayer.mustConfirmate()) {
-				send(F + "Il/elle n'a donc pas pu confirmer sa victoire.");
+				send(DACMessage.GameConfirmationFail);
 				for (DACPlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
 					playerWhoLost.resetLives();
 				}
@@ -199,8 +197,7 @@ public class DACGame {
 						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterFailDelay());
 					}
 				} else {
-					send(F + " Il/elle a donc perdu une vie" + G + " (" + N + 
-						dacPlayer.getLives() + G + " restante(s).");
+					send(DACMessage.GameLivesAfterFail.format(dacPlayer.getLives()));
 					if (DAC.getDACConfig().getTpAfterJump()) {
 						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
 					}
@@ -213,7 +210,7 @@ public class DACGame {
 	public void onPlayerQuit(Player player) {
 		DACPlayer dacPlayer = wrapPlayer(player);
 		if (!dacPlayer.hasLost()) {
-			send(dacPlayer.getDisplayName() + F + " a quitté la partie.");
+			send(DACMessage.GamePlayerQuit.format(dacPlayer.getDisplayName()));
 			dacPlayer.looseAllLives();
 			onPlayerLoss(dacPlayer, true);
 		}
@@ -224,7 +221,7 @@ public class DACGame {
 		if (lastPlayer != null) {
 			if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
 				lastPlayer.setMustConfirmate(true);
-				send(lastPlayer.getDisplayName() + G + " doit confirmer.");
+				send(DACMessage.GameMustConfirmate.format(lastPlayer.getDisplayName()));
 				nextTurn();
 			} else {
 				onPlayerWin(lastPlayer);
@@ -235,16 +232,17 @@ public class DACGame {
 	}
 	
 	public void onPlayerWin(DACPlayer player) {
-		send(G + "La partie est terminée.");
+		send(DACMessage.GameFinished);
 		for (DACPlayer dacPlayer : playersWhoLostLastTurn.keySet()) {
 			lostOrder.add(dacPlayer.getIndex());
 		}
 		
-		send("Gagnant : " + player.getDisplayName());
+		send(DACMessage.GameWinner.format(player.getDisplayName()));
 		
 		int i=2;
 		for (int index=lostOrder.size()-1 ; index>=0; index--) {
-			send(N.toString() + i + ChatColor.WHITE + ". " + players[lostOrder.get(index)].getDisplayName());
+			String name = players[lostOrder.get(index)].getDisplayName();
+			send(DACMessage.GameRank.format(i, name));
 			i++;
 		}
 		DAC.removeGame(this);
@@ -257,14 +255,14 @@ public class DACGame {
 		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
-		send(G + "La partie a été arretée.");
+		send(DACMessage.GameStopped);
 	}
 
 	private void displayLives(Player player, DACPlayer dacPlayer) {
 		if (!dacPlayer.hasLost()) {
-			String message = dacPlayer.getDisplayName() + G + ": ";
-			message += N.toString() + dacPlayer.getLives() + G + " vie(s)";
-			player.sendMessage(message);
+			String name = dacPlayer.getDisplayName();
+			int lives = dacPlayer.getLives();
+			player.sendMessage(DACMessage.GameDisplayLives.format(name, lives));
 		}
 	}
 

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACGame;
 import fr.aumgn.dac.DACJoinStep;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class QuitCommand extends PlayerCommandExecutor {
@@ -25,7 +26,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 			game.onPlayerQuit(player);
 			return true;
 		}
-		context.error("Vous n'êtes pas dans une partie en cours.");
+		context.error(DACMessage.CmdQuitNotInGame);
 		return true;
 	}
 

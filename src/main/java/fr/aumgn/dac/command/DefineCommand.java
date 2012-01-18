@@ -1,6 +1,7 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class DefineCommand extends PlayerCommandExecutor {
@@ -9,11 +10,11 @@ public class DefineCommand extends PlayerCommandExecutor {
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 1) { return false; }
 		if (DAC.getArenas().get(args[0]) != null) {
-			context.error("Une arène portant ce nom existe deja");
+			context.error(DACMessage.CmdDefineExists);
 			return true;
 		}
 		DAC.getArenas().createArena(args[0], context.getPlayer().getWorld());
-		context.success("Arène créée avec succés");
+		context.success(DACMessage.CmdDefineSuccess);
 		return true;
 	}
 

@@ -6,16 +6,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACColors;
 import fr.aumgn.dac.config.DACColor;
+import fr.aumgn.dac.config.DACMessage;
 
 public class DACJoinStep {
-	
-	private static final ChatColor G = ChatColor.BLUE;
 	
 	private DACArena arena;
 	private DACColors colors;
@@ -28,10 +26,8 @@ public class DACJoinStep {
 		colorsMap = new HashSet<DACColor>();
 		players = new ArrayList<DACPlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			player.sendMessage(G + 
-					"Une nouvelle partie de Dé à coudre dans " + arena.getName() + " a été débutée.");
-			player.sendMessage(G +
-					"Utilisez \"/dac join\" dans la zone de départ pour la rejoindre.");
+			player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
+			player.sendMessage(DACMessage.JoinNewGame2.getValue());
 		}
 	}
 	
@@ -47,6 +43,10 @@ public class DACJoinStep {
 		for (DACPlayer player : players) {
 			player.getPlayer().sendMessage(message);
 		}
+	}
+	
+	public void notify(DACMessage message) {
+		notify(message.getValue());
 	}
 	
 	public boolean isMinReached() {
@@ -94,15 +94,15 @@ public class DACJoinStep {
 
 	private void addPlayer(Player player, DACColor color) {
 		if (players.size() > 0) {
-			player.sendMessage(G + "Joueurs Actuels :");
+			player.sendMessage(DACMessage.JoinCurrentPlayers.getValue());
 			for (DACPlayer dacPlayer : players) {
-				player.sendMessage("  " + dacPlayer.getDisplayName());
+				player.sendMessage(DACMessage.JoinPlayerList.format(dacPlayer.getDisplayName()));
 			}
 		}
 		DACPlayer dacPlayer = new DACPlayer(player, color);
 		players.add(dacPlayer);
 		colorsMap.add(color);
-		notify(dacPlayer.getDisplayName() + G + " a rejoint la partie");
+		notify(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
 	}
 
 	public boolean contains(Player player) {
@@ -117,7 +117,7 @@ public class DACJoinStep {
 	public void remove(Player player) {
 		for (DACPlayer dacPlayer : players) {
 			if (dacPlayer.getPlayer().equals(player)) {
-				notify(dacPlayer.getDisplayName() + G + " a quitté la partie.");				
+				notify(DACMessage.JoinPlayerQuit.format(dacPlayer.getDisplayName()));				
 				players.remove(dacPlayer);
 				colorsMap.remove(dacPlayer.getColor());
 				return;
@@ -127,8 +127,7 @@ public class DACJoinStep {
 
 	public void stop() {
 		for (DACPlayer player : players) {
-			player.getPlayer().sendMessage(G +
-				"La partie a été arretée.");
+			player.getPlayer().sendMessage(DACMessage.JoinStopped.toString());
 		}
 	}
 

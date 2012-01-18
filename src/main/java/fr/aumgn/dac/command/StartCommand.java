@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACGame;
 import fr.aumgn.dac.DACJoinStep;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class StartCommand extends PlayerCommandExecutor {
@@ -14,11 +15,11 @@ public class StartCommand extends PlayerCommandExecutor {
 		Player player = context.getPlayer();
 		DACJoinStep joinStep = DAC.getJoinStep(player);
 		if (joinStep == null) {
-			context.error("Vous devez avoir rejoint une partie avec \"dac join\" avant de la débuter.");
+			context.error(DACMessage.CmdStartNotInGame);
 			return true;
 		}
 		if (!joinStep.isMinReached()) {
-			context.error("Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter.");
+			context.error(DACMessage.CmdStartMinNotReached);
 			return true;
 		}
 		DACGame game = new DACGame(joinStep);

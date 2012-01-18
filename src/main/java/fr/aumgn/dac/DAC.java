@@ -45,11 +45,11 @@ public class DAC extends JavaPlugin {
 		YamlConfiguration newMessages = new YamlConfiguration();
 		YamlConfiguration defaultMessages = new YamlConfiguration();
 		try {
-			newMessages.load(new File(plugin.getDataFolder(), "lang.yml"));
-			defaultMessages.load(plugin.getResource("lang.yml"));
+			newMessages.load(new File(plugin.getDataFolder(), "messages.yml"));
+			defaultMessages.load(plugin.getResource("messages.yml"));
 			DACMessage.load(newMessages, defaultMessages);
 		} catch (Exception e) {
-			getLogger().severe("Unable to load lang.yml file.");
+			getLogger().severe("Unable to load messages.yml file.");
 			getLogger().severe(e.getClass().getSimpleName() + " exception raised");
 		}
 	}
@@ -125,7 +125,8 @@ public class DAC extends JavaPlugin {
 		if (DAC.plugin != null) {
 			throw new UnsupportedOperationException("DAC seems to have been loaded twice.");
 		}
-		
+		DAC.plugin = this;
+				
 		PluginManager pm = Bukkit.getPluginManager();
 
 		arenas = new DACArenas(this);
@@ -156,8 +157,6 @@ public class DAC extends JavaPlugin {
 		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Event.Priority.High, this);
 		pm.registerEvent(Event.Type.PLAYER_MOVE, playerListener, Event.Priority.Monitor, this);
 		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Event.Priority.Monitor, this);
-		
-		DAC.plugin = this;
 		
 		logger.info(getDescription().getFullName() + " is enabled.");
 	}

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACJoinStep;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class JoinCommand extends PlayerCommandExecutor {
@@ -13,16 +14,16 @@ public class JoinCommand extends PlayerCommandExecutor {
 	public boolean onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
 		if (DAC.isPlayerInGame(player)) {
-			context.error("Vous ne pouvez pas rejoindre plusieurs parties.");
+			context.error(DACMessage.CmdJoinAlreadyPlaying);
 			return true;	
 		}
 		DACArena arena = DAC.getArenas().get(player);
 		if (arena == null) {
-			context.error("Vous devez vous trouver dans la zone de départ d'un DAC pour utiliser cette commande.");
+			context.error(DACMessage.CmdJoinNotInStart);
 			return true;
 		}
 		if (DAC.getGame(arena) != null) {
-			context.error("Une partie est déjà en cours dans cette arène.");
+			context.error(DACMessage.CmdJoinInGame);
 			return true;
 		}
 		DACJoinStep joinStep = DAC.getJoinStep(arena);
@@ -31,7 +32,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 			DAC.setJoinStep(joinStep);
 		}
 		if (joinStep.isMaxReached()) {
-			context.error("Il y a déjà 8 joueurs dans la partie");
+			context.error(DACMessage.CmdJoinMaxReached);
 			return true;
 		}
 		joinStep.addPlayer(player, args);

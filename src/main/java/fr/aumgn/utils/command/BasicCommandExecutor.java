@@ -55,6 +55,18 @@ public abstract class BasicCommandExecutor implements org.bukkit.command.Command
 		public void error(String message) {
 			send(ChatColor.RED + message);
 		}
+		
+		public void send(Object message) {
+			sender.sendMessage(message.toString());
+		}
+		
+		public void success(Object message) {
+			send(ChatColor.GREEN + message.toString());
+		}
+		
+		public void error(Object message) {
+			send(ChatColor.RED + message.toString());
+		}
 
 	}
 	

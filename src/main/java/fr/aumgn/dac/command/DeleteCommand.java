@@ -3,6 +3,7 @@ package fr.aumgn.dac.command;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACJoinStep;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class DeleteCommand extends PlayerCommandExecutor {
@@ -12,11 +13,11 @@ public class DeleteCommand extends PlayerCommandExecutor {
 		if (args.length != 1) { return false; }
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
-			context.error("Aucune arène ne porte ce nom");
+			context.error(DACMessage.CmdDeleteUnknown);
 			return true;
 		}
 		if (DAC.getGame(arena) != null) {
-			context.error("Une partie est en cours dans cette arène.");
+			context.error(DACMessage.CmdDeleteInGame);
 			return true;
 		}
 		DACJoinStep joinStep = DAC.getJoinStep(arena);
@@ -25,7 +26,7 @@ public class DeleteCommand extends PlayerCommandExecutor {
 			joinStep.stop();
 		}
 		DAC.getArenas().removeArena(arena);
-		context.success("Arène supprimée avec succés.");
+		context.success(DACMessage.CmdDeleteSuccess);
 		return true;
 	}
 

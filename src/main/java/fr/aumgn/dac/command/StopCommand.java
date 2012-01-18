@@ -3,6 +3,7 @@ package fr.aumgn.dac.command;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACGame;
 import fr.aumgn.dac.DACJoinStep;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class StopCommand extends PlayerCommandExecutor {
@@ -13,7 +14,7 @@ public class StopCommand extends PlayerCommandExecutor {
 		if (game == null) {
 			DACJoinStep joinStep = DAC.getJoinStep(context.getPlayer());
 			if (joinStep == null) {
-				context.error("Aucune partie en cours a arrêté");
+				context.error(DACMessage.CmdStopNoGameToStop);
 				return true;
 			}
 			joinStep.stop();

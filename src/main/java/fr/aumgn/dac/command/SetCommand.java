@@ -4,10 +4,12 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.regions.RegionSelector;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SetCommand extends PlayerCommandExecutor {
@@ -17,54 +19,46 @@ public class SetCommand extends PlayerCommandExecutor {
 		if (args.length != 2) { return false; }
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
-			context.error("Arène inconnu.");
+			context.error(DACMessage.CmdSetUnknown);
 			return true;
 		}
-		if (!arena.getWorld().getName().equals(context.getPlayer().getWorld().getName())) {
-			context.error("L'arène est défini dans un autre monde.");
-			return true;
-		}
-		if (args[1].equalsIgnoreCase("diving")) {
-			arena.getDivingBoard().update(context.getPlayer().getLocation());
-			context.success("La position sur le plongeoir a été mise à jour.");
+		String currentWorld = context.getPlayer().getWorld().getName();
+		if (!arena.getWorld().getName().equals(currentWorld)) {
+			context.error(DACMessage.CmdSetWrongWorld);
 			return true;
 		}
 		try {
-			if (args[1].equalsIgnoreCase("pool")) {
-				Region region = getRegion(context);
-				if (region != null) {
-					arena.getPool().update(getRegion(context));
-					context.success("La zone du bassin a été mise a jour.");
-				}
-				return true;
+			DACMessage message;
+			if (args[1].equalsIgnoreCase("diving")) {
+				arena.getDivingBoard().update(context.getPlayer().getLocation());
+				message = DACMessage.CmdSetSuccessDiving;
+			} else if (args[1].equalsIgnoreCase("pool")) {
+				arena.getPool().update(getRegion(context));
+				message = DACMessage.CmdSetSuccessPool;
+			} else if (args[1].equalsIgnoreCase("start")) {
+				arena.getStartArea().update(getRegion(context));
+				message = DACMessage.CmdSetSuccessStart;
+			} else {
+				return false;
 			}
-			if (args[1].equalsIgnoreCase("start")) {
-				Region region = getRegion(context);
-				if (region != null) {
-					arena.getStartArea().update(region);
-					context.success("La zone de départ a été mise a jour.");
-				}
-				return true;
-			}
+			context.success(message);
+			return true;			
+		} catch (IncompleteRegionException e) {
+			context.error(DACMessage.CmdSetIncompleteRegion);
+			return true;
 		} catch (InvalidRegionType exc) {
-			context.error("Une erreur est survenu durant la mise a jour de la zone.");
+			context.error(DACMessage.CmdSetError);
 			context.error(exc.getMessage());
 			return true;
 		}
-		return false;
 	}
 
-	private Region getRegion(Context context) {
-		try {
-			WorldEditPlugin worldEdit = DAC.getWorldEdit();
-			BukkitWorld world = new BukkitWorld(context.getPlayer().getWorld());
-			Region region;
-			region = worldEdit.getSession(context.getPlayer()).getRegionSelector(world).getRegion();
-			return region;
-		} catch (IncompleteRegionException e) {
-			context.error("La sélection WorldEdit est incomplète");
-		}
-		return null;
+	private Region getRegion(Context context) throws IncompleteRegionException {
+		WorldEditPlugin worldEdit = DAC.getWorldEdit();
+		BukkitWorld world = new BukkitWorld(context.getPlayer().getWorld());
+		RegionSelector selector;
+		selector = worldEdit.getSession(context.getPlayer()).getRegionSelector(world);
+		return selector.getRegion();
 	}
 
 }
