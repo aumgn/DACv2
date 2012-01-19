@@ -15,7 +15,7 @@ import fr.aumgn.dac.DACJoinStep;
 
 public class DACPlayerListener implements Listener {
 
-	@EventHandler(event = EntityDamageEvent.class, priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
@@ -24,13 +24,13 @@ public class DACPlayerListener implements Listener {
 		}
 	}
 
-	@EventHandler(event = PlayerMoveEvent.class, priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onMove(PlayerMoveEvent event) {
 		DACGame game = DAC.getGame(event.getPlayer());
 		if (game != null) { game.onPlayerMove(event); }
 	}
 
-	@EventHandler(event = PlayerQuitEvent.class, priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		DACJoinStep joinStep = DAC.getJoinStep(player);
