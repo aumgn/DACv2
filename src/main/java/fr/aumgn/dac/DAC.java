@@ -163,9 +163,12 @@ public class DAC extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		//arenas.dump();
-		DAC.plugin = null;
-		getLogger().info(getDescription().getName() + " unloaded.");
+		try {
+			arenas.dump();
+			getLogger().info(getDescription().getName() + " unloaded.");
+		} finally {
+			DAC.plugin = null;
+		}
 	}
 
 }

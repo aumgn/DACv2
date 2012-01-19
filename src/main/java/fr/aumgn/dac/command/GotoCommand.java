@@ -16,7 +16,7 @@ public class GotoCommand extends PlayerCommandExecutor {
 			return true;
 		}
 		if (args[0].equalsIgnoreCase("diving")) {
-			context.getPlayer().teleport(game.getArena().getDivingBoard());
+			context.getPlayer().teleport(game.getArena().getDivingBoard().getLocation());
 		} else if (args[0].equalsIgnoreCase("start")) {
 			game.wrapPlayer(context.getPlayer()).tpToStart();
 		} else {

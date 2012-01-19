@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
@@ -13,6 +14,7 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACColor;
 
+@SerializableAs("dac-pool")
 public class Pool extends DACArea {
 
 	private static final Material DefaultMaterial = Material.STATIONARY_WATER;

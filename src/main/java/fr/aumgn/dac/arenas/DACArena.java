@@ -6,9 +6,14 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 
+import fr.aumgn.dac.arenas.region.DACRegion;
+import fr.aumgn.dac.arenas.vector.DACLocation;
+
+@SerializableAs("dac-arena")
 public class DACArena implements ConfigurationSerializable {
 
 	private String name;
@@ -25,6 +30,10 @@ public class DACArena implements ConfigurationSerializable {
 		divingBoard = new DivingBoard(this);
 		pool = new Pool(this);
 		startArea = new StartArea(this);
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void updated() {
@@ -60,23 +69,21 @@ public class DACArena implements ConfigurationSerializable {
 	}
 
 	public static DACArena deserialize(Map<String, Object> map) {
-		String name = (String)map.get("name");
 		String world = (String)map.get("world");
-		DACArena arena = new DACArena(name, Bukkit.getWorld(world));
-		arena.getDivingBoard().load(map.get("diving-board"));
-		arena.getPool().load(map.get("pool"));
-		arena.getStartArea().load(map.get("start-area"));
+		DACArena arena = new DACArena("", Bukkit.getWorld(world));
+		arena.divingBoard.setDACLocation((DACLocation)map.get("diving-board"));
+		arena.pool.setRegion((DACRegion) map.get("pool"));
+		arena.startArea.setRegion((DACRegion) map.get("start-area"));
 		return arena;
 	}
 
 	@Override
 	public Map<String, Object> serialize() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("name", name);
 		map.put("world", world.getName());
-		map.put("diving-board", divingBoard);
-		map.put("pool", pool);
-		map.put("start-area", startArea);
+		map.put("diving-board", divingBoard.getDACLocation());
+		map.put("pool", pool.getRegion());
+		map.put("start-area", startArea.getRegion());
 		return map;
 	}
 

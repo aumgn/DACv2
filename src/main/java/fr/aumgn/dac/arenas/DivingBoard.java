@@ -1,52 +1,36 @@
 package fr.aumgn.dac.arenas;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.Location;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 
-public class DivingBoard extends Location implements ConfigurationSerializable {
+import fr.aumgn.dac.arenas.vector.DACLocation;
+
+@SerializableAs("dac-diving")
+public class DivingBoard {
 
 	private DACArena arena;
+	private DACLocation dacLocation;
 
 	public DivingBoard(DACArena arena) {
-		super(arena.getWorld(), 0.0, 0.0, 0.0, 0.0f, 0.0f);
 		this.arena = arena;
+		this.dacLocation = new DACLocation();
 	}
 
-	@SuppressWarnings("unchecked")
-	public void load(Object data) {
-		if (data instanceof Map) {
-			Map<String, Object> map = (Map<String, Object>)data;
-			setX((Double)map.get("x"));
-			setY((Double)map.get("y"));
-			setZ((Double)map.get("z"));
-			double yaw = (Double)map.get("yaw");
-			double pitch = (Double)map.get("pitch");
-			setYaw((float)yaw);
-			setPitch((float)pitch);
-		}
+	public Object getDACLocation() {
+		return dacLocation;
+	}
+	
+	public void setDACLocation(DACLocation dacLocation) {
+		this.dacLocation = dacLocation;
+	}
+
+	public Location getLocation() {
+		return dacLocation.toLocation(arena.getWorld());
 	}
 
 	public void update(Location loc) {
-		setX(loc.getX());
-		setY(loc.getY());
-		setZ(loc.getZ());
-		setYaw(loc.getYaw());
-		setPitch(loc.getPitch());
+		this.dacLocation = new DACLocation(loc);
 		arena.updated();
-	}
-
-	@Override
-	public Map<String, Object> serialize() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("x", getX());
-		map.put("y", getY());
-		map.put("z", getZ());
-		map.put("yaw", getYaw());
-		map.put("pitch", getPitch());
-		return map;
 	}
 
 }

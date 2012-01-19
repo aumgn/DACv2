@@ -77,7 +77,7 @@ public class DACGame {
 			player = players[turn];
 		} while (player.hasLost());
 		send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
-		player.getPlayer().teleport(arena.getDivingBoard());
+		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
 	}
 
 	private boolean isPlayerTurn(DACPlayer player) {

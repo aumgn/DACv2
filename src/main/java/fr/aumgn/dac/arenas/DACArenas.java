@@ -8,23 +8,31 @@ import java.util.Set;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-//import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.arenas.region.DACCuboid;
+import fr.aumgn.dac.arenas.vector.DACBlockVector;
+import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
+import fr.aumgn.dac.arenas.vector.DACLocation;
 
 public class DACArenas {
+	
+	static {
+		ConfigurationSerialization.registerClass(DACArena.class);
+		ConfigurationSerialization.registerClass(DACBlockVector.class);
+		ConfigurationSerialization.registerClass(DACBlockVector2D.class);
+		ConfigurationSerialization.registerClass(DACLocation.class);
+		ConfigurationSerialization.registerClass(DACCuboid.class);
+	}
 
 	private DAC plugin;
 	private YamlConfiguration yaml;
 	private boolean updated;
 	private Map<String, DACArena> arenas;
-
-	static {
-		ConfigurationSerialization.registerClass(DACArena.class);
-	}
 
 	public DACArenas(DAC dac) {
 		plugin = dac;
@@ -32,17 +40,19 @@ public class DACArenas {
 		updated = false; 
 
 		ensureDirectoryExists();
-		/*try {
+		try {
 			yaml.load(getConfigFileName());
 		} catch (IOException exc) {
 			DAC.getDACLogger().warning("Unable to find " + getConfigFileName() + " config file");
 		} catch (InvalidConfigurationException exception) {
 			DAC.getDACLogger().warning("Unable to load " + getConfigFileName() + " config file");
-		}*/		
+		}		
 		arenas = new HashMap<String, DACArena>();
 		Set<String> arenaNames = yaml.getKeys(false);
 		for (String name : arenaNames) {
-			arenas.put(name, (DACArena)yaml.get(name));
+			DACArena arena = (DACArena)yaml.get(name);
+			arena.setName(name);
+			arenas.put(name, arena);
 		}
 	}
 
