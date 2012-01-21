@@ -19,7 +19,7 @@ import fr.aumgn.dac.arenas.region.DACRegion;
 public class DACArea {
 
 	private DACArena arena;
-	private DACRegion region;
+	private DACRegion<?> region;
 
 	public DACArea(DACArena arena) {
 		this.arena = arena;
@@ -47,12 +47,11 @@ public class DACArea {
 	}
 
 	public Region getRegion() {
-		return region;
+		return region.getRegion(arena.getWEWorld());
 	}
 
-	public void setRegion(DACRegion region) {
+	public void setRegion(DACRegion<?> region) {
 		this.region = region;
-		this.region.setWorld(arena.getWEWorld());
 	}
 
 	public Selection getSelection() {
@@ -67,7 +66,7 @@ public class DACArea {
 		int x = location.getBlockX();
 		int y = location.getBlockY();
 		int z = location.getBlockZ();
-		return region.contains(new BlockVector(x, y, z));
+		return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
 	}
 
 }

@@ -10,38 +10,41 @@ import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.Vector2D;
 
 @SerializableAs("dac-blockvector2d")
-public class DACBlockVector2D extends BlockVector2D implements ConfigurationSerializable {
+public class DACBlockVector2D implements ConfigurationSerializable {
+	
+	private int x;
+	private int z;
 
+	public DACBlockVector2D(int x, int z) {
+		this.x = 0;
+		this.z = 0;
+	}
+	
 	public DACBlockVector2D() {
-		super(0, 0);
+		this(0, 0); 
 	}
 	
 	public DACBlockVector2D(Vector2D vector) {
-		super(vector);
+		this(vector.getBlockX(), vector.getBlockZ());
 	}
 
 	public static DACBlockVector2D deserialize(Map<String, Object> map) {
 		int x, z;
 		x = (Integer) map.get("x");
 		z = (Integer) map.get("z");
-		return new DACBlockVector2D(new BlockVector2D(x, z));
+		return new DACBlockVector2D(x, z);
 	}
 
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		map.put("x", getBlockX());
-		map.put("z", getBlockZ());
+		map.put("x", x);
+		map.put("z", z);
 		return map;
 	}
 	
-	@Override
-	public Vector2D add(Vector2D vec) {
-		return new DACBlockVector2D(super.add(vec));
+	public BlockVector2D getVector() {
+		return new BlockVector2D(x, z);
 	}
-
-	@Override
-	public Vector2D subtract(Vector2D vec) {
-		return new DACBlockVector2D(super.subtract(vec));
-	}
+	
 }

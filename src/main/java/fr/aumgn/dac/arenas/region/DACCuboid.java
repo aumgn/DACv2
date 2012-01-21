@@ -6,7 +6,7 @@ import java.util.Map;
 import org.bukkit.World;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
@@ -14,10 +14,15 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 
 @SerializableAs("dac-cuboid")
-public class DACCuboid extends CuboidRegion implements DACRegion {
+public class DACCuboid implements DACRegion<CuboidRegion> {
 	
-	private DACCuboid(Vector pos1, Vector pos2) {
-		super(pos1, pos2);
+	private DACBlockVector pos1;
+	private DACBlockVector pos2;
+	
+	
+	private DACCuboid(DACBlockVector pos1, DACBlockVector pos2) {
+		this.pos1 = pos1;
+		this.pos2 = pos2;
 	}
 	
 	public DACCuboid() {
@@ -32,22 +37,28 @@ public class DACCuboid extends CuboidRegion implements DACRegion {
 	}
 
 	public static DACCuboid deserialize(Map<String, Object> map) {
-		Vector pos1 = (DACBlockVector) map.get("pos-1");
-		Vector pos2 = (DACBlockVector) map.get("pos-2");
-		return new DACCuboid(pos1, pos2);
+		DACCuboid cuboid = new DACCuboid();
+		cuboid.pos1 = (DACBlockVector) map.get("pos-1");
+		cuboid.pos2 = (DACBlockVector) map.get("pos-2");
+		return cuboid;
 	}
 
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		map.put("pos-1", new DACBlockVector(getPos1()));
-		map.put("pos-2", new DACBlockVector(getPos2()));
+		map.put("pos-1", pos1);
+		map.put("pos-2", pos2);
 		return map;
 	}
-	
+
+	@Override
+	public CuboidRegion getRegion(LocalWorld world) {
+		return new CuboidRegion(world, pos1.getVector(), pos2.getVector());
+	}
+
 	@Override
 	public Selection getSelection(World world) {
-		return new CuboidSelection(world, getPos1(), getPos2());
+		return new CuboidSelection(world, pos1.getVector(), pos2.getVector());
 	}
 
 }

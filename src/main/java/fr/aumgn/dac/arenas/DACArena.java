@@ -72,8 +72,8 @@ public class DACArena implements ConfigurationSerializable {
 		String world = (String)map.get("world");
 		DACArena arena = new DACArena("", Bukkit.getWorld(world));
 		arena.divingBoard.setDACLocation((DACLocation)map.get("diving-board"));
-		arena.pool.setRegion((DACRegion) map.get("pool"));
-		arena.startArea.setRegion((DACRegion) map.get("start-area"));
+		arena.pool.setRegion((DACRegion<?>) map.get("pool"));
+		arena.startArea.setRegion((DACRegion<?>) map.get("start-area"));
 		return arena;
 	}
 
