@@ -1,6 +1,6 @@
 package fr.aumgn.dac.arenas;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -79,7 +79,7 @@ public class DACArena implements ConfigurationSerializable {
 
 	@Override
 	public Map<String, Object> serialize() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		map.put("world", world.getName());
 		map.put("diving-board", divingBoard.getDACLocation());
 		map.put("pool", pool.getRegion());

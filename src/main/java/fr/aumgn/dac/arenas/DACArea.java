@@ -6,10 +6,12 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.dac.arenas.region.DACCuboid;
+import fr.aumgn.dac.arenas.region.DACPolygonal;
 import fr.aumgn.dac.arenas.region.DACRegion;
 
 public class DACArea {
@@ -26,16 +28,9 @@ public class DACArea {
 		if (region instanceof CuboidRegion) {
 			CuboidRegion cuboid = (CuboidRegion)region;
 			this.region = new DACCuboid(cuboid);
-		/*} else if (region instanceof Polygonal2DRegion) {
+		} else if (region instanceof Polygonal2DRegion) {
 			Polygonal2DRegion poly = (Polygonal2DRegion)region;
-			// Workaround
-			polygonSerialization = new Polygonal2DSerialization(poly);
-			this.region = new Polygonal2DRegion(
-					arena.getWEWorld(),
-					poly.getPoints(),
-					poly.getMinimumPoint().getBlockY(),
-					poly.getMaximumPoint().getBlockY()
-					);*/
+			this.region = new DACPolygonal(poly);
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
 		}
@@ -52,32 +47,11 @@ public class DACArea {
 
 	public void setRegion(DACRegion region) {
 		this.region = region;
+		this.region.setWorld(arena.getWEWorld());
 	}
 
 	public Selection getSelection() {
 		return region.getSelection(arena.getWorld());
-		/*if (region instanceof CuboidRegion) {
-			CuboidRegion cuboid = (CuboidRegion)region;
-			selection = new CuboidSelection(arena.getWorld(), cuboid.getMinimumPoint(), cuboid.getMaximumPoint());
-		} else if (region instanceof Polygonal2DRegion) {
-			Polygonal2DRegion poly = (Polygonal2DRegion)region;
-			try {
-				selection = new Polygonal2DSelection(
-						arena.getWorld(),
-						poly.getPoints(),
-						poly.getMinimumPoint().getBlockY(),
-						poly.getMaximumPoint().getBlockY()
-						);	
-			} catch (IndexOutOfBoundsException exc) {
-				throw new InvalidRegionType(
-						"La reselection des zones polygonales n'est pas supportée "
-								+ "avec votre version de WorldEdit a cause d'un bug (resolu dans les builds plus récent)."
-						);
-			}
-		} else {
-			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
-		}
-		return selection;*/
 	}
 
 	public boolean contains(Player player) {

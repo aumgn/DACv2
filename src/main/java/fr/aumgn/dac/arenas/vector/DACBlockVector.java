@@ -1,6 +1,6 @@
 package fr.aumgn.dac.arenas.vector;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -29,7 +29,7 @@ public class DACBlockVector extends BlockVector implements ConfigurationSerializ
 	}
 
 	public Map<String, Object> serialize() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		map.put("x", getBlockX());
 		map.put("y", getBlockY());
 		map.put("z", getBlockZ());

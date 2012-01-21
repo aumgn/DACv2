@@ -45,6 +45,8 @@ public class SetCommand extends PlayerCommandExecutor {
 			return true;			
 		} catch (IncompleteRegionException e) {
 			context.error(DACMessage.CmdSetIncompleteRegion);
+			System.out.println(e);
+			e.printStackTrace();
 			return true;
 		} catch (InvalidRegionType exc) {
 			context.error(DACMessage.CmdSetError);

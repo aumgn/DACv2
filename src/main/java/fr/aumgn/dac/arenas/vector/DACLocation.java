@@ -1,6 +1,6 @@
 package fr.aumgn.dac.arenas.vector;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.Location;
@@ -47,7 +47,7 @@ public class DACLocation implements ConfigurationSerializable {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		map.put("x", x);
 		map.put("y", y);
 		map.put("z", z);

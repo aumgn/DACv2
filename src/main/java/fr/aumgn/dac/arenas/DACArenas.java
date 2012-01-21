@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.region.DACCuboid;
+import fr.aumgn.dac.arenas.region.DACPolygonal;
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 import fr.aumgn.dac.arenas.vector.DACLocation;
@@ -27,6 +28,7 @@ public class DACArenas {
 		ConfigurationSerialization.registerClass(DACBlockVector2D.class);
 		ConfigurationSerialization.registerClass(DACLocation.class);
 		ConfigurationSerialization.registerClass(DACCuboid.class);
+		ConfigurationSerialization.registerClass(DACPolygonal.class);
 	}
 
 	private DAC plugin;

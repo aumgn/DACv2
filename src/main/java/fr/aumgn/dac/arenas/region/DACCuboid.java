@@ -1,6 +1,6 @@
 package fr.aumgn.dac.arenas.region;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.World;
@@ -39,7 +39,7 @@ public class DACCuboid extends CuboidRegion implements DACRegion {
 
 	@Override
 	public Map<String, Object> serialize() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		map.put("pos-1", new DACBlockVector(getPos1()));
 		map.put("pos-2", new DACBlockVector(getPos2()));
 		return map;
