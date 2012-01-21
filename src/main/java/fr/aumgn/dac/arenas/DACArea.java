@@ -6,11 +6,13 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.dac.arenas.region.DACCuboid;
+import fr.aumgn.dac.arenas.region.DACCylinder;
 import fr.aumgn.dac.arenas.region.DACPolygonal;
 import fr.aumgn.dac.arenas.region.DACRegion;
 
@@ -31,6 +33,9 @@ public class DACArea {
 		} else if (region instanceof Polygonal2DRegion) {
 			Polygonal2DRegion poly = (Polygonal2DRegion)region;
 			this.region = new DACPolygonal(poly);
+		} else if (region instanceof CylinderRegion) {
+			CylinderRegion cyl = (CylinderRegion)region;
+			this.region = new DACCylinder(cyl);
 		} else {
 			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
 		}

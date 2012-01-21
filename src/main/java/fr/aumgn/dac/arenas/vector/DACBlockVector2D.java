@@ -34,5 +34,14 @@ public class DACBlockVector2D extends BlockVector2D implements ConfigurationSeri
 		map.put("z", getBlockZ());
 		return map;
 	}
+	
+	@Override
+	public Vector2D add(Vector2D vec) {
+		return new DACBlockVector2D(super.add(vec));
+	}
 
+	@Override
+	public Vector2D subtract(Vector2D vec) {
+		return new DACBlockVector2D(super.subtract(vec));
+	}
 }

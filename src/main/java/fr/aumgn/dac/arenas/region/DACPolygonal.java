@@ -7,7 +7,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.sk89q.worldedit.BlockVector2D;
-import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
@@ -18,10 +17,6 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 public class DACPolygonal extends Polygonal2DRegion implements DACRegion {
 	
 	public DACPolygonal() {
-		super();
-	}
-	
-	public DACPolygonal(LocalWorld world) {
 		super();
 	}
 	
