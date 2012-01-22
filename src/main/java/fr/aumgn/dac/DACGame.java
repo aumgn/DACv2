@@ -88,6 +88,16 @@ public class DACGame {
 		return players[turn].getPlayer().equals(player);
 	}
 
+	private void tpAfterJump(DACPlayer dacPlayer) {
+		if (DAC.getDACConfig().getTpAfterJump()) {
+			int delay = DAC.getDACConfig().getTpAfterSuccessDelay();
+			if (delay > 0) { dacPlayer.getPlayer().setNoDamageTicks(delay + 1); }
+			dacPlayer.tpToStart();
+		} else {
+			dacPlayer.getPlayer().setNoDamageTicks(20);
+		}
+	}
+
 	public DACPlayer getLastPlayer() {
 		int i = 0;
 		DACPlayer playerLeft = null;
@@ -138,9 +148,7 @@ public class DACGame {
 				} else {
 					send(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
 				}
-				if (DAC.getDACConfig().getTpAfterJump()) {
-					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
-				}
+				tpAfterJump(dacPlayer);
 				onPlayerWin(dacPlayer);
 			} else {
 				if (dac) {
@@ -150,9 +158,7 @@ public class DACGame {
 				} else {
 					send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
 				}
-				if (DAC.getDACConfig().getTpAfterJump()) {
-					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
-				}
+				tpAfterJump(dacPlayer);
 				if (dac) {
 					pool.putDACColumn(x, z, dacPlayer.getColor());
 				} else {
@@ -184,9 +190,7 @@ public class DACGame {
 				}
 				playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
 				dacPlayer.setMustConfirmate(false);
-				if (DAC.getDACConfig().getTpAfterJump()) {
-					dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
-				}
+				tpAfterJump(dacPlayer);
 				nextTurn();
 			} else {
 				dacPlayer.looseLive();
@@ -198,9 +202,7 @@ public class DACGame {
 					}
 				} else {
 					send(DACMessage.GameLivesAfterFail.format(dacPlayer.getLives()));
-					if (DAC.getDACConfig().getTpAfterJump()) {
-						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterSuccessDelay());
-					}
+					tpAfterJump(dacPlayer);
 					nextTurn();
 				}
 			}
