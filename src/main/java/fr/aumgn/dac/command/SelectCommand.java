@@ -14,7 +14,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 		if (args.length != 2) { return false; }
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
-			context.error(DACMessage.CmdSelectError);
+			context.error(DACMessage.CmdSelectUnknown);
 			return true;
 		}
 		DACArea area;
