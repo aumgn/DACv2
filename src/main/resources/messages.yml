@@ -14,6 +14,9 @@ command:
         not-in-start: "Vous devez vous trouver dans la zone de départ d'un DAC pour utiliser cette commande."
         in-game: "Une partie est déjà en cours dans cette arène."
         max-reached: "Il y a déjà %1$d joueurs dans la partie"
+    kick:
+        not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
+        no-player-found: "Aucun joueur trouvé avec ce nom."
     lives:
         not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         unknown-player: "Aucun joueur dans la partie en cours ne porte ce nom"

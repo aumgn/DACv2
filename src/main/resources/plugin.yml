@@ -32,6 +32,19 @@ commands:
         usage: 'Utilisation: /<command> <arene> pool|start'
         permission: 'dac.cmd.select'
         aliases: ["dac-sel"]
+    dac-stop:
+        description: 'Arrete la partie en cours si partie il y a.'
+        usage: 'Utilisation: /<command>'
+        permission: 'dac.cmd.stop'
+    dac-kick:
+        description: 'Kick un joueur.'
+        usage: 'Utilisation: /<command> player'
+        permission: 'dac.cmd.kick'
+    dac-reset:
+        description: "Remplis le bassin d'eau"
+        usage: 'Utilisation: /<command> <arene>'
+        permission: 'dac.cmd.reset'
+        aliases: ["dac-r"]
     dac-join:
         description: "Permets de rejoindre une nouvelle partie ou d'en creer une nouvelle."
         usage: 'Utilisation: /<command> [<color> [<color2> [...]]]'
@@ -42,15 +55,6 @@ commands:
         usage: 'Utilisation: /<command>'
         permission: 'dac.cmd.start'
         aliases: ["dac-s"]
-    dac-stop:
-        description: 'Arrete la partie en cours si partie il y a.'
-        usage: 'Utilisation: /<command>'
-        permission: 'dac.cmd.stop'
-    dac-reset:
-        description: "Remplis le bassin d'eau"
-        usage: 'Utilisation: /<command> <arene>'
-        permission: 'dac.cmd.reset'
-        aliases: ["dac-r"]
     dac-quit:
         description: "Quitter la partie en cours"
         usage: 'Utilisation: /<command>'
@@ -91,6 +95,7 @@ permissions:
         children:
             dac.game.play : true
             dac.game.reset: true
+            dac.cmd.kick: true
             dac.cmd.stop: true
     dac.config:
         description: "Permets de mettre en place les zones du jeu."

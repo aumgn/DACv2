@@ -21,6 +21,8 @@ public enum DACMessage {
 	CmdJoinNotInStart       ("command.join.not-in-start"),
 	CmdJoinInGame           ("command.join.in-game"),
 	CmdJoinMaxReached       ("command.join.max-reached"),
+	CmdKickNotInGame        ("command.kick.not-in-game"),
+	CmdKickNoPlayerFound    ("command.kick.no-player-found"),
 	CmdLivesNotInGame       ("command.lives.not-in-game"),
 	CmdLivesUnknownPlayer   ("command.lives.unknown-player"),
 	CmdQuitNotInGame        ("command.quit.not-in-game"),

@@ -11,10 +11,13 @@ public class DACCommand extends CommandDispatcher {
 		registerCommand("delete", new DeleteCommand());
 		registerCommand("set", new SetCommand());
 		registerCommand("select", new SelectCommand());
-		registerCommand("join", new JoinCommand());
-		registerCommand("start", new StartCommand());
+		
+		registerCommand("kick", new KickCommand());
 		registerCommand("stop", new StopCommand());
 		registerCommand("reset", new ResetCommand());
+
+		registerCommand("join", new JoinCommand());
+		registerCommand("start", new StartCommand());
 		registerCommand("lives", new LivesCommand());
 		registerCommand("goto", new GotoCommand());
 		registerCommand("quit", new QuitCommand());
