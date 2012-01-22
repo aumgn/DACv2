@@ -6,15 +6,37 @@ import java.util.Map;
 import org.bukkit.World;
 import org.bukkit.configuration.serialization.SerializableAs;
 
+import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.LocalWorld;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.bukkit.selections.RegionSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CylinderRegion;
+import com.sk89q.worldedit.regions.CylinderRegionSelector;
 
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-cylinder")
 public class DACCylinder implements DACRegion<CylinderRegion> {
+	
+	public static class DACCylinderSelection extends RegionSelection {
+
+		public DACCylinderSelection(World world, BlockVector center, BlockVector2D radius, int minY, int maxY) {
+			super(world);
+			
+			CylinderRegionSelector sel = new CylinderRegionSelector(new BukkitWorld(world));
+			sel.selectPrimary(center);
+			sel.selectSecondary(center.setY(minY).add(radius.getBlockX(), 0, 0));
+			sel.selectSecondary(center.setY(maxY).add(0, 0, radius.getBlockZ()));
+			
+			CylinderRegion cyl = sel.getIncompleteRegion();
+			setRegionSelector(sel);
+			setRegion(cyl);
+		}
+		
+	}
 	
 	private int minY;
 	private int maxY;
@@ -23,7 +45,7 @@ public class DACCylinder implements DACRegion<CylinderRegion> {
 	
 	public DACCylinder(int minY, int maxY, DACBlockVector center, DACBlockVector2D radius) {
 		this.minY = minY;
-		this.minY = minY;
+		this.maxY = maxY;
 		this.center = center;
 		this.radius = radius;
 	}
@@ -66,7 +88,7 @@ public class DACCylinder implements DACRegion<CylinderRegion> {
 
 	@Override
 	public Selection getSelection(World world) {
-		throw new UnsupportedOperationException("Cylinder selecion is not supported yet.");
+		return new DACCylinderSelection(world, center.getVector(), radius.getVector(), minY, maxY);
 	}
 
 }
