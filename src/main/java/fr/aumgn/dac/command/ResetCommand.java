@@ -15,7 +15,7 @@ public class ResetCommand extends PlayerCommandExecutor {
 			context.error(DACMessage.CmdResetUnknown);
 			return true;
 		}
-		if (DAC.getGame(arena) != null && !context.hasPermission("dac.game.reset")) {
+		if (!context.hasPermission("dac.game.reset") && DAC.getGame(arena) != null) {
 			context.error(DACMessage.CmdResetInGame);
 			return true;
 		}

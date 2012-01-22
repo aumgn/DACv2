@@ -22,7 +22,7 @@ commands:
         description: 'Supprime une arene'
         usage: "Utilisation: /<command> <arene>"
         permission: 'dac.cmd.delete'
-        aliases: ["dac-del", "dac-rm"]
+        aliases: ["dac-remove", "dac-del", "dac-rm"]
     dac-set:
         description: 'Assigne une zone ou un emplacement.'
         usage: 'Utilisation: /<command> <arene> pool|start|diving'
