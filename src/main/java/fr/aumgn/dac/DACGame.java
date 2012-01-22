@@ -94,7 +94,7 @@ public class DACGame {
 	}
 	
 	private void turnTimedOut() {
-		
+		send(DACMessage.GameTurnTimedOut);
 		onPlayerQuit(players[turn]);
 	}
 

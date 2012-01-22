@@ -58,6 +58,7 @@ public enum DACMessage {
 	GamePlayerList          ("game.player-list"),
 	GameEnjoy               ("game.enjoy"),
 	GamePlayerTurn          ("game.player-turn"),
+	GameTurnTimedOut        ("game.turn-timed-out"),
 	GameConfirmation        ("game.confirmation"),
 	GameDACConfirmation     ("game.dac-confirmation"),
 	GameDACConfirmation2    ("game.dac-confirmation2"),
