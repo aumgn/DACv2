@@ -164,6 +164,7 @@ public class DAC extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		try {
+			Bukkit.getScheduler().cancelTasks(this);
 			arenas.dump();
 			getLogger().info(getDescription().getName() + " unloaded.");
 		} finally {

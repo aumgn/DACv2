@@ -8,6 +8,7 @@ public class DACConfig {
 
 	private boolean resetOnStart = false;
 	private boolean resetOnEnd = false;
+	private int turnTimeOut;
 	private boolean tpAfterJump;
 	private boolean tpAfterFail;
 	private int tpAfterJumpDelay = 0;
@@ -24,6 +25,7 @@ public class DACConfig {
 			resetOnStart = true;
 			resetOnEnd = true;
 		}
+		turnTimeOut = config.getInt("turn-timeout");
 		int tpAfterJumpConfig = config.getInt("tp-after-jump");
 		int tpAfterFailConfig = config.getInt("tp-after-fail");
 		tpAfterJump = tpAfterJumpConfig >= 0;
@@ -41,6 +43,10 @@ public class DACConfig {
 
 	public boolean getResetOnEnd() {
 		return resetOnEnd;
+	}
+
+	public int getTurnTimeOut() {
+		return turnTimeOut;
 	}
 
 	public boolean getTpAfterJump() {

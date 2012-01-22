@@ -1,6 +1,9 @@
 # Auto-Reset : start | end | both | none
 auto-reset: start
 
+# Turn Time Out (ticks)
+turn-timeout: 1200
+
 # Tp Delay (ticks). Negative values mean deactivated 
 tp-after-jump: 20    
 tp-after-fail: 60
