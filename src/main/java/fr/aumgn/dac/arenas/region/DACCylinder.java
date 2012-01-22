@@ -35,7 +35,8 @@ public class DACCylinder implements DACRegion<CylinderRegion> {
 	public DACCylinder(CylinderRegion region) {
 		this(
 			region.getMaximumY(), region.getMinimumY(), 
-			new DACBlockVector(region.getCenter()), new DACBlockVector2D(region.getRadius())
+			new DACBlockVector(region.getCenter()),
+			new DACBlockVector2D(region.getRadius())
 		);
 	}
 	

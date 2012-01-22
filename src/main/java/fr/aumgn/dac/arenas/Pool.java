@@ -10,6 +10,7 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.blocks.BaseBlock;
+import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACColor;
@@ -27,7 +28,7 @@ public class Pool extends DACArea {
 	public void reset() {
 		EditSession editSession = new EditSession(getArena().getWEWorld(), -1);
 		try {
-			editSession.setBlocks(getRegion(), new BaseBlock(DefaultMaterial.getId())); 
+			editSession.setBlocks(getWERegion(), new BaseBlock(DefaultMaterial.getId())); 
 		} catch (MaxChangedBlocksException e) {
 			String warning = "A weird exception has occured while trying to reset ;";
 			warning += getArena().getName() + " pool. Maybe the pool is too Big ?";
@@ -36,8 +37,9 @@ public class Pool extends DACArea {
 	}
 
 	public void putColumn(int x, int z, DACColor color) {
-		int y = getRegion().getMinimumPoint().getBlockY();
-		int yMax = getRegion().getMaximumPoint().getBlockY();
+		Region region = getWERegion();
+		int y = region.getMinimumPoint().getBlockY();
+		int yMax = region.getMaximumPoint().getBlockY();
 		World world = getArena().getWorld();
 		for (; y<=yMax; y++) { 
 			Block block = world.getBlockAt(x, y, z);
@@ -47,8 +49,9 @@ public class Pool extends DACArea {
 	}
 
 	public void putDACColumn(int x, int z, DACColor color) {
-		int y = getRegion().getMinimumPoint().getBlockY();
-		int yMax = getRegion().getMaximumPoint().getBlockY();
+		Region region = getWERegion(); 
+		int y = region.getMinimumPoint().getBlockY();
+		int yMax = region.getMaximumPoint().getBlockY();
 		World world = getArena().getWorld();
 		for (; y<yMax; y++) { 
 			Block block = world.getBlockAt(x, y, z);
@@ -60,7 +63,7 @@ public class Pool extends DACArea {
 	}
 
 	public void putRIPSign(Location location, String name) {
-		int yMax = getRegion().getMaximumPoint().getBlockY();
+		int yMax = getWERegion().getMaximumPoint().getBlockY();
 		Block block = getArena().getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
 		block.setType(Material.SIGN_POST);
 		Sign sign = (Sign)block.getState();
@@ -68,7 +71,7 @@ public class Pool extends DACArea {
 	}
 
 	public void rip(Location location, String name) {
-		int yMax = getRegion().getMaximumPoint().getBlockY();
+		int yMax = getWERegion().getMaximumPoint().getBlockY();
 		Block block = getArena().getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
 		if (block.getType() != Material.SIGN_POST) {
 			putRIPSign(location, name);
@@ -83,7 +86,7 @@ public class Pool extends DACArea {
 	}
 
 	private boolean isColumnAt(int x, int z) {
-		Block blk = getArena().getWorld().getBlockAt(x, getRegion().getMinimumPoint().getBlockY(), z);
+		Block blk = getArena().getWorld().getBlockAt(x, getWERegion().getMinimumPoint().getBlockY(), z);
 		return !blk.getType().equals(DefaultMaterial);
 	}
 

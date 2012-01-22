@@ -16,8 +16,8 @@ public class DACBlockVector2D implements ConfigurationSerializable {
 	private int z;
 
 	public DACBlockVector2D(int x, int z) {
-		this.x = 0;
-		this.z = 0;
+		this.x = x;
+		this.z = z;
 	}
 	
 	public DACBlockVector2D() {

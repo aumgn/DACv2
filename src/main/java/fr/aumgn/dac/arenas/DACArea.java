@@ -45,8 +45,12 @@ public class DACArea {
 	public DACArena getArena() {
 		return arena;
 	}
+	
+	public DACRegion<?> getRegion() {
+		return region;
+	}
 
-	public Region getRegion() {
+	public Region getWERegion() {
 		return region.getRegion(arena.getWEWorld());
 	}
 

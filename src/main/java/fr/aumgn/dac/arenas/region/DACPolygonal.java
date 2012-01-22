@@ -36,7 +36,7 @@ public class DACPolygonal implements DACRegion<Polygonal2DRegion> {
 	public DACPolygonal(Polygonal2DRegion region) {
 		this.minY = region.getMininumY();
 		this.maxY = region.getMaximumY();
-		this.points = new ArrayList<DACBlockVector2D>();
+		this.points = new ArrayList<DACBlockVector2D>(region.getPoints().size());
 		for (BlockVector2D pt : region.getPoints()) {
 			points.add(new DACBlockVector2D(pt));
 		}
