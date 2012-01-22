@@ -15,7 +15,7 @@
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/artifactory/repo</url>
+			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
 		<repository>
 			<id>sk89q-mvn2</id>
@@ -33,7 +33,13 @@
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldedit</artifactId>
 			<version>5.1</version>
-		</dependency>
+			<exclusions>
+        		<exclusion>
+          			<groupId>org.spout</groupId>
+      				<artifactId>spoutapi</artifactId>
+        		</exclusion>
+        	</exclusions>
+        </dependency>
 	</dependencies>
 
 	<build>
