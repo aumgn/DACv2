@@ -19,6 +19,10 @@ import fr.aumgn.dac.config.DACMessage;
 
 public class DACGame {
 	
+	private final Runnable turnTimeOutRunnable = new Runnable() { 
+		@Override
+		public void run() { turnTimedOut(); }
+	};
 	private DACArena arena;
 	private DACPlayer[] players;
 	private int turn;
@@ -84,12 +88,8 @@ public class DACGame {
 		} while (player.hasLost());
 		send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
-		Runnable runnable = new Runnable() { 
-			@Override
-			public void run() { turnTimedOut(); }
-		};
 		turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
-			DAC.getPlugin(), runnable, DAC.getDACConfig().getTurnTimeOut()
+			DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
 		);
 	}
 	
