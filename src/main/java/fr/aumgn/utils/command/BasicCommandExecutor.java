@@ -68,6 +68,10 @@ public abstract class BasicCommandExecutor implements org.bukkit.command.Command
 			send(ChatColor.RED + message.toString());
 		}
 
+		public boolean hasPermission(String perm) {
+			return sender.hasPermission(perm);
+		}
+
 	}
 
 	public abstract boolean onCommand(Context context, String[] args);

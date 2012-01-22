@@ -77,16 +77,20 @@ permissions:
         children:
             dac.cmd.join: true
             dac.cmd.start: true
+            dac.cmd.reset: true
             dac.cmd.quit: true
             dac.cmd.lives: true
             dac.cmd.goto: true
             dac.cmd.colors: true
+    dac.game.reset:
+        description: "Permets de remettre a zéro le bassin in-game"
+        default: op
     dac.game.manage:
         description: "Permets de gerer le deroulement d'une partie et de jouer."
         default: op
         children:
             dac.game.play : true
-            dac.cmd.reset: true
+            dac.game.reset: true
             dac.cmd.stop: true
     dac.config:
         description: "Permets de mettre en place les zones du jeu."
