@@ -38,7 +38,7 @@ colors:
         block: 35
         data: 0
     jaune: 
-        chat: jaune
+        chat: yellow
         block: 35
         data: 4
     magenta: 

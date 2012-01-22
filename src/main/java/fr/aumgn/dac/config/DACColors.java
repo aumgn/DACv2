@@ -39,7 +39,11 @@ public class DACColors implements Iterable<DACColor> {
 		for (String key : keys) {
 			if (section.isConfigurationSection(key)) {
 				DACColor color = parseColor(key, section.getConfigurationSection(key));
-				if (color != null) { colors.put(key, color); }
+				if (color == null) {
+					DAC.getDACLogger().warning("Unable to parse " + key + " color.");
+				} else { 
+					colors.put(key, color); 
+				}
 			}
 		}
 		return colors;
