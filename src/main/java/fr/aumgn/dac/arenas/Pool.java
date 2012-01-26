@@ -1,8 +1,5 @@
 package fr.aumgn.dac.arenas;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -30,8 +27,9 @@ public class Pool extends DACArea {
 
 	private static final Material DefaultMaterial = Material.STATIONARY_WATER;
 	private static final Material DacMaterial = Material.GLASS;
+	private static final Material sign = Material.SIGN_POST;
+	private static final Material air = Material.AIR; 
 	private static final BaseBlock water = new BaseBlock(DefaultMaterial.getId());
-	private static final BaseBlock sign = new BaseBlock(Material.SIGN_POST.getId()); 
 
 	public Pool(DACArena arena) {
 		super(arena);
@@ -40,12 +38,15 @@ public class Pool extends DACArea {
 	public void reset() {
 		EditSession editSession = new EditSession(getArena().getWEWorld(), -1);
 		try {
-			Set<BaseBlock> blocksToReplace = new HashSet<BaseBlock>(1);
-			blocksToReplace.add(sign);
-			editSession.replaceBlocks(getAboveRegion(), blocksToReplace, new BaseBlock(Material.AIR.getId()));
+			World world = getArena().getWorld();
+			CuboidRegion above = getAboveRegion();
+			for (BlockVector vec : above) {
+				Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
+				if (block.getType() == sign) { block.setType(air); }
+			}
 			editSession.setBlocks(getWERegion(), water); 
 		} catch (MaxChangedBlocksException e) {
-			String warning = "A weird exception occured while trying to reset";
+			String warning = "A weird exception occured while trying to reset ";
 			warning += getArena().getName() + ". Maybe the pool is too Big ?";
 			DAC.getDACLogger().warning(warning);
 		}
