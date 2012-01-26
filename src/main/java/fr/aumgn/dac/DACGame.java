@@ -11,7 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-//import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import static fr.aumgn.dac.DACUtil.getDeathBlockVector;
@@ -21,14 +21,14 @@ import fr.aumgn.dac.config.DACMessage;
 
 public class DACGame {
 	
-	/*private final Runnable turnTimeOutRunnable = new Runnable() { 
+	private final Runnable turnTimeOutRunnable = new Runnable() { 
 		@Override
 		public void run() { turnTimedOut(); }
-	};*/
+	};
 	private DACArena arena;
 	private DACPlayer[] players;
 	private int turn;
-	//private int turnTimeoutTaskId;
+	private int turnTimeoutTaskId;
 	private List<Integer> lostOrder;
 	private Map<DACPlayer, Vector> playersWhoLostLastTurn;
 
@@ -54,7 +54,7 @@ public class DACGame {
 		}
 		send(DACMessage.GameEnjoy);
 		turn = -1;
-		//turnTimeoutTaskId = -1;
+		turnTimeoutTaskId = -1;
 		nextTurn();
 	}
 
@@ -84,26 +84,26 @@ public class DACGame {
 
 	private void nextTurn() {
 		DACPlayer player;
-		//if (turnTimeoutTaskId != -1) {
-		//	BukkitScheduler scheduler = Bukkit.getScheduler();
-		//	scheduler.cancelTask(turnTimeoutTaskId);
-		//}
+		if (turnTimeoutTaskId != -1) {
+			BukkitScheduler scheduler = Bukkit.getScheduler();
+			scheduler.cancelTask(turnTimeoutTaskId);
+		}
 		do {
 			increaseTurn();
 			player = players[turn];
 		} while (player.hasLost());
 		send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
-		//turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
-		//	DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
-		//);
+		turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
+			DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
+		);
 	}
 	
-	/*private void turnTimedOut() {
+	private void turnTimedOut() {
 		DACPlayer player = players[turn];
 		send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
 		onPlayerQuit(player);
-	}*/
+	}
 
 	private boolean isPlayerTurn(DACPlayer player) {
 		return isPlayerTurn(player.getPlayer());
@@ -281,14 +281,14 @@ public class DACGame {
 			i++;
 		}
 		DAC.removeGame(this);
+		Bukkit.getScheduler().cancelTask(turnTimeoutTaskId);
 		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
 	}
 
 	public void stop() {
-		//BukkitScheduler scheduler = Bukkit.getScheduler();
-		//scheduler.cancelTask(turnTimeoutTaskId);
+		Bukkit.getScheduler().cancelTask(turnTimeoutTaskId);
 		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
