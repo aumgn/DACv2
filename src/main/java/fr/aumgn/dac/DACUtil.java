@@ -43,7 +43,6 @@ public class DACUtil {
 			Vector2D dir = vec.normalize();
 			int modX = getModValue(dir.getX());
 			int modZ = getModValue(dir.getZ());
-			System.out.println(modX + " - " + modZ);
 			for (BlockFace face : BlockFace.values()) {
 				if (face.getModY() == 0 && face.getModX() == modX && face.getModZ() == modZ) {
 					return face;

@@ -108,7 +108,6 @@ public class Pool extends DACArea {
 		
 		Vector2D dir = new Vector2D(diving.getX()-vec.getX(), diving.getZ()-vec.getZ());
 		BlockFace face = getHorizontalFaceFor(dir);
-		System.out.println(face);
 		
 		Block block = getArena().getWorld().getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
 		block.setType(Material.SIGN_POST);
