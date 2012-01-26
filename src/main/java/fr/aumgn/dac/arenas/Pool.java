@@ -1,18 +1,29 @@
 package fr.aumgn.dac.arenas;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.entity.Player;
 
+import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.Vector2D;
 import com.sk89q.worldedit.blocks.BaseBlock;
+import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DAC;
+import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
 import fr.aumgn.dac.config.DACColor;
 
 @SerializableAs("dac-pool")
@@ -20,6 +31,8 @@ public class Pool extends DACArea {
 
 	private static final Material DefaultMaterial = Material.STATIONARY_WATER;
 	private static final Material DacMaterial = Material.GLASS;
+	private static final BaseBlock water = new BaseBlock(DefaultMaterial.getId());
+	private static final BaseBlock sign = new BaseBlock(Material.SIGN_POST.getId()); 
 
 	public Pool(DACArena arena) {
 		super(arena);
@@ -28,12 +41,40 @@ public class Pool extends DACArea {
 	public void reset() {
 		EditSession editSession = new EditSession(getArena().getWEWorld(), -1);
 		try {
-			editSession.setBlocks(getWERegion(), new BaseBlock(DefaultMaterial.getId())); 
+			Set<BaseBlock> blocksToReplace = new HashSet<BaseBlock>(1);
+			blocksToReplace.add(sign);
+			editSession.replaceBlocks(getAboveRegion(), blocksToReplace, new BaseBlock(Material.AIR.getId()));
+			editSession.setBlocks(getWERegion(), water); 
 		} catch (MaxChangedBlocksException e) {
-			String warning = "A weird exception has occured while trying to reset ;";
-			warning += getArena().getName() + " pool. Maybe the pool is too Big ?";
+			String warning = "A weird exception occured while trying to reset";
+			warning += getArena().getName() + ". Maybe the pool is too Big ?";
 			DAC.getDACLogger().warning(warning);
 		}
+	}
+	
+	public CuboidRegion getAboveRegion() {
+		int minY, maxY;
+		Vector poolMinPt, poolMaxPt, minPt, maxPt;
+		Region region = getWERegion();
+		poolMinPt = region.getMinimumPoint();
+		poolMaxPt = region.getMaximumPoint();
+		
+		minY = poolMaxPt.getBlockY() + 1;
+		maxY = minY + 5;
+		
+		minPt = poolMinPt.subtract(5, 0, 5).setY(minY);
+		maxPt = poolMaxPt.add(5, 0, 5).setY(maxY);
+		
+		return new CuboidRegion(region.getWorld(), minPt, maxPt);
+	}
+	
+	public boolean isAbove(Player player) {
+		Vector vec = new BlockVector(
+			player.getLocation().getBlockX(),
+			player.getLocation().getBlockY(),
+			player.getLocation().getBlockZ()
+		);
+		return getAboveRegion().contains(vec);
 	}
 
 	public void putColumn(int x, int z, DACColor color) {
@@ -62,19 +103,34 @@ public class Pool extends DACArea {
 		block.setType(DacMaterial);
 	}
 
-	public void putRIPSign(Location location, String name) {
-		int yMax = getWERegion().getMaximumPoint().getBlockY();
-		Block block = getArena().getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
+	public void putRIPSign(org.bukkit.util.Vector vec) {
+		Location diving = getArena().getDivingBoard().getLocation();
+		
+		Vector2D dir = new Vector2D(diving.getX()-vec.getX(), diving.getZ()-vec.getZ());
+		BlockFace face = getHorizontalFaceFor(dir);
+		System.out.println(face);
+		
+		Block block = getArena().getWorld().getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
 		block.setType(Material.SIGN_POST);
+		
+		org.bukkit.material.Sign signBlock = new org.bukkit.material.Sign(Material.SIGN_POST, block.getData());
+		signBlock.setFacingDirection(face);
+		block.setData(signBlock.getData());
+		
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, "RIP");
+		sign.setLine(0, ChatColor.RED + "RIP");
+		sign.update();
 	}
 
-	public void rip(Location location, String name) {
-		int yMax = getWERegion().getMaximumPoint().getBlockY();
-		Block block = getArena().getWorld().getBlockAt(location.getBlockX(), yMax+1, location.getBlockZ());
+	public void rip(org.bukkit.util.Vector vec, String name) {
+		if (vec == null) { return; }
+		Block block = getArena().getWorld().getBlockAt(
+			vec.getBlockX(),
+			vec.getBlockY(),
+			vec.getBlockZ()
+		);
 		if (block.getType() != Material.SIGN_POST) {
-			putRIPSign(location, name);
+			putRIPSign(vec);
 		}
 		for (int i=1; i<4; i++) {
 			Sign sign = (Sign)block.getState();
@@ -82,6 +138,7 @@ public class Pool extends DACArea {
 				sign.setLine(i, name);
 				break;
 			}
+			sign.update();
 		}
 	}
 

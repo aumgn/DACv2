@@ -4,31 +4,33 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.scheduler.BukkitScheduler;
+//import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.util.Vector;
 
+import static fr.aumgn.dac.DACUtil.getDeathBlockVector;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
 import fr.aumgn.dac.config.DACMessage;
 
 public class DACGame {
 	
-	private final Runnable turnTimeOutRunnable = new Runnable() { 
+	/*private final Runnable turnTimeOutRunnable = new Runnable() { 
 		@Override
 		public void run() { turnTimedOut(); }
-	};
+	};*/
 	private DACArena arena;
 	private DACPlayer[] players;
 	private int turn;
-	private int turnTimeoutTaskId;
+	//private int turnTimeoutTaskId;
 	private List<Integer> lostOrder;
-	private Map<DACPlayer, Location> playersWhoLostLastTurn;
+	private Map<DACPlayer, Vector> playersWhoLostLastTurn;
 
 	public DACGame(DACJoinStep joinStep) {
 		this.arena = joinStep.getArena();
@@ -41,7 +43,7 @@ public class DACGame {
 			players[i].init(this, i);
 		}
 		lostOrder = new ArrayList<Integer>();
-		playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
+		playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Vector>();
 		if (DAC.getDACConfig().getResetOnStart()) {
 			arena.getPool().reset();
 		}
@@ -52,6 +54,7 @@ public class DACGame {
 		}
 		send(DACMessage.GameEnjoy);
 		turn = -1;
+		//turnTimeoutTaskId = -1;
 		nextTurn();
 	}
 
@@ -72,32 +75,35 @@ public class DACGame {
 			for (DACPlayer dacPlayer : playersWhoLostLastTurn.keySet()) {
 				lostOrder.add(dacPlayer.getIndex());
 			}
-			playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
+			for (Entry<DACPlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
+				arena.getPool().rip(entry.getValue(), entry.getKey().getDisplayName());
+			}
+			playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Vector>();
 		}
 	}
 
 	private void nextTurn() {
 		DACPlayer player;
-		BukkitScheduler scheduler = Bukkit.getScheduler();
-		if (scheduler.isQueued(turnTimeoutTaskId)) {
-			scheduler.cancelTask(turnTimeoutTaskId);
-		}
+		//if (turnTimeoutTaskId != -1) {
+		//	BukkitScheduler scheduler = Bukkit.getScheduler();
+		//	scheduler.cancelTask(turnTimeoutTaskId);
+		//}
 		do {
 			increaseTurn();
 			player = players[turn];
 		} while (player.hasLost());
 		send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
-		turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
-			DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
-		);
+		//turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
+		//	DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
+		//);
 	}
 	
-	private void turnTimedOut() {
+	/*private void turnTimedOut() {
 		DACPlayer player = players[turn];
 		send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
 		onPlayerQuit(player);
-	}
+	}*/
 
 	private boolean isPlayerTurn(DACPlayer player) {
 		return isPlayerTurn(player.getPlayer());
@@ -187,7 +193,7 @@ public class DACGame {
 			}
 		}
 	}
-
+	
 	public void onPlayerDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
 		if (isPlayerTurn(player)) {
@@ -207,14 +213,15 @@ public class DACGame {
 				for (DACPlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
 					playerWhoLost.resetLives();
 				}
-				playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Location>();
+				playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Vector>();
 				dacPlayer.setMustConfirmate(false);
 				tpAfterJump(dacPlayer);
 				nextTurn();
 			} else {
 				dacPlayer.looseLive();
 				if (dacPlayer.hasLost()) {
-					playersWhoLostLastTurn.put(dacPlayer, player.getLocation());
+					Vector vec = getDeathBlockVector(player.getLocation());
+					playersWhoLostLastTurn.put(dacPlayer, vec);
 					onPlayerLoss(dacPlayer, false);
 					if (DAC.getDACConfig().getTpAfterFail()) {
 						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterFailDelay());
@@ -276,6 +283,8 @@ public class DACGame {
 	}
 
 	public void stop() {
+		//BukkitScheduler scheduler = Bukkit.getScheduler();
+		//scheduler.cancelTask(turnTimeoutTaskId);
 		if (DAC.getDACConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}

@@ -20,7 +20,11 @@ public class DACPlayerListener implements Listener {
 		DamageCause cause = event.getCause();
 		if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
 			DACGame game = DAC.getGame((Player)event.getEntity());
-			if (game != null) { game.onPlayerDamage(event); }
+			if (game == null) { return; }
+			Player player = (Player)event.getEntity();
+			if (game.getArena().getPool().isAbove(player)) {
+				game.onPlayerDamage(event);
+			}
 		}
 	}
 

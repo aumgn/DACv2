@@ -62,7 +62,7 @@ game:
     player-list: "<gray>%1$s<blue>. %2$s"
     enjoy: "<blue>Enjoy !"
     player-turn: "<blue>C'est au tour de %1$s<blue>."
-    turn-timed-out: "<red>Delai expiré."
+    turn-timed-out: "<red>%1$s n'as pas sauté assez rapidement."
     confirmation: "%1$s <green>a confirmé."
     dac-confirmation: "%1$s <gold>a confirmé avec un Dé à coudre."
     dac-confirmation2: "<gold>Quelle classe !"
