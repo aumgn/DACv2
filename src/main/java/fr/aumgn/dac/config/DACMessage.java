@@ -1,12 +1,8 @@
 package fr.aumgn.dac.config;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 
-import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACUtil;
 
 public enum DACMessage {
 
@@ -76,36 +72,17 @@ public enum DACMessage {
 	GameStopped             ("game.stopped"),
 	GameDisplayLives        ("game.display-lives");
 
-	private static Pattern pattern = Pattern.compile("<([A-Za-z]+)>"); 
-
 	public static void load(Configuration config, Configuration defaults) {
 		for (DACMessage lang : DACMessage.values()) {
 			String node = lang.getNode();
 			if (config.isString(node)) {
-				lang.setValue(parse(node, config.getString(node)));
+				lang.setValue(DACUtil.parseColorsMarkup(config.getString(node)));
 			} else if (defaults.isString(node)) { 
-				lang.setValue(parse(node, defaults.getString(node)));
+				lang.setValue(DACUtil.parseColorsMarkup(defaults.getString(node)));
 			} else {
 				lang.setValue("");
 			}
 		}
-	}
-
-	public static String parse(String node, String message) {
-		StringBuffer parsed = new StringBuffer();
-		Matcher matcher = pattern.matcher(message);
-		while (matcher.find()) {
-			try {
-				ChatColor color = ChatColor.valueOf(matcher.group(1).toUpperCase()); 
-				matcher.appendReplacement(parsed, color.toString());
-			} catch (IllegalArgumentException exc) {
-				String error = "Invalid color identifier in ";
-				error += node + " : " + matcher.group(1);
-				DAC.getDACLogger().warning(error);
-			}
-		}
-		matcher.appendTail(parsed);
-		return parsed.toString();
 	}
 
 	private String node;

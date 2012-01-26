@@ -1,5 +1,9 @@
 package fr.aumgn.dac;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -12,6 +16,7 @@ public class DACUtil {
 	private static final double Mod0to1;
 	private static final double Mod1to2;
 	private static final double Mod2to1;
+	private static Pattern pattern = Pattern.compile("<([A-Za-z]+)>"); 
 	
 	static {
 		double i = Math.PI / 16;
@@ -92,4 +97,23 @@ public class DACUtil {
 		return null;
 	}
 
+	public static String parseColorsMarkup(String message) {
+		StringBuffer parsed = new StringBuffer();
+		Matcher matcher = pattern.matcher(message);
+		while (matcher.find()) {
+			try {
+				ChatColor color = ChatColor.valueOf(matcher.group(1).toUpperCase()); 
+				matcher.appendReplacement(parsed, color.toString());
+			} catch (IllegalArgumentException exc) {
+				String error = "Invalid color identifier in ";
+				error += message + " : " + matcher.group(1);
+				DAC.getDACLogger().warning(error);
+			}
+		}
+		matcher.appendTail(parsed);
+		return parsed.toString();
+	}
+
+
+	
 }

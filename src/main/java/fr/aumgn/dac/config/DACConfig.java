@@ -3,6 +3,9 @@ package fr.aumgn.dac.config;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 
+import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACUtil;
+
 
 public class DACConfig {
 
@@ -13,6 +16,7 @@ public class DACConfig {
 	private boolean tpAfterFail;
 	private int tpAfterJumpDelay = 0;
 	private int tpAfterFailDelay = 0;
+	private String deathSignFirstLine;
 	private DACColors colors;
 
 	public DACConfig(Configuration config) {
@@ -32,6 +36,11 @@ public class DACConfig {
 		tpAfterFail = tpAfterFailConfig >= 0;
 		if (tpAfterJump) { tpAfterJumpDelay = tpAfterJumpConfig; }
 		if (tpAfterFail) { tpAfterFailDelay = tpAfterFailConfig; }
+		deathSignFirstLine = DACUtil.parseColorsMarkup(config.getString("death-sign-first-line"));
+		if (deathSignFirstLine.length() > 16) { 
+			deathSignFirstLine = DACUtil.parseColorsMarkup(config.getDefaults().getString("death-sign-first-line"));
+			DAC.getDACLogger().warning("Config parameter 'death-sign-first-line' is longer than 16. Falling back to defaut value.");
+		}
 		ConfigurationSection colorsConfig = config.getConfigurationSection("colors");
 		ConfigurationSection defColorsConfig = config.getDefaults().getConfigurationSection("colors");
 		colors = new DACColors(colorsConfig, defColorsConfig);
@@ -67,6 +76,10 @@ public class DACConfig {
 
 	public int getMaxPlayers() {
 		return colors.size();
+	}
+
+	public String getDeathSignFirstLine() {
+		return deathSignFirstLine;
 	}
 
 	public DACColors getColors() {

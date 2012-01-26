@@ -3,7 +3,6 @@ package fr.aumgn.dac.arenas;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -118,7 +117,7 @@ public class Pool extends DACArea {
 		block.setData(signBlock.getData());
 		
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, ChatColor.RED + "RIP");
+		sign.setLine(0, DAC.getDACConfig().getDeathSignFirstLine());
 		sign.update();
 	}
 

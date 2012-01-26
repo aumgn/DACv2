@@ -8,6 +8,8 @@ turn-timeout: 1200
 tp-after-jump: 20    
 tp-after-fail: 60
 
+death-sign-first-line: "<red>RIP"
+
 # Colors available
 # Example: 
 #    red:
