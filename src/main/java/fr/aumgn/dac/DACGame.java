@@ -93,6 +93,7 @@ public class DACGame {
 			player = players[turn];
 		} while (player.hasLost());
 		send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
+		player.getPlayer().setFallDistance(0.0f);
 		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
 		turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
 			DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
