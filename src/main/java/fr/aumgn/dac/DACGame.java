@@ -168,9 +168,11 @@ public class DACGame {
 			player.setFallDistance(0.0f);
 			if (dacPlayer.mustConfirmate()) {
 				if (dac) {
+					pool.putDACColumn(x, z, dacPlayer.getColor());
 					send(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
 					send(DACMessage.GameDACConfirmation2);
 				} else {
+					pool.putColumn(x, z, dacPlayer.getColor());
 					send(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
 				}
 				tpAfterJump(dacPlayer);
@@ -264,7 +266,9 @@ public class DACGame {
 
 	public void onPlayerWin(DACPlayer player) {
 		send(DACMessage.GameFinished);
-		for (DACPlayer dacPlayer : playersWhoLostLastTurn.keySet()) {
+		for (Entry<DACPlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
+			DACPlayer dacPlayer = entry.getKey();
+			arena.getPool().rip(entry.getValue(), dacPlayer.getDisplayName());
 			lostOrder.add(dacPlayer.getIndex());
 		}
 
