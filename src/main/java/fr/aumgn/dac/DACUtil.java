@@ -51,8 +51,6 @@ public class DACUtil {
 			return BlockFace.SELF;
 		} catch (IllegalArgumentException exc) {
 			return BlockFace.SELF;
-		} catch (ArrayIndexOutOfBoundsException exc) {
-			return BlockFace.SELF;
 		}
 	}
 
