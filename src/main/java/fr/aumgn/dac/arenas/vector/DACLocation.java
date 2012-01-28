@@ -29,8 +29,8 @@ public class DACLocation implements ConfigurationSerializable {
 		x = bLocation.getX();
 		y = bLocation.getY();
 		z = bLocation.getZ();
-		pitch = bLocation.getPitch();
 		yaw = bLocation.getYaw();
+		pitch = bLocation.getPitch();
 	}
 	
 	public static DACLocation deserialize(Map<String, Object> map) {
@@ -38,10 +38,10 @@ public class DACLocation implements ConfigurationSerializable {
 		loc.x = (Double) map.get("x");
 		loc.y = (Double) map.get("y");
 		loc.z = (Double) map.get("z");
+		Double yaw = (Double)map.get("yaw");
+		loc.yaw = yaw.floatValue(); 
 		Double pitch = (Double)map.get("pitch");
 		loc.pitch = pitch.floatValue(); 
-		Double yaw = (Double)map.get("yaw");
-		loc.pitch = yaw.floatValue(); 
 		return loc;
 	}
 	
@@ -51,13 +51,13 @@ public class DACLocation implements ConfigurationSerializable {
 		map.put("x", x);
 		map.put("y", y);
 		map.put("z", z);
-		map.put("pitch", Double.valueOf(pitch));
 		map.put("yaw", Double.valueOf(yaw));
+		map.put("pitch", Double.valueOf(pitch));
 		return map;
 	}
 	
 	public Location toLocation(World world) {
-		return new Location(world, x, y, z, pitch, yaw);
+		return new Location(world, x, y, z, yaw, pitch);
 	}
 
 }
