@@ -62,10 +62,10 @@ public class DACUtil {
 		}
 		
 		int modX, modZ;
-		double x = loc.getX();
-		double z = loc.getZ();
-		double xDec = x - Math.ceil(x);
-		double zDec = z - Math.ceil(z);
+		double x = Math.abs(loc.getX());
+		double z = Math.abs(loc.getZ());
+		double xDec = x - Math.floor(x);
+		double zDec = z - Math.floor(z);
 		Block block2;
 		if (xDec < 0.3) { modX = -1; }
 		else if (xDec > 0.7) { modX = 1; }
