@@ -1,13 +1,13 @@
 command:
     define:
-        exists: "Une arène portant ce nom existe deja"
-        success: "Arène créée avec succés"
+        exists: "Une arène portant ce nom existe déjà."
+        success: "Arène créée avec succés."
     delete:
         unknown: "Aucune arène ne porte ce nom"
         in-game: "Une partie est en cours dans cette arène."
         success: "Arène supprimée avec succés."
     goto:
-        not-in-game: "Cette commande ne peut être utilisé que durant une partie de DAC."
+        not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         success: "Poof !"
     join:
         already-playing: "Vous ne pouvez pas rejoindre plusieurs parties."
@@ -19,36 +19,36 @@ command:
         no-player-found: "Aucun joueur trouvé avec ce nom."
     lives:
         not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
-        unknown-player: "Aucun joueur dans la partie en cours ne porte ce nom"
+        unknown-player: "Aucun joueur dans la partie en cours ne porte ce nom."
     quit:
         not-in-game: "Vous n'êtes pas dans une partie en cours."
     reload:
-        success: "Configuration mise a jour."
+        success: "Configuration mise à jour."
     reset:
         unknown: "Cette arène n'existe pas."
         in-game: "Cette commande ne peut pas être utilisée durant une partie."
         success: "Bassin réinitialisé."
     select:
-        unknown: "Arène inconnu."
-        success-pool: "La zone du bassin a été selectionné."
-        success-start: "La zone de départ a été selectionné."
-        error: "Une erreur est survenu durant la selection de la zone."
+        unknown: "Arène inconnue."
+        success-pool: "La zone du bassin a été sélectionnée."
+        success-start: "La zone de départ a été sélectionnée."
+        error: "Une erreur est survenue durant la sélection de la zone."
     set:
-        unknown: "Arène inconnu."
-        wrong-world: "L'arène est défini dans un autre monde."
+        unknown: "Arène inconnue."
+        wrong-world: "L'arène est définie dans un autre monde."
         success-diving: "La position sur le plongeoir a été mise à jour."
-        success-pool: "La zone du bassin a été mise a jour."
-        success-start: "La zone de départ a été mise a jour."
-        error: "Une erreur est survenu durant la mise a jour de la zone."
+        success-pool: "La zone du bassin a été mise à jour."
+        success-start: "La zone de départ a été mise à jour."
+        error: "Une erreur est survenue durant la mise à jour de la zone."
         incomplete-selection: "La sélection WorldEdit est incomplète"
     start:
         not-in-game: "Vous devez avoir rejoint une partie avec \"dac join\" avant de la débuter."
         min-not-reached: "Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter."
     stop:
-        no-game-to-stop: "Aucune partie en cours a arrêté"
+        no-game-to-stop: "Il n'y a aucune partie en cours."
 
 join:
-    new-game: "<blue>Une nouvelle partie de Dé à coudre dans <white>%1$s <blue>a été débutée."
+    new-game: "<blue>Une nouvelle partie de Dé à coudre dans l'arène de <white>%1$s <blue>a été débutée."
     new-game2: "<blue>Utilisez <white>\"/dac join\" <blue>dans la zone de départ pour la rejoindre."
     current-players: "<blue>Joueurs Actuels :"
     player-list: "  %1$s"
@@ -75,9 +75,7 @@ game:
     player-quit: "%1$s <blue>a quitté la partie."
     must-confirmate: "%1$s <red>doit confirmer."
     finished: "<blue>La partie est terminée."
-    winner: "<green>Gagnant: %1$s"
+    winner: "<green>Gagnant : %1$s"
     rank: "<gray>%1$s<blue>. %2$s"
     stopped: "<blue>La partie a été arretée."
-    display-lives: "%1$s: <gray>%2$s"
-    
-            
+    display-lives: "%1$s : <gray>%2$s"
