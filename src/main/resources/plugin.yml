@@ -11,11 +11,11 @@ commands:
         usage: "Utilisation: /<command> join | start | stop | reset | quit | lives | goto"
     dac-reload:
         description: 'Recharge la configuration du plugin.'
-        uasge: "Utilisation: /<command>"
+        usage: "Utilisation: /<command>"
         permission: 'dac.cmd.reload'
     dac-define:
         description: 'Defini une nouvelle arene de jeu dans le monde actuel.'
-        uasge: "Utilisation: /<command> <arene>"
+        usage: "Utilisation: /<command> <arene>"
         permission: 'dac.cmd.define'
         aliases: ["dac-def"]
     dac-delete:
@@ -64,11 +64,12 @@ commands:
         description: 'Affiche le nombre de vies du joueur selectionne ou de tous les joueurs'
         usage: 'Utilisation: /<command> [<joueur>]'
         permission: 'dac.cmd.lives'
+        aliases: ["dac-players", "dac-list"]
     dac-goto:
         description: 'Teleporte le joueur sur le plongeoir ou a sa position de depart'
         usage: 'Utilisation: /<command> diving|start'
         permission: 'dac.cmd.goto'
-        aliases: ["dac-g"]
+        aliases: ["dac-teleport", "dac-g", "dac-tp"]
     dac-colors:
         description: "Liste l'ensemble des couleurs disponibles"
         usage: 'Utilisation: /<command>'
