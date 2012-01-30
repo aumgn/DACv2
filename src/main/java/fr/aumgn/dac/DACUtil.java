@@ -13,14 +13,16 @@ import com.sk89q.worldedit.Vector2D;
 
 public final class DACUtil {
 	
+	public static final int TICKS_PER_SECONDS = 20;
 	public static final int PLAYER_MAX_HEALTH = 20;
 	public static final int SIGN_MAX_CHAR = 16;
-	public static final int TICKS_PER_SECONDS = 20;
+	public static final int SIGN_LINES = 4;
 	
 	private static final double BLOCK_LIMIT_LEFT = 0.3;
 	private static final double BLOCK_LIMIT_RIGHT = 0.7;
 	
-	private static final double SIGN_FACES_ANGLE = Math.PI / 16; 
+	private static final int SIGN_HORIZONTAL_FACES = 16;
+	private static final double SIGN_FACES_ANGLE = Math.PI / SIGN_HORIZONTAL_FACES; 
 	private static final double MOD_0_TO_1 = Math.cos(7 * SIGN_FACES_ANGLE);
 	private static final double MOD_1_TO_2 = Math.cos(3 * SIGN_FACES_ANGLE);
 	private static final double MOD_2_TO_1 = Math.cos(SIGN_FACES_ANGLE);

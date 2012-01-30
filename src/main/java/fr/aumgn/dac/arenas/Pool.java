@@ -19,6 +19,7 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACUtil;
 import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
 import fr.aumgn.dac.config.DACColor;
 
@@ -134,7 +135,7 @@ public class Pool extends DACArea {
 		if (block.getType() != Material.SIGN_POST) {
 			putRIPSign(vec);
 		}
-		for (int i=1; i<4; i++) {
+		for (int i = 1; i < DACUtil.SIGN_LINES; i++) {
 			Sign sign = (Sign)block.getState();
 			if (sign.getLine(i).isEmpty()) {
 				sign.setLine(i, name);
