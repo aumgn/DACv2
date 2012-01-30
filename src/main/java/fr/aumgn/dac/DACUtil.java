@@ -17,6 +17,9 @@ public final class DACUtil {
 	public static final int SIGN_MAX_CHAR = 16;
 	public static final int TICKS_PER_SECONDS = 20;
 	
+	private static final double BLOCK_LIMIT_LEFT = 0.3;
+	private static final double BLOCK_LIMIT_RIGHT = 0.7;
+	
 	private static final double SIGN_FACES_ANGLE = Math.PI / 16; 
 	private static final double MOD_0_TO_1 = Math.cos(7 * SIGN_FACES_ANGLE);
 	private static final double MOD_1_TO_2 = Math.cos(3 * SIGN_FACES_ANGLE);
@@ -56,8 +59,8 @@ public final class DACUtil {
 	}
 	
 	private static int getRelativeModValue(double decimal) {
-		if (decimal < 0.3) { return -1; }
-		if (decimal > 0.7) { return  1; }
+		if (decimal < BLOCK_LIMIT_LEFT)  { return -1; }
+		if (decimal > BLOCK_LIMIT_RIGHT) { return  1; }
 		return 0;
 	}
 	
