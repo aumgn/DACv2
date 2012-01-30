@@ -136,11 +136,11 @@ public class DAC extends JavaPlugin {
 		joinSteps = new HashMap<String, DACJoinStep>();
 		games = new HashMap<String, DACGame>();
 
-		Plugin plugin = pm.getPlugin("WorldEdit");
-		if (!(plugin instanceof WorldEditPlugin)) {
+		Plugin we = pm.getPlugin("WorldEdit");
+		if (!(we instanceof WorldEditPlugin)) {
 			throw new DACException.WorldEditNotLoaded();
 		} else {
-			worldEdit = (WorldEditPlugin)plugin;
+			worldEdit = (WorldEditPlugin)we;
 		}
 
 		if (!new File(getDataFolder(), "config.yml").exists()) {

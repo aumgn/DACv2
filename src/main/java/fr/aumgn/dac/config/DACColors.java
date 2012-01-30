@@ -35,18 +35,18 @@ public class DACColors implements Iterable<DACColor> {
 
 	private Map<String, DACColor> parseColors(ConfigurationSection section) {
 		Set<String> keys = section.getKeys(false);
-		Map<String, DACColor> colors = new LinkedHashMap<String, DACColor>();
+		Map<String, DACColor> tmpColors = new LinkedHashMap<String, DACColor>();
 		for (String key : keys) {
 			if (section.isConfigurationSection(key)) {
 				DACColor color = parseColor(key, section.getConfigurationSection(key));
 				if (color == null) {
 					DAC.getDACLogger().warning("Unable to parse " + key + " color.");
 				} else { 
-					colors.put(key, color); 
+					tmpColors.put(key, color); 
 				}
 			}
 		}
-		return colors;
+		return tmpColors;
 	}
 
 	private DACColor parseColor(String name, ConfigurationSection section) {

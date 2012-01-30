@@ -27,9 +27,9 @@ public class Pool extends DACArea {
 
 	private static final Material DefaultMaterial = Material.STATIONARY_WATER;
 	private static final Material DacMaterial = Material.GLASS;
-	private static final Material sign = Material.SIGN_POST;
-	private static final Material air = Material.AIR; 
-	private static final BaseBlock water = new BaseBlock(DefaultMaterial.getId());
+	private static final Material SignMaterial = Material.SIGN_POST;
+	private static final Material Air = Material.AIR; 
+	private static final BaseBlock Water = new BaseBlock(DefaultMaterial.getId());
 
 	public Pool(DACArena arena) {
 		super(arena);
@@ -42,9 +42,9 @@ public class Pool extends DACArea {
 			CuboidRegion above = getAboveRegion();
 			for (BlockVector vec : above) {
 				Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
-				if (block.getType() == sign) { block.setType(air); }
+				if (block.getType() == SignMaterial) { block.setType(Air); }
 			}
-			editSession.setBlocks(getWERegion(), water); 
+			editSession.setBlocks(getWERegion(), Water); 
 		} catch (MaxChangedBlocksException e) {
 			String warning = "A weird exception occured while trying to reset ";
 			warning += getArena().getName() + ". Maybe the pool is too Big ?";
