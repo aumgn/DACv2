@@ -21,6 +21,7 @@ import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.exception.WorldEditNotLoaded;
 import fr.aumgn.dac.listener.DACPlayerListener;
 
 public class DAC extends JavaPlugin {
@@ -138,7 +139,7 @@ public class DAC extends JavaPlugin {
 
 		Plugin we = pm.getPlugin("WorldEdit");
 		if (!(we instanceof WorldEditPlugin)) {
-			throw new DACException.WorldEditNotLoaded();
+			throw new WorldEditNotLoaded();
 		} else {
 			worldEdit = (WorldEditPlugin)we;
 		}

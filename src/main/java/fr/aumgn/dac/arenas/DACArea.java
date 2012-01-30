@@ -10,11 +10,11 @@ import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.dac.arenas.region.DACCuboid;
 import fr.aumgn.dac.arenas.region.DACCylinder;
 import fr.aumgn.dac.arenas.region.DACPolygonal;
 import fr.aumgn.dac.arenas.region.DACRegion;
+import fr.aumgn.dac.exception.InvalidRegionType;
 
 public class DACArea {
 

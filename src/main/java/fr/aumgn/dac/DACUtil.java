@@ -11,7 +11,7 @@ import org.bukkit.util.BlockVector;
 
 import com.sk89q.worldedit.Vector2D;
 
-public class DACUtil {
+public final class DACUtil {
 	
 	private static final double Mod0to1;
 	private static final double Mod1to2;
@@ -24,6 +24,8 @@ public class DACUtil {
 		Mod1to2 = Math.cos(3 * i);
 		Mod2to1 = Math.cos(i);
 	}
+	
+	private DACUtil() {} 
 	
 	public static int getModValue(double i) {
 		if (i < -1 || i > 1) {

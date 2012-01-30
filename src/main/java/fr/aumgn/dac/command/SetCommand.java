@@ -7,9 +7,9 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.RegionSelector;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACException.InvalidRegionType;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.exception.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SetCommand extends PlayerCommandExecutor {
