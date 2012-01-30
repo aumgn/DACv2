@@ -9,8 +9,8 @@ import com.sk89q.worldedit.regions.Region;
 
 public interface DACRegion<T extends Region> extends ConfigurationSerializable {
 	
-	public T getRegion(LocalWorld world);
+	T getRegion(LocalWorld world);
 	
-	public Selection getSelection(World world);
+	Selection getSelection(World world);
 	
 }
