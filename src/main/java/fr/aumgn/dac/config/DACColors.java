@@ -13,9 +13,9 @@ import fr.aumgn.dac.DAC;
 
 public class DACColors implements Iterable<DACColor> {
 
-	private static final String ChatKey = "chat";
-	private static final String BlockKey = "block";
-	private static final String DataKey = "data";
+	private static final String CHAT_KEY = "chat";
+	private static final String BLOCK_KEY = "block";
+	private static final String DATA_KEY = "data";
 
 	private Map<String, DACColor> colors;
 
@@ -54,22 +54,22 @@ public class DACColors implements Iterable<DACColor> {
 			ChatColor chat;
 			Material material;
 			byte data;
-			if (section.isString(ChatKey)) {
-				chat = ChatColor.valueOf(section.getString(ChatKey).toUpperCase());
+			if (section.isString(CHAT_KEY)) {
+				chat = ChatColor.valueOf(section.getString(CHAT_KEY).toUpperCase());
 			} else {
 				return null;
 			}
-			if (section.isInt(BlockKey)) {
-				int block = section.getInt(BlockKey);
+			if (section.isInt(BLOCK_KEY)) {
+				int block = section.getInt(BLOCK_KEY);
 				material = Material.getMaterial(block);
-			} else if (section.isString(BlockKey)) {
-				String block = section.getString(BlockKey);
+			} else if (section.isString(BLOCK_KEY)) {
+				String block = section.getString(BLOCK_KEY);
 				material = Material.valueOf(block.toUpperCase());
 			} else { 
 				material = Material.WOOL;
 			}
-			if (section.isInt(DataKey)) {
-				data = (byte) section.getInt(DataKey);
+			if (section.isInt(DATA_KEY)) {
+				data = (byte) section.getInt(DATA_KEY);
 			} else {
 				data = 0;
 			}

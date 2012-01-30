@@ -26,7 +26,7 @@ import fr.aumgn.dac.listener.DACPlayerListener;
 
 public class DAC extends JavaPlugin {
 
-	private static final String MessagesFile = "messages.yml";
+	private static final String MESSAGES_FILENAME = "messages.yml";
 	private static DAC plugin;
 
 	public static DAC getPlugin() {
@@ -46,14 +46,14 @@ public class DAC extends JavaPlugin {
 		YamlConfiguration newMessages = new YamlConfiguration();
 		YamlConfiguration defaultMessages = new YamlConfiguration();
 		try {
-			newMessages.load(new File(plugin.getDataFolder(), MessagesFile));
-			defaultMessages.load(plugin.getResource(MessagesFile));
+			newMessages.load(new File(plugin.getDataFolder(), MESSAGES_FILENAME));
+			defaultMessages.load(plugin.getResource(MESSAGES_FILENAME));
 			DACMessage.load(newMessages, defaultMessages);
 		} catch (IOException exc) {
-			getDACLogger().severe("Unable to read " + MessagesFile + " file.");
+			getDACLogger().severe("Unable to read " + MESSAGES_FILENAME + " file.");
 			getDACLogger().severe(exc.getClass().getSimpleName() + " exception raised");
 		} catch (InvalidConfigurationException exc) {
-			getDACLogger().severe("Unable to load " + MessagesFile + " file.");
+			getDACLogger().severe("Unable to load " + MESSAGES_FILENAME + " file.");
 			getDACLogger().severe(exc.getClass().getSimpleName() + " exception raised");
 		}
 	}

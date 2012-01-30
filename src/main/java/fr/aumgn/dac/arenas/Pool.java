@@ -25,14 +25,14 @@ import fr.aumgn.dac.config.DACColor;
 @SerializableAs("dac-pool")
 public class Pool extends DACArea {
 
-	private static final Material DefaultMaterial = Material.STATIONARY_WATER;
-	private static final Material DacMaterial = Material.GLASS;
-	private static final Material SignMaterial = Material.SIGN_POST;
-	private static final Material Air = Material.AIR; 
-	private static final BaseBlock Water = new BaseBlock(DefaultMaterial.getId());
+	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
+	private static final Material DAC_MATERIAL = Material.GLASS;
+	private static final Material SIGN_MATERIAL = Material.SIGN_POST;
+	private static final Material AIR = Material.AIR; 
+	private static final BaseBlock WATER = new BaseBlock(DEFAULT_MATERIAL.getId());
 	
-	private static final int AboveRegionHeight = 5;
-	private static final int AboveRegionMargin = 5;
+	private static final int ABOVE_REGION_HEIGHT = 5;
+	private static final int ABOVE_REGION_MARGIN = 5;
 
 	public Pool(DACArena arena) {
 		super(arena);
@@ -45,9 +45,9 @@ public class Pool extends DACArea {
 			CuboidRegion above = getAboveRegion();
 			for (BlockVector vec : above) {
 				Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
-				if (block.getType() == SignMaterial) { block.setType(Air); }
+				if (block.getType() == SIGN_MATERIAL) { block.setType(AIR); }
 			}
-			editSession.setBlocks(getWERegion(), Water); 
+			editSession.setBlocks(getWERegion(), WATER); 
 		} catch (MaxChangedBlocksException e) {
 			String warning = "A weird exception occured while trying to reset ";
 			warning += getArena().getName() + ". Maybe the pool is too Big ?";
@@ -63,10 +63,10 @@ public class Pool extends DACArea {
 		poolMaxPt = region.getMaximumPoint();
 		
 		minY = poolMaxPt.getBlockY() + 1;
-		maxY = minY + AboveRegionHeight;
+		maxY = minY + ABOVE_REGION_HEIGHT;
 		
-		minPt = poolMinPt.subtract(AboveRegionMargin, 0, AboveRegionMargin).setY(minY);
-		maxPt = poolMaxPt.add(AboveRegionMargin, 0, AboveRegionMargin).setY(maxY);
+		minPt = poolMinPt.subtract(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(minY);
+		maxPt = poolMaxPt.add(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(maxY);
 		
 		return new CuboidRegion(region.getWorld(), minPt, maxPt);
 	}
@@ -103,7 +103,7 @@ public class Pool extends DACArea {
 			block.setData(color.getData());
 		}
 		Block block = world.getBlockAt(x, y, z);
-		block.setType(DacMaterial);
+		block.setType(DAC_MATERIAL);
 	}
 
 	public void putRIPSign(org.bukkit.util.Vector vec) {
@@ -146,7 +146,7 @@ public class Pool extends DACArea {
 
 	private boolean isColumnAt(int x, int z) {
 		Block blk = getArena().getWorld().getBlockAt(x, getWERegion().getMinimumPoint().getBlockY(), z);
-		return !blk.getType().equals(DefaultMaterial);
+		return !blk.getType().equals(DEFAULT_MATERIAL);
 	}
 
 	public boolean isADACPattern(int x, int z) {
