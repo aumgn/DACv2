@@ -12,9 +12,9 @@ import com.sk89q.worldedit.Vector;
 @SerializableAs("dac-blockvector")
 public class DACBlockVector implements ConfigurationSerializable {
 	
-	int x;
-	int y;
-	int z;
+	private int x;
+	private int y;
+	private int z;
 	
 	public DACBlockVector(int x, int y, int z) {
 		this.x = x;
