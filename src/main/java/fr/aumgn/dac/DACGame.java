@@ -120,7 +120,7 @@ public class DACGame {
 			if (delay > 0) { dacPlayer.getPlayer().setNoDamageTicks(delay + 1); }
 			dacPlayer.tpToStart();
 		} else {
-			dacPlayer.getPlayer().setNoDamageTicks(20);
+			dacPlayer.getPlayer().setNoDamageTicks(DACUtil.TicksPerSeconds);
 		}
 	}
 
@@ -201,9 +201,9 @@ public class DACGame {
 		Player player = (Player)event.getEntity();
 		if (isPlayerTurn(player)) {
 			int health = player.getHealth(); 
-			if (health == 20) {
+			if (health == DACUtil.PlayerMaxHealth) {
 				player.damage(1);
-				player.setHealth(20);
+				player.setHealth(DACUtil.PlayerMaxHealth);
 			} else {
 				player.setHealth(health + 1);
 				player.damage(1);

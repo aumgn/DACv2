@@ -30,6 +30,9 @@ public class Pool extends DACArea {
 	private static final Material SignMaterial = Material.SIGN_POST;
 	private static final Material Air = Material.AIR; 
 	private static final BaseBlock Water = new BaseBlock(DefaultMaterial.getId());
+	
+	private static final int AboveRegionHeight = 5;
+	private static final int AboveRegionMargin = 5;
 
 	public Pool(DACArena arena) {
 		super(arena);
@@ -60,10 +63,10 @@ public class Pool extends DACArea {
 		poolMaxPt = region.getMaximumPoint();
 		
 		minY = poolMaxPt.getBlockY() + 1;
-		maxY = minY + 5;
+		maxY = minY + AboveRegionHeight;
 		
-		minPt = poolMinPt.subtract(5, 0, 5).setY(minY);
-		maxPt = poolMaxPt.add(5, 0, 5).setY(maxY);
+		minPt = poolMinPt.subtract(AboveRegionMargin, 0, AboveRegionMargin).setY(minY);
+		maxPt = poolMaxPt.add(AboveRegionMargin, 0, AboveRegionMargin).setY(maxY);
 		
 		return new CuboidRegion(region.getWorld(), minPt, maxPt);
 	}

@@ -13,17 +13,16 @@ import com.sk89q.worldedit.Vector2D;
 
 public final class DACUtil {
 	
-	private static final double Mod0to1;
-	private static final double Mod1to2;
-	private static final double Mod2to1;
-	private static Pattern pattern = Pattern.compile("<([A-Za-z]+)>"); 
+	public static final int PlayerMaxHealth = 20;
+	public static final int SignMaxChar = 16;
+	public static final int TicksPerSeconds = 20;
 	
-	static {
-		double i = Math.PI / 16;
-		Mod0to1 = Math.cos(7 * i);
-		Mod1to2 = Math.cos(3 * i);
-		Mod2to1 = Math.cos(i);
-	}
+	private static final double SignFaceAngle = Math.PI / 16; 
+	private static final double Mod0to1 = Math.cos(7 * SignFaceAngle);
+	private static final double Mod1to2 = Math.cos(3 * SignFaceAngle);
+	private static final double Mod2to1 = Math.cos(SignFaceAngle);
+	
+	private static final Pattern pattern = Pattern.compile("<([A-Za-z]+)>"); 
 	
 	private DACUtil() {} 
 	

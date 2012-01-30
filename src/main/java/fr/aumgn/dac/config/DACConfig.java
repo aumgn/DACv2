@@ -37,7 +37,7 @@ public class DACConfig {
 		if (tpAfterJump) { tpAfterJumpDelay = tpAfterJumpConfig; }
 		if (tpAfterFail) { tpAfterFailDelay = tpAfterFailConfig; }
 		deathSignFirstLine = DACUtil.parseColorsMarkup(config.getString("death-sign-first-line"));
-		if (deathSignFirstLine.length() > 16) { 
+		if (deathSignFirstLine.length() > DACUtil.SignMaxChar) { 
 			deathSignFirstLine = DACUtil.parseColorsMarkup(config.getDefaults().getString("death-sign-first-line"));
 			DAC.getDACLogger().warning("Config parameter 'death-sign-first-line' is longer than 16. Falling back to defaut value.");
 		}
