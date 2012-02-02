@@ -39,7 +39,7 @@ public class DACConfig {
 		deathSignFirstLine = DACUtil.parseColorsMarkup(config.getString("death-sign-first-line"));
 		if (deathSignFirstLine.length() > DACUtil.SIGN_MAX_CHAR) { 
 			deathSignFirstLine = DACUtil.parseColorsMarkup(config.getDefaults().getString("death-sign-first-line"));
-			DAC.getDACLogger().warning("Config parameter 'death-sign-first-line' is longer than 16. Falling back to defaut value.");
+			DAC.getLogger().warning("Config parameter 'death-sign-first-line' is longer than 16. Falling back to defaut value.");
 		}
 		ConfigurationSection colorsConfig = config.getConfigurationSection("colors");
 		ConfigurationSection defColorsConfig = config.getDefaults().getConfigurationSection("colors");

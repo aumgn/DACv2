@@ -44,7 +44,7 @@ public class DACGame {
 		}
 		lostOrder = new ArrayList<Integer>();
 		playersWhoLostLastTurn = new LinkedHashMap<DACPlayer, Vector>();
-		if (DAC.getDACConfig().getResetOnStart()) {
+		if (DAC.getConfig().getResetOnStart()) {
 			arena.getPool().reset();
 		}
 		send(DACMessage.GameStart);
@@ -96,7 +96,7 @@ public class DACGame {
 		player.getPlayer().setFallDistance(0.0f);
 		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
 		turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
-			DAC.getPlugin(), turnTimeOutRunnable, DAC.getDACConfig().getTurnTimeOut()
+			DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut()
 		);
 	}
 	
@@ -115,8 +115,8 @@ public class DACGame {
 	}
 
 	private void tpAfterJump(DACPlayer dacPlayer) {
-		if (DAC.getDACConfig().getTpAfterJump()) {
-			int delay = DAC.getDACConfig().getTpAfterSuccessDelay();
+		if (DAC.getConfig().getTpAfterJump()) {
+			int delay = DAC.getConfig().getTpAfterSuccessDelay();
 			if (delay > 0) { dacPlayer.getPlayer().setNoDamageTicks(delay + 1); }
 			dacPlayer.tpToStart();
 		} else {
@@ -226,8 +226,8 @@ public class DACGame {
 					Vector vec = getDeathBlockVector(player.getLocation());
 					playersWhoLostLastTurn.put(dacPlayer, vec);
 					onPlayerLoss(dacPlayer, false);
-					if (DAC.getDACConfig().getTpAfterFail()) {
-						dacPlayer.tpToStart(DAC.getDACConfig().getTpAfterFailDelay());
+					if (DAC.getConfig().getTpAfterFail()) {
+						dacPlayer.tpToStart(DAC.getConfig().getTpAfterFailDelay());
 					}
 				} else {
 					send(DACMessage.GameLivesAfterFail.format(dacPlayer.getLives()));
@@ -283,14 +283,14 @@ public class DACGame {
 		}
 		DAC.removeGame(this);
 		Bukkit.getScheduler().cancelTask(turnTimeoutTaskId);
-		if (DAC.getDACConfig().getResetOnEnd()) {
+		if (DAC.getConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
 	}
 
 	public void stop() {
 		Bukkit.getScheduler().cancelTask(turnTimeoutTaskId);
-		if (DAC.getDACConfig().getResetOnEnd()) {
+		if (DAC.getConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
 		send(DACMessage.GameStopped);

@@ -107,7 +107,7 @@ public final class DACUtil {
 			} catch (IllegalArgumentException exc) {
 				String error = "Invalid color identifier in ";
 				error += message + " : " + matcher.group(1);
-				DAC.getDACLogger().warning(error);
+				DAC.getLogger().warning(error);
 			}
 		}
 		matcher.appendTail(parsed);

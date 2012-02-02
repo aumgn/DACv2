@@ -24,12 +24,12 @@ public class DACColors implements Iterable<DACColor> {
 		Set<String> keys = section.getKeys(false);
 		if (colors.size() < 2) {
 			if (keys.size() > 0) {
-				DAC.getDACLogger().warning("Unable to parse colors config, using defaults");
+				DAC.getLogger().warning("Unable to parse colors config, using defaults");
 			}
 			colors = parseColors(defColorsConfig);
 		} else if (colors.size() < keys.size()) {
-			DAC.getDACLogger().warning("Unable to parse all colors");
-			DAC.getDACLogger().warning("Using " + colors.size() + " of " + keys.size());
+			DAC.getLogger().warning("Unable to parse all colors");
+			DAC.getLogger().warning("Using " + colors.size() + " of " + keys.size());
 		}
 	}
 
@@ -40,7 +40,7 @@ public class DACColors implements Iterable<DACColor> {
 			if (section.isConfigurationSection(key)) {
 				DACColor color = parseColor(key, section.getConfigurationSection(key));
 				if (color == null) {
-					DAC.getDACLogger().warning("Unable to parse " + key + " color.");
+					DAC.getLogger().warning("Unable to parse " + key + " color.");
 				} else { 
 					tmpColors.put(key, color); 
 				}

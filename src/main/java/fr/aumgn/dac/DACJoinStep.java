@@ -22,7 +22,7 @@ public class DACJoinStep {
 
 	public DACJoinStep(DACArena arena) {
 		this.arena = arena;
-		colors = DAC.getDACConfig().getColors();
+		colors = DAC.getConfig().getColors();
 		colorsMap = new HashSet<DACColor>();
 		players = new ArrayList<DACPlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {

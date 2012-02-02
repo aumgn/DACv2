@@ -12,6 +12,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.region.DACCuboid;
@@ -33,13 +34,11 @@ public class DACArenas {
 		ConfigurationSerialization.registerClass(DACCylinder.class);
 	}
 
-	private DAC plugin;
 	private YamlConfiguration yaml;
 	private boolean updated;
 	private Map<String, DACArena> arenas;
 
-	public DACArenas(DAC dac) {
-		plugin = dac;
+	public DACArenas() {
 		yaml = new YamlConfiguration();
 		updated = false; 
 
@@ -47,9 +46,9 @@ public class DACArenas {
 		try {
 			yaml.load(getConfigFileName());
 		} catch (IOException exc) {
-			DAC.getDACLogger().warning("Unable to find " + getConfigFileName() + " config file");
+			DAC.getLogger().warning("Unable to find " + getConfigFileName() + " config file");
 		} catch (InvalidConfigurationException exception) {
-			DAC.getDACLogger().warning("Unable to load " + getConfigFileName() + " config file");
+			DAC.getLogger().warning("Unable to load " + getConfigFileName() + " config file");
 		}		
 		arenas = new HashMap<String, DACArena>();
 		Set<String> arenaNames = yaml.getKeys(false);
@@ -61,21 +60,18 @@ public class DACArenas {
 	}
 
 	private void ensureDirectoryExists() {
+		Plugin plugin = DAC.getPlugin();
 		if (!plugin.getDataFolder().exists()) {
 			try {
 				plugin.getDataFolder().mkdir();
 			} catch (SecurityException exc) {
-				DAC.getDACLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
+				DAC.getLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
 			}
 		}
 	}
 
-	public DAC getPlugin() {
-		return plugin;
-	}
-
 	private String getConfigFileName() {
-		return plugin.getDataFolder() + File.separator + "DAC.yml";
+		return DAC.getPlugin().getDataFolder() + File.separator + "DAC.yml";
 	}
 
 	public void createArena(String name, World world) {
@@ -118,7 +114,7 @@ public class DACArenas {
 				ensureDirectoryExists();
 				yaml.save(getConfigFileName());
 			} catch (IOException e) {
-				DAC.getDACLogger().severe("Unable to save " + getConfigFileName() + " config file");
+				DAC.getLogger().severe("Unable to save " + getConfigFileName() + " config file");
 			}
 		}
 	}

@@ -8,7 +8,7 @@ public class ReloadCommand extends BasicCommandExecutor {
 
 	@Override
 	public boolean onCommand(Context context, String[] args) {
-		DAC.reloadDACConfig();
+		DAC.reloadConfig();
 		DAC.reloadMessages();
 		context.success(DACMessage.CmdReloadSuccess);
 		return true;

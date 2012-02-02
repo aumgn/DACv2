@@ -52,7 +52,7 @@ public class Pool extends DACArea {
 		} catch (MaxChangedBlocksException e) {
 			String warning = "A weird exception occured while trying to reset ";
 			warning += getArena().getName() + ". Maybe the pool is too Big ?";
-			DAC.getDACLogger().warning(warning);
+			DAC.getLogger().warning(warning);
 		}
 	}
 	
@@ -121,7 +121,7 @@ public class Pool extends DACArea {
 		block.setData(signBlock.getData());
 		
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, DAC.getDACConfig().getDeathSignFirstLine());
+		sign.setLine(0, DAC.getConfig().getDeathSignFirstLine());
 		sign.update();
 	}
 

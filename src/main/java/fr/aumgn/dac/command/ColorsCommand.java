@@ -11,7 +11,7 @@ public class ColorsCommand extends PlayerCommandExecutor {
 		if (args.length != 0) { return false; }
 		int i = 0;
 		String msg = "";
-		for (DACColor color : DAC.getDACConfig().getColors()) {  
+		for (DACColor color : DAC.getConfig().getColors()) {  
 			msg += getColorMessage(color) + " ";
 			if (i==2) {
 				context.send(msg);
