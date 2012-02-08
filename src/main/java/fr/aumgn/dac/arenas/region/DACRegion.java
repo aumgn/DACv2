@@ -8,9 +8,9 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Region;
 
 public interface DACRegion extends ConfigurationSerializable {
+
+	public Region getRegion(LocalWorld world);
 	
-	Region getRegion(LocalWorld world);
-	
-	Selection getSelection(World world);
+	public Selection getSelection(World world);
 	
 }

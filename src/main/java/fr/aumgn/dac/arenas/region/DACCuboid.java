@@ -15,7 +15,7 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 
 @SerializableAs("dac-cuboid")
-public class DACCuboid implements DACRegion {
+public class DACCuboid extends DACBasicRegion {
 	
 	private DACBlockVector pos1;
 	private DACBlockVector pos2;
@@ -53,7 +53,7 @@ public class DACCuboid implements DACRegion {
 	}
 
 	@Override
-	public Region getRegion(LocalWorld world) {
+	public Region createWERegion(LocalWorld world) {
 		return new CuboidRegion(world, pos1.getVector(), pos2.getVector());
 	}
 

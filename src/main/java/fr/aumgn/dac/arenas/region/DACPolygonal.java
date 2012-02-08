@@ -18,7 +18,7 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-poly")
-public class DACPolygonal implements DACRegion {
+public class DACPolygonal extends DACBasicRegion {
 	
 	private int minY;
 	private int maxY;
@@ -78,7 +78,7 @@ public class DACPolygonal implements DACRegion {
 	}
 
 	@Override
-	public Region getRegion(LocalWorld world) {
+	public Region createWERegion(LocalWorld world) {
 		return new Polygonal2DRegion(world, getWEPoints(), minY, maxY);
 	}
 

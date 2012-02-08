@@ -20,7 +20,7 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-cylinder")
-public class DACCylinder implements DACRegion {
+public class DACCylinder extends DACBasicRegion {
 	
 	public static class DACCylinderSelection extends RegionSelection {
 
@@ -83,7 +83,7 @@ public class DACCylinder implements DACRegion {
 	}
 
 	@Override
-	public Region getRegion(LocalWorld world) {
+	public Region createWERegion(LocalWorld world) {
 		CylinderRegion cyl = new CylinderRegion(world, center.getVector(), radius.getVector(), minY, maxY);
 		// Workaround
 		cyl.setCenter(cyl.getCenter());
