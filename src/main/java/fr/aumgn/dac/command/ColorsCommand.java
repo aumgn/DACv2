@@ -10,13 +10,14 @@ public class ColorsCommand extends PlayerCommandExecutor {
 	public boolean onPlayerCommand(Context context, String[] args) {
 		if (args.length != 0) { return false; }
 		int i = 0;
-		String msg = "";
+		StringBuilder msg = new StringBuilder(32);
 		for (DACColor color : DAC.getConfig().getColors()) {  
-			msg += getColorMessage(color) + " ";
+			msg.append(getColorMessage(color));
+			msg.append(" ");
 			if (i==2) {
 				context.send(msg);
-				msg = "";
 				i = 0;
+				msg = new StringBuilder(32);
 			} else {
 				i++;
 			}
