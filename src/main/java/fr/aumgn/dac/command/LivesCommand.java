@@ -8,11 +8,12 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class LivesCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length <= 1;
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length > 2) {
-			usageError();
-		}
-		
 		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
 			error(DACMessage.CmdLivesNotInGame);

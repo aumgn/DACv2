@@ -8,11 +8,12 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class ResetCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 1;
+	}
+	
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 1) {
-			
-		}
-		
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
 			error(DACMessage.CmdResetUnknown);

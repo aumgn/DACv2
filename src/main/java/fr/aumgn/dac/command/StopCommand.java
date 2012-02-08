@@ -9,11 +9,12 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class StopCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 0;
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length > 0) {
-			
-		}
-		
 		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
 			DACJoinStep joinStep = DAC.getJoinStep(context.getPlayer());

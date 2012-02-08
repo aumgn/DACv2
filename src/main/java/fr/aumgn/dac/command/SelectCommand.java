@@ -10,15 +10,20 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class SelectCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 2 && ( 
+			args[1].equalsIgnoreCase("pool") ||
+			args[1].equalsIgnoreCase("start")
+		);
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 2) {
-			usageError();
-		}
-		
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
 			error(DACMessage.CmdSelectUnknown);
 		}
+		
 		DACArea area = null;
 		DACMessage message = DACMessage.CmdSelectError;
 		if (args[1].equalsIgnoreCase("pool")) {
@@ -27,8 +32,6 @@ public class SelectCommand extends PlayerCommandExecutor {
 		} else if (args[1].equalsIgnoreCase("start")) {
 			area = arena.getStartArea();
 			message = DACMessage.CmdSelectSuccessStart;
-		} else {
-			usageError();
 		}
 		
 		try {

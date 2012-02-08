@@ -5,13 +5,14 @@ import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ColorsCommand extends PlayerCommandExecutor {
+	
+	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 0;
+	}
 
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 0) {
-			usageError();
-		}
-		
 		int i = 0;
 		StringBuilder msg = new StringBuilder(32);
 		for (DACColor color : DAC.getConfig().getColors()) {  

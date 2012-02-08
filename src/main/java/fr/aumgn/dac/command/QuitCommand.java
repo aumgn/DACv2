@@ -11,11 +11,12 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class QuitCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 0;
+	}
+	
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length > 0) {
-			usageError();
-		}
-		
 		Player player = context.getPlayer(); 
 		DACJoinStep joinStep = DAC.getJoinStep(player);
 		if (joinStep != null) {

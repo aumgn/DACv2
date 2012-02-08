@@ -8,11 +8,15 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class GotoCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 1 && ( 
+			args[0].equalsIgnoreCase("diving") ||
+			args[0].equalsIgnoreCase("start")
+		);
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 1) {
-			usageError();
-		}
-		
 		DACGame game = DAC.getGame(context.getPlayer());
 		if (game == null) {
 			error(DACMessage.CmdGotoNotInGame);
@@ -21,8 +25,6 @@ public class GotoCommand extends PlayerCommandExecutor {
 			context.getPlayer().teleport(game.getArena().getDivingBoard().getLocation());
 		} else if (args[0].equalsIgnoreCase("start")) {
 			game.wrapPlayer(context.getPlayer()).tpToStart();
-		} else {
-			usageError();
 		}
 		context.success(DACMessage.CmdGotoSuccess);
 	}

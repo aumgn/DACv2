@@ -7,11 +7,12 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class DefineCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 1;		
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 1) {
-			usageError();
-		}
-		
 		if (DAC.getArenas().get(args[0]) != null) {
 			error(DACMessage.CmdDefineExists);
 		}

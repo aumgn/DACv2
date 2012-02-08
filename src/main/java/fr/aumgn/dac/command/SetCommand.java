@@ -15,11 +15,16 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class SetCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 2 && ( 
+			args[1].equalsIgnoreCase("diving") ||
+			args[1].equalsIgnoreCase("pool") ||
+			args[1].equalsIgnoreCase("start")
+		);
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 2) {
-			usageError();
-		}
-		
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
 			error(DACMessage.CmdSetUnknown);
@@ -31,20 +36,16 @@ public class SetCommand extends PlayerCommandExecutor {
 		}
 		
 		try {
-			DACMessage message = DACMessage.CmdSetError;
 			if (args[1].equalsIgnoreCase("diving")) {
 				arena.getDivingBoard().update(context.getPlayer().getLocation());
-				message = DACMessage.CmdSetSuccessDiving;
+				context.success(DACMessage.CmdSetSuccessDiving);
 			} else if (args[1].equalsIgnoreCase("pool")) {
 				arena.getPool().update(getRegion(context));
-				message = DACMessage.CmdSetSuccessPool;
+				context.success(DACMessage.CmdSetSuccessPool);
 			} else if (args[1].equalsIgnoreCase("start")) {
 				arena.getStartArea().update(getRegion(context));
-				message = DACMessage.CmdSetSuccessStart;
-			} else {
-				usageError();
+				context.success(DACMessage.CmdSetSuccessStart);
 			}
-			context.success(message);
 		} catch (IncompleteRegionException e) {
 			error(DACMessage.CmdSetIncompleteRegion);
 		} catch (InvalidRegionType exc) {

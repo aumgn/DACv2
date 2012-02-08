@@ -14,11 +14,12 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class KickCommand extends PlayerCommandExecutor {
 
 	@Override
+	public boolean checkUsage(String[] args) {
+		return args.length == 1;
+	}
+
+	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		if (args.length != 1) {
-			usageError();
-		}
-		
 		Player sender = context.getPlayer(); 
 		
 		DACGame game = DAC.getGame(sender);
