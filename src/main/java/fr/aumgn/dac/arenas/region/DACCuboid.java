@@ -10,11 +10,12 @@ import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 
 @SerializableAs("dac-cuboid")
-public class DACCuboid implements DACRegion<CuboidRegion> {
+public class DACCuboid implements DACRegion {
 	
 	private DACBlockVector pos1;
 	private DACBlockVector pos2;
@@ -52,7 +53,7 @@ public class DACCuboid implements DACRegion<CuboidRegion> {
 	}
 
 	@Override
-	public CuboidRegion getRegion(LocalWorld world) {
+	public Region getRegion(LocalWorld world) {
 		return new CuboidRegion(world, pos1.getVector(), pos2.getVector());
 	}
 

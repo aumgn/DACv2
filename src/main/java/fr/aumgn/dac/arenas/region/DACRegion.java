@@ -7,9 +7,9 @@ import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Region;
 
-public interface DACRegion<T extends Region> extends ConfigurationSerializable {
+public interface DACRegion extends ConfigurationSerializable {
 	
-	T getRegion(LocalWorld world);
+	Region getRegion(LocalWorld world);
 	
 	Selection getSelection(World world);
 	

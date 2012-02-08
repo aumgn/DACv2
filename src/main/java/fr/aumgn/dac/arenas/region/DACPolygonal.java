@@ -13,11 +13,12 @@ import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
+import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-poly")
-public class DACPolygonal implements DACRegion<Polygonal2DRegion> {
+public class DACPolygonal implements DACRegion {
 	
 	private int minY;
 	private int maxY;
@@ -77,7 +78,7 @@ public class DACPolygonal implements DACRegion<Polygonal2DRegion> {
 	}
 
 	@Override
-	public Polygonal2DRegion getRegion(LocalWorld world) {
+	public Region getRegion(LocalWorld world) {
 		return new Polygonal2DRegion(world, getWEPoints(), minY, maxY);
 	}
 

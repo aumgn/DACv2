@@ -19,7 +19,7 @@ import fr.aumgn.dac.exception.InvalidRegionType;
 public class DACArea {
 
 	private DACArena arena;
-	private DACRegion<?> region;
+	private DACRegion region;
 
 	public DACArea(DACArena arena) {
 		this.arena = arena;
@@ -46,7 +46,7 @@ public class DACArea {
 		return arena;
 	}
 	
-	public DACRegion<?> getRegion() {
+	public DACRegion getRegion() {
 		return region;
 	}
 
@@ -54,7 +54,7 @@ public class DACArea {
 		return region.getRegion(arena.getWEWorld());
 	}
 
-	public void setRegion(DACRegion<?> region) {
+	public void setRegion(DACRegion region) {
 		this.region = region;
 	}
 

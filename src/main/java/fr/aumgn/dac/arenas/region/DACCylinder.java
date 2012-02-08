@@ -14,12 +14,13 @@ import com.sk89q.worldedit.bukkit.selections.RegionSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.CylinderRegionSelector;
+import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-cylinder")
-public class DACCylinder implements DACRegion<CylinderRegion> {
+public class DACCylinder implements DACRegion {
 	
 	public static class DACCylinderSelection extends RegionSelection {
 
@@ -82,7 +83,7 @@ public class DACCylinder implements DACRegion<CylinderRegion> {
 	}
 
 	@Override
-	public CylinderRegion getRegion(LocalWorld world) {
+	public Region getRegion(LocalWorld world) {
 		CylinderRegion cyl = new CylinderRegion(world, center.getVector(), radius.getVector(), minY, maxY);
 		// Workaround
 		cyl.setCenter(cyl.getCenter());
