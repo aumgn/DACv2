@@ -23,7 +23,7 @@ public class StartCommand extends PlayerCommandExecutor {
 			return true;
 		}
 		DACGame game = new DACGame(joinStep);
-		DAC.setGame(game);
+		DAC.addGame(game);
 		DAC.removeJoinStep(joinStep);
 		return true;
 	}

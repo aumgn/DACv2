@@ -91,7 +91,7 @@ public final class DAC {
 		return null;
 	}
 
-	public static void setJoinStep(DACJoinStep joinStep) {
+	public static void addJoinStep(DACJoinStep joinStep) {
 		joinSteps.put(joinStep.getArena().getName(), joinStep);
 	}
 
@@ -106,7 +106,7 @@ public final class DAC {
 		return null;
 	}
 
-	public static void setGame(DACGame game) {
+	public static void addGame(DACGame game) {
 		games.put(game.getArena().getName(), game);
 	}
 

@@ -29,7 +29,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 		DACJoinStep joinStep = DAC.getJoinStep(arena);
 		if (joinStep == null) {
 			joinStep = new DACJoinStep(arena);
-			DAC.setJoinStep(joinStep);
+			DAC.addJoinStep(joinStep);
 		}
 		if (joinStep.isMaxReached()) {
 			context.error(DACMessage.CmdJoinMaxReached.format(joinStep.getMaxPlayers()));
