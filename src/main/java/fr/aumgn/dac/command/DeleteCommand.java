@@ -9,16 +9,17 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class DeleteCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
-		if (args.length != 1) { return false; }
+	public void onPlayerCommand(Context context, String[] args) {
+		if (args.length != 1) {
+			usageError();
+		}
+		
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
-			context.error(DACMessage.CmdDeleteUnknown);
-			return true;
+			error(DACMessage.CmdDeleteUnknown);
 		}
 		if (DAC.getGame(arena) != null) {
-			context.error(DACMessage.CmdDeleteInGame);
-			return true;
+			error(DACMessage.CmdDeleteInGame);
 		}
 		DACJoinStep joinStep = DAC.getJoinStep(arena);
 		if (joinStep != null) {
@@ -27,7 +28,6 @@ public class DeleteCommand extends PlayerCommandExecutor {
 		}
 		DAC.getArenas().removeArena(arena);
 		context.success(DACMessage.CmdDeleteSuccess);
-		return true;
 	}
 
 }

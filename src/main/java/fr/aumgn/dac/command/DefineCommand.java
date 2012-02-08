@@ -7,15 +7,16 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class DefineCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
-		if (args.length != 1) { return false; }
+	public void onPlayerCommand(Context context, String[] args) {
+		if (args.length != 1) {
+			usageError();
+		}
+		
 		if (DAC.getArenas().get(args[0]) != null) {
-			context.error(DACMessage.CmdDefineExists);
-			return true;
+			error(DACMessage.CmdDefineExists);
 		}
 		DAC.getArenas().createArena(args[0], context.getPlayer().getWorld());
 		context.success(DACMessage.CmdDefineSuccess);
-		return true;
 	}
 
 }

@@ -7,8 +7,11 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class ColorsCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
-		if (args.length != 0) { return false; }
+	public void onPlayerCommand(Context context, String[] args) {
+		if (args.length != 0) {
+			usageError();
+		}
+		
 		int i = 0;
 		StringBuilder msg = new StringBuilder(32);
 		for (DACColor color : DAC.getConfig().getColors()) {  
@@ -22,8 +25,10 @@ public class ColorsCommand extends PlayerCommandExecutor {
 				i++;
 			}
 		}
-		if (i!=0) { context.send(msg); }
-		return true;
+		
+		if (i!=0) {
+			context.send(msg);
+		}
 	}
 
 	private String getColorMessage(DACColor color) {

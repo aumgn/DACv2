@@ -11,21 +11,23 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class StartCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
+	public void onPlayerCommand(Context context, String[] args) {
+		if (args.length > 0) {
+			usageError();
+		}
+		
 		Player player = context.getPlayer();
 		DACJoinStep joinStep = DAC.getJoinStep(player);
 		if (joinStep == null) {
-			context.error(DACMessage.CmdStartNotInGame);
-			return true;
+			error(DACMessage.CmdStartNotInGame);
 		}
 		if (!joinStep.isMinReached()) {
-			context.error(DACMessage.CmdStartMinNotReached);
-			return true;
+			error(DACMessage.CmdStartMinNotReached);
 		}
+		
 		DACGame game = new DACGame(joinStep);
 		DAC.addGame(game);
 		DAC.removeJoinStep(joinStep);
-		return true;
 	}
 
 }

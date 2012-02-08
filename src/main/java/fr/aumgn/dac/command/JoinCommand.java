@@ -11,32 +11,33 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class JoinCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
+	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
+		
 		if (DAC.isPlayerInGame(player)) {
-			context.error(DACMessage.CmdJoinAlreadyPlaying);
-			return true;	
+			error(DACMessage.CmdJoinAlreadyPlaying);
 		}
+		
 		DACArena arena = DAC.getArenas().get(player);
 		if (arena == null) {
-			context.error(DACMessage.CmdJoinNotInStart);
-			return true;
+			error(DACMessage.CmdJoinNotInStart);
 		}
+		
 		if (DAC.getGame(arena) != null) {
-			context.error(DACMessage.CmdJoinInGame);
-			return true;
+			error(DACMessage.CmdJoinInGame);
 		}
+		
 		DACJoinStep joinStep = DAC.getJoinStep(arena);
 		if (joinStep == null) {
 			joinStep = new DACJoinStep(arena);
 			DAC.addJoinStep(joinStep);
 		}
+		
 		if (joinStep.isMaxReached()) {
-			context.error(DACMessage.CmdJoinMaxReached.format(joinStep.getMaxPlayers()));
-			return true;
+			error(DACMessage.CmdJoinMaxReached.format(joinStep.getMaxPlayers()));
 		}
+		
 		joinStep.addPlayer(player, args);
-		return true;
 	}
 
 }

@@ -11,23 +11,24 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class QuitCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
+	public void onPlayerCommand(Context context, String[] args) {
 		if (args.length > 0) {
-			return false;
+			usageError();
 		}
+		
 		Player player = context.getPlayer(); 
 		DACJoinStep joinStep = DAC.getJoinStep(player);
 		if (joinStep != null) {
 			joinStep.remove(player);
-			return true;
+			return;
 		}
+		
 		DACGame game = DAC.getGame(player);
 		if (game != null) {
 			game.onPlayerQuit(player);
-			return true;
+			return;
 		}
-		context.error(DACMessage.CmdQuitNotInGame);
-		return true;
+		error(DACMessage.CmdQuitNotInGame);
 	}
 
 }

@@ -15,20 +15,23 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class SetCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
-		if (args.length != 2) { return false; }
+	public void onPlayerCommand(Context context, String[] args) {
+		if (args.length != 2) {
+			usageError();
+		}
+		
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
-			context.error(DACMessage.CmdSetUnknown);
-			return true;
+			error(DACMessage.CmdSetUnknown);
 		}
+		
 		String currentWorld = context.getPlayer().getWorld().getName();
 		if (!arena.getWorld().getName().equals(currentWorld)) {
-			context.error(DACMessage.CmdSetWrongWorld);
-			return true;
+			error(DACMessage.CmdSetWrongWorld);
 		}
+		
 		try {
-			DACMessage message;
+			DACMessage message = DACMessage.CmdSetError;
 			if (args[1].equalsIgnoreCase("diving")) {
 				arena.getDivingBoard().update(context.getPlayer().getLocation());
 				message = DACMessage.CmdSetSuccessDiving;
@@ -39,17 +42,14 @@ public class SetCommand extends PlayerCommandExecutor {
 				arena.getStartArea().update(getRegion(context));
 				message = DACMessage.CmdSetSuccessStart;
 			} else {
-				return false;
+				usageError();
 			}
 			context.success(message);
-			return true;			
 		} catch (IncompleteRegionException e) {
-			context.error(DACMessage.CmdSetIncompleteRegion);
-			return true;
+			error(DACMessage.CmdSetIncompleteRegion);
 		} catch (InvalidRegionType exc) {
 			context.error(DACMessage.CmdSetError);
-			context.error(exc.getMessage());
-			return true;
+			error(exc.getMessage());
 		}
 	}
 

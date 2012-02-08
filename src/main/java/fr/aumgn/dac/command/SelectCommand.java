@@ -10,15 +10,17 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 public class SelectCommand extends PlayerCommandExecutor {
 
 	@Override
-	public boolean onPlayerCommand(Context context, String[] args) {
-		if (args.length != 2) { return false; }
+	public void onPlayerCommand(Context context, String[] args) {
+		if (args.length != 2) {
+			usageError();
+		}
+		
 		DACArena arena = DAC.getArenas().get(args[0]);
 		if (arena == null) {
-			context.error(DACMessage.CmdSelectUnknown);
-			return true;
+			error(DACMessage.CmdSelectUnknown);
 		}
-		DACArea area;
-		DACMessage message;
+		DACArea area = null;
+		DACMessage message = DACMessage.CmdSelectError;
 		if (args[1].equalsIgnoreCase("pool")) {
 			area = arena.getPool();
 			message = DACMessage.CmdSelectSuccessPool;
@@ -26,16 +28,15 @@ public class SelectCommand extends PlayerCommandExecutor {
 			area = arena.getStartArea();
 			message = DACMessage.CmdSelectSuccessStart;
 		} else {
-			return false;
+			usageError();
 		}
+		
 		try {
 			DAC.getWorldEdit().setSelection(context.getPlayer(), area.getSelection());
 			context.success(message);
-			return true;
 		} catch (InvalidRegionType exc) {
 			context.error(DACMessage.CmdSelectError);
-			context.error(exc.getMessage());
-			return true;
+			error(exc.getMessage());
 		}
 	}
 

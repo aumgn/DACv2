@@ -7,11 +7,14 @@ import fr.aumgn.utils.command.BasicCommandExecutor;
 public class ReloadCommand extends BasicCommandExecutor {
 
 	@Override
-	public boolean onCommand(Context context, String[] args) {
+	public void onCommand(Context context, String[] args) {
+		if (args.length > 0) {
+			usageError();
+		}
+		
 		DAC.reloadConfig();
 		DAC.reloadMessages();
 		context.success(DACMessage.CmdReloadSuccess);
-		return true;
 	}
 
 }
