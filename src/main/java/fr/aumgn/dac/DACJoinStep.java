@@ -95,13 +95,17 @@ public class DACJoinStep {
 		}
 		addPlayer(player, color);
 	}
+	
+	public void listPlayersTo(Player player) {
+		player.sendMessage(DACMessage.JoinCurrentPlayers.getValue());
+		for (DACPlayer dacPlayer : players) {
+			player.sendMessage(DACMessage.JoinPlayerList.format(dacPlayer.getDisplayName()));
+		}
+	}
 
 	private void addPlayer(Player player, DACColor color) {
 		if (players.size() > 0) {
-			player.sendMessage(DACMessage.JoinCurrentPlayers.getValue());
-			for (DACPlayer dacPlayer : players) {
-				player.sendMessage(DACMessage.JoinPlayerList.format(dacPlayer.getDisplayName()));
-			}
+			listPlayersTo(player);
 		}
 		DACPlayer dacPlayer = new DACPlayer(player, color);
 		players.add(dacPlayer);

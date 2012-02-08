@@ -23,6 +23,10 @@ commands:
         usage: "Utilisation: /<command> <arene>"
         permission: 'dac.cmd.delete'
         aliases: ["dac-remove", "dac-del", "dac-rm"]
+    dac-arenas:
+        description: 'Liste les arenes'
+        usage: '/<command>'
+        permission: 'dac.cmd.arenas'
     dac-set:
         description: 'Assigne une zone ou un emplacement.'
         usage: 'Utilisation: /<command> <arene> pool|start|diving'
@@ -60,11 +64,11 @@ commands:
         usage: 'Utilisation: /<command>'
         permission: 'dac.cmd.quit'
         aliases: ["dac-q"]
-    dac-lives:
+    dac-list:
         description: 'Affiche le nombre de vies du joueur selectionne ou de tous les joueurs'
         usage: 'Utilisation: /<command> [<joueur>]'
         permission: 'dac.cmd.lives'
-        aliases: ["dac-players", "dac-list"]
+        aliases: ["dac-players", "dac-lives"]
     dac-goto:
         description: 'Teleporte le joueur sur le plongeoir ou a sa position de depart'
         usage: 'Utilisation: /<command> diving|start'
@@ -105,6 +109,7 @@ permissions:
             dac.cmd.reload: true
             dac.cmd.define: true
             dac.cmd.delete: true
+            dac.cmd.arenas: true
             dac.cmd.set: true
             dac.cmd.select: true            
 

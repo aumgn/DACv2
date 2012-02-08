@@ -9,6 +9,7 @@ public class DACCommand extends CommandDispatcher {
 		registerCommand("reload", new ReloadCommand());
 		registerCommand("define", new DefineCommand());
 		registerCommand("delete", new DeleteCommand());
+		registerCommand("arenas", new ArenasCommand());
 		registerCommand("set", new SetCommand());
 		registerCommand("select", new SelectCommand());
 		
@@ -18,7 +19,7 @@ public class DACCommand extends CommandDispatcher {
 
 		registerCommand("join", new JoinCommand());
 		registerCommand("start", new StartCommand());
-		registerCommand("lives", new LivesCommand());
+		registerCommand("list", new ListCommand());
 		registerCommand("goto", new GotoCommand());
 		registerCommand("quit", new QuitCommand());
 		registerCommand("colors", new ColorsCommand());

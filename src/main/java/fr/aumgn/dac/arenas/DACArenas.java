@@ -3,6 +3,7 @@ package fr.aumgn.dac.arenas;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 import fr.aumgn.dac.arenas.vector.DACLocation;
 
-public class DACArenas {
+public class DACArenas implements Iterable<DACArena> {
 	
 	static {
 		ConfigurationSerialization.registerClass(DACArena.class);
@@ -117,6 +118,11 @@ public class DACArenas {
 				DAC.getLogger().severe("Unable to save " + getConfigFileName() + " config file");
 			}
 		}
+	}
+
+	@Override
+	public Iterator<DACArena> iterator() {
+		return arenas.values().iterator();
 	}
 
 }

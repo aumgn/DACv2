@@ -11,6 +11,8 @@ public enum DACMessage {
 	CmdDeleteUnknown        ("command.delete.unknown"),
 	CmdDeleteInGame         ("command.delete.in-game"),
 	CmdDeleteSuccess        ("command.delete.success"),
+	CmdArenasList           ("command.arenas.list"),
+	CmdArenasArena          ("command.arenas.arena"),
 	CmdGotoNotInGame        ("command.goto.not-in-game"),
 	CmdGotoSuccess          ("command.goto.success"),
 	CmdJoinAlreadyPlaying   ("command.join.already-playing"),

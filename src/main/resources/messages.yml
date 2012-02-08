@@ -6,6 +6,9 @@ command:
         unknown: "Aucune arène ne porte ce nom"
         in-game: "Une partie est en cours dans cette arène."
         success: "Arène supprimée avec succés."
+    arenas:
+        list: "<blue>Liste des arenes"
+        arena: "  <green>%1$s <white>in %2$s"
     goto:
         not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         success: "Poof !"
