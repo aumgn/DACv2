@@ -24,7 +24,7 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 import fr.aumgn.dac.arenas.vector.DACLocation;
 
 public class DACArenas implements Iterable<DACArena> {
-	
+
 	static {
 		ConfigurationSerialization.registerClass(DACArena.class);
 		ConfigurationSerialization.registerClass(DACBlockVector.class);

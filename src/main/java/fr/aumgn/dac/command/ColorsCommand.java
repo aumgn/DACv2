@@ -5,7 +5,7 @@ import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ColorsCommand extends PlayerCommandExecutor {
-	
+
 	@Override
 	public boolean checkUsage(String[] args) {
 		return args.length == 0;
@@ -26,7 +26,7 @@ public class ColorsCommand extends PlayerCommandExecutor {
 				i++;
 			}
 		}
-		
+
 		if (i!=0) {
 			context.send(msg);
 		}

@@ -45,7 +45,7 @@ public class DACArea {
 	public DACArena getArena() {
 		return arena;
 	}
-	
+
 	public DACRegion getRegion() {
 		return region;
 	}

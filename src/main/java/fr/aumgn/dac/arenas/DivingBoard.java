@@ -19,7 +19,7 @@ public class DivingBoard {
 	public Object getDACLocation() {
 		return dacLocation;
 	}
-	
+
 	public void setDACLocation(DACLocation dacLocation) {
 		this.dacLocation = dacLocation;
 	}

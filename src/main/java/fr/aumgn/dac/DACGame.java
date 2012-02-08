@@ -20,7 +20,7 @@ import fr.aumgn.dac.arenas.Pool;
 import fr.aumgn.dac.config.DACMessage;
 
 public class DACGame {
-	
+
 	private final Runnable turnTimeOutRunnable = new Runnable() { 
 		@Override
 		public void run() { turnTimedOut(); }
@@ -96,10 +96,10 @@ public class DACGame {
 		player.getPlayer().setFallDistance(0.0f);
 		player.getPlayer().teleport(arena.getDivingBoard().getLocation());
 		turnTimeoutTaskId = Bukkit.getScheduler().scheduleAsyncDelayedTask(
-			DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut()
-		);
+				DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut()
+				);
 	}
-	
+
 	private void turnTimedOut() {
 		DACPlayer player = players[turn];
 		send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
@@ -196,7 +196,7 @@ public class DACGame {
 			}
 		}
 	}
-	
+
 	public void onPlayerDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
 		if (isPlayerTurn(player)) {
@@ -241,7 +241,7 @@ public class DACGame {
 	public void onPlayerQuit(Player player) {
 		onPlayerQuit(wrapPlayer(player));
 	}
-	
+
 	public void onPlayerQuit(DACPlayer dacPlayer) { 
 		if (!dacPlayer.hasLost()) {
 			send(DACMessage.GamePlayerQuit.format(dacPlayer.getDisplayName()));

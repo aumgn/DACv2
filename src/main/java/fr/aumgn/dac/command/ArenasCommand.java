@@ -11,7 +11,7 @@ public class ArenasCommand extends BasicCommandExecutor {
 	public boolean checkUsage(String[] args) {
 		return args.length == 0;
 	}
-	
+
 	@Override
 	public void onCommand(Context context, String[] args) {
 		context.send(DACMessage.CmdArenasList);

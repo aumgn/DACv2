@@ -19,21 +19,21 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-poly")
 public class DACPolygonal extends DACBasicRegion {
-	
+
 	private int minY;
 	private int maxY;
 	private List<DACBlockVector2D> points;
-	
+
 	public DACPolygonal(int minY, int maxY, List<DACBlockVector2D> points) {
 		this.minY = minY;
 		this.maxY = maxY;
 		this.points = points;
 	}
-	
+
 	public DACPolygonal() {
 		this(0, 0, new ArrayList<DACBlockVector2D>());
 	}
-	
+
 	public DACPolygonal(Polygonal2DRegion region) {
 		this.minY = region.getMininumY();
 		this.maxY = region.getMaximumY();
@@ -41,9 +41,9 @@ public class DACPolygonal extends DACBasicRegion {
 		for (BlockVector2D pt : region.getPoints()) {
 			points.add(new DACBlockVector2D(pt));
 		}
-		
+
 	}
-	
+
 	public static DACPolygonal deserialize(Map<String, Object> map) {
 		int i = 1;
 		DACPolygonal poly = new DACPolygonal();
@@ -68,7 +68,7 @@ public class DACPolygonal extends DACBasicRegion {
 		}
 		return map;
 	}
-	
+
 	private List<BlockVector2D> getWEPoints() {
 		List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
 		for (DACBlockVector2D point : points) {
@@ -86,5 +86,5 @@ public class DACPolygonal extends DACBasicRegion {
 	public Selection getSelection(World world) {
 		return new Polygonal2DSelection(world, getWEPoints(), minY, maxY);
 	}
-	
+
 }

@@ -25,7 +25,7 @@ public class StartCommand extends PlayerCommandExecutor {
 		if (!joinStep.isMinReached()) {
 			error(DACMessage.CmdStartMinNotReached);
 		}
-		
+
 		DACGame game = new DACGame(joinStep);
 		DAC.addGame(game);
 		DAC.removeJoinStep(joinStep);

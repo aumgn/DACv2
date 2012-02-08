@@ -16,25 +16,25 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector;
 
 @SerializableAs("dac-cuboid")
 public class DACCuboid extends DACBasicRegion {
-	
+
 	private DACBlockVector pos1;
 	private DACBlockVector pos2;
-	
-	
+
+
 	private DACCuboid(DACBlockVector pos1, DACBlockVector pos2) {
 		this.pos1 = pos1;
 		this.pos2 = pos2;
 	}
-	
+
 	public DACCuboid() {
 		this(new DACBlockVector(), new DACBlockVector());
 	}
-	
+
 	public DACCuboid(CuboidRegion region) {
 		this(
-			new DACBlockVector(region.getPos1()), 
-			new DACBlockVector(region.getPos2())
-		);
+				new DACBlockVector(region.getPos1()), 
+				new DACBlockVector(region.getPos2())
+				);
 	}
 
 	public static DACCuboid deserialize(Map<String, Object> map) {

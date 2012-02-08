@@ -18,13 +18,13 @@ public class ListCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
-		
+
 		DACJoinStep joinStep = DAC.getJoinStep(player);
 		if (joinStep != null) {
 			joinStep.listPlayersTo(player);
 			return;			
 		}
-		
+
 		DACGame game = DAC.getGame(context.getPlayer());
 		if (game != null) {
 			game.displayLives(context.getPlayer());

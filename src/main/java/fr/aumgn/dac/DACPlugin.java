@@ -25,7 +25,7 @@ public class DACPlugin extends JavaPlugin {
 		if (!new File(getDataFolder(), "messages.yml").exists()) {
 			saveResource("messages.yml", false);
 		}
-		
+
 		Plugin worldEdit = pm.getPlugin("WorldEdit");
 		if (!(worldEdit instanceof WorldEditPlugin)) {
 			throw new WorldEditNotLoaded();

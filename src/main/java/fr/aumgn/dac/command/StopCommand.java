@@ -24,7 +24,7 @@ public class StopCommand extends PlayerCommandExecutor {
 			joinStep.stop();
 			DAC.removeJoinStep(joinStep);
 		}
-		
+
 		game.stop();
 		DAC.removeGame(game);
 	}

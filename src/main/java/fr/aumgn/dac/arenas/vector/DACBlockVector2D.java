@@ -11,7 +11,7 @@ import com.sk89q.worldedit.Vector2D;
 
 @SerializableAs("dac-blockvector2d")
 public class DACBlockVector2D implements ConfigurationSerializable {
-	
+
 	private int x;
 	private int z;
 
@@ -19,11 +19,11 @@ public class DACBlockVector2D implements ConfigurationSerializable {
 		this.x = x;
 		this.z = z;
 	}
-	
+
 	public DACBlockVector2D() {
 		this(0, 0); 
 	}
-	
+
 	public DACBlockVector2D(Vector2D vector) {
 		this(vector.getBlockX(), vector.getBlockZ());
 	}
@@ -42,9 +42,9 @@ public class DACBlockVector2D implements ConfigurationSerializable {
 		map.put("z", z);
 		return map;
 	}
-	
+
 	public BlockVector2D getVector() {
 		return new BlockVector2D(x, z);
 	}
-	
+
 }

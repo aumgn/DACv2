@@ -95,7 +95,7 @@ public class DACJoinStep {
 		}
 		addPlayer(player, color);
 	}
-	
+
 	public void listPlayersTo(Player player) {
 		player.sendMessage(DACMessage.JoinCurrentPlayers.getValue());
 		for (DACPlayer dacPlayer : players) {

@@ -14,7 +14,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 	public boolean checkUsage(String[] args) {
 		return args.length == 0;
 	}
-	
+
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer(); 
@@ -23,7 +23,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 			joinStep.remove(player);
 			return;
 		}
-		
+
 		DACGame game = DAC.getGame(player);
 		if (game != null) {
 			game.onPlayerQuit(player);

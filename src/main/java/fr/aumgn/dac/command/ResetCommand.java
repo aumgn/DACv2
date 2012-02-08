@@ -11,7 +11,7 @@ public class ResetCommand extends PlayerCommandExecutor {
 	public boolean checkUsage(String[] args) {
 		return args.length == 1;
 	}
-	
+
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		DACArena arena = DAC.getArenas().get(args[0]);

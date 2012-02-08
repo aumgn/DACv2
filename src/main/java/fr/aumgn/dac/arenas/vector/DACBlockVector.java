@@ -11,11 +11,11 @@ import com.sk89q.worldedit.Vector;
 
 @SerializableAs("dac-blockvector")
 public class DACBlockVector implements ConfigurationSerializable {
-	
+
 	private int x;
 	private int y;
 	private int z;
-	
+
 	public DACBlockVector(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
@@ -45,7 +45,7 @@ public class DACBlockVector implements ConfigurationSerializable {
 		map.put("z", z);
 		return map;
 	}
-	
+
 	public BlockVector getVector() {
 		return new BlockVector(x, y, z); 
 	}

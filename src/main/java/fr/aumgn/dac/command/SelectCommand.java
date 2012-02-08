@@ -12,9 +12,9 @@ public class SelectCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean checkUsage(String[] args) {
 		return args.length == 2 && ( 
-			args[1].equalsIgnoreCase("pool") ||
-			args[1].equalsIgnoreCase("start")
-		);
+				args[1].equalsIgnoreCase("pool") ||
+				args[1].equalsIgnoreCase("start")
+				);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 		if (arena == null) {
 			error(DACMessage.CmdSelectUnknown);
 		}
-		
+
 		DACArea area = null;
 		DACMessage message = DACMessage.CmdSelectError;
 		if (args[1].equalsIgnoreCase("pool")) {
@@ -33,7 +33,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 			area = arena.getStartArea();
 			message = DACMessage.CmdSelectSuccessStart;
 		}
-		
+
 		try {
 			DAC.getWorldEdit().setSelection(context.getPlayer(), area.getSelection());
 			context.success(message);

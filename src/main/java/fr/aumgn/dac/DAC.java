@@ -27,7 +27,7 @@ public final class DAC {
 	private static DACArenas arenas; 
 	private static Map<String, DACJoinStep> joinSteps;
 	private static Map<String, DACGame> games;
-	
+
 	private DAC() {}
 
 	public static void init(DACPlugin plugin, WorldEditPlugin worldEdit) {
@@ -42,15 +42,15 @@ public final class DAC {
 		reloadConfig();
 		reloadMessages();
 	}
-	
+
 	public static Plugin getPlugin() {
 		return plugin;
 	}
-	
+
 	public static Logger getLogger() {
 		return plugin.getLogger();
 	}
-	
+
 	public static void reloadConfig() {
 		plugin.reloadConfig();
 		config = new DACConfig(plugin.getConfig());
@@ -79,11 +79,11 @@ public final class DAC {
 	public static DACArenas getArenas() {
 		return arenas;
 	}
-	
+
 	public static DACJoinStep getJoinStep(DACArena arena) {
 		return joinSteps.get(arena.getName());
 	}
-	
+
 	public static DACJoinStep getJoinStep(Player player) {
 		for (DACJoinStep joinStep : joinSteps.values()) {
 			if (joinStep.contains(player)) { return joinStep; }

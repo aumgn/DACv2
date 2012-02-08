@@ -21,7 +21,7 @@ public class KickCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player sender = context.getPlayer(); 
-		
+
 		DACGame game = DAC.getGame(sender);
 		if (game != null) {
 			List<Player> list = matchPlayer(context, args[0]);
@@ -32,7 +32,7 @@ public class KickCommand extends PlayerCommandExecutor {
 			}
 			return;
 		}
-		
+
 		DACJoinStep joinStep = DAC.getJoinStep(sender);
 		if (joinStep != null) {
 			List<Player> list = matchPlayer(context, args[0]);
@@ -43,10 +43,10 @@ public class KickCommand extends PlayerCommandExecutor {
 			}
 			return;
 		}
-		
+
 		error(DACMessage.CmdKickNotInGame);
 	}
-	
+
 	public List<Player> matchPlayer(Context context, String arg) {
 		List<Player> list = Bukkit.matchPlayer(arg);
 		if (list.isEmpty()) {
@@ -54,5 +54,5 @@ public class KickCommand extends PlayerCommandExecutor {
 		}
 		return list;
 	}
-	
+
 }

@@ -10,9 +10,9 @@ public class GotoCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean checkUsage(String[] args) {
 		return args.length == 1 && ( 
-			args[0].equalsIgnoreCase("diving") ||
-			args[0].equalsIgnoreCase("start")
-		);
+				args[0].equalsIgnoreCase("diving") ||
+				args[0].equalsIgnoreCase("start")
+				);
 	}
 
 	@Override

@@ -17,10 +17,10 @@ public class SetCommand extends PlayerCommandExecutor {
 	@Override
 	public boolean checkUsage(String[] args) {
 		return args.length == 2 && ( 
-			args[1].equalsIgnoreCase("diving") ||
-			args[1].equalsIgnoreCase("pool") ||
-			args[1].equalsIgnoreCase("start")
-		);
+				args[1].equalsIgnoreCase("diving") ||
+				args[1].equalsIgnoreCase("pool") ||
+				args[1].equalsIgnoreCase("start")
+				);
 	}
 
 	@Override
@@ -29,12 +29,12 @@ public class SetCommand extends PlayerCommandExecutor {
 		if (arena == null) {
 			error(DACMessage.CmdSetUnknown);
 		}
-		
+
 		String currentWorld = context.getPlayer().getWorld().getName();
 		if (!arena.getWorld().getName().equals(currentWorld)) {
 			error(DACMessage.CmdSetWrongWorld);
 		}
-		
+
 		try {
 			if (args[1].equalsIgnoreCase("diving")) {
 				arena.getDivingBoard().update(context.getPlayer().getLocation());

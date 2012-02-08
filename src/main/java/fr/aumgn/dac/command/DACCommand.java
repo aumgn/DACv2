@@ -12,7 +12,7 @@ public class DACCommand extends CommandDispatcher {
 		registerCommand("arenas", new ArenasCommand());
 		registerCommand("set", new SetCommand());
 		registerCommand("select", new SelectCommand());
-		
+
 		registerCommand("kick", new KickCommand());
 		registerCommand("stop", new StopCommand());
 		registerCommand("reset", new ResetCommand());
