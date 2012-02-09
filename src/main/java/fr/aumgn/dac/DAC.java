@@ -1,7 +1,5 @@
 package fr.aumgn.dac;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.plugin.Plugin;
@@ -12,7 +10,6 @@ import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.bukkit.DACPlugin;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.stage.StageManager;
 
 public final class DAC {
@@ -22,7 +19,6 @@ public final class DAC {
 	private static DACConfig config;
 	private static DACArenas arenas; 
 	private static StageManager stageManager;
-	private static Map<String, GameMode> modes;
 
 	private DAC() {}
 
@@ -34,7 +30,6 @@ public final class DAC {
 		DAC.worldEdit = worldEdit;
 		arenas = new DACArenas();
 		stageManager = new StageManager();
-		modes = new HashMap<String, GameMode>(); 
 		reloadConfig();
 		reloadMessages();
 	}
@@ -66,10 +61,6 @@ public final class DAC {
 	
 	public static StageManager getStageManager() {
 		return stageManager;
-	}
-	
-	public static GameMode getMode(String name) {
-		return modes.get(name);
 	}
 	
 	public static WorldEditPlugin getWorldEdit() {
