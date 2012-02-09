@@ -1,8 +1,16 @@
 package fr.aumgn.dac.game.mode.default_;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
 import fr.aumgn.dac.config.DACMessage;
@@ -14,10 +22,14 @@ public class DefaultGameModeHandler extends SimpleGameModeHandler {
 	
 	private Game game;
 	private DACArena arena;
+	private List<String> lostOrder;
+	private Map<DefaultGamePlayer, Vector> playersWhoLostLastTurn;
 	
 	public DefaultGameModeHandler(Game game) {
 		this.game = game;
 		this.arena = game.getArena();
+		this.lostOrder = new ArrayList<String>();
+		this.playersWhoLostLastTurn = new LinkedHashMap<DefaultGamePlayer, Vector>();
 	}
 	
 	@Override
@@ -27,12 +39,20 @@ public class DefaultGameModeHandler extends SimpleGameModeHandler {
 		}
 		game.send(DACMessage.GameStart);
 		game.send(DACMessage.GamePlayers);
-		int i = 0;
+		int i = 1;
 		for (DACPlayer player : game.getPlayers()) {
 			game.send(DACMessage.GamePlayerList.format(i, player.getDisplayName()));
 			i++;
 		}
-		game.send(DACMessage.GameEnjoy);		
+		game.send(DACMessage.GameEnjoy);
+	}
+	
+	@Override	
+	public void onNewTurn() {
+		for (Entry<DefaultGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
+			lostOrder.add(entry.getKey().getDisplayName());
+			arena.getPool().rip(entry.getValue(), entry.getKey().getDisplayName());
+		}
 	}
 	
 	@Override
@@ -42,26 +62,122 @@ public class DefaultGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onSuccess(DACPlayer player) {
+	public void onSuccess(DACPlayer dacPlayer) {
+		DefaultGamePlayer player = (DefaultGamePlayer)dacPlayer;
 		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
-		player.tpToStart();
-		Pool pool = arena.getPool(); 
-		if (pool.isADACPattern(x, z)) {
-			pool.putDACColumn(x, z, player.getColor());
+		Pool pool = arena.getPool();
+		boolean dac = pool.isADACPattern(x, z);
+		if (player.mustConfirmate()) {
+			if (dac) {
+				game.send(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
+				game.send(DACMessage.GameDACConfirmation2);
+				pool.putDACColumn(x, z, dacPlayer.getColor());
+			} else {
+				game.send(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
+				pool.putColumn(x, z, dacPlayer.getColor());
+			}
+			onPlayerWin(player);
 		} else {
-			pool.putColumn(x, z, player.getColor());
+			if (dac) {
+				game.send(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
+				player.winLive();
+				game.send(DACMessage.GameLivesAfterDAC.format(player.getLives()));
+			} else {
+				game.send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
+			}
+			if (dac) {
+				pool.putDACColumn(x, z, dacPlayer.getColor());
+			} else {
+				pool.putColumn(x, z, dacPlayer.getColor());
+			}
 		}
+		
+		player.tpToStart();
 		game.nextTurn();
 	}
 
 	@Override
-	public void onFail(DACPlayer player) {
+	public void onFail(DACPlayer dacPlayer) {
+		DefaultGamePlayer player = (DefaultGamePlayer)dacPlayer;
+		
 		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
+
+		if (player.mustConfirmate()) {
+			game.send(DACMessage.GameConfirmationFail);
+			for (DefaultGamePlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
+				playerWhoLost.resetLives();
+			}
+			playersWhoLostLastTurn = new LinkedHashMap<DefaultGamePlayer, Vector>();
+			player.setMustConfirmate(false);
+		} else {
+			player.looseLive();
+			if (player.hasLost()) {
+				Vector vec = DACUtil.getDeathBlockVector(player.getPlayer().getLocation());
+				playersWhoLostLastTurn.put(player, vec);
+				onPlayerLoss(player, false);
+			} else {
+				game.send(DACMessage.GameLivesAfterFail.format(player.getLives()));
+			}
+		}
+		
 		player.tpToStart();
 		game.nextTurn();
 	}
+	
+	private DefaultGamePlayer getLastPlayer() {
+		int i = 0;
+		DefaultGamePlayer playerLeft = null;
+		for (DACPlayer player : game.getPlayers()) {
+			DefaultGamePlayer gamePlayer = (DefaultGamePlayer)player;
+			if (!gamePlayer.hasLost()) {
+				playerLeft = gamePlayer;
+				i++;
+			}
+		}
+		return (i == 1) ? playerLeft : null;
+	}	
+	
+	public void onPlayerLoss(DefaultGamePlayer player, boolean force) {
+		DefaultGamePlayer lastPlayer = getLastPlayer();
+		if (lastPlayer != null) {
+			if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
+				lastPlayer.setMustConfirmate(true);
+				game.send(DACMessage.GameMustConfirmate.format(lastPlayer.getDisplayName()));
+				game.nextTurn();
+			} else {
+				onPlayerWin(lastPlayer);
+			}
+		} else {
+			if (game.isPlayerTurn(player)) {
+				game.nextTurn(); 
+			}
+		}		
+	}
+	
+	public void onPlayerWin(DefaultGamePlayer player) {
+		game.send(DACMessage.GameFinished);
+		
+		for (Entry<DefaultGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
+			DefaultGamePlayer dacPlayer = entry.getKey();
+			arena.getPool().rip(entry.getValue(), dacPlayer.getDisplayName());
+			lostOrder.add(dacPlayer.getDisplayName());
+		}
+
+		game.send(DACMessage.GameWinner.format(player.getDisplayName()));
+
+		int i=2;
+		for (int index = lostOrder.size()-1 ; index >= 0; index--) {
+			String name = lostOrder.get(index);
+			game.send(DACMessage.GameRank.format(i, name));
+			i++;
+		}
+		
+		game.stop();
+	}
+	
+	
 
 }

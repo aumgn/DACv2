@@ -7,7 +7,7 @@ public interface GameMode {
 
 	GameModeHandler createHandler(Game game);
 	
-	DACPlayer createPlayer(Game game, DACPlayer player);
+	DACPlayer createPlayer(Game game, DACPlayer player, int index);
 	
 	int getMinimumPlayer();
 	

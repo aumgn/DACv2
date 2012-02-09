@@ -15,8 +15,8 @@ public class DefaultGameMode implements GameMode {
 	}
 
 	@Override
-	public DACPlayer createPlayer(Game game, DACPlayer player) {
-		return new DefaultGamePlayer(game, player);
+	public DACPlayer createPlayer(Game game, DACPlayer player, int index) {
+		return new DefaultGamePlayer(game, player, index);
 	}
 
 	@Override

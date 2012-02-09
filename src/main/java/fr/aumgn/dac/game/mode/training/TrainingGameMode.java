@@ -16,7 +16,7 @@ public class TrainingGameMode implements GameMode {
 	}
 
 	@Override
-	public DACPlayer createPlayer(Game game, DACPlayer player) {
+	public DACPlayer createPlayer(Game game, DACPlayer player, int index) {
 		return new DACSimplePlayer(player, game);
 	}
 

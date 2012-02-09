@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
@@ -32,7 +33,7 @@ public class SimpleGame implements Game {
 			int j = rand.nextInt(roulette.size());
 			DACPlayer dacPlayer = roulette.remove(j);
 			DAC.getPlayerManager().unregister(dacPlayer);
-			dacPlayer = gameMode.createPlayer(this, dacPlayer);
+			dacPlayer = gameMode.createPlayer(this, dacPlayer, i);
 			players[i] = dacPlayer;
 			DAC.getPlayerManager().register(dacPlayer);
 		}
@@ -45,6 +46,7 @@ public class SimpleGame implements Game {
 	private void increaseTurn() {
 		turn++;
 		if (turn == players.length) {
+			turn = 0;
 			gameModeHandler.onNewTurn();
 		}
 	}
@@ -55,15 +57,15 @@ public class SimpleGame implements Game {
 		gameModeHandler.onTurn(player);
 	}
 	
-	private boolean isPlayerTurn(DACPlayer player) {
+	public boolean isPlayerTurn(DACPlayer player) {
 		return players[turn].equals(player);
 	}
 	
 	public void send(Object msg, DACPlayer exclude) {
 		for (DACPlayer player : players) {
-			if (player != exclude) {
+			//if (player != exclude) {
 				player.getPlayer().sendMessage(msg.toString());
-			}
+			//}
 		}
 	}
 	
@@ -88,6 +90,13 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void stop() {
+		for (DACPlayer player : players) {
+			DAC.getPlayerManager().unregister(player);
+		}
+		DAC.getStageManager().unregister(this);
+		if (DAC.getConfig().getResetOnEnd()) {
+			arena.getPool().reset();
+		}
 	}
 
 	@Override
@@ -95,6 +104,14 @@ public class SimpleGame implements Game {
 		Player player = (Player)event.getEntity();
 		if (arena.getPool().isAbove(player)) {
 			gameModeHandler.onFail(DAC.getPlayerManager().get(player));
+			int health = player.getHealth();
+			if (health == DACUtil.PLAYER_MAX_HEALTH) {
+				player.damage(1);
+				player.setHealth(DACUtil.PLAYER_MAX_HEALTH);
+			} else {
+				player.setHealth(health + 1);
+				player.damage(1);
+			}
 			event.setCancelled(true);
 		}
 	}

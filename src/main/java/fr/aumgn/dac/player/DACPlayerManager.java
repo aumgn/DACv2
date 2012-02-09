@@ -1,5 +1,6 @@
 package fr.aumgn.dac.player;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
@@ -7,6 +8,10 @@ import org.bukkit.entity.Player;
 public class DACPlayerManager {
 
 	private Map<Player, DACPlayer> players;
+	
+	public DACPlayerManager() {
+		players = new HashMap<Player, DACPlayer>();
+	}
 
 	public DACPlayer get(Player player) {
 		return players.get(player);

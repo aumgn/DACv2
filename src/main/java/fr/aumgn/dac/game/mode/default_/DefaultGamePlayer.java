@@ -9,8 +9,8 @@ public class DefaultGamePlayer extends SimpleGamePlayer {
 	private int lives;
 	private boolean mustConfirmate; 
 	
-	public DefaultGamePlayer(Game game, DACPlayer player) {
-		super(game, player);
+	public DefaultGamePlayer(Game game, DACPlayer player, int index) {
+		super(game, player, index);
 		this.lives = 0;
 		this.mustConfirmate = false;
 	}
@@ -37,6 +37,10 @@ public class DefaultGamePlayer extends SimpleGamePlayer {
 
 	public void looseAllLives() {
 		lives = -1;
+	}
+	
+	public boolean hasLost() {
+		return lives == -1;
 	}
 
 	public void setMustConfirmate(boolean bool) {
