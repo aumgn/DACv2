@@ -19,7 +19,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer(); 
 		
-		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
+		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
 		Stage stage = dacPlayer.getStage();
 		
 		if (stage == null) {

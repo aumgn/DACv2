@@ -21,7 +21,7 @@ public class GotoCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
-		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
+		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (dacPlayer == null) {
 			error(DACMessage.CmdGotoNotInGame);
 		}

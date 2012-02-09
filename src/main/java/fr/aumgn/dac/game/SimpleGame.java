@@ -31,10 +31,10 @@ public class SimpleGame implements Game {
 		for (int i=0; i< players.length; i++) {
 			int j = rand.nextInt(roulette.size());
 			DACPlayer dacPlayer = roulette.remove(j);
-			DAC.getStageManager().unregisterPlayer(dacPlayer);
+			DAC.getPlayerManager().unregister(dacPlayer);
 			dacPlayer = gameMode.createPlayer(this, dacPlayer);
 			players[i] = dacPlayer;
-			DAC.getStageManager().registerPlayer(dacPlayer);
+			DAC.getPlayerManager().register(dacPlayer);
 		}
 		gameModeHandler = gameMode.createHandler(this);
 		turn = -1;
@@ -94,7 +94,7 @@ public class SimpleGame implements Game {
 	public void onFallDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
 		if (arena.getPool().isAbove(player)) {
-			gameModeHandler.onFail(DAC.getStageManager().getPlayer(player));
+			gameModeHandler.onFail(DAC.getPlayerManager().get(player));
 			event.setCancelled(true);
 		}
 	}
@@ -102,7 +102,7 @@ public class SimpleGame implements Game {
 	@Override
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
+		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (isPlayerTurn(dacPlayer) && arena.getPool().contains(player)) {
 			gameModeHandler.onSuccess(dacPlayer);
 		}

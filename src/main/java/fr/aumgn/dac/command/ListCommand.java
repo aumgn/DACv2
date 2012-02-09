@@ -15,7 +15,7 @@ public class ListCommand extends PlayerCommandExecutor {
 
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		Stage stage = DAC.getStageManager().getPlayer(context.getPlayer()).getStage();
+		Stage stage = DAC.getPlayerManager().get(context.getPlayer()).getStage();
 		for (DACPlayer playerinStage : stage.getPlayers()) {
 			context.send(" " + playerinStage.getDisplayName());
 		}

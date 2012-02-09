@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.player.DACPlayer;
-import fr.aumgn.dac.stage.StageManager;
+import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class KickCommand extends PlayerCommandExecutor {
@@ -20,9 +20,9 @@ public class KickCommand extends PlayerCommandExecutor {
 
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		StageManager stageManager = DAC.getStageManager();
+		DACPlayerManager playerManager = DAC.getPlayerManager();
 		for (Player player : matchPlayer(context, args[0])) {
-			DACPlayer dacPlayer = stageManager.getPlayer(player);
+			DACPlayer dacPlayer = playerManager.get(player);
 			dacPlayer.getStage().removePlayer(dacPlayer);
 		}
 

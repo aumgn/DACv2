@@ -77,7 +77,7 @@ public class SimpleJoinStage implements JoinStage {
 	private void addPlayer(Player player, DACColor color) {
 		DACPlayer dacPlayer = new JoinStagePlayer(this, player, color);
 		players.add(dacPlayer);
-		DAC.getStageManager().registerPlayer(dacPlayer);
+		DAC.getPlayerManager().register(dacPlayer);
 		colorsMap.add(color);
 		send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
 	}
@@ -103,7 +103,7 @@ public class SimpleJoinStage implements JoinStage {
 			if (dacPlayer.getPlayer().equals(player)) {
 				send(DACMessage.JoinPlayerQuit.format(dacPlayer.getDisplayName()));
 				players.remove(dacPlayer);
-				DAC.getStageManager().unregisterPlayer(dacPlayer);
+				DAC.getPlayerManager().unregister(dacPlayer);
 				colorsMap.remove(dacPlayer.getColor());
 				return;
 			}

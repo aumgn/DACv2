@@ -10,6 +10,7 @@ import fr.aumgn.dac.arenas.DACArenas;
 import fr.aumgn.dac.bukkit.DACPlugin;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.dac.stage.StageManager;
 
 public final class DAC {
@@ -19,6 +20,7 @@ public final class DAC {
 	private static DACConfig config;
 	private static DACArenas arenas; 
 	private static StageManager stageManager;
+	private static DACPlayerManager playerManager;
 
 	private DAC() {}
 
@@ -30,6 +32,7 @@ public final class DAC {
 		DAC.worldEdit = worldEdit;
 		arenas = new DACArenas();
 		stageManager = new StageManager();
+		playerManager = new DACPlayerManager();
 		reloadConfig();
 		reloadMessages();
 	}
@@ -61,6 +64,10 @@ public final class DAC {
 	
 	public static StageManager getStageManager() {
 		return stageManager;
+	}
+	
+	public static DACPlayerManager getPlayerManager() {
+		return playerManager;
 	}
 	
 	public static WorldEditPlugin getWorldEdit() {

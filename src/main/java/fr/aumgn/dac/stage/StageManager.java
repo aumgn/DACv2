@@ -5,17 +5,16 @@ import java.util.Map;
 
 import org.bukkit.entity.Player;
 
+import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.player.DACPlayer;
 
 public class StageManager {
 
 	private Map<DACArena, Stage> stages;
-	private Map<Player, DACPlayer> players;
 	
 	public StageManager() {
 		stages = new HashMap<DACArena, Stage>();
-		players = new HashMap<Player, DACPlayer>();
 	}
 	
 	public boolean hasStage(DACArena arena) {
@@ -27,7 +26,7 @@ public class StageManager {
 	}
 	
 	public Stage get(Player player) {
-		DACPlayer dacPlayer = getPlayer(player);
+		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (dacPlayer == null) {
 			return null;
 		}
@@ -48,22 +47,4 @@ public class StageManager {
 		stages.remove(stage.getArena());
 	}
 	
-	public DACPlayer getPlayer(Player player) {
-		return players.get(player);
-	}
-	
-	public void registerPlayer(DACPlayer player) {
-		if (players.containsKey(player.getPlayer())) {
-			throw new RuntimeException();
-		}
-		players.put(player.getPlayer(), player);
-	}
-
-	public void unregisterPlayer(DACPlayer player) {
-		if (!players.containsKey(player.getPlayer())) {
-			throw new RuntimeException();
-		}
-		players.remove(player.getPlayer());
-	}
-
 }
