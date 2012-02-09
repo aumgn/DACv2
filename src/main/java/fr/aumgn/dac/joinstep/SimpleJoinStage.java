@@ -1,54 +1,120 @@
 package fr.aumgn.dac.joinstep;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.config.DACColor;
+import fr.aumgn.dac.config.DACColors;
+import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.player.DACPlayer;
 
 public class SimpleJoinStage implements JoinStage {
 	
 	private DACArena arena;
+	private DACColors colors;
+	private Set<DACColor> colorsMap;
 	private List<DACPlayer> players;
 
 	public SimpleJoinStage(DACArena arena) {
-		
+		this.arena = arena;
+		colors = DAC.getConfig().getColors();
+		colorsMap = new HashSet<DACColor>();
+		players = new ArrayList<DACPlayer>();
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
+			player.sendMessage(DACMessage.JoinNewGame2.getValue());
+		}
+	}
+	
+	public void send(String message) {
+		for (DACPlayer player : players) {
+			player.getPlayer().sendMessage(message);
+		}
+	}
+
+	public void send(DACMessage message) {
+		send(message.getValue());
 	}
 
 	@Override
 	public DACArena getArena() {
 		return arena;
 	}
+	
+	private boolean isColorAvailable(String name) {
+		DACColor color = colors.get(name);
+		if (color == null) {
+			return false;
+		} else {
+			return isColorAvailable(color);
+		}
+	}
+
+	private boolean isColorAvailable(DACColor color) {
+		return !colorsMap.contains(color);
+	}
+	
+	private DACColor getFirstColorAvailable() {
+		for (DACColor color : colors) {
+			if (!colorsMap.contains(color)) {
+				return color;
+			}
+		}
+		// Should never be reached;
+		return colors.defaut();
+	}
+	
+	private void addPlayer(Player player, DACColor color) {
+		DACPlayer dacPlayer = new JoinStagePlayer(this, player, color);
+		players.add(dacPlayer);
+		DAC.getStageManager().registerPlayer(dacPlayer);
+		colorsMap.add(color);
+		send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+	}
 
 	@Override
-	public void addPlayer(Player player, String[] colors) {
+	public void addPlayer(Player player, String[] colorsName) {
+		int i = 0;
+		DACColor color;
+		while (i < colorsName.length && !isColorAvailable(colorsName[i])) {
+			i++; 
+		}
+		if (i == colorsName.length) {
+			color = getFirstColorAvailable();
+		} else {
+			color = colors.get(colorsName[i]);
+		}
+		addPlayer(player, color);	
 	}
 
 	@Override
 	public void removePlayer(DACPlayer player) {
+		for (DACPlayer dacPlayer : players) {
+			if (dacPlayer.getPlayer().equals(player)) {
+				send(DACMessage.JoinPlayerQuit.format(dacPlayer.getDisplayName()));
+				players.remove(dacPlayer);
+				DAC.getStageManager().unregisterPlayer(dacPlayer);
+				colorsMap.remove(dacPlayer.getColor());
+				return;
+			}
+		}
 	}
 	
 	@Override
-	public boolean containsPlayer(Player player) {
-		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
-		return containsPlayer(dacPlayer);
-	}
-
-	@Override
-	public boolean containsPlayer(DACPlayer player) {
-		return player.getStage() == this;
-	}
-
-	@Override
 	public List<DACPlayer> getPlayers() {
-		return Collections.unmodifiableList(players);
+		return players;
 	}
 
 	@Override
 	public void stop() {
+		send(DACMessage.JoinStopped);
 	}
 
 	@Override

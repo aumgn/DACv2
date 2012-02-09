@@ -15,6 +15,7 @@ public class StageManager {
 	
 	public StageManager() {
 		stages = new HashMap<DACArena, Stage>();
+		players = new HashMap<Player, DACPlayer>();
 	}
 	
 	public boolean hasStage(DACArena arena) {
@@ -33,6 +34,20 @@ public class StageManager {
 		return dacPlayer.getStage();
 	}
 	
+	public void register(Stage stage) {
+		if (stages.containsKey(stage.getArena())) {
+			throw new RuntimeException();
+		}
+		stages.put(stage.getArena(), stage);
+	}
+
+	public void unregister(Stage stage) {
+		if (!stages.containsKey(stage.getArena())) {
+			throw new RuntimeException();
+		}
+		stages.remove(stage.getArena());
+	}
+	
 	public DACPlayer getPlayer(Player player) {
 		return players.get(player);
 	}
@@ -43,5 +58,12 @@ public class StageManager {
 		}
 		players.put(player.getPlayer(), player);
 	}
-	
+
+	public void unregisterPlayer(DACPlayer player) {
+		if (!players.containsKey(player.getPlayer())) {
+			throw new RuntimeException();
+		}
+		players.remove(player.getPlayer());
+	}
+
 }

@@ -38,7 +38,7 @@ public class DACListener implements Listener {
 				return;
 			}
 			
-			//TODO: Process
+			game.onFallDamage(event);
 		}
 	}
 
@@ -49,7 +49,7 @@ public class DACListener implements Listener {
 			return;
 		}
 		
-		//TODO: Process
+		game.onMove(event);
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -60,7 +60,7 @@ public class DACListener implements Listener {
 			return;
 		}
 		
-		//TODO: Process
+		// Process
 	}
 
 }

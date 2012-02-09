@@ -7,6 +7,6 @@ public interface GameMode {
 
 	GameModeHandler createHandler(Game Game);
 	
-	DACPlayer createPlayer(DACPlayer player);
+	DACPlayer createPlayer(Game game, DACPlayer player);
 	
 }

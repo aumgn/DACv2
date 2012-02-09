@@ -5,10 +5,8 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.joinstep.JoinStage;
 import fr.aumgn.dac.joinstep.SimpleJoinStage;
-import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
@@ -18,8 +16,8 @@ public class JoinCommand extends PlayerCommandExecutor {
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
 
-		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
-		if (dacPlayer.getStage() instanceof Game) {
+		Stage stage = DAC.getStageManager().get(player);
+		if (stage != null) {
 			error(DACMessage.CmdJoinAlreadyPlaying);
 		}
 
@@ -28,14 +26,15 @@ public class JoinCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdJoinNotInStart);
 		}
 
-		Stage stage = DAC.getStageManager().get(arena); 
-		if (!(stage instanceof JoinStage)) {
+		stage = DAC.getStageManager().get(arena); 
+		if (stage != null && !(stage instanceof JoinStage)) {
 			error(DACMessage.CmdJoinInGame);
 		}
 
 		JoinStage joinStage;
 		if (stage == null) {
 			joinStage = new SimpleJoinStage(arena);
+			DAC.getStageManager().register(joinStage);
 		} else {
 			joinStage = (JoinStage)stage;
 		}

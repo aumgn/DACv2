@@ -7,6 +7,8 @@ import fr.aumgn.dac.DAC;
 //import fr.aumgn.dac.DACJoinStep;
 import fr.aumgn.dac.config.DACMessage;
 //import fr.aumgn.dac.game.BasicGame;
+import fr.aumgn.dac.game.SimpleGame;
+import fr.aumgn.dac.game.mode.DACGameModes;
 import fr.aumgn.dac.joinstep.JoinStage;
 import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.dac.stage.StageManager;
@@ -32,9 +34,9 @@ public class StartCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdStartMinNotReached);
 		}
 
-		//BasicGame game = new BasicGame(mode, joinStage);
-		//stageManager.remove(joinStage);
-		//stageManager.add(game);
+		stageManager.unregister(joinStage);
+		SimpleGame game = new SimpleGame(DACGameModes.get("default"), joinStage);
+		stageManager.register(game);
 	}
 
 }

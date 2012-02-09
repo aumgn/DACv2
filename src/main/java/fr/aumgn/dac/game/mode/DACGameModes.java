@@ -1,16 +1,21 @@
 package fr.aumgn.dac.game.mode;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import fr.aumgn.dac.DAC;
 
 public final class DACGameModes {
 	
-	private static Map<String, GameMode> modes;
+	private static Map<String, GameMode> modes = new HashMap<String, GameMode>();
 	
 	private DACGameModes() {}
 	
-	public void registerMode(Class<? extends GameMode> modeCls) {
+	public static GameMode get(String name) {
+		return modes.get(name);
+	}
+	
+	public static void register(Class<? extends GameMode> modeCls) {
 		DACGameMode annotation = modeCls.getAnnotation(DACGameMode.class);
 		if (annotation == null) {
 			DAC.getLogger().warning("Cannot regitser game mode for " + modeCls.getSimpleName());

@@ -19,5 +19,9 @@ public interface DACPlayer {
 	DACColor getColor();
 	
 	Location getStartLocation();
-	
+
+	void tpToStart();
+
+	void tpToDiving();
+
 }

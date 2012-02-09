@@ -20,6 +20,7 @@ public abstract class DACSimplePlayer implements DACPlayer {
 		this.stage = stage;
 		String name = ChatColor.stripColor(player.getDisplayName());
 		this.displayName = color.getChatColor() + name + ChatColor.WHITE;
+		this.startLocation = startLocation;
 		this.color = color;
 	}
 
@@ -51,6 +52,18 @@ public abstract class DACSimplePlayer implements DACPlayer {
 	@Override
 	public Location getStartLocation() {
 		return startLocation;
+	}
+	
+	@Override
+	public void tpToStart() {
+		player.setFallDistance(0.0f);
+		player.teleport(startLocation);
+	}
+	
+	@Override
+	public void tpToDiving() {
+		player.setFallDistance(0.0f);
+		player.teleport(stage.getArena().getDivingBoard().getLocation());
 	}
 
 }
