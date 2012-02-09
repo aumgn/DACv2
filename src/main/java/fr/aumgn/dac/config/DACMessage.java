@@ -1,7 +1,14 @@
 package fr.aumgn.dac.config;
 
-import org.bukkit.configuration.Configuration;
+import java.io.File;
+import java.io.IOException;
 
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+
+import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 
 public enum DACMessage {
@@ -73,8 +80,26 @@ public enum DACMessage {
 	GameRank                ("game.rank"),
 	GameStopped             ("game.stopped"),
 	GameDisplayLives        ("game.display-lives");
+	
+	private static final String MESSAGES_FILENAME = "messages.yml";
 
-	public static void load(Configuration config, Configuration defaults) {
+	public static void reload(Plugin plugin) {
+		YamlConfiguration newMessages = new YamlConfiguration();
+		YamlConfiguration defaultMessages = new YamlConfiguration();
+		try {
+			newMessages.load(new File(plugin.getDataFolder(), MESSAGES_FILENAME));
+			defaultMessages.load(plugin.getResource(MESSAGES_FILENAME));
+			load(newMessages, defaultMessages);
+		} catch (IOException exc) {
+			DAC.getLogger().severe("Unable to read " + MESSAGES_FILENAME + " file.");
+			DAC.getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
+		} catch (InvalidConfigurationException exc) {
+			DAC.getLogger().severe("Unable to load " + MESSAGES_FILENAME + " file.");
+			DAC.getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
+		}
+	}
+
+	private static void load(Configuration config, Configuration defaults) {
 		for (DACMessage lang : DACMessage.values()) {
 			String node = lang.getNode();
 			if (config.isString(node)) {
