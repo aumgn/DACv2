@@ -8,9 +8,12 @@ import fr.aumgn.dac.stage.Stage;
 
 public interface Game extends Stage {
 	
+	void nextTurn();
+	
 	void onFallDamage(EntityDamageEvent event);
 	
 	void onMove(PlayerMoveEvent event);
 	
 	void onQuit(PlayerQuitEvent event);
+	
 }

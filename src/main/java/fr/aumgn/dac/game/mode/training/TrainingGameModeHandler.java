@@ -1,4 +1,4 @@
-package fr.aumgn.dac.game.mode.default_;
+package fr.aumgn.dac.game.mode.training;
 
 import org.bukkit.Location;
 
@@ -10,12 +10,12 @@ import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
 
-public class DefaultGameModeHandler implements GameModeHandler {
-	
+public class TrainingGameModeHandler implements GameModeHandler {
+
 	private Game game;
 	private DACArena arena;
-	
-	public DefaultGameModeHandler(Game game) {
+
+	public TrainingGameModeHandler(Game game) {
 		this.game = game;
 		this.arena = game.getArena();
 	}
@@ -26,19 +26,12 @@ public class DefaultGameModeHandler implements GameModeHandler {
 			arena.getPool().reset();
 		}
 		game.send(DACMessage.GameStart);
-		game.send(DACMessage.GamePlayers);
-		int i = 0;
-		for (DACPlayer player : game.getPlayers()) {
-			game.send(DACMessage.GamePlayerList.format(i, player.getDisplayName()));
-			i++;
-		}
-		game.send(DACMessage.GameEnjoy);		
 	}
-	
+
 	@Override
 	public void onTurn(DACPlayer player) {
 		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
-		player.tpToDiving();
+		player.tpToDiving();		
 	}
 
 	@Override
@@ -61,7 +54,7 @@ public class DefaultGameModeHandler implements GameModeHandler {
 	public void onFail(DACPlayer player) {
 		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 		player.tpToStart();
-		game.nextTurn();
+		game.nextTurn();		
 	}
 
 }

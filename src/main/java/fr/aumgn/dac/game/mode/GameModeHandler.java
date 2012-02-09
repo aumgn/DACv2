@@ -7,9 +7,9 @@ public interface GameModeHandler {
 	void onStart();
 
 	void onTurn(DACPlayer player);
+	
+	void onSuccess(DACPlayer player);
 
 	void onFail(DACPlayer player);
-
-	void onSuccess(DACPlayer dacPlayer);
 
 }
