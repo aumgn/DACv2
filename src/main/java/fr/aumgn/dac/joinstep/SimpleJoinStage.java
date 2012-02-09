@@ -33,16 +33,18 @@ public class SimpleJoinStage implements JoinStage {
 		}
 	}
 	
-	public void send(String message) {
+	public void send(Object msg, DACPlayer exclude) {
 		for (DACPlayer player : players) {
-			player.getPlayer().sendMessage(message);
+			if (player != exclude) {
+				player.getPlayer().sendMessage(msg.toString());
+			}
 		}
 	}
-
-	public void send(DACMessage message) {
-		send(message.getValue());
+	
+	public void send(Object msg) {
+		send(msg, null);
 	}
-
+	
 	@Override
 	public DACArena getArena() {
 		return arena;

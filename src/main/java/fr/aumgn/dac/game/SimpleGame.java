@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
-import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.joinstep.JoinStage;
@@ -57,14 +56,16 @@ public class SimpleGame implements Game {
 		return players[turn].equals(player);
 	}
 	
-	public void send(String msg) {
+	public void send(Object msg, DACPlayer exclude) {
 		for (DACPlayer player : players) {
-			player.getPlayer().sendMessage(msg);
+			if (player != exclude) {
+				player.getPlayer().sendMessage(msg.toString());
+			}
 		}
 	}
-
-	public void send(DACMessage msg) {
-		send(msg.getValue());
+	
+	public void send(Object msg) {
+		send(msg, null);
 	}
 	
 	@Override
