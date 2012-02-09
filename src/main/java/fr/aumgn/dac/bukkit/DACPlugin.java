@@ -1,4 +1,4 @@
-package fr.aumgn.dac;
+package fr.aumgn.dac.bukkit;
 
 import java.io.File;
 
@@ -9,9 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
+import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.exception.WorldEditNotLoaded;
-import fr.aumgn.dac.listener.DACPlayerListener;
 
 public class DACPlugin extends JavaPlugin {
 
@@ -34,7 +34,7 @@ public class DACPlugin extends JavaPlugin {
 		DACCommand dacCommand = new DACCommand();
 		Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
 
-		DACPlayerListener dacPlayerListener = new DACPlayerListener();
+		DACListener dacPlayerListener = new DACListener();
 		pm.registerEvents(dacPlayerListener, this);
 
 		DAC.init(this, (WorldEditPlugin)worldEdit);

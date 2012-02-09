@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import fr.aumgn.dac.arenas.DACArenas;
+import fr.aumgn.dac.bukkit.DACPlugin;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.mode.GameMode;

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.listener;
+package fr.aumgn.dac.bukkit;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -13,7 +13,7 @@ import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.stage.Stage;
 
-public class DACPlayerListener implements Listener {
+public class DACListener implements Listener {
 	
 	private Game getGame(Player player) {
 		Stage stage = DAC.getStageManager().get(player);
