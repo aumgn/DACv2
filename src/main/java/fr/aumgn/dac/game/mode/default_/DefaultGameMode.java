@@ -1,4 +1,4 @@
-package fr.aumgn.dac.game.defaultmode;
+package fr.aumgn.dac.game.mode.default_;
 
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.DACGameMode;

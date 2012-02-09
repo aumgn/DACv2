@@ -5,7 +5,7 @@ import fr.aumgn.dac.player.DACPlayer;
 
 public interface GameMode {
 
-	GameModeHandler createHandler(Game Game);
+	GameModeHandler createHandler(Game game);
 	
 	DACPlayer createPlayer(Game game, DACPlayer player);
 	

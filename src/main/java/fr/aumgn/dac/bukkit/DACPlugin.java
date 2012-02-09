@@ -12,8 +12,8 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.exception.WorldEditNotLoaded;
-import fr.aumgn.dac.game.defaultmode.DefaultGameMode;
 import fr.aumgn.dac.game.mode.DACGameModes;
+import fr.aumgn.dac.game.mode.default_.DefaultGameMode;
 
 public class DACPlugin extends JavaPlugin {
 

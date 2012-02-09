@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.dac.stage.Stage;
 
-public abstract class DACSimplePlayer implements DACPlayer {
+public class DACSimplePlayer implements DACPlayer {
 
 	private Player player;
 	private Stage stage;
@@ -22,6 +22,10 @@ public abstract class DACSimplePlayer implements DACPlayer {
 		this.displayName = color.getChatColor() + name + ChatColor.WHITE;
 		this.startLocation = startLocation;
 		this.color = color;
+	}
+	
+	public DACSimplePlayer(DACPlayer player, Stage stage) {
+		this(player.getPlayer(), stage, player.getColor(), player.getStartLocation());
 	}
 
 	@Override

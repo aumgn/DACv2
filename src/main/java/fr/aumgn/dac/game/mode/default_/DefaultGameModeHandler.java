@@ -1,4 +1,4 @@
-package fr.aumgn.dac.game.defaultmode;
+package fr.aumgn.dac.game.mode.default_;
 
 import org.bukkit.Location;
 
