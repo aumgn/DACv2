@@ -6,6 +6,8 @@ public interface GameModeHandler {
 	
 	void onStart();
 
+	void onNewTurn();
+
 	void onTurn(DACPlayer player);
 	
 	void onSuccess(DACPlayer player);

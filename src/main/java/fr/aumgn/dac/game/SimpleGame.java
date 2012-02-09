@@ -43,7 +43,10 @@ public class SimpleGame implements Game {
 	}
 	
 	private void increaseTurn() {
-		turn = (turn + 1) % players.length;
+		turn++;
+		if (turn == players.length) {
+			gameModeHandler.onNewTurn();
+		}
 	}
 	
 	public void nextTurn() {

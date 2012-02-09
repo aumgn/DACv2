@@ -7,10 +7,10 @@ import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
-import fr.aumgn.dac.game.mode.GameModeHandler;
+import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
 
-public class DefaultGameModeHandler implements GameModeHandler {
+public class DefaultGameModeHandler extends SimpleGameModeHandler {
 	
 	private Game game;
 	private DACArena arena;
