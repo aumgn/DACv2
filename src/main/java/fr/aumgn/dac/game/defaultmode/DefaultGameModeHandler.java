@@ -38,13 +38,13 @@ public class DefaultGameModeHandler implements GameModeHandler {
 	
 	@Override
 	public void onTurn(DACPlayer player) {
-		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
+		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
 		player.tpToDiving();
 	}
 
 	@Override
 	public void onSuccess(DACPlayer player) {
-		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
+		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
@@ -60,7 +60,7 @@ public class DefaultGameModeHandler implements GameModeHandler {
 
 	@Override
 	public void onFail(DACPlayer player) {
-		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()));
+		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 		player.tpToStart();
 		game.nextTurn();
 	}
