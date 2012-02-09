@@ -56,7 +56,7 @@ commands:
         aliases: ["dac-j"]
     dac-start: 
         description: 'Debute une nouvelle partie avec les joueurs presents dans la zone de depart.'
-        usage: 'Utilisation: /<command>'
+        usage: 'Utilisation: /<command> [mode]'
         permission: 'dac.cmd.start'
         aliases: ["dac-s"]
     dac-quit:

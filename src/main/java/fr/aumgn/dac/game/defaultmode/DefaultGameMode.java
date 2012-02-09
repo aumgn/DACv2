@@ -19,4 +19,9 @@ public class DefaultGameMode implements GameMode {
 		return new DefaultGamePlayer(game, player);
 	}
 
+	@Override
+	public int getMinimumPlayer() {
+		return 2;
+	}
+
 }

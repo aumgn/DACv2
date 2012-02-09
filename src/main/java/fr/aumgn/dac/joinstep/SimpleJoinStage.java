@@ -13,6 +13,7 @@ import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.dac.config.DACColors;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.player.DACPlayer;
 
 public class SimpleJoinStage implements JoinStage {
@@ -120,8 +121,8 @@ public class SimpleJoinStage implements JoinStage {
 	}
 
 	@Override
-	public boolean isMinReached() {
-		return players.size() > 1;
+	public boolean isMinReached(GameMode mode) {
+		return players.size() >= mode.getMinimumPlayer();
 	}
 
 	@Override

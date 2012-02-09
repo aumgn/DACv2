@@ -46,6 +46,7 @@ command:
         incomplete-selection: "La sélection WorldEdit est incomplète"
     start:
         not-in-game: "Vous devez avoir rejoint une partie avec \"dac join\" avant de la débuter."
+        unknown-mode: "Mode de jeu inconnu"
         min-not-reached: "Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter."
     stop:
         no-game-to-stop: "Il n'y a aucune partie en cours."
