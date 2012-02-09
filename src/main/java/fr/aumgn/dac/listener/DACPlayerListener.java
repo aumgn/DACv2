@@ -10,40 +10,57 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACGame;
-import fr.aumgn.dac.DACJoinStep;
+import fr.aumgn.dac.game.Game;
+import fr.aumgn.dac.stage.Stage;
 
 public class DACPlayerListener implements Listener {
+	
+	private Game getGame(Player player) {
+		Stage stage = DAC.getStageManager().get(player);
+		if (!(stage instanceof Game)) {
+			return null;
+		}
+		return (Game) stage;
+	}
 
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
-			DACGame game = DAC.getGame((Player)event.getEntity());
-			if (game == null) { return; }
 			Player player = (Player)event.getEntity();
-			if (game.getArena().getPool().isAbove(player)) {
-				game.onPlayerDamage(event);
+			Game game = getGame(player);
+			
+			if (game == null) {
+				return;
 			}
+			
+			if (!game.getArena().getPool().isAbove(player)) {
+				return;
+			}
+			
+			//TODO: Process
 		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onMove(PlayerMoveEvent event) {
-		DACGame game = DAC.getGame(event.getPlayer());
-		if (game != null) { game.onPlayerMove(event); }
+		Game game = getGame(event.getPlayer());
+		if (game == null) {
+			return;
+		}
+		
+		//TODO: Process
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		DACJoinStep joinStep = DAC.getJoinStep(player);
-		if (joinStep != null) {
-			joinStep.remove(player);
+		Stage stage = DAC.getStageManager().get(player);
+		if (stage == null) {
 			return;
 		}
-		DACGame game = DAC.getGame(player);
-		if (game != null) { game.onPlayerQuit(player); }
+		
+		//TODO: Process
 	}
 
 }

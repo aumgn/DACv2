@@ -3,9 +3,9 @@ package fr.aumgn.dac.command;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACGame;
-import fr.aumgn.dac.DACJoinStep;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class QuitCommand extends PlayerCommandExecutor {
@@ -18,18 +18,14 @@ public class QuitCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer(); 
-		DACJoinStep joinStep = DAC.getJoinStep(player);
-		if (joinStep != null) {
-			joinStep.remove(player);
-			return;
+		
+		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
+		Stage stage = dacPlayer.getStage();
+		
+		if (stage == null) {
+			error(DACMessage.CmdQuitNotInGame);
 		}
-
-		DACGame game = DAC.getGame(player);
-		if (game != null) {
-			game.onPlayerQuit(player);
-			return;
-		}
-		error(DACMessage.CmdQuitNotInGame);
+		stage.removePlayer(dacPlayer);
 	}
 
 }

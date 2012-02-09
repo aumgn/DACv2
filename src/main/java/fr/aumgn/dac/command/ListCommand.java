@@ -1,11 +1,9 @@
 package fr.aumgn.dac.command;
 
-import org.bukkit.entity.Player;
-
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACGame;
-import fr.aumgn.dac.DACJoinStep;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ListCommand extends PlayerCommandExecutor {
@@ -17,18 +15,9 @@ public class ListCommand extends PlayerCommandExecutor {
 
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		Player player = context.getPlayer();
-
-		DACJoinStep joinStep = DAC.getJoinStep(player);
-		if (joinStep != null) {
-			joinStep.listPlayersTo(player);
-			return;			
-		}
-
-		DACGame game = DAC.getGame(context.getPlayer());
-		if (game != null) {
-			game.displayLives(context.getPlayer());
-			return;
+		Stage stage = DAC.getStageManager().getPlayer(context.getPlayer()).getStage();
+		for (DACPlayer playerinStage : stage.getPlayers()) {
+			context.send(" " + playerinStage.getDisplayName());
 		}
 
 		error(DACMessage.CmdLivesNotInGame);

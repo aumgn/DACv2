@@ -1,8 +1,11 @@
 package fr.aumgn.dac.command;
 
+import org.bukkit.entity.Player;
+
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACGame;
+import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class GotoCommand extends PlayerCommandExecutor {
@@ -17,14 +20,17 @@ public class GotoCommand extends PlayerCommandExecutor {
 
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		DACGame game = DAC.getGame(context.getPlayer());
-		if (game == null) {
+		Player player = context.getPlayer();
+		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
+		if (dacPlayer == null) {
 			error(DACMessage.CmdGotoNotInGame);
 		}
+		
 		if (args[0].equalsIgnoreCase("diving")) {
-			context.getPlayer().teleport(game.getArena().getDivingBoard().getLocation());
+			DACArena arena = dacPlayer.getStage().getArena();
+			player.teleport(arena.getDivingBoard().getLocation());
 		} else if (args[0].equalsIgnoreCase("start")) {
-			game.wrapPlayer(context.getPlayer()).tpToStart();
+			player.teleport(dacPlayer.getStartLocation());
 		}
 		context.success(DACMessage.CmdGotoSuccess);
 	}

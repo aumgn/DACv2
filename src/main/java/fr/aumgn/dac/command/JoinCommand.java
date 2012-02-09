@@ -3,9 +3,13 @@ package fr.aumgn.dac.command;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.DACJoinStep;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.game.Game;
+import fr.aumgn.dac.joinstep.JoinStage;
+import fr.aumgn.dac.joinstep.SimpleJoinStage;
+import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class JoinCommand extends PlayerCommandExecutor {
@@ -14,7 +18,8 @@ public class JoinCommand extends PlayerCommandExecutor {
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
 
-		if (DAC.isPlayerInGame(player)) {
+		DACPlayer dacPlayer = DAC.getStageManager().getPlayer(player);
+		if (dacPlayer.getStage() instanceof Game) {
 			error(DACMessage.CmdJoinAlreadyPlaying);
 		}
 
@@ -23,21 +28,23 @@ public class JoinCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdJoinNotInStart);
 		}
 
-		if (DAC.getGame(arena) != null) {
+		Stage stage = DAC.getStageManager().get(arena); 
+		if (!(stage instanceof JoinStage)) {
 			error(DACMessage.CmdJoinInGame);
 		}
 
-		DACJoinStep joinStep = DAC.getJoinStep(arena);
-		if (joinStep == null) {
-			joinStep = new DACJoinStep(arena);
-			DAC.addJoinStep(joinStep);
+		JoinStage joinStage;
+		if (stage == null) {
+			joinStage = new SimpleJoinStage(arena);
+		} else {
+			joinStage = (JoinStage)stage;
 		}
 
-		if (joinStep.isMaxReached()) {
-			error(DACMessage.CmdJoinMaxReached.format(joinStep.getMaxPlayers()));
+		if (joinStage.isMaxReached()) {
+			error(DACMessage.CmdJoinMaxReached.format(DAC.getConfig().getMaxPlayers()));
 		}
 
-		joinStep.addPlayer(player, args);
+		joinStage.addPlayer(player, args);
 	}
 
 }
