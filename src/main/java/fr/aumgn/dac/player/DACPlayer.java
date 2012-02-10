@@ -18,6 +18,10 @@ public interface DACPlayer {
 	
 	Location getStartLocation();
 
+	void send(Object message);
+	
+	void sendToOthers(Object message);
+	
 	void tpToStart();
 
 	void tpToDiving();

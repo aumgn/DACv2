@@ -54,6 +54,16 @@ public class DACSimplePlayer implements DACPlayer {
 	}
 	
 	@Override
+	public void send(Object message) {
+		player.sendMessage(message.toString());
+	}
+	
+	@Override
+	public void sendToOthers(Object message) {
+		stage.send(message.toString(), this);
+	}
+	
+	@Override
 	public void tpToStart() {
 		player.setFallDistance(0.0f);
 		player.teleport(startLocation);

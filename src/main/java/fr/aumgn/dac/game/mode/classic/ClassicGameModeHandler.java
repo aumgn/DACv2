@@ -65,7 +65,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		if (player.hasLost()) {
 			game.nextTurn();
 		} else {
-			game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
+			player.send(DACMessage.GamePlayerTurn2.getValue());
+			player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 			player.tpToDiving();
 		}
 	}
@@ -89,19 +90,24 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		
 		if (player.mustConfirmate()) {
 			if (dac) {
-				game.send(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
+				player.send(DACMessage.GameDACConfirmation3);
+				player.sendToOthers(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
 				game.send(DACMessage.GameDACConfirmation2);
 			} else {
-				game.send(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
+				player.send(DACMessage.GameConfirmation2);
+				player.sendToOthers(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
 			}
 			onPlayerWin(player);
 		} else {
 			if (dac) {
 				player.winLive();
-				game.send(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
-				game.send(DACMessage.GameLivesAfterDAC.format(player.getLives()));
+				player.send(DACMessage.GameDAC2);
+				player.sendToOthers(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
+				player.send(DACMessage.GameLivesAfterDAC2.format(player.getLives()));
+				player.sendToOthers(DACMessage.GameLivesAfterDAC.format(player.getLives()));
 			} else {
-				game.send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
+				player.send(DACMessage.GameJumpSuccess2);
+				player.sendToOthers(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
 			}
 			game.nextTurn();
 		}
@@ -111,10 +117,12 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	public void onFail(DACPlayer dacPlayer) {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 		
-		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
+		player.send(DACMessage.GameJumpFail2);
+		player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
 
 		if (player.mustConfirmate()) {
-			game.send(DACMessage.GameConfirmationFail, player);
+			player.send(DACMessage.GameConfirmationFail2);
+			player.sendToOthers(DACMessage.GameConfirmationFail);
 			for (ClassicGamePlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
 				playerWhoLost.resetLives();
 			}
@@ -128,7 +136,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 				playersWhoLostLastTurn.put(player, vec);
 				onPlayerLoss(player, false);
 			} else {
-				game.send(DACMessage.GameLivesAfterFail.format(player.getLives()), player);
+				player.send(DACMessage.GameLivesAfterFail2.format(player.getLives()));
+				player.sendToOthers(DACMessage.GameLivesAfterFail.format(player.getLives()));
 				game.nextTurn();
 			}
 		}
@@ -163,7 +172,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		if (lastPlayer != null) {
 			if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
 				lastPlayer.setMustConfirmate(true);
-				game.send(DACMessage.GameMustConfirmate.format(lastPlayer.getDisplayName()));
+				lastPlayer.send(DACMessage.GameMustConfirmate2);
+				lastPlayer.sendToOthers(DACMessage.GameMustConfirmate.format(lastPlayer.getDisplayName()));
 				game.nextTurn();
 			} else {
 				onPlayerWin(lastPlayer);
@@ -189,7 +199,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		game.send(DACMessage.GameWinner.format(player.getDisplayName()));
 
 		int i=2;
-		for (int index = lostOrder.size()-1 ; index >= 0; index--) {
+		for (int index = lostOrder.size() - 1; index >= 0; index--) {
 			String name = lostOrder.get(index);
 			game.send(DACMessage.GameRank.format(i, name));
 			i++;

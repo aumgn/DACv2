@@ -64,18 +64,28 @@ public enum DACMessage {
 	GamePlayerList          ("game.player-list"),
 	GameEnjoy               ("game.enjoy"),
 	GamePlayerTurn          ("game.player-turn"),
+	GamePlayerTurn2         ("game.player-turn2"),
 	GameTurnTimedOut        ("game.turn-timed-out"),
 	GameConfirmation        ("game.confirmation"),
+	GameConfirmation2       ("game.confirmation2"),
 	GameDACConfirmation     ("game.dac-confirmation"),
 	GameDACConfirmation2    ("game.dac-confirmation2"),
+	GameDACConfirmation3    ("game.dac-confirmation3"),
 	GameDAC                 ("game.dac"),
+	GameDAC2                ("game.dac2"),
 	GameLivesAfterDAC       ("game.lives-after-dac"),
+	GameLivesAfterDAC2      ("game.lives-after-dac2"),
 	GameJumpSuccess         ("game.jump-success"),
+	GameJumpSuccess2        ("game.jump-success2"),
 	GameJumpFail            ("game.jump-fail"),
+	GameJumpFail2           ("game.jump-fail2"),
 	GameConfirmationFail    ("game.confirmation-fail"),
+	GameConfirmationFail2   ("game.confirmation-fail2"),
 	GameLivesAfterFail      ("game.lives-after-fail"),
+	GameLivesAfterFail2     ("game.lives-after-fail2"),
 	GamePlayerQuit          ("game.player-quit"),
 	GameMustConfirmate      ("game.must-confirmate"),
+	GameMustConfirmate2     ("game.must-confirmate2"),
 	GameFinished            ("game.finished"),
 	GameWinner              ("game.winner"),
 	GameRank                ("game.rank"),
@@ -101,14 +111,14 @@ public enum DACMessage {
 	}
 
 	private static void load(Configuration config, Configuration defaults) {
-		for (DACMessage lang : DACMessage.values()) {
-			String node = lang.getNode();
+		for (DACMessage message : DACMessage.values()) {
+			String node = message.getNode();
 			if (config.isString(node)) {
-				lang.setValue(DACUtil.parseColorsMarkup(config.getString(node)));
+				message.setValue(DACUtil.parseColorsMarkup(config.getString(node)));
 			} else if (defaults.isString(node)) { 
-				lang.setValue(DACUtil.parseColorsMarkup(defaults.getString(node)));
+				message.setValue(DACUtil.parseColorsMarkup(defaults.getString(node)));
 			} else {
-				lang.setValue("");
+				message.setValue("");
 			}
 		}
 	}
