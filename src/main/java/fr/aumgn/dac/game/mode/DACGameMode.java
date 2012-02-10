@@ -10,10 +10,14 @@ import java.lang.annotation.Target;
 public @interface DACGameMode {
 
 	/**
-	* Name of your type
+	* Name of your mode
 	*
-	* @return Name of the showcase type.
+	* @return Name of the game mode.
 	*/
-	public String value();
+	public String name();
+	
+	public int minPlayers() default 2;
+	
+	public boolean allowPoolReset() default false;
 	
 }

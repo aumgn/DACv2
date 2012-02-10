@@ -23,7 +23,7 @@ public final class DACGameModes {
 			return;
 		}
 				
-		String modeName = annotation.value();
+		String modeName = annotation.name();
 		try {
 			GameMode mode = modeCls.newInstance();
 			modes.put(modeName, mode);

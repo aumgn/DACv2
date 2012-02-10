@@ -6,7 +6,7 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
 
-@DACGameMode("default")
+@DACGameMode(name="default")
 public class DefaultGameMode implements GameMode {
 
 	@Override
@@ -17,11 +17,6 @@ public class DefaultGameMode implements GameMode {
 	@Override
 	public DACPlayer createPlayer(Game game, DACPlayer player, int index) {
 		return new DefaultGamePlayer(game, player, index);
-	}
-
-	@Override
-	public int getMinimumPlayer() {
-		return 2;
 	}
 
 }

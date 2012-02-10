@@ -9,6 +9,4 @@ public interface GameMode {
 	
 	DACPlayer createPlayer(Game game, DACPlayer player, int index);
 	
-	int getMinimumPlayer();
-	
 }
