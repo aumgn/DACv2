@@ -56,6 +56,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 			lostOrder.add(entry.getKey().getDisplayName());
 			arena.getPool().rip(entry.getValue(), entry.getKey().getDisplayName());
 		}
+		playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
 	}
 	
 	@Override
@@ -63,9 +64,10 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 		if (player.hasLost()) {
 			game.nextTurn();
+		} else {
+			game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
+			player.tpToDiving();
 		}
-		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
-		player.tpToDiving();
 	}
 
 	@Override
@@ -77,7 +79,6 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		Pool pool = arena.getPool();
 		boolean dac = pool.isADACPattern(x, z);
 
-		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		player.tpToStart();
 		if (dac) {
 			DAC.callEvent(new DACClassicDACEvent(game, player));
@@ -113,7 +114,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 
 		if (player.mustConfirmate()) {
-			game.send(DACMessage.GameConfirmationFail);
+			game.send(DACMessage.GameConfirmationFail, player);
 			for (ClassicGamePlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
 				playerWhoLost.resetLives();
 			}
@@ -127,7 +128,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 				playersWhoLostLastTurn.put(player, vec);
 				onPlayerLoss(player, false);
 			} else {
-				game.send(DACMessage.GameLivesAfterFail.format(player.getLives()));
+				game.send(DACMessage.GameLivesAfterFail.format(player.getLives()), player);
 				game.nextTurn();
 			}
 		}
