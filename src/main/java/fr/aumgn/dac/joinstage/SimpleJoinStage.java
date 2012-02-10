@@ -13,6 +13,8 @@ import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.dac.config.DACColors;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.event.joinstage.DACJoinStageStartEvent;
+import fr.aumgn.dac.event.joinstage.DACJoinStageStopEvent;
 import fr.aumgn.dac.event.joinstage.DACPlayerJoinEvent;
 import fr.aumgn.dac.game.mode.DACGameMode;
 import fr.aumgn.dac.game.mode.GameMode;
@@ -35,6 +37,7 @@ public class SimpleJoinStage implements JoinStage {
 			player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
 			player.sendMessage(DACMessage.JoinNewGame2.getValue());
 		}
+		DAC.callEvent(new DACJoinStageStartEvent(this));
 	}
 	
 	@Override
@@ -141,7 +144,7 @@ public class SimpleJoinStage implements JoinStage {
 
 	@Override
 	public void stop() {
-		send(DACMessage.JoinStopped);
+		DAC.callEvent(new DACJoinStageStopEvent(this));
 		DAC.getStageManager().unregister(this);
 	}
 

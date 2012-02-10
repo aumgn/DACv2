@@ -33,7 +33,7 @@ public class SimpleGame implements Game {
 	
 	public SimpleGame(GameMode gameMode, JoinStage joinStage) {
 		StageManager stagesManager = DAC.getStageManager();
-		stagesManager.unregister(joinStage);
+		joinStage.stop();
 		this.arena = joinStage.getArena();
 		this.mode = gameMode;
 		List<DACPlayer> roulette = joinStage.getPlayers();
