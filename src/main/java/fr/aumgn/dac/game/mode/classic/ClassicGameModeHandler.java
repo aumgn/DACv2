@@ -14,6 +14,9 @@ import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.event.classic.DACClassicDACEvent;
+import fr.aumgn.dac.event.classic.DACClassicLooseEvent;
+import fr.aumgn.dac.event.classic.DACClassicWinEvent;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
@@ -73,6 +76,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		player.tpToStart();
 		if (dac) {
+			DAC.callEvent(new DACClassicDACEvent(game, player));
 			pool.putDACColumn(x, z, dacPlayer.getColor());
 		} else {
 			pool.putColumn(x, z, dacPlayer.getColor());
@@ -148,6 +152,9 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	
 	public void onPlayerLoss(ClassicGamePlayer player, boolean force) {
 		ClassicGamePlayer lastPlayer = getLastPlayer();
+		
+		DAC.callEvent(new DACClassicLooseEvent(game, player));
+
 		if (lastPlayer != null) {
 			if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
 				lastPlayer.setMustConfirmate(true);
@@ -164,6 +171,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	}
 	
 	public void onPlayerWin(ClassicGamePlayer player) {
+		DAC.callEvent(new DACClassicWinEvent(game, player));
+		
 		game.send(DACMessage.GameFinished);
 		
 		for (Entry<ClassicGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
