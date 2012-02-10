@@ -94,12 +94,12 @@ public class SimpleJoinStage implements JoinStage {
 	}
 	
 	private void addPlayer(Player player, DACColor color) {
-		DACPlayer dacPlayer = new JoinStagePlayer(this, player, color);
 		
-		DACPlayerJoinEvent event = new DACPlayerJoinEvent(this, dacPlayer);
+		DACPlayerJoinEvent event = new DACPlayerJoinEvent(this, player, color, player.getLocation());
 		Bukkit.getPluginManager().callEvent(event);
 		
 		if (!event.isCancelled()) {
+			DACPlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
 			players.add(dacPlayer);
 			DAC.getPlayerManager().register(dacPlayer);
 			colorsMap.add(color);
