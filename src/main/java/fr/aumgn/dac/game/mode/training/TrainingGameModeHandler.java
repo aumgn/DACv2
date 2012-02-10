@@ -2,7 +2,6 @@ package fr.aumgn.dac.game.mode.training;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
@@ -33,9 +32,12 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 	@Override
 	public void onTurn(DACPlayer dacPlayer) {
 		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
-		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
-		player.tpToDiving();
-		player.getPlayer().setVelocity(new Vector(0.0, -2.0, 0.0));
+		if (!player.isPlaying()) {
+			game.nextTurn();
+		} else {
+			game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
+			player.tpToDiving();
+		}
 	}
 
 	@Override
@@ -64,6 +66,22 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 		player.tpToStart();
 		player.incrementFails();
 		game.nextTurn();	
+	}
+	
+	@Override
+	public void onQuit(DACPlayer dacPlayer) {
+		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
+		player.setPlaying(false);
+		int count = 0;
+		for (DACPlayer gamePlayer : game.getPlayers()) {
+			player = (TrainingGamePlayer)gamePlayer;
+			if (player.isPlaying()) {
+				count++;
+			}
+		}
+		if (count == 0) {
+			game.stop();
+		}
 	}
 	
 	@Override
