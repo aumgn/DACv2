@@ -130,7 +130,7 @@ public class SimpleJoinStage implements JoinStage {
 	
 	@Override
 	public List<DACPlayer> getPlayers() {
-		return players;
+		return new ArrayList<DACPlayer>(players);
 	}
 
 	@Override
