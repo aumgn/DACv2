@@ -13,6 +13,7 @@ import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.dac.config.DACColors;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.event.joinstage.DACPlayerJoinEvent;
 import fr.aumgn.dac.game.mode.DACGameMode;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.player.DACPlayer;
@@ -94,10 +95,16 @@ public class SimpleJoinStage implements JoinStage {
 	
 	private void addPlayer(Player player, DACColor color) {
 		DACPlayer dacPlayer = new JoinStagePlayer(this, player, color);
-		players.add(dacPlayer);
-		DAC.getPlayerManager().register(dacPlayer);
-		colorsMap.add(color);
-		send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+		
+		DACPlayerJoinEvent event = new DACPlayerJoinEvent(this, dacPlayer);
+		Bukkit.getPluginManager().callEvent(event);
+		
+		if (!event.isCancelled()) {
+			players.add(dacPlayer);
+			DAC.getPlayerManager().register(dacPlayer);
+			colorsMap.add(color);
+			send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+		}
 	}
 
 	@Override
