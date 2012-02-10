@@ -34,7 +34,7 @@ public class StartCommand extends PlayerCommandExecutor {
 				error(DACMessage.CmdStartUnknownMode);
 			}
 		} else {
-			mode = DACGameModes.get("default");
+			mode = DACGameModes.get("classic");
 		}
 		
 		if (!joinStage.isMinReached(mode)) {

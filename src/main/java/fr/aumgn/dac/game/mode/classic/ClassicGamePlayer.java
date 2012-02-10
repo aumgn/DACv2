@@ -1,15 +1,15 @@
-package fr.aumgn.dac.game.mode.default_;
+package fr.aumgn.dac.game.mode.classic;
 
 import fr.aumgn.dac.game.SimpleGamePlayer;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.player.DACPlayer;
 
-public class DefaultGamePlayer extends SimpleGamePlayer {
+public class ClassicGamePlayer extends SimpleGamePlayer {
 
 	private int lives;
 	private boolean mustConfirmate; 
 	
-	public DefaultGamePlayer(Game game, DACPlayer player, int index) {
+	public ClassicGamePlayer(Game game, DACPlayer player, int index) {
 		super(game, player, index);
 		this.lives = 0;
 		this.mustConfirmate = false;

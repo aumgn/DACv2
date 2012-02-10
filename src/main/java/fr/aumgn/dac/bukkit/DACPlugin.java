@@ -13,7 +13,7 @@ import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.exception.WorldEditNotLoaded;
 import fr.aumgn.dac.game.mode.DACGameModes;
-import fr.aumgn.dac.game.mode.default_.DefaultGameMode;
+import fr.aumgn.dac.game.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.game.mode.training.TrainingGameMode;
 
 public class DACPlugin extends JavaPlugin {
@@ -42,7 +42,7 @@ public class DACPlugin extends JavaPlugin {
 
 		DAC.init(this, (WorldEditPlugin)worldEdit);
 		
-		DACGameModes.register(DefaultGameMode.class);
+		DACGameModes.register(ClassicGameMode.class);
 		DACGameModes.register(TrainingGameMode.class);
 
 		getLogger().info(getDescription().getName() + " loaded.");
