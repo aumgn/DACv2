@@ -13,5 +13,7 @@ public interface GameModeHandler {
 	void onSuccess(DACPlayer player);
 
 	void onFail(DACPlayer player);
+	
+	void onQuit(DACPlayer player);
 
 }

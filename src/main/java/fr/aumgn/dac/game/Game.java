@@ -2,7 +2,6 @@ package fr.aumgn.dac.game;
 
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.player.DACPlayer;
@@ -19,7 +18,5 @@ public interface Game extends Stage {
 	void onFallDamage(EntityDamageEvent event);
 	
 	void onMove(PlayerMoveEvent event);
-	
-	void onQuit(PlayerQuitEvent event);
 	
 }

@@ -9,6 +9,10 @@ public class SimpleGameModeHandler implements GameModeHandler {
 	}
 
 	@Override
+	public void onNewTurn() {
+	}
+
+	@Override
 	public void onTurn(DACPlayer player) {
 	}
 
@@ -19,9 +23,9 @@ public class SimpleGameModeHandler implements GameModeHandler {
 	@Override
 	public void onFail(DACPlayer player) {
 	}
-
+	
 	@Override
-	public void onNewTurn() {
+	public void onQuit(DACPlayer player) {
 	}
 
 }

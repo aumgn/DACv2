@@ -127,6 +127,13 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		game.nextTurn();
 	}
 	
+	@Override
+	public void onQuit(DACPlayer dacPlayer) {
+		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+		player.looseAllLives();
+		onPlayerLoss(player, true);
+	}
+	
 	private ClassicGamePlayer getLastPlayer() {
 		int i = 0;
 		ClassicGamePlayer playerLeft = null;

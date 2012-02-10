@@ -7,7 +7,6 @@ import java.util.Random;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
@@ -108,6 +107,7 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void removePlayer(DACPlayer player) {
+		gameModeHandler.onQuit(player);
 	}
 
 
@@ -118,9 +118,6 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void stop() {
-		for (DACPlayer player : players) {
-			DAC.getPlayerManager().unregister(player);
-		}
 		DAC.getStageManager().unregister(this);
 		if (DAC.getConfig().getResetOnEnd()) {
 			arena.getPool().reset();
@@ -151,10 +148,6 @@ public class SimpleGame implements Game {
 		if (isPlayerTurn(dacPlayer) && arena.getPool().contains(player)) {
 			gameModeHandler.onSuccess(dacPlayer);
 		}
-	}
-
-	@Override
-	public void onQuit(PlayerQuitEvent event) {
 	}
 
 }

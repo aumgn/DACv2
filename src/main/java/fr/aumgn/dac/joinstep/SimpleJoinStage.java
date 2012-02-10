@@ -136,6 +136,7 @@ public class SimpleJoinStage implements JoinStage {
 	@Override
 	public void stop() {
 		send(DACMessage.JoinStopped);
+		DAC.getStageManager().unregister(this);
 	}
 
 	@Override
