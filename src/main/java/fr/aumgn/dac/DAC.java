@@ -2,6 +2,8 @@ package fr.aumgn.dac;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -72,6 +74,10 @@ public final class DAC {
 	
 	public static WorldEditPlugin getWorldEdit() {
 		return worldEdit;
+	}
+
+	public static void callEvent(Event event) {
+		Bukkit.getPluginManager().callEvent(event);
 	}
 
 }

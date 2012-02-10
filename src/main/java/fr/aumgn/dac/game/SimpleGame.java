@@ -11,6 +11,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.event.game.DACGameStartEvent;
+import fr.aumgn.dac.event.game.DACGameStopEvent;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.joinstage.JoinStage;
@@ -47,6 +49,7 @@ public class SimpleGame implements Game {
 		stagesManager.register(this);
 		gameModeHandler.onStart();
 		nextTurn();
+		DAC.callEvent(new DACGameStartEvent(this));
 	}
 	
 	@Override
@@ -118,6 +121,7 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void stop() {
+		DAC.callEvent(new DACGameStopEvent(this));
 		gameModeHandler.onStop();
 		DAC.getStageManager().unregister(this);
 		if (DAC.getConfig().getResetOnEnd()) {

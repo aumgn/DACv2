@@ -89,14 +89,13 @@ public class SimpleJoinStage implements JoinStage {
 				return color;
 			}
 		}
-		// Should never be reached;
+		// Should never be reached
 		return colors.defaut();
 	}
 	
 	private void addPlayer(Player player, DACColor color) {
-		
 		DACPlayerJoinEvent event = new DACPlayerJoinEvent(this, player, color, player.getLocation());
-		Bukkit.getPluginManager().callEvent(event);
+		DAC.callEvent(event);
 		
 		if (!event.isCancelled()) {
 			DACPlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
