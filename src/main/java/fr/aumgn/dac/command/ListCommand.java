@@ -16,8 +16,8 @@ public class ListCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Stage stage = DAC.getPlayerManager().get(context.getPlayer()).getStage();
-		for (DACPlayer playerinStage : stage.getPlayers()) {
-			context.send(" " + playerinStage.getDisplayName());
+		for (DACPlayer playerInStage : stage.getPlayers()) {
+			context.send(" " + playerInStage.getDisplayName());
 		}
 
 		error(DACMessage.CmdLivesNotInGame);

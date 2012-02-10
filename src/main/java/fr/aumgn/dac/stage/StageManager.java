@@ -38,6 +38,7 @@ public class StageManager {
 			throw new RuntimeException();
 		}
 		stages.put(stage.getArena(), stage);
+		stage.registerAll();
 	}
 
 	public void unregister(Stage stage) {
@@ -45,6 +46,7 @@ public class StageManager {
 			throw new RuntimeException();
 		}
 		stages.remove(stage.getArena());
+		stage.unregisterAll();
 	}
 	
 }

@@ -16,6 +16,8 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.joinstep.JoinStage;
 import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.player.DACPlayerManager;
+import fr.aumgn.dac.stage.StageManager;
 
 public class SimpleGame implements Game {
 
@@ -26,6 +28,8 @@ public class SimpleGame implements Game {
 	private int turn;
 	
 	public SimpleGame(GameMode gameMode, JoinStage joinStage) {
+		StageManager stagesManager = DAC.getStageManager();
+		stagesManager.unregister(joinStage);
 		this.arena = joinStage.getArena();
 		this.mode = gameMode;
 		List<DACPlayer> roulette = joinStage.getPlayers();
@@ -41,10 +45,27 @@ public class SimpleGame implements Game {
 		}
 		gameModeHandler = gameMode.createHandler(this);
 		turn = -1;
+		stagesManager.register(this);
 		gameModeHandler.onStart();
 		nextTurn();
 	}
 	
+	@Override
+	public void registerAll() {
+		DACPlayerManager playerManager = DAC.getPlayerManager();
+		for (DACPlayer player : players) {
+			playerManager.register(player);
+		}
+	}
+
+	@Override
+	public void unregisterAll() {
+		DACPlayerManager playerManager = DAC.getPlayerManager();
+		for (DACPlayer player : players) {
+			playerManager.unregister(player);
+		}
+	}
+
 	private void increaseTurn() {
 		turn++;
 		if (turn == players.length) {

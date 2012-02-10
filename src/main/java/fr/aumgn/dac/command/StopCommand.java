@@ -18,9 +18,7 @@ public class StopCommand extends PlayerCommandExecutor {
 		if (stage == null) {
 			error(DACMessage.CmdStopNoGameToStop);
 		}
-
 		stage.stop();
-		DAC.getStageManager().unregister(stage);
 	}
 
 }

@@ -13,8 +13,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 	public boolean checkUsage(String[] args) {
 		return args.length == 2 && ( 
 				args[1].equalsIgnoreCase("pool") ||
-				args[1].equalsIgnoreCase("start")
-				);
+				args[1].equalsIgnoreCase("start"));
 	}
 
 	@Override

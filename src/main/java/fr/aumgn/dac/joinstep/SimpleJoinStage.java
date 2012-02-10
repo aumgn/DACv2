@@ -16,6 +16,7 @@ import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.mode.DACGameMode;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.player.DACPlayerManager;
 
 public class SimpleJoinStage implements JoinStage {
 	
@@ -35,6 +36,22 @@ public class SimpleJoinStage implements JoinStage {
 		}
 	}
 	
+	@Override
+	public void registerAll() {
+		DACPlayerManager playerManager = DAC.getPlayerManager();
+		for (DACPlayer player : players) {
+			playerManager.register(player);
+		}
+	}
+
+	@Override
+	public void unregisterAll() {
+		DACPlayerManager playerManager = DAC.getPlayerManager();
+		for (DACPlayer player : players) {
+			playerManager.unregister(player);
+		}
+	}
+
 	public void send(Object msg, DACPlayer exclude) {
 		for (DACPlayer player : players) {
 			if (player != exclude) {

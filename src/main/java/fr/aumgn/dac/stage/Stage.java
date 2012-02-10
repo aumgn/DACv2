@@ -13,6 +13,10 @@ public interface Stage {
 	
 	List<DACPlayer> getPlayers();
 	
+	void registerAll();
+	
+	void unregisterAll();
+	
 	void send(Object message);
 	
 	void send(Object message, DACPlayer exclude);
