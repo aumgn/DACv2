@@ -118,6 +118,7 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void stop() {
+		gameModeHandler.onStop();
 		DAC.getStageManager().unregister(this);
 		if (DAC.getConfig().getResetOnEnd()) {
 			arena.getPool().reset();

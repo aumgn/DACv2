@@ -28,4 +28,8 @@ public class SimpleGameModeHandler implements GameModeHandler {
 	public void onQuit(DACPlayer player) {
 	}
 
+	@Override
+	public void onStop() {
+	}
+
 }
