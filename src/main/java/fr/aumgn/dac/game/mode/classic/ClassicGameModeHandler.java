@@ -64,39 +64,38 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	@Override
 	public void onSuccess(DACPlayer dacPlayer) {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
-		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
 		Pool pool = arena.getPool();
 		boolean dac = pool.isADACPattern(x, z);
+
+		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
+		player.tpToStart();
+		if (dac) {
+			pool.putDACColumn(x, z, dacPlayer.getColor());
+		} else {
+			pool.putColumn(x, z, dacPlayer.getColor());
+		}
+		
 		if (player.mustConfirmate()) {
 			if (dac) {
 				game.send(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
 				game.send(DACMessage.GameDACConfirmation2);
-				pool.putDACColumn(x, z, dacPlayer.getColor());
 			} else {
 				game.send(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
-				pool.putColumn(x, z, dacPlayer.getColor());
 			}
 			onPlayerWin(player);
 		} else {
 			if (dac) {
-				game.send(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
 				player.winLive();
+				game.send(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
 				game.send(DACMessage.GameLivesAfterDAC.format(player.getLives()));
 			} else {
 				game.send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
 			}
-			if (dac) {
-				pool.putDACColumn(x, z, dacPlayer.getColor());
-			} else {
-				pool.putColumn(x, z, dacPlayer.getColor());
-			}
+			game.nextTurn();
 		}
-		
-		player.tpToStart();
-		game.nextTurn();
 	}
 
 	@Override
