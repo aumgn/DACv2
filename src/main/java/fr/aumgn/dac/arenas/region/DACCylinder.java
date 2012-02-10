@@ -20,7 +20,7 @@ import fr.aumgn.dac.arenas.vector.DACBlockVector;
 import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-cylinder")
-public class DACCylinder extends DACBasicRegion {
+public class DACCylinder extends DACSimpleRegion {
 
 	public static class DACCylinderSelection extends RegionSelection {
 

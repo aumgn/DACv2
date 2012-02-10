@@ -15,7 +15,7 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.arenas.vector.DACBlockVector;
 
 @SerializableAs("dac-cuboid")
-public class DACCuboid extends DACBasicRegion {
+public class DACCuboid extends DACSimpleRegion {
 
 	private DACBlockVector pos1;
 	private DACBlockVector pos2;
