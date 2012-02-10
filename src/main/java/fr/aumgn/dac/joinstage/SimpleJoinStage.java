@@ -102,14 +102,14 @@ public class SimpleJoinStage implements JoinStage {
 		
 		if (!event.isCancelled()) {
 			DACPlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
+			players.add(dacPlayer);
+			DAC.getPlayerManager().register(dacPlayer);
+			colorsMap.add(color);
 			dacPlayer.send(DACMessage.JoinCurrentPlayers);
 			for (DACPlayer currentPlayer : players) {
 				dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
 			}
-			players.add(dacPlayer);
-			DAC.getPlayerManager().register(dacPlayer);
-			colorsMap.add(color);
-			send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+			dacPlayer.sendToOthers(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
 		}
 	}
 
@@ -134,7 +134,6 @@ public class SimpleJoinStage implements JoinStage {
 		players.remove(player);
 		DAC.getPlayerManager().unregister(player);
 		colorsMap.remove(player.getColor());
-		return;
 	}
 	
 	@Override
