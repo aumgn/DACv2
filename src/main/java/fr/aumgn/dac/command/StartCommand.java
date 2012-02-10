@@ -7,7 +7,7 @@ import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.SimpleGame;
 import fr.aumgn.dac.game.mode.DACGameModes;
 import fr.aumgn.dac.game.mode.GameMode;
-import fr.aumgn.dac.joinstep.JoinStage;
+import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 

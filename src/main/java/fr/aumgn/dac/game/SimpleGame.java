@@ -13,7 +13,7 @@ import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
-import fr.aumgn.dac.joinstep.JoinStage;
+import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.dac.stage.StageManager;

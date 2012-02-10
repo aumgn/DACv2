@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.joinstep.JoinStage;
-import fr.aumgn.dac.joinstep.SimpleJoinStage;
+import fr.aumgn.dac.joinstage.JoinStage;
+import fr.aumgn.dac.joinstage.SimpleJoinStage;
 import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 

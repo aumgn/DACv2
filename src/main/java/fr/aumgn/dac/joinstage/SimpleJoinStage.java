@@ -1,4 +1,4 @@
-package fr.aumgn.dac.joinstep;
+package fr.aumgn.dac.joinstage;
 
 import java.util.ArrayList;
 import java.util.HashSet;

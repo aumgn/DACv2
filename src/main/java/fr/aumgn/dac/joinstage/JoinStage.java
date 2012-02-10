@@ -1,4 +1,4 @@
-package fr.aumgn.dac.joinstep;
+package fr.aumgn.dac.joinstage;
 
 import org.bukkit.entity.Player;
 
