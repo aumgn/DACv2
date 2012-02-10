@@ -10,7 +10,7 @@ public class DACGameNewTurnEvent extends DACGameEvent {
 	private static final HandlerList handlers = new HandlerList();
 	
 	public DACGameNewTurnEvent(Game game) {
-		super("DACGameNewEvent", game);
+		super("DACGameNewTurnEvent", game);
 	}
 	
     @Override
