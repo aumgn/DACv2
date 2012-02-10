@@ -1,6 +1,8 @@
 package fr.aumgn.dac.game.mode.training;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
@@ -29,13 +31,16 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onTurn(DACPlayer player) {
+	public void onTurn(DACPlayer dacPlayer) {
+		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
-		player.tpToDiving();		
+		player.tpToDiving();
+		player.getPlayer().setVelocity(new Vector(0.0, -2.0, 0.0));
 	}
 
 	@Override
-	public void onSuccess(DACPlayer player) {
+	public void onSuccess(DACPlayer dacPlayer) {
+		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
@@ -43,18 +48,33 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 		player.tpToStart();
 		Pool pool = arena.getPool(); 
 		if (pool.isADACPattern(x, z)) {
+			player.incrementDACs();
 			pool.putDACColumn(x, z, player.getColor());
 		} else {
+			player.incrementSuccesses();
 			pool.putColumn(x, z, player.getColor());
 		}
 		game.nextTurn();
 	}
 
 	@Override
-	public void onFail(DACPlayer player) {
+	public void onFail(DACPlayer dacPlayer) {
+		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 		player.tpToStart();
-		game.nextTurn();		
+		player.incrementFails();
+		game.nextTurn();	
+	}
+	
+	@Override
+	public void onStop() {
+		for (DACPlayer dacPlayer : game.getPlayers()) {
+			TrainingGamePlayer gamePlayer = (TrainingGamePlayer)dacPlayer;
+			Player player = gamePlayer.getPlayer();
+			player.sendMessage("Reussi : " + gamePlayer.getSuccesses());
+			player.sendMessage("Dés a coudre : " + gamePlayer.getDACs());
+			player.sendMessage("Manqués : " + gamePlayer.getFails());
+		}
 	}
 
 }
