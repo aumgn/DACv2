@@ -29,11 +29,6 @@ public class DACSimplePlayer implements DACPlayer {
 	}
 
 	@Override
-	public boolean equals(DACPlayer obj) {
-		return obj.getPlayer().getName().equalsIgnoreCase(getPlayer().getName());
-	}
-
-	@Override
 	public Stage getStage() {
 		return stage;
 	}

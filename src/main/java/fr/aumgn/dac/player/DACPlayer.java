@@ -8,8 +8,6 @@ import fr.aumgn.dac.stage.Stage;
 
 public interface DACPlayer {
 	
-	boolean equals(DACPlayer obj);
-	
 	Stage getStage();
 
 	Player getPlayer();
