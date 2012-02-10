@@ -25,8 +25,6 @@ public class KickCommand extends PlayerCommandExecutor {
 			DACPlayer dacPlayer = playerManager.get(player);
 			dacPlayer.getStage().removePlayer(dacPlayer);
 		}
-
-		error(DACMessage.CmdKickNotInGame);
 	}
 
 	public List<Player> matchPlayer(Context context, String arg) {

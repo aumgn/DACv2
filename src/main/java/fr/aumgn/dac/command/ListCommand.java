@@ -15,12 +15,15 @@ public class ListCommand extends PlayerCommandExecutor {
 
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
-		Stage stage = DAC.getPlayerManager().get(context.getPlayer()).getStage();
+		Stage stage = DAC.getStageManager().get(context.getPlayer());
+		
+		if (stage == null) {
+			error(DACMessage.CmdLivesNotInGame);
+		}
+		
 		for (DACPlayer playerInStage : stage.getPlayers()) {
 			context.send(" " + playerInStage.getDisplayName());
 		}
-
-		error(DACMessage.CmdLivesNotInGame);
 	}
 
 }
