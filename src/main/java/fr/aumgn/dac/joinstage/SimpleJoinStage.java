@@ -134,6 +134,9 @@ public class SimpleJoinStage implements JoinStage {
 		players.remove(player);
 		DAC.getPlayerManager().unregister(player);
 		colorsMap.remove(player.getColor());
+		if (players.size() == 0) {
+			stop();
+		}
 	}
 	
 	@Override

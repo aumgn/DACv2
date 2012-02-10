@@ -113,6 +113,9 @@ public class SimpleGame implements Game {
 	@Override
 	public void removePlayer(DACPlayer player) {
 		gameModeHandler.onQuit(player);
+		if (players.length == 0) {
+			stop();
+		}
 	}
 
 
