@@ -11,9 +11,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.event.game.DACGameFailEvent;
 import fr.aumgn.dac.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.event.game.DACGameStartEvent;
 import fr.aumgn.dac.event.game.DACGameStopEvent;
+import fr.aumgn.dac.event.game.DACGameSuccessEvent;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.joinstage.JoinStage;
@@ -135,16 +137,25 @@ public class SimpleGame implements Game {
 	public void onFallDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
 		if (arena.getPool().isAbove(player)) {
-			gameModeHandler.onFail(DAC.getPlayerManager().get(player));
-			int health = player.getHealth();
-			if (health == DACUtil.PLAYER_MAX_HEALTH) {
-				player.damage(1);
-				player.setHealth(DACUtil.PLAYER_MAX_HEALTH);
-			} else {
-				player.setHealth(health + 1);
-				player.damage(1);
+			DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
+			DACGameFailEvent failEvent = new DACGameFailEvent(this, dacPlayer);
+			DAC.callEvent(failEvent);
+			
+			if (!failEvent.isCancelled()) {
+				gameModeHandler.onFail(dacPlayer);
 			}
-			event.setCancelled(true);
+			
+			if (failEvent.cancelDeath()) {
+				event.setCancelled(true);
+				int health = player.getHealth();
+				if (health == DACUtil.PLAYER_MAX_HEALTH) {
+					player.damage(1);
+					player.setHealth(DACUtil.PLAYER_MAX_HEALTH);
+				} else {
+					player.setHealth(health + 1);
+					player.damage(1);
+				}
+			}
 		}
 	}
 
@@ -153,7 +164,11 @@ public class SimpleGame implements Game {
 		Player player = event.getPlayer();
 		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (isPlayerTurn(dacPlayer) && arena.getPool().contains(player)) {
-			gameModeHandler.onSuccess(dacPlayer);
+			DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, dacPlayer);
+			DAC.callEvent(successEvent);
+			if (!successEvent.isCancelled()) {
+				gameModeHandler.onSuccess(dacPlayer);
+			}
 		}
 	}
 

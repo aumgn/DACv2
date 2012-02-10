@@ -22,5 +22,4 @@ public class DACGameNewTurnEvent extends DACGameEvent {
         return handlers;
     }
     
-
 }
