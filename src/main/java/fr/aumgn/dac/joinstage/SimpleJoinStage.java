@@ -102,6 +102,10 @@ public class SimpleJoinStage implements JoinStage {
 		
 		if (!event.isCancelled()) {
 			DACPlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
+			dacPlayer.send(DACMessage.JoinCurrentPlayers);
+			for (DACPlayer currentPlayer : players) {
+				dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
+			}
 			players.add(dacPlayer);
 			DAC.getPlayerManager().register(dacPlayer);
 			colorsMap.add(color);
