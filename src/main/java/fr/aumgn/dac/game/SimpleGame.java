@@ -42,10 +42,8 @@ public class SimpleGame implements Game {
 		for (int i=0; i< players.length; i++) {
 			int j = rand.nextInt(roulette.size());
 			DACPlayer dacPlayer = roulette.remove(j);
-			DAC.getPlayerManager().unregister(dacPlayer);
 			dacPlayer = gameMode.createPlayer(this, dacPlayer, i);
 			players[i] = dacPlayer;
-			DAC.getPlayerManager().register(dacPlayer);
 		}
 		gameModeHandler = gameMode.createHandler(this);
 		turn = -1;

@@ -59,7 +59,11 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	}
 	
 	@Override
-	public void onTurn(DACPlayer player) {
+	public void onTurn(DACPlayer dacPlayer) {
+		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+		if (player.hasLost()) {
+			game.nextTurn();
+		}
 		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
 		player.tpToDiving();
 	}
@@ -115,6 +119,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 			}
 			playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
 			player.setMustConfirmate(false);
+			game.nextTurn();
 		} else {
 			player.looseLive();
 			if (player.hasLost()) {
@@ -123,11 +128,10 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 				onPlayerLoss(player, false);
 			} else {
 				game.send(DACMessage.GameLivesAfterFail.format(player.getLives()));
+				game.nextTurn();
 			}
 		}
-		
-		player.tpToStart();
-		game.nextTurn();
+		player.tpToStart();		
 	}
 	
 	@Override
