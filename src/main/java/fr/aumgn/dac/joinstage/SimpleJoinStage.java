@@ -126,15 +126,11 @@ public class SimpleJoinStage implements JoinStage {
 
 	@Override
 	public void removePlayer(DACPlayer player) {
-		for (DACPlayer dacPlayer : players) {
-			if (dacPlayer.getPlayer().equals(player)) {
-				send(DACMessage.JoinPlayerQuit.format(dacPlayer.getDisplayName()));
-				players.remove(dacPlayer);
-				DAC.getPlayerManager().unregister(dacPlayer);
-				colorsMap.remove(dacPlayer.getColor());
-				return;
-			}
-		}
+		send(DACMessage.JoinPlayerQuit.format(player.getDisplayName()));
+		players.remove(player);
+		DAC.getPlayerManager().unregister(player);
+		colorsMap.remove(player.getColor());
+		return;
 	}
 	
 	@Override
