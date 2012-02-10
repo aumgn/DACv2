@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.event.game.DACGameStartEvent;
 import fr.aumgn.dac.event.game.DACGameStopEvent;
 import fr.aumgn.dac.game.mode.GameMode;
@@ -72,6 +73,7 @@ public class SimpleGame implements Game {
 		turn++;
 		if (turn == players.length) {
 			turn = 0;
+			DAC.callEvent(new DACGameNewTurnEvent(this));
 			gameModeHandler.onNewTurn();
 		}
 	}
