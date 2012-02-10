@@ -3,7 +3,6 @@ package fr.aumgn.dac.command;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
@@ -14,8 +13,7 @@ public class GotoCommand extends PlayerCommandExecutor {
 	public boolean checkUsage(String[] args) {
 		return args.length == 1 && ( 
 				args[0].equalsIgnoreCase("diving") ||
-				args[0].equalsIgnoreCase("start")
-				);
+				args[0].equalsIgnoreCase("start"));
 	}
 
 	@Override
@@ -27,10 +25,9 @@ public class GotoCommand extends PlayerCommandExecutor {
 		}
 		
 		if (args[0].equalsIgnoreCase("diving")) {
-			DACArena arena = dacPlayer.getStage().getArena();
-			player.teleport(arena.getDivingBoard().getLocation());
+			dacPlayer.tpToDiving();
 		} else if (args[0].equalsIgnoreCase("start")) {
-			player.teleport(dacPlayer.getStartLocation());
+			dacPlayer.tpToStart();
 		}
 		context.success(DACMessage.CmdGotoSuccess);
 	}
