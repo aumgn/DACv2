@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.player.DACPlayer;
 
 public class StageManager {
@@ -31,6 +32,21 @@ public class StageManager {
 			return null;
 		}
 		return dacPlayer.getStage();
+	}
+	
+	private Game castGame(Stage stage) {
+		if (stage instanceof Game) {
+			return (Game) stage;
+		}
+		return null;
+	}
+	
+	public Game getGame(DACArena arena) {
+		return castGame(get(arena));
+	}
+	
+	public Game getGame(Player player) {
+		return castGame(get(player));
 	}
 	
 	public void register(Stage stage) {

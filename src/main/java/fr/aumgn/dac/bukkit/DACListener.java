@@ -12,30 +12,16 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.player.DACPlayer;
-import fr.aumgn.dac.stage.Stage;
 
 public class DACListener implements Listener {
 	
-	private Game getGame(Player player) {
-		Stage stage = DAC.getStageManager().get(player);
-		if (!(stage instanceof Game)) {
-			return null;
-		}
-		return (Game) stage;
-	}
-
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
 			Player player = (Player)event.getEntity();
-			Game game = getGame(player);
-			
+			Game game = DAC.getStageManager().getGame(player);
 			if (game == null) {
-				return;
-			}
-			
-			if (!game.getArena().getPool().isAbove(player)) {
 				return;
 			}
 			
@@ -45,7 +31,7 @@ public class DACListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onMove(PlayerMoveEvent event) {
-		Game game = getGame(event.getPlayer());
+		Game game = DAC.getStageManager().getGame(event.getPlayer());
 		if (game == null) {
 			return;
 		}
