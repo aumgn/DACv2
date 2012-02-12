@@ -14,6 +14,7 @@ import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.exception.WorldEditNotLoaded;
 import fr.aumgn.dac.game.mode.DACGameModes;
 import fr.aumgn.dac.game.mode.classic.ClassicGameMode;
+import fr.aumgn.dac.game.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.game.mode.training.TrainingGameMode;
 
 public class DACPlugin extends JavaPlugin {
@@ -44,6 +45,7 @@ public class DACPlugin extends JavaPlugin {
 		
 		DACGameModes.register(ClassicGameMode.class);
 		DACGameModes.register(TrainingGameMode.class);
+		DACGameModes.register(SuddenDeathGameMode.class);
 
 		getLogger().info(getDescription().getName() + " loaded.");
 	}
