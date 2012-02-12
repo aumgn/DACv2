@@ -19,9 +19,9 @@ import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
 import fr.aumgn.dac.areas.DACArea;
-import fr.aumgn.dac.areas.DACAreaSimpleFiller;
 import fr.aumgn.dac.areas.column.DACColumn;
 import fr.aumgn.dac.areas.column.DACColumnPattern;
+import fr.aumgn.dac.areas.filler.DACAreaSimpleFiller;
 import fr.aumgn.dac.config.DACColor;
 
 @SerializableAs("dac-pool")
@@ -128,14 +128,6 @@ public class Pool extends DACArea {
 		dac &= isColumnAt(x+1, z);
 		dac &= isColumnAt(x, z+1);
 		return dac;
-	}
-
-	public int getMinimumY() {
-		return getWERegion().getMinimumPoint().getBlockY();
-	}
-
-	public int getMaximumY() {
-		return getWERegion().getMaximumPoint().getBlockY();
 	}
 
 }

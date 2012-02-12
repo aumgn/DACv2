@@ -13,6 +13,8 @@ import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
+import fr.aumgn.dac.areas.column.DACColumn;
+import fr.aumgn.dac.areas.filler.DACAreaFiller;
 import fr.aumgn.dac.areas.region.DACCuboid;
 import fr.aumgn.dac.areas.region.DACCylinder;
 import fr.aumgn.dac.areas.region.DACPolygonal;
@@ -66,6 +68,14 @@ public class DACArea implements Iterable<Block> {
 		return region.getSelection(arena.getWorld());
 	}
 
+	public int getMinimumY() {
+		return getWERegion().getMinimumPoint().getBlockY();
+	}
+
+	public int getMaximumY() {
+		return getWERegion().getMaximumPoint().getBlockY();
+	}
+
 	public boolean contains(Player player) {
 		return contains(player.getLocation());
 	}
@@ -84,6 +94,15 @@ public class DACArea implements Iterable<Block> {
 	@Override
 	public Iterator<Block> iterator() {
 		return new DACAreaIterator(this, getWERegion().iterator());
+	}
+	
+	public Iterable<DACColumn> columns() {
+		return new Iterable<DACColumn>() {
+			@Override
+			public Iterator<DACColumn> iterator() {
+				return new DACAreaVerticalIterator(DACArea.this);
+			}
+		};
 	}
 
 }

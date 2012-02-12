@@ -61,5 +61,5 @@ public class DACCuboid extends DACSimpleRegion {
 	public Selection getSelection(World world) {
 		return new CuboidSelection(world, pos1.getVector(), pos2.getVector());
 	}
-
+	
 }

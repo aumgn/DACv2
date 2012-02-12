@@ -78,6 +78,9 @@ commands:
         description: "Liste l'ensemble des couleurs disponibles"
         usage: 'Utilisation: /<command>'
         permission: 'dac.cmd.colors'
+    dac-test:
+        description: "Test"
+        usage: "Utilisation: /<command> <arene>"
         
 permissions:
     dac.game.play:

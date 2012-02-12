@@ -1,4 +1,4 @@
-package fr.aumgn.dac.areas;
+package fr.aumgn.dac.areas.filler;
 
 import org.bukkit.Material;
 
@@ -7,6 +7,7 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.areas.DACArea;
 
 public class DACAreaSimpleFiller implements DACAreaFiller {
 	

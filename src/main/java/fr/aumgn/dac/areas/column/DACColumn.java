@@ -3,10 +3,11 @@ package fr.aumgn.dac.areas.column;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import fr.aumgn.dac.arenas.Pool;
+import fr.aumgn.dac.areas.DACArea;
 
 public class DACColumn implements Iterable<Block> {
 	
@@ -47,10 +48,10 @@ public class DACColumn implements Iterable<Block> {
 	private int x;
 	private int z;
 
-	public DACColumn(Pool pool, int x, int z) {
-		this.world = pool.getArena().getWorld();
-		this.bottom = pool.getMinimumY();
-		this.top = pool.getMaximumY();
+	public DACColumn(DACArea area, int x, int z) {
+		this.world = area.getArena().getWorld();
+		this.bottom = area.getMinimumY();
+		this.top = area.getMaximumY();
 		this.x = x;
 		this.z = z;
 	}
@@ -73,6 +74,19 @@ public class DACColumn implements Iterable<Block> {
 
 	public int getTop() {
 		return top;
+	}
+	
+	public void set(Material material, byte data) {
+		for (Block block : this) {
+			block.setType(material);
+			block.setData(data);
+		}
+	}
+	
+	public void set(Material material) {
+		for (Block block : this) {
+			block.setType(material);
+		}
 	}
 	
 	@Override
