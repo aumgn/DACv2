@@ -13,6 +13,8 @@ import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
+import fr.aumgn.dac.arenas.column.DACGlassColumn;
+import fr.aumgn.dac.arenas.column.DACSimpleColumn;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.event.classic.DACClassicDACEvent;
 import fr.aumgn.dac.event.classic.DACClassicLooseEvent;
@@ -83,9 +85,9 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		player.tpToStart();
 		if (dac) {
 			DAC.callEvent(new DACClassicDACEvent(game, player));
-			pool.putDACColumn(x, z, dacPlayer.getColor());
+			pool.putColumn(new DACGlassColumn(), dacPlayer.getColor(), x, z);
 		} else {
-			pool.putColumn(x, z, dacPlayer.getColor());
+			pool.putColumn(new DACSimpleColumn(), dacPlayer.getColor(), x, z);
 		}
 		
 		if (player.mustConfirmate()) {

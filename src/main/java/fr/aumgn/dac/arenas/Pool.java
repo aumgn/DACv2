@@ -21,13 +21,14 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
+import fr.aumgn.dac.arenas.column.DACColumn;
+import fr.aumgn.dac.arenas.column.DACColumnPattern;
 import fr.aumgn.dac.config.DACColor;
 
 @SerializableAs("dac-pool")
 public class Pool extends DACArea {
 
 	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
-	private static final Material DAC_MATERIAL = Material.GLASS;
 	private static final Material SIGN_MATERIAL = Material.SIGN_POST;
 	private static final Material AIR = Material.AIR; 
 	private static final BaseBlock WATER = new BaseBlock(DEFAULT_MATERIAL.getId());
@@ -81,30 +82,8 @@ public class Pool extends DACArea {
 		return getAboveRegion().contains(vec);
 	}
 
-	public void putColumn(int x, int z, DACColor color) {
-		Region region = getWERegion();
-		int y = region.getMinimumPoint().getBlockY();
-		int yMax = region.getMaximumPoint().getBlockY();
-		World world = getArena().getWorld();
-		for (; y<=yMax; y++) { 
-			Block block = world.getBlockAt(x, y, z);
-			block.setType(color.getMaterial());
-			block.setData(color.getData());
-		}
-	}
-
-	public void putDACColumn(int x, int z, DACColor color) {
-		Region region = getWERegion(); 
-		int y = region.getMinimumPoint().getBlockY();
-		int yMax = region.getMaximumPoint().getBlockY();
-		World world = getArena().getWorld();
-		for (; y<yMax; y++) { 
-			Block block = world.getBlockAt(x, y, z);
-			block.setType(color.getMaterial());
-			block.setData(color.getData());
-		}
-		Block block = world.getBlockAt(x, y, z);
-		block.setType(DAC_MATERIAL);
+	public void putColumn(DACColumnPattern pattern, DACColor color, int x, int z) {
+		pattern.place(new DACColumn(this, x, z), color);
 	}
 
 	public void putRIPSign(org.bukkit.util.Vector vec) {
@@ -157,6 +136,14 @@ public class Pool extends DACArea {
 		dac &= isColumnAt(x+1, z);
 		dac &= isColumnAt(x, z+1);
 		return dac;
+	}
+
+	public int getMinimumY() {
+		return getWERegion().getMinimumPoint().getBlockY();
+	}
+
+	public int getMaximumY() {
+		return getWERegion().getMaximumPoint().getBlockY();
 	}
 
 }

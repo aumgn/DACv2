@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
+import fr.aumgn.dac.arenas.column.DACGlassColumn;
+import fr.aumgn.dac.arenas.column.DACSimpleColumn;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
@@ -51,10 +53,10 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 		Pool pool = arena.getPool(); 
 		if (pool.isADACPattern(x, z)) {
 			player.incrementDACs();
-			pool.putDACColumn(x, z, player.getColor());
+			pool.putColumn(new DACGlassColumn(), player.getColor(), x, z);
 		} else {
 			player.incrementSuccesses();
-			pool.putColumn(x, z, player.getColor());
+			pool.putColumn(new DACSimpleColumn(), player.getColor(), x, z);
 		}
 		game.nextTurn();
 	}
