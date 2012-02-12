@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.game.Game;
+import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.stage.Stage;
 
 public class DACListener implements Listener {
@@ -54,13 +55,12 @@ public class DACListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onQuit(PlayerQuitEvent event) {
-		Player player = event.getPlayer();
-		Stage stage = DAC.getStageManager().get(player);
-		if (stage == null) {
+		DACPlayer player = DAC.getPlayerManager().get(event.getPlayer()); 
+		if (player == null) {
 			return;
 		}
 		
-		// Process
+		player.getStage().removePlayer(player);
 	}
 
 }
