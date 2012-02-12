@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.region;
+package fr.aumgn.dac.areas.region;
 
 import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;

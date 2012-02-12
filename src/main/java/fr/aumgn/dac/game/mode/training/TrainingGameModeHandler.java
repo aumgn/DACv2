@@ -4,10 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
+import fr.aumgn.dac.areas.column.DACGlassColumn;
+import fr.aumgn.dac.areas.column.DACSimpleColumn;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
-import fr.aumgn.dac.arenas.column.DACGlassColumn;
-import fr.aumgn.dac.arenas.column.DACSimpleColumn;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;

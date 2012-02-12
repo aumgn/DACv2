@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.vector;
+package fr.aumgn.dac.areas.vector;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -10,8 +10,8 @@ import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 
-import fr.aumgn.dac.arenas.region.DACRegion;
-import fr.aumgn.dac.arenas.vector.DACLocation;
+import fr.aumgn.dac.areas.region.DACRegion;
+import fr.aumgn.dac.areas.vector.DACLocation;
 
 @SerializableAs("dac-arena")
 public class DACArena implements ConfigurationSerializable {

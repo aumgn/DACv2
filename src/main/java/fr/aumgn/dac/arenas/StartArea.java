@@ -2,7 +2,7 @@ package fr.aumgn.dac.arenas;
 
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import fr.aumgn.dac.arenas.areas.DACArea;
+import fr.aumgn.dac.areas.DACArea;
 
 @SerializableAs("dac-start")
 public class StartArea extends DACArea {

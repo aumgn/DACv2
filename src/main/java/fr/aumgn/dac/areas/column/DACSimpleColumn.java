@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.column;
+package fr.aumgn.dac.areas.column;
 
 import org.bukkit.block.Block;
 

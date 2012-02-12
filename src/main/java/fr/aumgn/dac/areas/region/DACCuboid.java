@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.region;
+package fr.aumgn.dac.areas.region;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.arenas.vector.DACBlockVector;
+import fr.aumgn.dac.areas.vector.DACBlockVector;
 
 @SerializableAs("dac-cuboid")
 public class DACCuboid extends DACSimpleRegion {

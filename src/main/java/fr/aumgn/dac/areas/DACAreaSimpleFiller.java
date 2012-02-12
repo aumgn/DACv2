@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.areas;
+package fr.aumgn.dac.areas;
 
 import org.bukkit.Material;
 

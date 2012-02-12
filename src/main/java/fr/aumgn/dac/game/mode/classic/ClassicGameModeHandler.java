@@ -11,10 +11,10 @@ import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
+import fr.aumgn.dac.areas.column.DACGlassColumn;
+import fr.aumgn.dac.areas.column.DACSimpleColumn;
 import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.Pool;
-import fr.aumgn.dac.arenas.column.DACGlassColumn;
-import fr.aumgn.dac.arenas.column.DACSimpleColumn;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.event.classic.DACClassicDACEvent;
 import fr.aumgn.dac.event.classic.DACClassicLooseEvent;

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.column;
+package fr.aumgn.dac.areas.column;
 
 import fr.aumgn.dac.config.DACColor;
 

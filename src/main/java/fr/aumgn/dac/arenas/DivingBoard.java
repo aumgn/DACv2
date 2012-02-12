@@ -3,7 +3,7 @@ package fr.aumgn.dac.arenas;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import fr.aumgn.dac.arenas.vector.DACLocation;
+import fr.aumgn.dac.areas.vector.DACLocation;
 
 @SerializableAs("dac-diving")
 public class DivingBoard {

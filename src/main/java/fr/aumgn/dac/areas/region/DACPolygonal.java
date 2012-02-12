@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.region;
+package fr.aumgn.dac.areas.region;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,7 +15,7 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
+import fr.aumgn.dac.areas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-poly")
 public class DACPolygonal extends DACSimpleRegion {

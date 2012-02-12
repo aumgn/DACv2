@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.region;
+package fr.aumgn.dac.areas.region;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,8 +16,8 @@ import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.CylinderRegionSelector;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.arenas.vector.DACBlockVector;
-import fr.aumgn.dac.arenas.vector.DACBlockVector2D;
+import fr.aumgn.dac.areas.vector.DACBlockVector;
+import fr.aumgn.dac.areas.vector.DACBlockVector2D;
 
 @SerializableAs("dac-cylinder")
 public class DACCylinder extends DACSimpleRegion {

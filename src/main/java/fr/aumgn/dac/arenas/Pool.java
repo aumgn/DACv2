@@ -18,10 +18,10 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
-import fr.aumgn.dac.arenas.areas.DACArea;
-import fr.aumgn.dac.arenas.areas.DACAreaSimpleFiller;
-import fr.aumgn.dac.arenas.column.DACColumn;
-import fr.aumgn.dac.arenas.column.DACColumnPattern;
+import fr.aumgn.dac.areas.DACArea;
+import fr.aumgn.dac.areas.DACAreaSimpleFiller;
+import fr.aumgn.dac.areas.column.DACColumn;
+import fr.aumgn.dac.areas.column.DACColumnPattern;
 import fr.aumgn.dac.config.DACColor;
 
 @SerializableAs("dac-pool")

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas.column;
+package fr.aumgn.dac.areas.column;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
