@@ -15,12 +15,12 @@ public class DACColumn implements Iterable<Block> {
 		private int y;
 		
 		public DACColumnIterator() {
-			this.y = yMin;
+			this.y = bottom;
 		}
 		
 		@Override
 		public boolean hasNext() {
-			return y <= yMax;
+			return y <= top;
 		}
 
 		@Override
@@ -42,15 +42,15 @@ public class DACColumn implements Iterable<Block> {
 	}
 	
 	private World world;
-	private int yMin;
-	private int yMax; 
+	private int bottom;
+	private int top; 
 	private int x;
 	private int z;
 
 	public DACColumn(Pool pool, int x, int z) {
 		this.world = pool.getArena().getWorld();
-		this.yMin = pool.getMinimumY();
-		this.yMax = pool.getMaximumY();
+		this.bottom = pool.getMinimumY();
+		this.top = pool.getMaximumY();
 		this.x = x;
 		this.z = z;
 	}
@@ -67,12 +67,12 @@ public class DACColumn implements Iterable<Block> {
 		return z;
 	}
 
-	public int getYMin() {
-		return yMin;
+	public int getBottom() {
+		return bottom;
 	}
 
-	public int getYMax() {
-		return yMax;
+	public int getTop() {
+		return top;
 	}
 	
 	@Override
