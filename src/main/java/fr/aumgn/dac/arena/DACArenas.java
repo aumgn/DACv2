@@ -1,4 +1,4 @@
-package fr.aumgn.dac.arenas;
+package fr.aumgn.dac.arena;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,12 +16,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.areas.region.DACCuboid;
-import fr.aumgn.dac.areas.region.DACCylinder;
-import fr.aumgn.dac.areas.region.DACPolygonal;
-import fr.aumgn.dac.areas.vector.DACBlockVector;
-import fr.aumgn.dac.areas.vector.DACBlockVector2D;
-import fr.aumgn.dac.areas.vector.DACLocation;
+import fr.aumgn.dac.area.region.DACCuboid;
+import fr.aumgn.dac.area.region.DACCylinder;
+import fr.aumgn.dac.area.region.DACPolygonal;
+import fr.aumgn.dac.area.vector.DACBlockVector;
+import fr.aumgn.dac.area.vector.DACBlockVector2D;
+import fr.aumgn.dac.area.vector.DACLocation;
 
 public class DACArenas implements Iterable<DACArena> {
 

@@ -4,10 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.areas.column.DACGlassColumn;
-import fr.aumgn.dac.areas.column.DACSimpleColumn;
-import fr.aumgn.dac.arenas.DACArena;
-import fr.aumgn.dac.arenas.Pool;
+import fr.aumgn.dac.area.column.GlassColumn;
+import fr.aumgn.dac.area.column.SimpleColumn;
+import fr.aumgn.dac.arena.DACArena;
+import fr.aumgn.dac.arena.Pool;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
@@ -53,10 +53,10 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 		Pool pool = arena.getPool(); 
 		if (pool.isADACPattern(x, z)) {
 			player.incrementDACs();
-			pool.putColumn(new DACGlassColumn(), player.getColor(), x, z);
+			pool.putColumn(new GlassColumn(), player.getColor(), x, z);
 		} else {
 			player.incrementSuccesses();
-			pool.putColumn(new DACSimpleColumn(), player.getColor(), x, z);
+			pool.putColumn(new SimpleColumn(), player.getColor(), x, z);
 		}
 		game.nextTurn();
 	}

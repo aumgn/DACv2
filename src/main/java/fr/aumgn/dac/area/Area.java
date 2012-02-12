@@ -1,4 +1,4 @@
-package fr.aumgn.dac.areas;
+package fr.aumgn.dac.area;
 
 import java.util.Iterator;
 
@@ -13,21 +13,21 @@ import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.areas.column.DACColumn;
-import fr.aumgn.dac.areas.filler.DACAreaFiller;
-import fr.aumgn.dac.areas.region.DACCuboid;
-import fr.aumgn.dac.areas.region.DACCylinder;
-import fr.aumgn.dac.areas.region.DACPolygonal;
-import fr.aumgn.dac.areas.region.DACRegion;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.area.column.AreaColumn;
+import fr.aumgn.dac.area.filler.AreaFiller;
+import fr.aumgn.dac.area.region.DACCuboid;
+import fr.aumgn.dac.area.region.DACCylinder;
+import fr.aumgn.dac.area.region.DACPolygonal;
+import fr.aumgn.dac.area.region.DACRegion;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.exception.InvalidRegionType;
 
-public class DACArea implements Iterable<Block> {
+public class Area implements Iterable<Block> {
 
 	private DACArena arena;
 	private DACRegion region;
 
-	public DACArea(DACArena arena) {
+	public Area(DACArena arena) {
 		this.arena = arena;
 		this.region = new DACCuboid();
 	}
@@ -87,20 +87,20 @@ public class DACArea implements Iterable<Block> {
 		return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
 	}
 	
-	public void fillWith(DACAreaFiller filler) {
+	public void fillWith(AreaFiller filler) {
 		filler.fill(this);
 	}
 	
 	@Override
 	public Iterator<Block> iterator() {
-		return new DACAreaIterator(this, getWERegion().iterator());
+		return new AreaIterator(this, getWERegion().iterator());
 	}
 	
-	public Iterable<DACColumn> columns() {
-		return new Iterable<DACColumn>() {
+	public Iterable<AreaColumn> columns() {
+		return new Iterable<AreaColumn>() {
 			@Override
-			public Iterator<DACColumn> iterator() {
-				return new DACAreaVerticalIterator(DACArea.this);
+			public Iterator<AreaColumn> iterator() {
+				return new AreaVerticalIterator(Area.this);
 			}
 		};
 	}

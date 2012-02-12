@@ -1,13 +1,13 @@
-package fr.aumgn.dac.areas.column;
+package fr.aumgn.dac.area.column;
 
 import org.bukkit.block.Block;
 
 import fr.aumgn.dac.config.DACColor;
 
-public class DACSimpleColumn implements DACColumnPattern {
+public class SimpleColumn implements ColumnPattern {
 
 	@Override
-	public void place(DACColumn column, DACColor color) {
+	public void place(AreaColumn column, DACColor color) {
 		for (Block block : column) {
 			block.setType(color.getMaterial());
 			block.setData(color.getData());

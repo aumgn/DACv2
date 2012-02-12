@@ -9,7 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.config.DACColor;
 import fr.aumgn.dac.config.DACColors;
 import fr.aumgn.dac.config.DACMessage;

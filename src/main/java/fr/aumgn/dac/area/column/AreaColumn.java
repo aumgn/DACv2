@@ -1,4 +1,4 @@
-package fr.aumgn.dac.areas.column;
+package fr.aumgn.dac.area.column;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -7,9 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import fr.aumgn.dac.areas.DACArea;
+import fr.aumgn.dac.area.Area;
 
-public class DACColumn implements Iterable<Block> {
+public class AreaColumn implements Iterable<Block> {
 	
 	private class DACColumnIterator implements Iterator<Block> {
 		
@@ -48,7 +48,7 @@ public class DACColumn implements Iterable<Block> {
 	private int x;
 	private int z;
 
-	public DACColumn(DACArea area, int x, int z) {
+	public AreaColumn(Area area, int x, int z) {
 		this.world = area.getArena().getWorld();
 		this.bottom = area.getMinimumY();
 		this.top = area.getMaximumY();

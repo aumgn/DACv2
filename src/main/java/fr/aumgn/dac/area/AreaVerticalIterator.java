@@ -2,7 +2,7 @@
  * Adaptation of WorldEdit RegionIterator (by TomyLobo)
  */
 
-package fr.aumgn.dac.areas;
+package fr.aumgn.dac.area;
 
 import java.util.Iterator;
 
@@ -10,11 +10,11 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.areas.column.DACColumn;
+import fr.aumgn.dac.area.column.AreaColumn;
 
-public class DACAreaVerticalIterator implements Iterator<DACColumn> {
+public class AreaVerticalIterator implements Iterator<AreaColumn> {
 
-	private DACArea area;
+	private Area area;
 	private Region region;
 	private int x;
 	private int z;
@@ -23,7 +23,7 @@ public class DACAreaVerticalIterator implements Iterator<DACColumn> {
 	private int maxZ;
 	private int y;
 
-	public DACAreaVerticalIterator(DACArea area) {
+	public AreaVerticalIterator(Area area) {
 		this.area = area;
 		this.region = area.getWERegion();
 		Vector minPoint = region.getMinimumPoint();
@@ -48,10 +48,10 @@ public class DACAreaVerticalIterator implements Iterator<DACColumn> {
         }
     }
 
-    public DACColumn next() {
+    public AreaColumn next() {
         if (!hasNext()) throw new java.util.NoSuchElementException();
 
-        DACColumn answer = new DACColumn(area, x, z);
+        AreaColumn answer = new AreaColumn(area, x, z);
 
         forwardOne();
         forward();

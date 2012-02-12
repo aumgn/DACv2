@@ -6,7 +6,7 @@ import java.util.Map;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.player.DACPlayer;
 

@@ -3,7 +3,7 @@ package fr.aumgn.dac.command;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.joinstage.SimpleJoinStage;

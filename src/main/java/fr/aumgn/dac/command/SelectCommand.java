@@ -1,8 +1,8 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.areas.DACArea;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.area.Area;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.exception.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
@@ -23,7 +23,7 @@ public class SelectCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdSelectUnknown);
 		}
 
-		DACArea area = null;
+		Area area = null;
 		DACMessage message = DACMessage.CmdSelectError;
 		if (args[1].equalsIgnoreCase("pool")) {
 			area = arena.getPool();

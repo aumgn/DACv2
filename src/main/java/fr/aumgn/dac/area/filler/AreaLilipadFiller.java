@@ -1,24 +1,24 @@
-package fr.aumgn.dac.areas.filler;
+package fr.aumgn.dac.area.filler;
 
 import java.util.Random;
 
 import org.bukkit.Material;
 
-import fr.aumgn.dac.areas.DACArea;
-import fr.aumgn.dac.areas.column.DACColumn;
+import fr.aumgn.dac.area.Area;
+import fr.aumgn.dac.area.column.AreaColumn;
 
-public class DACAreaLilipadFiller implements DACAreaFiller {
+public class AreaLilipadFiller implements AreaFiller {
 	
 	private int percentage;
 
-	public DACAreaLilipadFiller(int percentage) {
+	public AreaLilipadFiller(int percentage) {
 		this.percentage = Math.min(Math.max(1, percentage), 100);
 	}
 	
 	@Override
-	public void fill(DACArea area) {
+	public void fill(Area area) {
 		Random rand = new Random();
-		for (DACColumn column : area.columns()) {
+		for (AreaColumn column : area.columns()) {
 			column.set(Material.STATIONARY_WATER);
 			if (rand.nextInt(100) < percentage) {
 				column.getWorld().getBlockAt(

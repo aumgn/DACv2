@@ -7,7 +7,7 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.RegionSelector;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.exception.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;

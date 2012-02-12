@@ -1,9 +1,9 @@
-package fr.aumgn.dac.arenas;
+package fr.aumgn.dac.arena;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import fr.aumgn.dac.areas.vector.DACLocation;
+import fr.aumgn.dac.area.vector.DACLocation;
 
 @SerializableAs("dac-diving")
 public class DivingBoard {

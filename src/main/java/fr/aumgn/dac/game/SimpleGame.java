@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.event.game.DACGameFailEvent;
 import fr.aumgn.dac.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.event.game.DACGameStartEvent;

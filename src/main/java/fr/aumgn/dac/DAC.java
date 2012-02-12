@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-import fr.aumgn.dac.arenas.DACArenas;
+import fr.aumgn.dac.arena.DACArenas;
 import fr.aumgn.dac.bukkit.DACPlugin;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;

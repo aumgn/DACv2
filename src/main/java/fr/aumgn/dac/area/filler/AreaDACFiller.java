@@ -1,24 +1,24 @@
-package fr.aumgn.dac.areas.filler;
+package fr.aumgn.dac.area.filler;
 
 import java.util.Random;
 
 import org.bukkit.Material;
 
-import fr.aumgn.dac.areas.DACArea;
-import fr.aumgn.dac.areas.column.DACColumn;
+import fr.aumgn.dac.area.Area;
+import fr.aumgn.dac.area.column.AreaColumn;
 
-public class DACAreaDACFiller implements DACAreaFiller {
+public class AreaDACFiller implements AreaFiller {
 	
 	private boolean even;
 
-	private boolean isDACColumn(DACColumn column) {
+	private boolean isDACColumn(AreaColumn column) {
 		return ((column.getX() % 2) == (column.getZ() % 2)) == even;
 	}
 
 	@Override
-	public void fill(DACArea area) {
+	public void fill(Area area) {
 		even = new Random().nextBoolean();
-		for (DACColumn column : area.columns()) {
+		for (AreaColumn column : area.columns()) {
 			if (isDACColumn(column)) {
 				column.set(Material.STATIONARY_WATER);
 			} else {

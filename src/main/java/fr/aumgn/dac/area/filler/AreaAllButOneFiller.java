@@ -1,4 +1,4 @@
-package fr.aumgn.dac.areas.filler;
+package fr.aumgn.dac.area.filler;
 
 import java.util.Random;
 
@@ -8,13 +8,13 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.areas.DACArea;
-import fr.aumgn.dac.areas.column.DACColumn;
+import fr.aumgn.dac.area.Area;
+import fr.aumgn.dac.area.column.AreaColumn;
 
-public class DACAreaAllButOneFiller implements DACAreaFiller {
+public class AreaAllButOneFiller implements AreaFiller {
 
 	@Override
-	public void fill(DACArea area) {
+	public void fill(Area area) {
 		Random rand = new Random();
 		Region region = area.getWERegion();
 		Vector minPoint = region.getMinimumPoint();
@@ -29,7 +29,7 @@ public class DACAreaAllButOneFiller implements DACAreaFiller {
 			z = minZ + rand.nextInt(zRange);
 		} while (!region.contains(new BlockVector(x, y, z)));
 		
-		for (DACColumn column : area.columns()) {
+		for (AreaColumn column : area.columns()) {
 			if (column.getX() != x || column.getZ() != z) {
 				column.set(Material.WOOL);
 			} else {

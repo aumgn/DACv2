@@ -11,10 +11,10 @@ import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
-import fr.aumgn.dac.areas.column.DACGlassColumn;
-import fr.aumgn.dac.areas.column.DACSimpleColumn;
-import fr.aumgn.dac.arenas.DACArena;
-import fr.aumgn.dac.arenas.Pool;
+import fr.aumgn.dac.area.column.GlassColumn;
+import fr.aumgn.dac.area.column.SimpleColumn;
+import fr.aumgn.dac.arena.DACArena;
+import fr.aumgn.dac.arena.Pool;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.event.classic.DACClassicDACEvent;
 import fr.aumgn.dac.event.classic.DACClassicLooseEvent;
@@ -85,9 +85,9 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 		player.tpToStart();
 		if (dac) {
 			DAC.callEvent(new DACClassicDACEvent(game, player));
-			pool.putColumn(new DACGlassColumn(), dacPlayer.getColor(), x, z);
+			pool.putColumn(new GlassColumn(), dacPlayer.getColor(), x, z);
 		} else {
-			pool.putColumn(new DACSimpleColumn(), dacPlayer.getColor(), x, z);
+			pool.putColumn(new SimpleColumn(), dacPlayer.getColor(), x, z);
 		}
 		
 		if (player.mustConfirmate()) {

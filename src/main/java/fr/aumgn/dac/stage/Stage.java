@@ -3,7 +3,7 @@ package fr.aumgn.dac.stage;
 import java.util.List;
 
 import fr.aumgn.dac.player.DACPlayer;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 
 public interface Stage {
 	

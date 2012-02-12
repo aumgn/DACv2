@@ -1,6 +1,6 @@
 package fr.aumgn.dac.game.mode.suddendeath;
 
-import fr.aumgn.dac.areas.filler.DACAreaAllButOneFiller;
+import fr.aumgn.dac.area.filler.AreaAllButOneFiller;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
@@ -44,7 +44,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler {
 			}
 		}
 		
-		game.getArena().getPool().fillWith(new DACAreaAllButOneFiller());
+		game.getArena().getPool().fillWith(new AreaAllButOneFiller());
 	}
 	
 	@Override

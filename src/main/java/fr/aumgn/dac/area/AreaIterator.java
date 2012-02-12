@@ -1,4 +1,4 @@
-package fr.aumgn.dac.areas;
+package fr.aumgn.dac.area;
 
 import java.util.Iterator;
 
@@ -7,12 +7,12 @@ import org.bukkit.block.Block;
 
 import com.sk89q.worldedit.BlockVector;
 
-public class DACAreaIterator implements Iterator<Block> {
+public class AreaIterator implements Iterator<Block> {
 
 	private World world;
 	private Iterator<BlockVector> weIterator;
 	
-	public DACAreaIterator(DACArea area, Iterator<BlockVector> weIterator) {
+	public AreaIterator(Area area, Iterator<BlockVector> weIterator) {
 		this.world = area.getArena().getWorld();
 		this.weIterator = weIterator;
 	}

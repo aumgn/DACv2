@@ -1,7 +1,7 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
