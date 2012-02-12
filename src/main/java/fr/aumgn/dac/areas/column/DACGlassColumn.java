@@ -9,16 +9,14 @@ public class DACGlassColumn implements DACColumnPattern {
 
 	@Override
 	public void place(DACColumn column, DACColor color) {
-		int y = column.getYMin();
 		int yMax = column.getYMax();
 		for (Block block : column) {
-			if (y == yMax) {
+			if (block.getY() == yMax) {
 				block.setType(Material.GLASS);
 			} else { 
 				block.setType(color.getMaterial());
 				block.setData(color.getData());
 			}
-			y++;
 		}
 	}
 
