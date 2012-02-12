@@ -34,6 +34,8 @@ public class DACAreaVerticalIterator implements Iterator<DACColumn> {
 		this.maxX = maxPoint.getBlockX();
 		this.maxZ = maxPoint.getBlockZ();
 		this.y = minPoint.getBlockY();
+		
+		forward();
 	}
 
     public boolean hasNext() {
