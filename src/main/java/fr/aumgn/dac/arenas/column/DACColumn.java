@@ -1,6 +1,7 @@
 package fr.aumgn.dac.arenas.column;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -24,6 +25,10 @@ public class DACColumn implements Iterable<Block> {
 
 		@Override
 		public Block next() {
+			if (!hasNext()) {
+				 throw new NoSuchElementException();
+			}
+			
 			Block block = world.getBlockAt(x, y, z);
 			y++;
 			return block;
@@ -31,6 +36,7 @@ public class DACColumn implements Iterable<Block> {
 
 		@Override
 		public void remove() {
+			throw new UnsupportedOperationException();
 		}
 
 	}
