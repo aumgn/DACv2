@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.SimpleGame;
-import fr.aumgn.dac.game.mode.DACGameModes;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.stage.Stage;
@@ -29,12 +28,12 @@ public class StartCommand extends PlayerCommandExecutor {
 		
 		GameMode mode;
 		if (args.length == 1) {
-			mode = DACGameModes.get(args[0]);
+			mode = DAC.getGameMode(args[0]);
 			if (mode == null) {
 				error(DACMessage.CmdStartUnknownMode);
 			}
 		} else {
-			mode = DACGameModes.get("classic");
+			mode = DAC.getGameMode("classic");
 		}
 		
 		if (!joinStage.isMinReached(mode)) {

@@ -12,7 +12,6 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.exception.WorldEditNotLoaded;
-import fr.aumgn.dac.game.mode.DACGameModes;
 import fr.aumgn.dac.game.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.game.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.game.mode.training.TrainingGameMode;
@@ -43,9 +42,9 @@ public class DACPlugin extends JavaPlugin {
 
 		DAC.init(this, (WorldEditPlugin)worldEdit);
 		
-		DACGameModes.register(ClassicGameMode.class);
-		DACGameModes.register(TrainingGameMode.class);
-		DACGameModes.register(SuddenDeathGameMode.class);
+		DAC.registerGameMode(ClassicGameMode.class);
+		DAC.registerGameMode(TrainingGameMode.class);
+		DAC.registerGameMode(SuddenDeathGameMode.class);
 
 		getLogger().info(getDescription().getName() + " loaded.");
 	}

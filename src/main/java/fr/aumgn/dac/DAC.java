@@ -1,5 +1,7 @@
 package fr.aumgn.dac;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -12,6 +14,8 @@ import fr.aumgn.dac.arena.DACArenas;
 import fr.aumgn.dac.bukkit.DACPlugin;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
+import fr.aumgn.dac.game.mode.DACGameMode;
+import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.dac.stage.StageManager;
 
@@ -23,6 +27,7 @@ public final class DAC {
 	private static DACArenas arenas; 
 	private static StageManager stageManager;
 	private static DACPlayerManager playerManager;
+	private static Map<String, GameMode> modes = new HashMap<String, GameMode>();
 
 	private DAC() {}
 
@@ -79,5 +84,28 @@ public final class DAC {
 	public static void callEvent(Event event) {
 		Bukkit.getPluginManager().callEvent(event);
 	}
-
+	
+	public static GameMode getGameMode(String name) {
+		return modes.get(name);
+	}
+	
+	public static void registerGameMode(Class<? extends GameMode> modeCls) {
+		DACGameMode annotation = modeCls.getAnnotation(DACGameMode.class);
+		if (annotation == null) {
+			DAC.getLogger().warning("Cannot regitser game mode for " + modeCls.getSimpleName());
+			DAC.getLogger().warning("Annotation `DACGameMode` missing");
+			return;
+		}
+				
+		String modeName = annotation.name();
+		try {
+			GameMode mode = modeCls.newInstance();
+			modes.put(modeName, mode);
+		} catch (InstantiationException exc) {
+			DAC.getLogger().warning("Cannot register game mode " + modeName);
+		} catch (IllegalAccessException e) {
+			DAC.getLogger().warning("Cannot register game mode " + modeName);
+		}
+	}
+	
 }
