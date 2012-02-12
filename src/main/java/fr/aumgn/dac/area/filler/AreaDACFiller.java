@@ -9,15 +9,15 @@ import fr.aumgn.dac.area.column.AreaColumn;
 
 public class AreaDACFiller implements AreaFiller {
 	
-	private boolean even;
+	private boolean sameParity;
 
 	private boolean isDACColumn(AreaColumn column) {
-		return ((column.getX() % 2) == (column.getZ() % 2)) == even;
+		return ((column.getX() & 1) == (column.getZ() & 1)) == sameParity;
 	}
 
 	@Override
 	public void fill(Area area) {
-		even = new Random().nextBoolean();
+		sameParity = new Random().nextBoolean();
 		for (AreaColumn column : area.columns()) {
 			if (isDACColumn(column)) {
 				column.set(Material.STATIONARY_WATER);
