@@ -10,17 +10,16 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.Vector2D;
-import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.DACUtil;
 import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
+import fr.aumgn.dac.arenas.areas.DACArea;
+import fr.aumgn.dac.arenas.areas.DACAreaSimpleFiller;
 import fr.aumgn.dac.arenas.column.DACColumn;
 import fr.aumgn.dac.arenas.column.DACColumnPattern;
 import fr.aumgn.dac.config.DACColor;
@@ -31,7 +30,7 @@ public class Pool extends DACArea {
 	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
 	private static final Material SIGN_MATERIAL = Material.SIGN_POST;
 	private static final Material AIR = Material.AIR; 
-	private static final BaseBlock WATER = new BaseBlock(DEFAULT_MATERIAL.getId());
+	private static final DACAreaSimpleFiller WATER_FILLER = new DACAreaSimpleFiller(DEFAULT_MATERIAL);
 
 	private static final int ABOVE_REGION_HEIGHT = 5;
 	private static final int ABOVE_REGION_MARGIN = 5;
@@ -41,20 +40,13 @@ public class Pool extends DACArea {
 	}
 
 	public void reset() {
-		EditSession editSession = new EditSession(getArena().getWEWorld(), -1);
-		try {
-			World world = getArena().getWorld();
-			CuboidRegion above = getAboveRegion();
-			for (BlockVector vec : above) {
-				Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
-				if (block.getType() == SIGN_MATERIAL) { block.setType(AIR); }
-			}
-			editSession.setBlocks(getWERegion(), WATER); 
-		} catch (MaxChangedBlocksException e) {
-			String warning = "A weird exception occured while trying to reset ";
-			warning += getArena().getName() + ". Maybe the pool is too Big ?";
-			DAC.getLogger().warning(warning);
+		World world = getArena().getWorld();
+		CuboidRegion above = getAboveRegion();
+		for (BlockVector vec : above) {
+			Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
+			if (block.getType() == SIGN_MATERIAL) { block.setType(AIR); }
 		}
+		fillWith(WATER_FILLER);
 	}
 
 	public CuboidRegion getAboveRegion() {

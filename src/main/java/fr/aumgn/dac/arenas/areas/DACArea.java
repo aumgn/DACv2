@@ -1,6 +1,9 @@
-package fr.aumgn.dac.arenas;
+package fr.aumgn.dac.arenas.areas;
+
+import java.util.Iterator;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.BlockVector;
@@ -10,13 +13,14 @@ import com.sk89q.worldedit.regions.CylinderRegion;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
+import fr.aumgn.dac.arenas.DACArena;
 import fr.aumgn.dac.arenas.region.DACCuboid;
 import fr.aumgn.dac.arenas.region.DACCylinder;
 import fr.aumgn.dac.arenas.region.DACPolygonal;
 import fr.aumgn.dac.arenas.region.DACRegion;
 import fr.aumgn.dac.exception.InvalidRegionType;
 
-public class DACArea {
+public class DACArea implements Iterable<Block> {
 
 	private DACArena arena;
 	private DACRegion region;
@@ -71,6 +75,15 @@ public class DACArea {
 		int y = location.getBlockY();
 		int z = location.getBlockZ();
 		return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
+	}
+	
+	public void fillWith(DACAreaFiller filler) {
+		filler.fill(this);
+	}
+	
+	@Override
+	public Iterator<Block> iterator() {
+		return new DACAreaIterator(this, getWERegion().iterator());
 	}
 
 }

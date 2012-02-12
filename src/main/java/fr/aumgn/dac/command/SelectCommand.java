@@ -1,8 +1,8 @@
 package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
-import fr.aumgn.dac.arenas.DACArea;
 import fr.aumgn.dac.arenas.DACArena;
+import fr.aumgn.dac.arenas.areas.DACArea;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.exception.InvalidRegionType;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
