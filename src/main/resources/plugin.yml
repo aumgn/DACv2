@@ -27,6 +27,10 @@ commands:
         description: 'Liste les arenes'
         usage: '/<command>'
         permission: 'dac.cmd.arenas'
+    dac-modes:
+        description: 'Gere les modes de jeu assignés a une arene'
+        usage: 'Utilisation: /<command> [<arene> [add|rm <mode>]]'
+        permission: 'dac.cmd.modes'
     dac-set:
         description: 'Assigne une zone ou un emplacement.'
         usage: 'Utilisation: /<command> <arene> pool|start|diving'
@@ -36,6 +40,10 @@ commands:
         usage: 'Utilisation: /<command> <arene> pool|start'
         permission: 'dac.cmd.select'
         aliases: ["dac-sel"]
+    dac-options:
+        description: 'Gere les options assignées a une arene'
+        usage: 'Utilisation: /<command> <arene> [set|rm <option>...]'
+        permission: 'dac.cmd.options'
     dac-stop:
         description: 'Arrete la partie en cours si partie il y a.'
         usage: 'Utilisation: /<command>'
@@ -113,6 +121,7 @@ permissions:
             dac.cmd.define: true
             dac.cmd.delete: true
             dac.cmd.arenas: true
+            dac.cmd.modes: true
             dac.cmd.set: true
-            dac.cmd.select: true            
-
+            dac.cmd.select: true
+            dac.cmd.options: true

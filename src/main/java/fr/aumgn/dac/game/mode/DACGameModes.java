@@ -1,5 +1,6 @@
 package fr.aumgn.dac.game.mode;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -52,6 +53,10 @@ public class DACGameModes {
 			}
 		}
 		return set;
+	}
+	
+	public Collection<String> getNames() {
+		return modes.keySet();
 	}
 	
 	public GameMode get(String name) {

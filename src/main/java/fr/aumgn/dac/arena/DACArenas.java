@@ -22,6 +22,7 @@ import fr.aumgn.dac.area.region.DACPolygonal;
 import fr.aumgn.dac.area.vector.DACBlockVector;
 import fr.aumgn.dac.area.vector.DACBlockVector2D;
 import fr.aumgn.dac.area.vector.DACLocation;
+import fr.aumgn.dac.game.options.GameOptions;
 
 public class DACArenas implements Iterable<DACArena> {
 
@@ -33,6 +34,7 @@ public class DACArenas implements Iterable<DACArena> {
 		ConfigurationSerialization.registerClass(DACCuboid.class);
 		ConfigurationSerialization.registerClass(DACPolygonal.class);
 		ConfigurationSerialization.registerClass(DACCylinder.class);
+		ConfigurationSerialization.registerClass(GameOptions.class);
 	}
 
 	private YamlConfiguration yaml;

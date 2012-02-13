@@ -66,6 +66,20 @@ public class DACArena implements ConfigurationSerializable {
 		return modes.contains(name);
 	}
 
+	public void addMode(String mode) {
+		modes.add(mode);
+		updated();
+	}
+	
+	public void removeMode(String mode) {
+		modes.remove(mode);
+		updated();
+	}
+
+	public List<String> getModes() {
+		return new ArrayList<String>(modes);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -104,7 +118,9 @@ public class DACArena implements ConfigurationSerializable {
 		arena.divingBoard.setDACLocation((DACLocation)map.get("diving-board"));
 		arena.pool.setRegion((DACRegion) map.get("pool"));
 		arena.startArea.setRegion((DACRegion) map.get("start-area"));
-		arena.options = (GameOptions) map.get("options");
+		if (map.containsKey("options")) {
+			arena.options = (GameOptions) map.get("options");
+		}
 		return arena;
 	}
 

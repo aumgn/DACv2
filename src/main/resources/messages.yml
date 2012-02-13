@@ -20,6 +20,18 @@ command:
     kick:
         not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         no-player-found: "Aucun joueur trouvé avec ce nom."
+    modes:
+        unknown: "Aucune arène ne porte ce nom"
+        list: "Modes de jeu disponibles :"
+        mode: " - %1$s"
+        add-success: "Mode de jeu ajouté"
+        remove-success: "Mode de jeu supprimé"
+    options:
+        unknown: "Aucune arène ne porte ce nom"
+        list: "Options assignées :"
+        option: " - %1$s : %2$s"
+        add-success: "Option modifiée"
+        remove-success: "Option supprimée"
     lives:
         not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         unknown-player: "Aucun joueur dans la partie en cours ne porte ce nom."

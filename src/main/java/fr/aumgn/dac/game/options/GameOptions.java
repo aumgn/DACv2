@@ -1,13 +1,16 @@
 package fr.aumgn.dac.game.options;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 @SerializableAs("dac-game-options")
-public class GameOptions implements ConfigurationSerializable{
+public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entry<String, String>> {
 	
 	private Map<String, String> options;
 	
@@ -41,8 +44,10 @@ public class GameOptions implements ConfigurationSerializable{
 	public static GameOptions deserialize(Map<String, Object> map) {
 		HashMap<String, String> options = new HashMap<String, String>();
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
-			if (entry.getValue() instanceof String) {
-				options.put(entry.getKey(), (String) entry.getValue());
+			if (!entry.getKey().equals(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
+				if (entry.getValue() instanceof String) {
+					options.put(entry.getKey(), (String) entry.getValue());
+				}
 			}
 		}
 		return new GameOptions(options);
@@ -57,4 +62,16 @@ public class GameOptions implements ConfigurationSerializable{
 		return map; 
 	}
 
+	public void set(String name, String value) {
+		options.put(name, value);
+	}
+
+	public void remove(String name) {
+		options.remove(name);
+	}
+
+	@Override
+	public Iterator<Entry<String, String>> iterator() {
+		return options.entrySet().iterator();
+	}
 }
