@@ -44,10 +44,6 @@ public class StartCommand extends PlayerCommandExecutor {
 		GameOptions options = joinStage.getArena().getOptions();
 		if (args.length > 1) {
 			String[] commandOptions = Arrays.copyOfRange(args, 1, args.length);
-			System.out.println(commandOptions.length);
-			for (String commandOption : commandOptions) {
-				System.out.println(commandOption);
-			}
 			options = options.merge(GameOptions.parse(commandOptions));
 		}
 		
