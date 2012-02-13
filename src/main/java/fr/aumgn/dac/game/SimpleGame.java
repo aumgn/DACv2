@@ -18,6 +18,7 @@ import fr.aumgn.dac.event.game.DACGameStopEvent;
 import fr.aumgn.dac.event.game.DACGameSuccessEvent;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
+import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.player.DACPlayerManager;
@@ -27,15 +28,17 @@ public class SimpleGame implements Game {
 
 	private DACArena arena;
 	private GameMode mode;
+	private GameOptions options;
 	private GameModeHandler gameModeHandler;
 	private DACPlayer[] players;
 	private int turn;
 	
-	public SimpleGame(GameMode gameMode, JoinStage joinStage) {
+	public SimpleGame(JoinStage joinStage, GameMode gameMode, GameOptions options) {
 		StageManager stagesManager = DAC.getStageManager();
 		joinStage.stop();
 		this.arena = joinStage.getArena();
 		this.mode = gameMode;
+		this.options = options;
 		List<DACPlayer> roulette = joinStage.getPlayers();
 		players = new DACPlayer[roulette.size()];
 		Random rand = new Random();
@@ -108,6 +111,11 @@ public class SimpleGame implements Game {
 	@Override
 	public GameMode getMode() {
 		return mode;
+	}
+
+	@Override
+	public GameOptions getOptions() {
+		return options;
 	}
 
 	@Override

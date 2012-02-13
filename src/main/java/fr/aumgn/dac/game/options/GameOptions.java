@@ -14,6 +14,17 @@ public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entr
 	
 	private Map<String, String> options;
 	
+	public static GameOptions parse(String[] options) {
+		Map<String, String> map = new HashMap<String, String>();
+		for (String option : options) {
+			String[] parsed = option.split(":");
+			if (parsed.length == 2) {
+				map.put(parsed[0], parsed[1]);
+			}
+		}
+		return new GameOptions(map);
+	}
+	
 	public GameOptions() {
 		this(new HashMap<String, String>());
 	}

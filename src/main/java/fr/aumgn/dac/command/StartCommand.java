@@ -1,11 +1,14 @@
 package fr.aumgn.dac.command;
 
+import java.util.Arrays;
+
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.SimpleGame;
 import fr.aumgn.dac.game.mode.GameMode;
+import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
@@ -14,7 +17,7 @@ public class StartCommand extends PlayerCommandExecutor {
 
 	@Override
 	public boolean checkUsage(String[] args) {
-		return args.length <= 1;
+		return true;
 	}
 
 	@Override
@@ -38,11 +41,17 @@ public class StartCommand extends PlayerCommandExecutor {
 			mode = DAC.getModes().get("classic");
 		}
 		
+		GameOptions options = joinStage.getArena().getOptions();
+		if (args.length > 1) {
+			String[] commandOptions = Arrays.copyOfRange(args, 1, args.length-1);
+			options = options.merge(GameOptions.parse(commandOptions));
+		}
+		
 		if (!joinStage.isMinReached(mode)) {
 			error(DACMessage.CmdStartMinNotReached);
 		}
 		
-		new SimpleGame(mode, joinStage);
+		new SimpleGame(joinStage, mode, options);
 	}
 
 }
