@@ -21,6 +21,7 @@ import fr.aumgn.dac.event.classic.DACClassicLooseEvent;
 import fr.aumgn.dac.event.classic.DACClassicWinEvent;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
+import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.player.DACPlayer;
 
 public class ClassicGameModeHandler extends SimpleGameModeHandler {
@@ -41,6 +42,13 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	public void onStart() {
 		if (DAC.getConfig().getResetOnStart()) {
 			arena.getPool().reset();
+		}
+		GameOptions options = game.getOptions();
+		String livesOption = options.get("lives", "0");
+		int lives = Integer.parseInt(livesOption);
+		for (DACPlayer dacPlayer : game.getPlayers()) {
+			ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+			player.setLives(lives);
 		}
 		game.send(DACMessage.GameStart);
 		game.send(DACMessage.GamePlayers);

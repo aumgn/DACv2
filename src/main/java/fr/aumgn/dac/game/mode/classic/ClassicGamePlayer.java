@@ -18,7 +18,11 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 	public int getLives() {
 		return lives;
 	}
-
+	
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+	
 	public boolean mustConfirmate() {
 		return mustConfirmate;
 	}
