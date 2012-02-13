@@ -21,7 +21,7 @@ import static fr.aumgn.dac.DACUtil.getHorizontalFaceFor;
 import fr.aumgn.dac.area.Area;
 import fr.aumgn.dac.area.column.AreaColumn;
 import fr.aumgn.dac.area.column.ColumnPattern;
-import fr.aumgn.dac.area.filler.AreaSimpleFiller;
+import fr.aumgn.dac.area.filler.AreaSimpleStrategy;
 import fr.aumgn.dac.config.DACColor;
 
 @SerializableAs("dac-pool")
@@ -30,7 +30,7 @@ public class Pool extends Area {
 	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
 	private static final Material SIGN_MATERIAL = Material.SIGN_POST;
 	private static final Material AIR = Material.AIR; 
-	private static final AreaSimpleFiller WATER_FILLER = new AreaSimpleFiller(DEFAULT_MATERIAL);
+	private static final AreaSimpleStrategy WATER_FILLER = new AreaSimpleStrategy(DEFAULT_MATERIAL);
 
 	private static final int ABOVE_REGION_HEIGHT = 5;
 	private static final int ABOVE_REGION_MARGIN = 5;

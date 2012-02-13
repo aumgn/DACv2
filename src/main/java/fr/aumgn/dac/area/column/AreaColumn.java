@@ -10,15 +10,15 @@ import org.bukkit.block.Block;
 import fr.aumgn.dac.area.Area;
 
 public class AreaColumn implements Iterable<Block> {
-	
+
 	private class DACColumnIterator implements Iterator<Block> {
-		
+
 		private int y;
-		
+
 		public DACColumnIterator() {
 			this.y = bottom;
 		}
-		
+
 		@Override
 		public boolean hasNext() {
 			return y <= top;
@@ -27,9 +27,9 @@ public class AreaColumn implements Iterable<Block> {
 		@Override
 		public Block next() {
 			if (!hasNext()) {
-				 throw new NoSuchElementException();
+				throw new NoSuchElementException();
 			}
-			
+
 			Block block = world.getBlockAt(x, y, z);
 			y++;
 			return block;
@@ -41,7 +41,7 @@ public class AreaColumn implements Iterable<Block> {
 		}
 
 	}
-	
+
 	private World world;
 	private int bottom;
 	private int top; 
@@ -75,20 +75,20 @@ public class AreaColumn implements Iterable<Block> {
 	public int getTop() {
 		return top;
 	}
-	
+
 	public void set(Material material, byte data) {
 		for (Block block : this) {
 			block.setType(material);
 			block.setData(data);
 		}
 	}
-	
+
 	public void set(Material material) {
 		for (Block block : this) {
 			block.setType(material);
 		}
 	}
-	
+
 	@Override
 	public Iterator<Block> iterator() {
 		return new DACColumnIterator(); 

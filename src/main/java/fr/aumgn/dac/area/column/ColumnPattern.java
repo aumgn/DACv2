@@ -5,5 +5,5 @@ import fr.aumgn.dac.config.DACColor;
 public interface ColumnPattern {
 
 	void place(AreaColumn column, DACColor color);
-	
+
 }

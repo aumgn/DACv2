@@ -11,7 +11,7 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.area.Area;
 import fr.aumgn.dac.area.column.AreaColumn;
 
-public class AreaAllButOneFiller implements AreaFiller {
+public class AreaAllButOneStrategy implements AreaFillStrategy {
 
 	@Override
 	public void fill(Area area) {
@@ -28,7 +28,7 @@ public class AreaAllButOneFiller implements AreaFiller {
 			x = minX + rand.nextInt(xRange);
 			z = minZ + rand.nextInt(zRange);
 		} while (!region.contains(new BlockVector(x, y, z)));
-		
+
 		for (AreaColumn column : area.columns()) {
 			if (column.getX() != x || column.getZ() != z) {
 				column.set(Material.WOOL);

@@ -92,7 +92,7 @@ public final class DAC {
 	public static void registerGameMode(Class<? extends GameMode> modeCls) {
 		DACGameMode annotation = modeCls.getAnnotation(DACGameMode.class);
 		if (annotation == null) {
-			DAC.getLogger().warning("Cannot regitser game mode for " + modeCls.getSimpleName());
+			DAC.getLogger().warning("Cannot register game mode for " + modeCls.getSimpleName());
 			DAC.getLogger().warning("Annotation `DACGameMode` missing");
 			return;
 		}

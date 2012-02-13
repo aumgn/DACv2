@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public @interface DACGameMode {
 
 	/**
-	* Name of your mode
+	* Name of the game mode
 	*
 	* @return Name of the game mode.
 	*/

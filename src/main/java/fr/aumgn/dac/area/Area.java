@@ -14,7 +14,7 @@ import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.area.column.AreaColumn;
-import fr.aumgn.dac.area.filler.AreaFiller;
+import fr.aumgn.dac.area.filler.AreaFillStrategy;
 import fr.aumgn.dac.area.region.DACCuboid;
 import fr.aumgn.dac.area.region.DACCylinder;
 import fr.aumgn.dac.area.region.DACPolygonal;
@@ -87,7 +87,7 @@ public class Area implements Iterable<Block> {
 		return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
 	}
 	
-	public void fillWith(AreaFiller filler) {
+	public void fillWith(AreaFillStrategy filler) {
 		filler.fill(this);
 	}
 	

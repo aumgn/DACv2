@@ -7,8 +7,8 @@ import org.bukkit.Material;
 import fr.aumgn.dac.area.Area;
 import fr.aumgn.dac.area.column.AreaColumn;
 
-public class AreaDACFiller implements AreaFiller {
-	
+public class AreaDACStrategy implements AreaFillStrategy {
+
 	private boolean sameParity;
 
 	private boolean isDACColumn(AreaColumn column) {

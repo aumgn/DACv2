@@ -9,15 +9,15 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.area.Area;
 
-public class AreaSimpleFiller implements AreaFiller {
-	
+public class AreaSimpleStrategy implements AreaFillStrategy {
+
 	private BaseBlock baseBlock;
-	
-	public AreaSimpleFiller(Material material, byte data) {
+
+	public AreaSimpleStrategy(Material material, byte data) {
 		this.baseBlock = new BaseBlock(material.getId(), data);
 	}
 
-	public AreaSimpleFiller(Material material) {
+	public AreaSimpleStrategy(Material material) {
 		this.baseBlock = new BaseBlock(material.getId());
 	}
 
