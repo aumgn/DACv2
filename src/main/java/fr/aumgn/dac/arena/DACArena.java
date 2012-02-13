@@ -17,6 +17,7 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.area.region.DACRegion;
 import fr.aumgn.dac.area.vector.DACLocation;
+import fr.aumgn.dac.game.options.GameOptions;
 
 @SerializableAs("dac-arena")
 public class DACArena implements ConfigurationSerializable {
@@ -28,6 +29,7 @@ public class DACArena implements ConfigurationSerializable {
 	private DivingBoard divingBoard;
 	private Pool pool;
 	private StartArea startArea;
+	private GameOptions options;
 
 	public DACArena(String name, World world) {
 		this.name = name;
@@ -37,6 +39,7 @@ public class DACArena implements ConfigurationSerializable {
 		divingBoard = new DivingBoard(this);
 		pool = new Pool(this);
 		startArea = new StartArea(this);
+		options = new GameOptions();
 	}
 
 	public void setName(String name) {
@@ -79,6 +82,10 @@ public class DACArena implements ConfigurationSerializable {
 		return startArea;
 	}
 
+	public GameOptions getOptions() {
+		return options;
+	}
+	
 	public static DACArena deserialize(Map<String, Object> map) {
 		String world = (String)map.get("world");
 		DACArena arena = new DACArena("", Bukkit.getWorld(world));
@@ -97,6 +104,7 @@ public class DACArena implements ConfigurationSerializable {
 		arena.divingBoard.setDACLocation((DACLocation)map.get("diving-board"));
 		arena.pool.setRegion((DACRegion) map.get("pool"));
 		arena.startArea.setRegion((DACRegion) map.get("start-area"));
+		arena.options = (GameOptions) map.get("options");
 		return arena;
 	}
 
@@ -108,6 +116,7 @@ public class DACArena implements ConfigurationSerializable {
 		map.put("diving-board", divingBoard.getDACLocation());
 		map.put("pool", pool.getRegion());
 		map.put("start-area", startArea.getRegion());
+		map.put("options", options);
 		return map;
 	}
 
