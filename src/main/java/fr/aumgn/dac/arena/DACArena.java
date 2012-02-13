@@ -58,6 +58,10 @@ public class DACArena implements ConfigurationSerializable {
 	public BukkitWorld getWEWorld() {
 		return new BukkitWorld(getWorld());
 	}
+	
+	public boolean hasMode(String name) {
+		return modes.contains(name);
+	}
 
 	public String getName() {
 		return name;

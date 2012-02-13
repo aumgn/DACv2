@@ -48,6 +48,7 @@ public enum DACMessage {
 	CmdSetIncompleteRegion  ("command.set.incomplete-selection"),
 	CmdStartNotInGame       ("command.start.not-in-game"),
 	CmdStartUnknownMode     ("command.start.unknown-mode"),
+	CmdStartUnavailableMode ("command.start.unavailable-mode"),
 	CmdStartMinNotReached   ("command.start.min-not-reached"),
 	CmdStopNoGameToStop     ("command.stop.no-game-to-stop"),
 

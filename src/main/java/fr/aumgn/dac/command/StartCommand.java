@@ -31,6 +31,8 @@ public class StartCommand extends PlayerCommandExecutor {
 			mode = DAC.getModes().get(args[0]);
 			if (mode == null) {
 				error(DACMessage.CmdStartUnknownMode);
+			} else if (!joinStage.getArena().hasMode(args[0])) {
+				error(DACMessage.CmdStartUnavailableMode);
 			}
 		} else {
 			mode = DAC.getModes().get("classic");

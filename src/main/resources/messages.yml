@@ -47,6 +47,7 @@ command:
     start:
         not-in-game: "Vous devez avoir rejoint une partie avec \"dac join\" avant de la débuter."
         unknown-mode: "Mode de jeu inconnu"
+        unavailable-mode: "Ce mode de jeu n'est pas disponible dans cette arene."
         min-not-reached: "Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter."
     stop:
         no-game-to-stop: "Il n'y a aucune partie en cours."
