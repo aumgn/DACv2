@@ -1,6 +1,8 @@
 package fr.aumgn.dac.bukkit;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -12,11 +14,22 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.command.DACCommand;
 import fr.aumgn.dac.exception.WorldEditNotLoaded;
+import fr.aumgn.dac.game.mode.DACGameModeProvider;
+import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.game.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.game.mode.training.TrainingGameMode;
 
-public class DACPlugin extends JavaPlugin {
+public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
+
+	@Override
+	public List<Class<? extends GameMode>> getGameModes() {
+		List<Class<? extends GameMode>> list = new ArrayList<Class<? extends GameMode>>(3);
+		list.add(ClassicGameMode.class);
+		list.add(TrainingGameMode.class);
+		list.add(SuddenDeathGameMode.class);
+		return list;
+	}
 
 	@Override
 	public void onEnable() {
@@ -42,10 +55,6 @@ public class DACPlugin extends JavaPlugin {
 
 		DAC.init(this, (WorldEditPlugin)worldEdit);
 		
-		DAC.registerGameMode(ClassicGameMode.class);
-		DAC.registerGameMode(TrainingGameMode.class);
-		DAC.registerGameMode(SuddenDeathGameMode.class);
-
 		getLogger().info(getDescription().getName() + " loaded.");
 	}
 

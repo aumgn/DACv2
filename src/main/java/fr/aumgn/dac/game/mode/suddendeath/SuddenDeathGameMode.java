@@ -6,7 +6,7 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
 
-@DACGameMode(name="sudden-death")
+@DACGameMode(name="sudden-death", isDefault=false)
 public class SuddenDeathGameMode implements GameMode {
 
 	@Override

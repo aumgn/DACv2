@@ -28,12 +28,12 @@ public class StartCommand extends PlayerCommandExecutor {
 		
 		GameMode mode;
 		if (args.length == 1) {
-			mode = DAC.getGameMode(args[0]);
+			mode = DAC.getModes().get(args[0]);
 			if (mode == null) {
 				error(DACMessage.CmdStartUnknownMode);
 			}
 		} else {
-			mode = DAC.getGameMode("classic");
+			mode = DAC.getModes().get("classic");
 		}
 		
 		if (!joinStage.isMinReached(mode)) {
