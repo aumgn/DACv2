@@ -8,6 +8,7 @@ import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
 
+import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.area.Area;
 import fr.aumgn.dac.area.column.AreaColumn;
 
@@ -15,7 +16,7 @@ public class AreaAllButOneStrategy implements AreaFillStrategy {
 
 	@Override
 	public void fill(Area area) {
-		Random rand = new Random();
+		Random rand = DAC.getRand();
 		Region region = area.getWERegion();
 		Vector minPoint = region.getMinimumPoint();
 		Vector maxPoint = region.getMaximumPoint();

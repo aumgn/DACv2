@@ -41,7 +41,7 @@ public class SimpleGame implements Game {
 		this.options = options;
 		List<DACPlayer> roulette = joinStage.getPlayers();
 		players = new DACPlayer[roulette.size()];
-		Random rand = new Random();
+		Random rand = DAC.getRand();
 		for (int i=0; i< players.length; i++) {
 			int j = rand.nextInt(roulette.size());
 			DACPlayer dacPlayer = roulette.remove(j);

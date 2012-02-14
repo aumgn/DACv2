@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Material;
 
+import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.area.Area;
 import fr.aumgn.dac.area.column.AreaColumn;
 
@@ -17,7 +18,7 @@ public class AreaLilipadStrategy implements AreaFillStrategy {
 
 	@Override
 	public void fill(Area area) {
-		Random rand = new Random();
+		Random rand = DAC.getRand();
 		for (AreaColumn column : area.columns()) {
 			column.set(Material.STATIONARY_WATER);
 			if (rand.nextInt(100) < percentage) {

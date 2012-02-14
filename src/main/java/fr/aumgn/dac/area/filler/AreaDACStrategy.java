@@ -1,9 +1,8 @@
 package fr.aumgn.dac.area.filler;
 
-import java.util.Random;
-
 import org.bukkit.Material;
 
+import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.area.Area;
 import fr.aumgn.dac.area.column.AreaColumn;
 
@@ -17,7 +16,7 @@ public class AreaDACStrategy implements AreaFillStrategy {
 
 	@Override
 	public void fill(Area area) {
-		sameParity = new Random().nextBoolean();
+		sameParity = DAC.getRand().nextBoolean();
 		for (AreaColumn column : area.columns()) {
 			if (isDACColumn(column)) {
 				column.set(Material.STATIONARY_WATER);

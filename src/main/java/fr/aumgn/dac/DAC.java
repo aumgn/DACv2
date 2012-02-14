@@ -1,5 +1,6 @@
 package fr.aumgn.dac;
 
+import java.util.Random;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -20,11 +21,12 @@ public final class DAC {
 
 	private static DACPlugin plugin = null;
 	private static WorldEditPlugin worldEdit = null;
-	private static DACConfig config;
+	private static Random rand;
 	private static DACGameModes gameModes; 
 	private static DACArenas arenas; 
 	private static StageManager stageManager;
 	private static DACPlayerManager playerManager;
+	private static DACConfig config;
 
 	private DAC() {}
 
@@ -34,6 +36,7 @@ public final class DAC {
 		}
 		DAC.plugin = plugin;
 		DAC.worldEdit = worldEdit;
+		rand = new Random();
 		gameModes = new DACGameModes(); 
 		arenas = new DACArenas();
 		stageManager = new StageManager();
@@ -48,6 +51,10 @@ public final class DAC {
 
 	public static Logger getLogger() {
 		return plugin.getLogger();
+	}
+	
+	public static Random getRand() {
+		return rand;
 	}
 
 	public static void reloadConfig() {
