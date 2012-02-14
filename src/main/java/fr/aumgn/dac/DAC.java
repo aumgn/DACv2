@@ -10,7 +10,6 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import fr.aumgn.dac.arena.DACArenas;
-import fr.aumgn.dac.bukkit.DACPlugin;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.mode.DACGameModes;
@@ -19,7 +18,7 @@ import fr.aumgn.dac.stage.StageManager;
 
 public final class DAC {
 
-	private static DACPlugin plugin = null;
+	private static Plugin plugin = null;
 	private static WorldEditPlugin worldEdit = null;
 	private static Random rand;
 	private static DACGameModes gameModes; 
@@ -30,7 +29,7 @@ public final class DAC {
 
 	private DAC() {}
 
-	public static void init(DACPlugin plugin, WorldEditPlugin worldEdit) {
+	public static void init(Plugin plugin, WorldEditPlugin worldEdit) {
 		if (DAC.plugin != null) {
 			throw new UnsupportedOperationException("Cannot init DAC twice.");
 		}
