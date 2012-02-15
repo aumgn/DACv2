@@ -20,12 +20,12 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACColor;
-import fr.aumgn.dac.plugin.area.DACArea;
 import fr.aumgn.dac.plugin.area.DACAreaColumn;
+import fr.aumgn.dac.plugin.area.DACVerticalArea;
 import fr.aumgn.dac.plugin.area.filler.AreaSimpleStrategy;
 
 @SerializableAs("dac-pool")
-public class DACPool extends DACArea implements Pool {
+public class DACPool extends DACVerticalArea implements Pool {
 
 	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
 	private static final Material SIGN_MATERIAL = Material.SIGN_POST;

@@ -11,10 +11,11 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.api.area.AreaColumn;
+import fr.aumgn.dac.api.area.VerticalArea;
 
 public class AreaVerticalIterator implements Iterator<AreaColumn> {
 
-	private DACArea area;
+	private VerticalArea area;
 	private Region region;
 	private int x;
 	private int z;
@@ -23,7 +24,7 @@ public class AreaVerticalIterator implements Iterator<AreaColumn> {
 	private int maxZ;
 	private int y;
 
-	public AreaVerticalIterator(DACArea area) {
+	public AreaVerticalIterator(VerticalArea area) {
 		this.area = area;
 		this.region = area.getWERegion();
 		Vector minPoint = region.getMinimumPoint();

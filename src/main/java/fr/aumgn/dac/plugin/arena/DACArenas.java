@@ -2,6 +2,7 @@ package fr.aumgn.dac.plugin.arena;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -128,8 +129,8 @@ public class DACArenas implements Arenas {
 	}
 
 	@Override
-	public Iterator<DACArena> iterator() {
-		return arenas.values().iterator();
+	public Iterator<Arena> iterator() {
+		return new ArrayList<Arena>(arenas.values()).iterator();
 	}
 
 }

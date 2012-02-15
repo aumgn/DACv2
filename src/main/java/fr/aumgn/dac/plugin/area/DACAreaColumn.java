@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import fr.aumgn.dac.api.area.AreaColumn;
+import fr.aumgn.dac.api.area.VerticalArea;
 
 public class DACAreaColumn implements AreaColumn {
 	
@@ -49,10 +50,10 @@ public class DACAreaColumn implements AreaColumn {
 	private int x;
 	private int z;
 
-	public DACAreaColumn(DACArea area, int x, int z) {
+	public DACAreaColumn(VerticalArea area, int x, int z) {
 		this.world = area.getArena().getWorld();
-		this.bottom = area.getMinimumY();
-		this.top = area.getMaximumY();
+		this.bottom = area.getBottom();
+		this.top = area.getTop();
 		this.x = x;
 		this.z = z;
 	}

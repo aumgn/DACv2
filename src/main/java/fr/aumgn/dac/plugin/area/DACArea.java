@@ -14,8 +14,6 @@ import com.sk89q.worldedit.regions.Polygonal2DRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.api.area.Area;
-import fr.aumgn.dac.api.area.AreaColumn;
-import fr.aumgn.dac.api.area.AreaFillStrategy;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.exception.InvalidRegionType;
 import fr.aumgn.dac.plugin.area.region.DACCuboid;
@@ -34,6 +32,7 @@ public class DACArea implements Area {
 		this.region = new DACCuboid();
 	}
 
+	@Override
 	public void update(Region region) {
 		if (region instanceof CuboidRegion) {
 			CuboidRegion cuboid = (CuboidRegion)region;
@@ -50,6 +49,7 @@ public class DACArea implements Area {
 		arena.updated();
 	}
 
+	@Override
 	public Arena getArena() {
 		return arena;
 	}
@@ -58,6 +58,7 @@ public class DACArea implements Area {
 		return region;
 	}
 
+	@Override
 	public Region getWERegion() {
 		return region.getRegion(arena.getWEWorld());
 	}
@@ -66,16 +67,9 @@ public class DACArea implements Area {
 		this.region = region;
 	}
 
+	@Override
 	public Selection getSelection() {
 		return region.getSelection(arena.getWorld());
-	}
-
-	public int getMinimumY() {
-		return getWERegion().getMinimumPoint().getBlockY();
-	}
-
-	public int getMaximumY() {
-		return getWERegion().getMaximumPoint().getBlockY();
 	}
 
 	public boolean contains(Player player) {
@@ -89,22 +83,9 @@ public class DACArea implements Area {
 		return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
 	}
 	
-	public void fillWith(AreaFillStrategy filler) {
-		filler.fill(this);
-	}
-	
 	@Override
 	public Iterator<Block> iterator() {
 		return new AreaIterator(this, getWERegion().iterator());
 	}
 	
-	public Iterable<AreaColumn> columns() {
-		return new Iterable<AreaColumn>() {
-			@Override
-			public Iterator<AreaColumn> iterator() {
-				return new AreaVerticalIterator(DACArea.this);
-			}
-		};
-	}
-
 }

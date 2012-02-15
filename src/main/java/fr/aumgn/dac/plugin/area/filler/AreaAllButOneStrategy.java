@@ -11,12 +11,12 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.AreaFillStrategy;
-import fr.aumgn.dac.plugin.area.DACArea;
+import fr.aumgn.dac.api.area.VerticalArea;
 
 public class AreaAllButOneStrategy implements AreaFillStrategy {
 
 	@Override
-	public void fill(DACArea area) {
+	public void fill(VerticalArea area) {
 		Random rand = DAC.getRand();
 		Region region = area.getWERegion();
 		Vector minPoint = region.getMinimumPoint();

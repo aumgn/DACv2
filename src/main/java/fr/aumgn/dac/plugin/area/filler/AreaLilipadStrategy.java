@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.AreaFillStrategy;
-import fr.aumgn.dac.plugin.area.DACArea;
+import fr.aumgn.dac.api.area.VerticalArea;
 
 public class AreaLilipadStrategy implements AreaFillStrategy {
 
@@ -18,7 +18,7 @@ public class AreaLilipadStrategy implements AreaFillStrategy {
 	}
 
 	@Override
-	public void fill(DACArea area) {
+	public void fill(VerticalArea area) {
 		Random rand = DAC.getRand();
 		for (AreaColumn column : area.columns()) {
 			column.set(Material.STATIONARY_WATER);

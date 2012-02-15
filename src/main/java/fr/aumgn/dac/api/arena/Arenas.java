@@ -3,9 +3,7 @@ package fr.aumgn.dac.api.arena;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.dac.plugin.arena.DACArena;
-
-public interface Arenas extends Iterable<DACArena> {
+public interface Arenas extends Iterable<Arena> {
 
 	void load();
 	

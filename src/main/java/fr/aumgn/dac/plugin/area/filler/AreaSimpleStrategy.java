@@ -8,7 +8,7 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaFillStrategy;
-import fr.aumgn.dac.plugin.area.DACArea;
+import fr.aumgn.dac.api.area.VerticalArea;
 
 public class AreaSimpleStrategy implements AreaFillStrategy {
 
@@ -23,7 +23,7 @@ public class AreaSimpleStrategy implements AreaFillStrategy {
 	}
 
 	@Override
-	public void fill(DACArea area) {
+	public void fill(VerticalArea area) {
 		EditSession editSession = new EditSession(area.getArena().getWEWorld(), -1);
 		try {
 			editSession.setBlocks(area.getWERegion(), baseBlock);
