@@ -22,7 +22,7 @@ import fr.aumgn.dac.event.classic.DACClassicWinEvent;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePlayer> {
 	
@@ -46,14 +46,14 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 		GameOptions options = game.getOptions();
 		String livesOption = options.get("lives", "0");
 		int lives = Integer.parseInt(livesOption);
-		for (DACPlayer dacPlayer : game.getPlayers()) {
+		for (StagePlayer dacPlayer : game.getPlayers()) {
 			ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 			player.setLives(lives);
 		}
 		game.send(DACMessage.GameStart);
 		game.send(DACMessage.GamePlayers);
 		int i = 1;
-		for (DACPlayer player : game.getPlayers()) {
+		for (StagePlayer player : game.getPlayers()) {
 			game.send(DACMessage.GamePlayerList.format(i, player.getDisplayName()));
 			i++;
 		}
@@ -164,7 +164,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 	private ClassicGamePlayer getLastPlayer() {
 		int i = 0;
 		ClassicGamePlayer playerLeft = null;
-		for (DACPlayer player : game.getPlayers()) {
+		for (StagePlayer player : game.getPlayers()) {
 			ClassicGamePlayer gamePlayer = (ClassicGamePlayer)player;
 			if (!gamePlayer.hasLost()) {
 				playerLeft = gamePlayer;

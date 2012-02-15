@@ -4,13 +4,13 @@ import fr.aumgn.dac.area.filler.AreaAllButOneStrategy;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeathGamePlayer> {
 	
 	private Game<SuddenDeathGamePlayer> game;
 	private int playersLeftCount;
-	private DACPlayer lastPlayer;
+	private StagePlayer lastPlayer;
 
 	public SuddenDeathGameModeHandler(Game<SuddenDeathGamePlayer> game) {
 		this.game = game;
@@ -24,7 +24,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 	@Override
 	public void onNewTurn() {
 		if (playersLeftCount == 0) {
-			for (DACPlayer dacPlayer : game.getPlayers()) {
+			for (StagePlayer dacPlayer : game.getPlayers()) {
 				SuddenDeathGamePlayer player = (SuddenDeathGamePlayer)dacPlayer;
 				if (player.isDeadThisTurn()) {
 					playersLeftCount++;
@@ -36,7 +36,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 			game.stop();
 			return;
 		} else {
-			for (DACPlayer dacPlayer : game.getPlayers()) {
+			for (StagePlayer dacPlayer : game.getPlayers()) {
 				SuddenDeathGamePlayer player = (SuddenDeathGamePlayer)dacPlayer;
 				if (player.isDeadThisTurn()) {
 					player.setDead();

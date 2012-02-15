@@ -2,8 +2,8 @@ package fr.aumgn.dac.command;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.stage.Stage;
+import fr.aumgn.dac.stage.StagePlayer;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ListCommand extends PlayerCommandExecutor {
@@ -21,7 +21,7 @@ public class ListCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdLivesNotInGame);
 		}
 		
-		for (DACPlayer playerInStage : stage.getPlayers()) {
+		for (StagePlayer playerInStage : stage.getPlayers()) {
 			context.send(playerInStage.formatForList());
 		}
 	}

@@ -1,21 +1,20 @@
-package fr.aumgn.dac.player;
+package fr.aumgn.dac.stage;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.config.DACColor;
-import fr.aumgn.dac.stage.Stage;
 
-public class DACSimplePlayer implements DACPlayer {
+public class SimpleStagePlayer implements StagePlayer {
 
 	private Player player;
-	private Stage<? extends DACSimplePlayer> stage;
+	private Stage<? extends SimpleStagePlayer> stage;
 	private String displayName;
 	private DACColor color;
 	private Location startLocation;
 	
-	public DACSimplePlayer(Player player, Stage<? extends DACSimplePlayer> stage, DACColor color, Location startLocation) {
+	public SimpleStagePlayer(Player player, Stage<? extends SimpleStagePlayer> stage, DACColor color, Location startLocation) {
 		this.player = player;
 		this.stage = stage;
 		String name = ChatColor.stripColor(player.getDisplayName());
@@ -24,7 +23,7 @@ public class DACSimplePlayer implements DACPlayer {
 		this.color = color;
 	}
 	
-	public DACSimplePlayer(DACPlayer player, Stage<? extends DACSimplePlayer> stage) {
+	public SimpleStagePlayer(StagePlayer player, Stage<? extends SimpleStagePlayer> stage) {
 		this(player.getPlayer(), stage, player.getColor(), player.getStartLocation());
 	}
 

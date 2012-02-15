@@ -13,8 +13,8 @@ import fr.aumgn.dac.arena.DACArenas;
 import fr.aumgn.dac.config.DACConfig;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.mode.DACGameModes;
-import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.dac.stage.StageManager;
+import fr.aumgn.dac.stage.StagePlayersManager;
 
 public final class DAC {
 
@@ -24,7 +24,7 @@ public final class DAC {
 	private static DACGameModes gameModes; 
 	private static DACArenas arenas; 
 	private static StageManager stageManager;
-	private static DACPlayerManager playerManager;
+	private static StagePlayersManager playerManager;
 	private static DACConfig config;
 
 	private DAC() {}
@@ -39,7 +39,7 @@ public final class DAC {
 		gameModes = new DACGameModes(); 
 		arenas = new DACArenas();
 		stageManager = new StageManager();
-		playerManager = new DACPlayerManager();
+		playerManager = new StagePlayersManager();
 		reloadConfig();
 		reloadMessages();
 	}
@@ -81,7 +81,7 @@ public final class DAC {
 		return stageManager;
 	}
 	
-	public static DACPlayerManager getPlayerManager() {
+	public static StagePlayersManager getPlayerManager() {
 		return playerManager;
 	}
 	

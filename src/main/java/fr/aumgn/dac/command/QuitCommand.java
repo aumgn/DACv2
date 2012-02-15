@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.stage.Stage;
+import fr.aumgn.dac.stage.StagePlayer;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class QuitCommand extends PlayerCommandExecutor {
@@ -19,7 +19,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer(); 
 		
-		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
+		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
 		Stage<?> stage = dacPlayer.getStage();
 		
 		if (stage == null) {

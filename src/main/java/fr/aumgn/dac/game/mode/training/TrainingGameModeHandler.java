@@ -11,7 +11,7 @@ import fr.aumgn.dac.arena.Pool;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGamePlayer> {
 
@@ -75,7 +75,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		player.setPlaying(false);
 		int count = 0;
-		for (DACPlayer gamePlayer : game.getPlayers()) {
+		for (StagePlayer gamePlayer : game.getPlayers()) {
 			player = (TrainingGamePlayer)gamePlayer;
 			if (player.isPlaying()) {
 				count++;
@@ -88,7 +88,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	
 	@Override
 	public void onStop() {
-		for (DACPlayer dacPlayer : game.getPlayers()) {
+		for (StagePlayer dacPlayer : game.getPlayers()) {
 			TrainingGamePlayer gamePlayer = (TrainingGamePlayer)dacPlayer;
 			Player player = gamePlayer.getPlayer();
 			player.sendMessage("Reussi : " + gamePlayer.getSuccesses());

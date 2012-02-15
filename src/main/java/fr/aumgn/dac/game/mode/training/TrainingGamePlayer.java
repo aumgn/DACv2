@@ -2,7 +2,7 @@ package fr.aumgn.dac.game.mode.training;
 
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.SimpleGamePlayer;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class TrainingGamePlayer extends SimpleGamePlayer {
 
@@ -11,7 +11,7 @@ public class TrainingGamePlayer extends SimpleGamePlayer {
 	private int dacs = 0;
 	private int fails = 0;
 	
-	public TrainingGamePlayer(Game<TrainingGamePlayer> stage, DACPlayer player, int index) {
+	public TrainingGamePlayer(Game<TrainingGamePlayer> stage, StagePlayer player, int index) {
 		super(stage, player, index);
 	}
 

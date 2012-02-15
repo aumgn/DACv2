@@ -7,7 +7,7 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 @DACGameMode(name="training", minPlayers=1, allowPoolReset=true)
 public class TrainingGameMode implements GameMode<TrainingGamePlayer> {
@@ -23,7 +23,7 @@ public class TrainingGameMode implements GameMode<TrainingGamePlayer> {
 	}
 
 	@Override
-	public TrainingGamePlayer createPlayer(Game<TrainingGamePlayer> game, DACPlayer player, int index) {
+	public TrainingGamePlayer createPlayer(Game<TrainingGamePlayer> game, StagePlayer player, int index) {
 		return new TrainingGamePlayer(game, player, index);
 	}
 

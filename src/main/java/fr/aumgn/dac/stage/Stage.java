@@ -2,14 +2,13 @@ package fr.aumgn.dac.stage;
 
 import java.util.List;
 
-import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.arena.DACArena;
 
-public interface Stage<T extends DACPlayer> {
+public interface Stage<T extends StagePlayer> {
 	
 	DACArena getArena();
 	
-	void removePlayer(DACPlayer player);
+	void removePlayer(StagePlayer player);
 	
 	List<T> getPlayers();
 	
@@ -19,7 +18,7 @@ public interface Stage<T extends DACPlayer> {
 	
 	void send(Object message);
 	
-	void send(Object message, DACPlayer exclude);
+	void send(Object message, StagePlayer exclude);
 	
 	void stop();
 

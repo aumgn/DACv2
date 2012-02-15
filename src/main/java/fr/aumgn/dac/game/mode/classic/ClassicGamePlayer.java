@@ -2,14 +2,14 @@ package fr.aumgn.dac.game.mode.classic;
 
 import fr.aumgn.dac.game.SimpleGamePlayer;
 import fr.aumgn.dac.game.Game;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class ClassicGamePlayer extends SimpleGamePlayer {
 
 	private int lives;
 	private boolean mustConfirmate; 
 	
-	public ClassicGamePlayer(Game<ClassicGamePlayer> game, DACPlayer player, int index) {
+	public ClassicGamePlayer(Game<ClassicGamePlayer> game, StagePlayer player, int index) {
 		super(game, player, index);
 		this.lives = 0;
 		this.mustConfirmate = false;

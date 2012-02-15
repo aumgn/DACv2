@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.arena.DACArena;
 import fr.aumgn.dac.game.Game;
-import fr.aumgn.dac.player.DACPlayer;
 
 public class StageManager {
 
@@ -27,7 +26,7 @@ public class StageManager {
 	}
 	
 	public Stage<?> get(Player player) {
-		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
+		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (dacPlayer == null) {
 			return null;
 		}

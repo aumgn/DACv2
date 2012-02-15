@@ -2,14 +2,14 @@ package fr.aumgn.dac.game.mode.suddendeath;
 
 import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.SimpleGamePlayer;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class SuddenDeathGamePlayer extends SimpleGamePlayer {
 
 	private boolean deadThisTurn;
 	private boolean dead;
 
-	public SuddenDeathGamePlayer(Game<SuddenDeathGamePlayer> game, DACPlayer player, int index) {
+	public SuddenDeathGamePlayer(Game<SuddenDeathGamePlayer> game, StagePlayer player, int index) {
 		super(game, player, index);
 		this.deadThisTurn = false;
 		this.dead = false;

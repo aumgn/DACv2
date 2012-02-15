@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.stage.Stage;
 
-public interface JoinStage<T extends JoinStagePlayer> extends Stage<T> {
+public interface JoinStage<T extends SimpleJoinStagePlayer> extends Stage<T> {
 
 	void addPlayer(Player player, String[] args);
 	

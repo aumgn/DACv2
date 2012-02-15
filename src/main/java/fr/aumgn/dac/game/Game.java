@@ -5,10 +5,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.options.GameOptions;
-import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.stage.Stage;
+import fr.aumgn.dac.stage.StagePlayer;
 
-public interface Game<T extends DACPlayer> extends Stage<T> {
+public interface Game<T extends StagePlayer> extends Stage<T> {
 	
 	GameMode<T> getMode();
 	

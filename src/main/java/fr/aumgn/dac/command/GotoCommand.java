@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
 import fr.aumgn.dac.game.Game;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class GotoCommand extends PlayerCommandExecutor {
@@ -20,7 +20,7 @@ public class GotoCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
-		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
+		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (dacPlayer == null || !(dacPlayer.getStage() instanceof Game)) {
 			error(DACMessage.CmdGotoNotInGame);
 		}

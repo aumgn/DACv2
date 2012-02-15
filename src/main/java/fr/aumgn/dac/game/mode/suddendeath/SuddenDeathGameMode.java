@@ -7,7 +7,7 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 @DACGameMode(name="sudden-death", isDefault=false)
 public class SuddenDeathGameMode implements GameMode<SuddenDeathGamePlayer> {
@@ -23,7 +23,7 @@ public class SuddenDeathGameMode implements GameMode<SuddenDeathGamePlayer> {
 	}
 
 	@Override
-	public SuddenDeathGamePlayer createPlayer(Game<SuddenDeathGamePlayer> game, DACPlayer player, int index) {
+	public SuddenDeathGamePlayer createPlayer(Game<SuddenDeathGamePlayer> game, StagePlayer player, int index) {
 		return new SuddenDeathGamePlayer(game, player, index);
 	}
 

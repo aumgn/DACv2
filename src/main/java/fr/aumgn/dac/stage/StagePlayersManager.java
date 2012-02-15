@@ -1,30 +1,30 @@
-package fr.aumgn.dac.player;
+package fr.aumgn.dac.stage;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
 
-public class DACPlayerManager {
+public class StagePlayersManager {
 
-	private Map<Player, DACPlayer> players;
+	private Map<Player, StagePlayer> players;
 	
-	public DACPlayerManager() {
-		players = new HashMap<Player, DACPlayer>();
+	public StagePlayersManager() {
+		players = new HashMap<Player, StagePlayer>();
 	}
 
-	public DACPlayer get(Player player) {
+	public StagePlayer get(Player player) {
 		return players.get(player);
 	}
 	
-	public void register(DACPlayer player) {
+	public void register(StagePlayer player) {
 		if (players.containsKey(player.getPlayer())) {
 			throw new RuntimeException();
 		}
 		players.put(player.getPlayer(), player);
 	}
 
-	public void unregister(DACPlayer player) {
+	public void unregister(StagePlayer player) {
 		if (!players.containsKey(player.getPlayer())) {
 			throw new RuntimeException();
 		}

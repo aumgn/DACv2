@@ -7,7 +7,7 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 @DACGameMode(name="classic")
 public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
@@ -23,7 +23,7 @@ public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
 	}
 
 	@Override
-	public ClassicGamePlayer createPlayer(Game<ClassicGamePlayer> game, DACPlayer player, int index) {
+	public ClassicGamePlayer createPlayer(Game<ClassicGamePlayer> game, StagePlayer player, int index) {
 		return new ClassicGamePlayer(game, player, index);
 	}
 

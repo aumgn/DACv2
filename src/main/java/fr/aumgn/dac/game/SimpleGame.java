@@ -22,11 +22,11 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
-import fr.aumgn.dac.player.DACPlayer;
-import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.dac.stage.StageManager;
+import fr.aumgn.dac.stage.StagePlayer;
+import fr.aumgn.dac.stage.StagePlayersManager;
 
-public class SimpleGame<T extends DACPlayer> implements Game<T> {
+public class SimpleGame<T extends StagePlayer> implements Game<T> {
 
 	private DACArena arena;
 	private GameMode<T> mode;
@@ -37,18 +37,18 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	private boolean finished;
 	
 	@SuppressWarnings("unchecked")
-	public SimpleGame(GameMode<T> gameMode, JoinStage<? extends DACPlayer> joinStage, GameOptions options) {
+	public SimpleGame(GameMode<T> gameMode, JoinStage<? extends StagePlayer> joinStage, GameOptions options) {
 		StageManager stagesManager = DAC.getStageManager();
 		joinStage.stop();
 		this.arena = joinStage.getArena();
 		this.mode = gameMode;
 		this.options = options;
-		List<DACPlayer> roulette = new ArrayList<DACPlayer>(joinStage.getPlayers());
-		players = (T[]) new DACPlayer[roulette.size()];
+		List<StagePlayer> roulette = new ArrayList<StagePlayer>(joinStage.getPlayers());
+		players = (T[]) new StagePlayer[roulette.size()];
 		Random rand = DAC.getRand();
 		for (int i=0; i< players.length; i++) {
 			int j = rand.nextInt(roulette.size());
-			DACPlayer dacPlayer = roulette.remove(j);
+			StagePlayer dacPlayer = roulette.remove(j);
 			players[i] = gameMode.createPlayer(this, dacPlayer, i);
 		}
 		gameModeHandler = gameMode.createHandler(this);
@@ -61,7 +61,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private T castPlayer(DACPlayer player) {
+	private T castPlayer(StagePlayer player) {
 		try {
 			return (T) player;
 		} catch (ClassCastException exc) {
@@ -72,16 +72,16 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	
 	@Override
 	public void registerAll() {
-		DACPlayerManager playerManager = DAC.getPlayerManager();
-		for (DACPlayer player : players) {
+		StagePlayersManager playerManager = DAC.getPlayerManager();
+		for (StagePlayer player : players) {
 			playerManager.register(player);
 		}
 	}
 
 	@Override
 	public void unregisterAll() {
-		DACPlayerManager playerManager = DAC.getPlayerManager();
-		for (DACPlayer player : players) {
+		StagePlayersManager playerManager = DAC.getPlayerManager();
+		for (StagePlayer player : players) {
 			playerManager.unregister(player);
 		}
 	}
@@ -103,12 +103,12 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 		}
 	}
 	
-	public boolean isPlayerTurn(DACPlayer player) {
+	public boolean isPlayerTurn(StagePlayer player) {
 		return !finished && players[turn].equals(player);
 	}
 	
-	public void send(Object msg, DACPlayer exclude) {
-		for (DACPlayer player : players) {
+	public void send(Object msg, StagePlayer exclude) {
+		for (StagePlayer player : players) {
 			if (exclude == null || !player.getPlayer().equals(exclude.getPlayer())) {
 				player.getPlayer().sendMessage(msg.toString());
 			}
@@ -135,7 +135,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	}
 
 	@Override
-	public void removePlayer(DACPlayer player) {
+	public void removePlayer(StagePlayer player) {
 		gameModeHandler.onQuit(castPlayer(player));
 	}
 
@@ -159,7 +159,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	@Override
 	public void onFallDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
-		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
+		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (isPlayerTurn(dacPlayer) && arena.getPool().isAbove(player)) {
 			DACGameFailEvent failEvent = new DACGameFailEvent(this, dacPlayer);
 			DAC.callEvent(failEvent);
@@ -185,7 +185,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	@Override
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
+		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (isPlayerTurn(dacPlayer) && arena.getPool().contains(player)) {
 			DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, dacPlayer);
 			DAC.callEvent(successEvent);

@@ -1,12 +1,11 @@
-package fr.aumgn.dac.player;
+package fr.aumgn.dac.stage;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.config.DACColor;
-import fr.aumgn.dac.stage.Stage;
 
-public interface DACPlayer {
+public interface StagePlayer {
 	
 	Stage<?> getStage();
 

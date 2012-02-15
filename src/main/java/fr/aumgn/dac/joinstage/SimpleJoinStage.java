@@ -18,21 +18,21 @@ import fr.aumgn.dac.event.joinstage.DACJoinStageStopEvent;
 import fr.aumgn.dac.event.joinstage.DACPlayerJoinEvent;
 import fr.aumgn.dac.game.mode.DACGameMode;
 import fr.aumgn.dac.game.mode.GameMode;
-import fr.aumgn.dac.player.DACPlayer;
-import fr.aumgn.dac.player.DACPlayerManager;
+import fr.aumgn.dac.stage.StagePlayer;
+import fr.aumgn.dac.stage.StagePlayersManager;
 
-public class SimpleJoinStage implements JoinStage<JoinStagePlayer> {
+public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
 	
 	private DACArena arena;
 	private DACColors colors;
 	private Set<DACColor> colorsMap;
-	private List<JoinStagePlayer> players;
+	private List<SimpleJoinStagePlayer> players;
 
 	public SimpleJoinStage(DACArena arena) {
 		this.arena = arena;
 		colors = DAC.getConfig().getColors();
 		colorsMap = new HashSet<DACColor>();
-		players = new ArrayList<JoinStagePlayer>();
+		players = new ArrayList<SimpleJoinStagePlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
 			player.sendMessage(DACMessage.JoinNewGame2.getValue());
@@ -42,23 +42,23 @@ public class SimpleJoinStage implements JoinStage<JoinStagePlayer> {
 	
 	@Override
 	public void registerAll() {
-		DACPlayerManager playerManager = DAC.getPlayerManager();
-		for (DACPlayer player : players) {
+		StagePlayersManager playerManager = DAC.getPlayerManager();
+		for (StagePlayer player : players) {
 			playerManager.register(player);
 		}
 	}
 
 	@Override
 	public void unregisterAll() {
-		DACPlayerManager playerManager = DAC.getPlayerManager();
-		for (DACPlayer player : players) {
+		StagePlayersManager playerManager = DAC.getPlayerManager();
+		for (StagePlayer player : players) {
 			playerManager.unregister(player);
 		}
 	}
 
 	@Override
-	public void send(Object msg, DACPlayer exclude) {
-		for (DACPlayer player : players) {
+	public void send(Object msg, StagePlayer exclude) {
+		for (StagePlayer player : players) {
 			if (player != exclude) {
 				player.getPlayer().sendMessage(msg.toString());
 			}
@@ -103,12 +103,12 @@ public class SimpleJoinStage implements JoinStage<JoinStagePlayer> {
 		DAC.callEvent(event);
 		
 		if (!event.isCancelled()) {
-			JoinStagePlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
+			SimpleJoinStagePlayer dacPlayer = new SimpleJoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
 			players.add(dacPlayer);
 			DAC.getPlayerManager().register(dacPlayer);
 			colorsMap.add(color);
 			dacPlayer.send(DACMessage.JoinCurrentPlayers);
-			for (DACPlayer currentPlayer : players) {
+			for (StagePlayer currentPlayer : players) {
 				dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
 			}
 			dacPlayer.sendToOthers(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
@@ -131,7 +131,7 @@ public class SimpleJoinStage implements JoinStage<JoinStagePlayer> {
 	}
 
 	@Override
-	public void removePlayer(DACPlayer player) {
+	public void removePlayer(StagePlayer player) {
 		send(DACMessage.JoinPlayerQuit.format(player.getDisplayName()));
 		players.remove(player);
 		DAC.getPlayerManager().unregister(player);
@@ -142,8 +142,8 @@ public class SimpleJoinStage implements JoinStage<JoinStagePlayer> {
 	}
 	
 	@Override
-	public List<JoinStagePlayer> getPlayers() {
-		return new ArrayList<JoinStagePlayer>(players);
+	public List<SimpleJoinStagePlayer> getPlayers() {
+		return new ArrayList<SimpleJoinStagePlayer>(players);
 	}
 
 	@Override

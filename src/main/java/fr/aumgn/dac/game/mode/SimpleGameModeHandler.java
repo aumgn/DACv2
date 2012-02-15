@@ -1,8 +1,8 @@
 package fr.aumgn.dac.game.mode;
 
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
-public class SimpleGameModeHandler<T extends DACPlayer> implements GameModeHandler<T> {
+public class SimpleGameModeHandler<T extends StagePlayer> implements GameModeHandler<T> {
 
 	@Override
 	public void onStart() {

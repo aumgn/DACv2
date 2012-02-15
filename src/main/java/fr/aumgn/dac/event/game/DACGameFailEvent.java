@@ -4,7 +4,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 import fr.aumgn.dac.game.Game;
-import fr.aumgn.dac.player.DACPlayer;
+import fr.aumgn.dac.stage.StagePlayer;
 
 public class DACGameFailEvent extends DACGamePlayerEvent implements Cancellable {
 
@@ -14,7 +14,7 @@ public class DACGameFailEvent extends DACGamePlayerEvent implements Cancellable 
 	private boolean isCancelled = false;
 	private boolean cancelDeath = true; 
 	
-	public DACGameFailEvent(Game<?> game, DACPlayer player) {
+	public DACGameFailEvent(Game<?> game, StagePlayer player) {
 		super("DACGameFailEvent", game, player);
 	}
 	
