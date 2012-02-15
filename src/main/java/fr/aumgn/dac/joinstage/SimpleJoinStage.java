@@ -21,18 +21,18 @@ import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.player.DACPlayerManager;
 
-public class SimpleJoinStage implements JoinStage {
+public class SimpleJoinStage implements JoinStage<JoinStagePlayer> {
 	
 	private DACArena arena;
 	private DACColors colors;
 	private Set<DACColor> colorsMap;
-	private List<DACPlayer> players;
+	private List<JoinStagePlayer> players;
 
 	public SimpleJoinStage(DACArena arena) {
 		this.arena = arena;
 		colors = DAC.getConfig().getColors();
 		colorsMap = new HashSet<DACColor>();
-		players = new ArrayList<DACPlayer>();
+		players = new ArrayList<JoinStagePlayer>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
 			player.sendMessage(DACMessage.JoinNewGame2.getValue());
@@ -56,6 +56,7 @@ public class SimpleJoinStage implements JoinStage {
 		}
 	}
 
+	@Override
 	public void send(Object msg, DACPlayer exclude) {
 		for (DACPlayer player : players) {
 			if (player != exclude) {
@@ -64,6 +65,7 @@ public class SimpleJoinStage implements JoinStage {
 		}
 	}
 	
+	@Override
 	public void send(Object msg) {
 		send(msg, null);
 	}
@@ -101,7 +103,7 @@ public class SimpleJoinStage implements JoinStage {
 		DAC.callEvent(event);
 		
 		if (!event.isCancelled()) {
-			DACPlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
+			JoinStagePlayer dacPlayer = new JoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
 			players.add(dacPlayer);
 			DAC.getPlayerManager().register(dacPlayer);
 			colorsMap.add(color);
@@ -140,8 +142,8 @@ public class SimpleJoinStage implements JoinStage {
 	}
 	
 	@Override
-	public List<DACPlayer> getPlayers() {
-		return new ArrayList<DACPlayer>(players);
+	public List<JoinStagePlayer> getPlayers() {
+		return new ArrayList<JoinStagePlayer>(players);
 	}
 
 	@Override
@@ -151,7 +153,7 @@ public class SimpleJoinStage implements JoinStage {
 	}
 
 	@Override
-	public boolean isMinReached(GameMode mode) {
+	public boolean isMinReached(GameMode<?> mode) {
 		int minimum = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
 		return players.size() >= minimum;
 	}

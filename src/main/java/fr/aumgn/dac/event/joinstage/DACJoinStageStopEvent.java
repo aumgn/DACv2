@@ -9,7 +9,7 @@ public class DACJoinStageStopEvent extends DACJoinStageEvent {
 	private static final long serialVersionUID = 1L;
 	private static final HandlerList handlers = new HandlerList();
 	
-	public DACJoinStageStopEvent(JoinStage joinStage) {
+	public DACJoinStageStopEvent(JoinStage<?> joinStage) {
 		super("DACJoinStageStopEvent", joinStage);
 	}
 	

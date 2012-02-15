@@ -24,14 +24,14 @@ import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.player.DACPlayer;
 
-public class ClassicGameModeHandler extends SimpleGameModeHandler {
+public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePlayer> {
 	
-	private Game game;
+	private Game<ClassicGamePlayer> game;
 	private DACArena arena;
 	private List<String> lostOrder;
 	private Map<ClassicGamePlayer, Vector> playersWhoLostLastTurn;
 	
-	public ClassicGameModeHandler(Game game) {
+	public ClassicGameModeHandler(Game<ClassicGamePlayer> game) {
 		this.game = game;
 		this.arena = game.getArena();
 		this.lostOrder = new ArrayList<String>();
@@ -70,7 +70,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	}
 	
 	@Override
-	public void onTurn(DACPlayer dacPlayer) {
+	public void onTurn(ClassicGamePlayer dacPlayer) {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 		if (player.hasLost()) {
 			game.nextTurn();
@@ -82,7 +82,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onSuccess(DACPlayer dacPlayer) {
+	public void onSuccess(ClassicGamePlayer dacPlayer) {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
@@ -124,7 +124,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onFail(DACPlayer dacPlayer) {
+	public void onFail(ClassicGamePlayer dacPlayer) {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 		
 		player.send(DACMessage.GameJumpFail2);
@@ -155,7 +155,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler {
 	}
 	
 	@Override
-	public void onQuit(DACPlayer dacPlayer) {
+	public void onQuit(ClassicGamePlayer dacPlayer) {
 		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
 		player.looseAllLives();
 		onPlayerLoss(player, true);

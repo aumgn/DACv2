@@ -24,10 +24,10 @@ public class ResetCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdResetUnknown);
 		}
 		
-		Stage stage = DAC.getStageManager().get(arena);
+		Stage<?> stage = DAC.getStageManager().get(arena);
 		if (stage instanceof Game) {
 			if (!context.hasPermission("dac.game.reset")) {
-				GameMode mode = ((Game)stage).getMode();
+				GameMode<?> mode = ((Game<?>)stage).getMode();
 				if (!mode.getClass().getAnnotation(DACGameMode.class).allowPoolReset()) {
 					error(DACMessage.CmdResetInGame);
 				}

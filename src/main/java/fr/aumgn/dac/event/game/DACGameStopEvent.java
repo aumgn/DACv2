@@ -9,7 +9,7 @@ public class DACGameStopEvent extends DACGameEvent {
 	private static final long serialVersionUID = 1L;
 	private static final HandlerList handlers = new HandlerList();
 	
-	public DACGameStopEvent(Game game) {
+	public DACGameStopEvent(Game<?> game) {
 		super("DACGameStopEvent", game);
 	}
 	

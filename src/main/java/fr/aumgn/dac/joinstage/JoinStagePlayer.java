@@ -9,7 +9,7 @@ import fr.aumgn.dac.stage.Stage;
 
 public class JoinStagePlayer extends DACSimplePlayer {
 
-	public JoinStagePlayer(Stage stage, Player player, DACColor color, Location startLocation) {
+	public JoinStagePlayer(Stage<JoinStagePlayer> stage, Player player, DACColor color, Location startLocation) {
 		super(player, stage, color, startLocation);
 	}
 	

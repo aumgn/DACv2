@@ -1,21 +1,29 @@
 package fr.aumgn.dac.game.mode.classic;
 
 import fr.aumgn.dac.game.Game;
+import fr.aumgn.dac.game.SimpleGame;
 import fr.aumgn.dac.game.mode.DACGameMode;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
+import fr.aumgn.dac.game.options.GameOptions;
+import fr.aumgn.dac.joinstage.JoinStage;
 import fr.aumgn.dac.player.DACPlayer;
 
 @DACGameMode(name="classic")
-public class ClassicGameMode implements GameMode {
+public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
 
 	@Override
-	public GameModeHandler createHandler(Game game) {
+	public Game<ClassicGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
+		return new SimpleGame<ClassicGamePlayer>(joinStage, this, options);
+	}
+
+	@Override
+	public GameModeHandler<ClassicGamePlayer> createHandler(Game<ClassicGamePlayer> game) {
 		return new ClassicGameModeHandler(game);
 	}
 
 	@Override
-	public DACPlayer createPlayer(Game game, DACPlayer player, int index) {
+	public ClassicGamePlayer createPlayer(Game<ClassicGamePlayer> game, DACPlayer player, int index) {
 		return new ClassicGamePlayer(game, player, index);
 	}
 

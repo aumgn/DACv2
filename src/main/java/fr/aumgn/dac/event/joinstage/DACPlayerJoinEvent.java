@@ -17,7 +17,7 @@ public class DACPlayerJoinEvent extends DACJoinStageEvent implements Cancellable
 	private Location startLocation;
 	private boolean isCancelled = false;
 	
-	public DACPlayerJoinEvent(JoinStage joinStage, Player player, DACColor color, Location location) {
+	public DACPlayerJoinEvent(JoinStage<?> joinStage, Player player, DACColor color, Location location) {
 		super("DACPlayerJoinEvent", joinStage);
 		this.player = player;
 		this.color = color;

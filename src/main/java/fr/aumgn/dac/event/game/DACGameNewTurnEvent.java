@@ -9,7 +9,7 @@ public class DACGameNewTurnEvent extends DACGameEvent {
 	private static final long serialVersionUID = 1L;
 	private static final HandlerList handlers = new HandlerList();
 	
-	public DACGameNewTurnEvent(Game game) {
+	public DACGameNewTurnEvent(Game<?> game) {
 		super("DACGameNewTurnEvent", game);
 	}
 	

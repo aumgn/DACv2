@@ -6,13 +6,13 @@ import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
 
-public class SuddenDeathGameModeHandler extends SimpleGameModeHandler {
+public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeathGamePlayer> {
 	
-	private Game game;
+	private Game<SuddenDeathGamePlayer> game;
 	private int playersLeftCount;
 	private DACPlayer lastPlayer;
 
-	public SuddenDeathGameModeHandler(Game game) {
+	public SuddenDeathGameModeHandler(Game<SuddenDeathGamePlayer> game) {
 		this.game = game;
 	}
 	
@@ -48,7 +48,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler {
 	}
 	
 	@Override
-	public void onTurn(DACPlayer dacPlayer) {
+	public void onTurn(SuddenDeathGamePlayer dacPlayer) {
 		SuddenDeathGamePlayer player = (SuddenDeathGamePlayer) dacPlayer;
 		if (player.isDead()) {
 			game.nextTurn();
@@ -59,7 +59,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onSuccess(DACPlayer dacPlayer) {
+	public void onSuccess(SuddenDeathGamePlayer dacPlayer) {
 		lastPlayer = dacPlayer;
 		game.send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
 		dacPlayer.tpToStart();
@@ -67,7 +67,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onFail(DACPlayer dacPlayer) {
+	public void onFail(SuddenDeathGamePlayer dacPlayer) {
 		SuddenDeathGamePlayer player = (SuddenDeathGamePlayer) dacPlayer;
 		playersLeftCount--;
 		player.setDeadThisTurn();

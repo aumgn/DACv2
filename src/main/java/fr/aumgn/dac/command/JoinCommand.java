@@ -16,7 +16,7 @@ public class JoinCommand extends PlayerCommandExecutor {
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
 
-		Stage stage = DAC.getStageManager().get(player);
+		Stage<?> stage = DAC.getStageManager().get(player);
 		if (stage != null) {
 			error(DACMessage.CmdJoinAlreadyPlaying);
 		}
@@ -31,12 +31,12 @@ public class JoinCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdJoinInGame);
 		}
 
-		JoinStage joinStage;
+		JoinStage<?> joinStage;
 		if (stage == null) {
 			joinStage = new SimpleJoinStage(arena);
 			DAC.getStageManager().register(joinStage);
 		} else {
-			joinStage = (JoinStage)stage;
+			joinStage = (JoinStage<?>)stage;
 		}
 
 		if (joinStage.isMaxReached()) {

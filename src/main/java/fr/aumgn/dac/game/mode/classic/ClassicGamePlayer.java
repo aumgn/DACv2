@@ -9,7 +9,7 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 	private int lives;
 	private boolean mustConfirmate; 
 	
-	public ClassicGamePlayer(Game game, DACPlayer player, int index) {
+	public ClassicGamePlayer(Game<ClassicGamePlayer> game, DACPlayer player, int index) {
 		super(game, player, index);
 		this.lives = 0;
 		this.mustConfirmate = false;

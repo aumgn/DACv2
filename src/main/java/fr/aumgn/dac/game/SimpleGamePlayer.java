@@ -7,7 +7,7 @@ public class SimpleGamePlayer extends DACSimplePlayer {
 	
 	private int index;
 	
-	public SimpleGamePlayer(Game stage, DACPlayer player, int index) {
+	public SimpleGamePlayer(Game<? extends SimpleGamePlayer> stage, DACPlayer player, int index) {
 		super(
 			player.getPlayer(),
 			stage,

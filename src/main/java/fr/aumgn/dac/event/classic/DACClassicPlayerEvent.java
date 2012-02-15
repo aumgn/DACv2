@@ -9,7 +9,7 @@ public class DACClassicPlayerEvent extends DACGameEvent {
 
 	private ClassicGamePlayer player;
 	
-	public DACClassicPlayerEvent(String name, Game game, ClassicGamePlayer player) {
+	public DACClassicPlayerEvent(String name, Game<?> game, ClassicGamePlayer player) {
 		super(name, game);
 		this.player = player;
 	}

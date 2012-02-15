@@ -8,13 +8,13 @@ import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.stage.Stage;
 
-public interface Game extends Stage {
+public interface Game<T extends DACPlayer> extends Stage<T> {
 	
-	GameMode getMode();
+	GameMode<T> getMode();
 	
 	void nextTurn();
 	
-	boolean isPlayerTurn(DACPlayer player);
+	boolean isPlayerTurn(T player);
 	
 	void onFallDamage(EntityDamageEvent event);
 	

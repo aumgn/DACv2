@@ -2,7 +2,7 @@ package fr.aumgn.dac.game.mode;
 
 import fr.aumgn.dac.player.DACPlayer;
 
-public class SimpleGameModeHandler implements GameModeHandler {
+public class SimpleGameModeHandler<T extends DACPlayer> implements GameModeHandler<T> {
 
 	@Override
 	public void onStart() {
@@ -13,19 +13,19 @@ public class SimpleGameModeHandler implements GameModeHandler {
 	}
 
 	@Override
-	public void onTurn(DACPlayer player) {
+	public void onTurn(T player) {
 	}
 
 	@Override
-	public void onSuccess(DACPlayer player) {
+	public void onSuccess(T player) {
 	}
 
 	@Override
-	public void onFail(DACPlayer player) {
+	public void onFail(T player) {
 	}
 	
 	@Override
-	public void onQuit(DACPlayer player) {
+	public void onQuit(T player) {
 	}
 
 	@Override

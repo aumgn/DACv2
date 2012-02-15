@@ -13,12 +13,12 @@ import fr.aumgn.dac.game.Game;
 import fr.aumgn.dac.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.player.DACPlayer;
 
-public class TrainingGameModeHandler extends SimpleGameModeHandler {
+public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGamePlayer> {
 
-	private Game game;
+	private Game<TrainingGamePlayer> game;
 	private DACArena arena;
 
-	public TrainingGameModeHandler(Game game) {
+	public TrainingGameModeHandler(Game<TrainingGamePlayer> game) {
 		this.game = game;
 		this.arena = game.getArena();
 	}
@@ -32,7 +32,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onTurn(DACPlayer dacPlayer) {
+	public void onTurn(TrainingGamePlayer dacPlayer) {
 		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		if (!player.isPlaying()) {
 			game.nextTurn();
@@ -43,7 +43,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onSuccess(DACPlayer dacPlayer) {
+	public void onSuccess(TrainingGamePlayer dacPlayer) {
 		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
@@ -62,7 +62,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 	}
 
 	@Override
-	public void onFail(DACPlayer dacPlayer) {
+	public void onFail(TrainingGamePlayer dacPlayer) {
 		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 		player.tpToStart();
@@ -71,7 +71,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler {
 	}
 	
 	@Override
-	public void onQuit(DACPlayer dacPlayer) {
+	public void onQuit(TrainingGamePlayer dacPlayer) {
 		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
 		player.setPlaying(false);
 		int count = 0;

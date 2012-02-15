@@ -12,21 +12,21 @@ import fr.aumgn.dac.player.DACPlayer;
 
 public class StageManager {
 
-	private Map<DACArena, Stage> stages;
+	private Map<DACArena, Stage<?>> stages;
 	
 	public StageManager() {
-		stages = new HashMap<DACArena, Stage>();
+		stages = new HashMap<DACArena, Stage<?>>();
 	}
 	
 	public boolean hasStage(DACArena arena) {
 		return stages.containsKey(arena);
 	}
 	
-	public Stage get(DACArena arena) {
+	public Stage<?> get(DACArena arena) {
 		return stages.get(arena);
 	}
 	
-	public Stage get(Player player) {
+	public Stage<?> get(Player player) {
 		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
 		if (dacPlayer == null) {
 			return null;
@@ -34,22 +34,22 @@ public class StageManager {
 		return dacPlayer.getStage();
 	}
 	
-	private Game castGame(Stage stage) {
+	private Game<?> castGame(Stage<?> stage) {
 		if (stage instanceof Game) {
-			return (Game) stage;
+			return (Game<?>) stage;
 		}
 		return null;
 	}
 	
-	public Game getGame(DACArena arena) {
+	public Game<?> getGame(DACArena arena) {
 		return castGame(get(arena));
 	}
 	
-	public Game getGame(Player player) {
+	public Game<?> getGame(Player player) {
 		return castGame(get(player));
 	}
 	
-	public void register(Stage stage) {
+	public void register(Stage<?> stage) {
 		if (stages.containsKey(stage.getArena())) {
 			throw new RuntimeException();
 		}
@@ -57,7 +57,7 @@ public class StageManager {
 		stage.registerAll();
 	}
 
-	public void unregister(Stage stage) {
+	public void unregister(Stage<?> stage) {
 		if (!stages.containsKey(stage.getArena())) {
 			throw new RuntimeException();
 		}

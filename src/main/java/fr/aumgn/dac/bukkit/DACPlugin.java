@@ -23,8 +23,8 @@ import fr.aumgn.dac.game.mode.training.TrainingGameMode;
 public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 
 	@Override
-	public List<Class<? extends GameMode>> getGameModes() {
-		List<Class<? extends GameMode>> list = new ArrayList<Class<? extends GameMode>>(3);
+	public List<Class<? extends GameMode<?>>> getGameModes() {
+		List<Class<? extends GameMode<?>>> list = new ArrayList<Class<? extends GameMode<?>>>(3);
 		list.add(ClassicGameMode.class);
 		list.add(TrainingGameMode.class);
 		list.add(SuddenDeathGameMode.class);

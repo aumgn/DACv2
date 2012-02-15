@@ -10,7 +10,7 @@ public class DACClassicDACEvent extends DACClassicPlayerEvent {
 	private static final long serialVersionUID = 1L;
 	private static final HandlerList handlers = new HandlerList();
 
-	public DACClassicDACEvent(Game game, ClassicGamePlayer player) {
+	public DACClassicDACEvent(Game<?> game, ClassicGamePlayer player) {
 		super("DACClassicDACEvent", game, player);
 	}
 	

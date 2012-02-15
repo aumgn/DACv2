@@ -8,7 +8,7 @@ import fr.aumgn.dac.stage.Stage;
 
 public interface DACPlayer {
 	
-	Stage getStage();
+	Stage<?> getStage();
 
 	Player getPlayer();
 	

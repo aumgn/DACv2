@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.DAC;
 import fr.aumgn.dac.config.DACMessage;
-import fr.aumgn.dac.game.SimpleGame;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.options.GameOptions;
 import fr.aumgn.dac.joinstage.JoinStage;
@@ -23,13 +22,13 @@ public class StartCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Player player = context.getPlayer();
-		Stage stage = DAC.getStageManager().get(player);
+		Stage<?> stage = DAC.getStageManager().get(player);
 		if (!(stage instanceof JoinStage)) {
 			error(DACMessage.CmdStartNotInGame);
 		}
-		JoinStage joinStage = (JoinStage) stage;
+		JoinStage<?> joinStage = (JoinStage<?>) stage;
 		
-		GameMode mode;
+		GameMode<?> mode;
 		if (args.length > 0) {
 			mode = DAC.getModes().get(args[0]);
 			if (mode == null) {
@@ -51,7 +50,7 @@ public class StartCommand extends PlayerCommandExecutor {
 			error(DACMessage.CmdStartMinNotReached);
 		}
 		
-		new SimpleGame(joinStage, mode, options);
+		mode.createGame(joinStage, options);
 	}
 
 }

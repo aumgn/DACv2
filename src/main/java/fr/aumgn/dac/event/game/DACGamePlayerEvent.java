@@ -8,7 +8,7 @@ public class DACGamePlayerEvent extends DACGameEvent {
 
 	private DACPlayer player;
 	
-	public DACGamePlayerEvent(String name, Game game, DACPlayer player) {
+	public DACGamePlayerEvent(String name, Game<?> game, DACPlayer player) {
 		super(name, game);
 		this.player = player;
 	}

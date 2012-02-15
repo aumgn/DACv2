@@ -1,5 +1,6 @@
 package fr.aumgn.dac.game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -24,30 +25,30 @@ import fr.aumgn.dac.player.DACPlayer;
 import fr.aumgn.dac.player.DACPlayerManager;
 import fr.aumgn.dac.stage.StageManager;
 
-public class SimpleGame implements Game {
+public class SimpleGame<T extends DACPlayer> implements Game<T> {
 
 	private DACArena arena;
-	private GameMode mode;
+	private GameMode<T> mode;
 	private GameOptions options;
-	private GameModeHandler gameModeHandler;
-	private DACPlayer[] players;
+	private GameModeHandler<T> gameModeHandler;
+	private T[] players;
 	private int turn;
 	private boolean finished;
 	
-	public SimpleGame(JoinStage joinStage, GameMode gameMode, GameOptions options) {
+	@SuppressWarnings("unchecked")
+	public SimpleGame(JoinStage<? extends DACPlayer> joinStage, GameMode<T> gameMode, GameOptions options) {
 		StageManager stagesManager = DAC.getStageManager();
 		joinStage.stop();
 		this.arena = joinStage.getArena();
 		this.mode = gameMode;
 		this.options = options;
-		List<DACPlayer> roulette = joinStage.getPlayers();
-		players = new DACPlayer[roulette.size()];
+		List<DACPlayer> roulette = new ArrayList<DACPlayer>(joinStage.getPlayers());
+		players = (T[]) new DACPlayer[roulette.size()];
 		Random rand = DAC.getRand();
 		for (int i=0; i< players.length; i++) {
 			int j = rand.nextInt(roulette.size());
 			DACPlayer dacPlayer = roulette.remove(j);
-			dacPlayer = gameMode.createPlayer(this, dacPlayer, i);
-			players[i] = dacPlayer;
+			players[i] = gameMode.createPlayer(this, dacPlayer, i);
 		}
 		gameModeHandler = gameMode.createHandler(this);
 		turn = players.length - 1;
@@ -86,7 +87,7 @@ public class SimpleGame implements Game {
 	public void nextTurn() {
 		increaseTurn();
 		if (!finished) {
-			DACPlayer player = players[turn];
+			T player = players[turn];
 			gameModeHandler.onTurn(player);
 		}
 	}
@@ -113,7 +114,7 @@ public class SimpleGame implements Game {
 	}
 	
 	@Override
-	public GameMode getMode() {
+	public GameMode<T> getMode() {
 		return mode;
 	}
 
@@ -124,12 +125,12 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void removePlayer(DACPlayer player) {
-		gameModeHandler.onQuit(player);
+		gameModeHandler.onQuit((T) player);
 	}
 
 
 	@Override
-	public List<DACPlayer> getPlayers() {
+	public List<T> getPlayers() {
 		return Arrays.asList(players);
 	}
 
@@ -153,7 +154,7 @@ public class SimpleGame implements Game {
 			DAC.callEvent(failEvent);
 			
 			if (!failEvent.isCancelled()) {
-				gameModeHandler.onFail(dacPlayer);
+				gameModeHandler.onFail((T) dacPlayer);
 			}
 			
 			if (failEvent.cancelDeath()) {
@@ -178,7 +179,7 @@ public class SimpleGame implements Game {
 			DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, dacPlayer);
 			DAC.callEvent(successEvent);
 			if (!successEvent.isCancelled()) {
-				gameModeHandler.onSuccess(dacPlayer);
+				gameModeHandler.onSuccess((T) dacPlayer);
 			}
 		}
 	}

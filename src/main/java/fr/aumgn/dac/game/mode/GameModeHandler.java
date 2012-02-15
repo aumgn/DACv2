@@ -2,19 +2,19 @@ package fr.aumgn.dac.game.mode;
 
 import fr.aumgn.dac.player.DACPlayer;
 
-public interface GameModeHandler {
+public interface GameModeHandler<T extends DACPlayer> {
 	
 	void onStart();
 
 	void onNewTurn();
 
-	void onTurn(DACPlayer player);
+	void onTurn(T player);
 	
-	void onSuccess(DACPlayer player);
+	void onSuccess(T player);
 
-	void onFail(DACPlayer player);
+	void onFail(T player);
 	
-	void onQuit(DACPlayer player);
+	void onQuit(T player);
 	
 	void onStop();
 

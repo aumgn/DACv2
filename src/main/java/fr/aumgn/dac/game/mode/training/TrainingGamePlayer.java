@@ -11,7 +11,7 @@ public class TrainingGamePlayer extends SimpleGamePlayer {
 	private int dacs = 0;
 	private int fails = 0;
 	
-	public TrainingGamePlayer(Game stage, DACPlayer player, int index) {
+	public TrainingGamePlayer(Game<TrainingGamePlayer> stage, DACPlayer player, int index) {
 		super(stage, player, index);
 	}
 

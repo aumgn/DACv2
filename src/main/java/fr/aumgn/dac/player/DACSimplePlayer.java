@@ -10,12 +10,12 @@ import fr.aumgn.dac.stage.Stage;
 public class DACSimplePlayer implements DACPlayer {
 
 	private Player player;
-	private Stage stage;
+	private Stage<? extends DACSimplePlayer> stage;
 	private String displayName;
 	private DACColor color;
 	private Location startLocation;
 	
-	public DACSimplePlayer(Player player, Stage stage, DACColor color, Location startLocation) {
+	public DACSimplePlayer(Player player, Stage<? extends DACSimplePlayer> stage, DACColor color, Location startLocation) {
 		this.player = player;
 		this.stage = stage;
 		String name = ChatColor.stripColor(player.getDisplayName());
@@ -24,12 +24,12 @@ public class DACSimplePlayer implements DACPlayer {
 		this.color = color;
 	}
 	
-	public DACSimplePlayer(DACPlayer player, Stage stage) {
+	public DACSimplePlayer(DACPlayer player, Stage<? extends DACSimplePlayer> stage) {
 		this(player.getPlayer(), stage, player.getColor(), player.getStartLocation());
 	}
 
 	@Override
-	public Stage getStage() {
+	public Stage<?> getStage() {
 		return stage;
 	}
 	

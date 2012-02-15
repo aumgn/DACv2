@@ -20,7 +20,7 @@ public class QuitCommand extends PlayerCommandExecutor {
 		Player player = context.getPlayer(); 
 		
 		DACPlayer dacPlayer = DAC.getPlayerManager().get(player);
-		Stage stage = dacPlayer.getStage();
+		Stage<?> stage = dacPlayer.getStage();
 		
 		if (stage == null) {
 			error(DACMessage.CmdQuitNotInGame);

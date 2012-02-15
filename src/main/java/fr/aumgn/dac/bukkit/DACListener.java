@@ -20,7 +20,7 @@ public class DACListener implements Listener {
 		DamageCause cause = event.getCause();
 		if (event.getEntity() instanceof Player && cause == DamageCause.FALL) {
 			Player player = (Player)event.getEntity();
-			Game game = DAC.getStageManager().getGame(player);
+			Game<?> game = DAC.getStageManager().getGame(player);
 			if (game == null) {
 				return;
 			}
@@ -31,7 +31,7 @@ public class DACListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onMove(PlayerMoveEvent event) {
-		Game game = DAC.getStageManager().getGame(event.getPlayer());
+		Game<?> game = DAC.getStageManager().getGame(event.getPlayer());
 		if (game == null) {
 			return;
 		}
