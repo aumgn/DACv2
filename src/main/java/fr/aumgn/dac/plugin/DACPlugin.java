@@ -54,7 +54,9 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 		DACListener dacPlayerListener = new DACListener();
 		pm.registerEvents(dacPlayerListener, this);
 
-		DAC.init(this, (WorldEditPlugin)worldEdit, new DACArenas());
+		DACGameModes gameModes = new DACGameModes();
+		DACArenas arenas = new DACArenas();
+		DAC.init(this, (WorldEditPlugin)worldEdit, gameModes, arenas);
 		
 		getLogger().info(getDescription().getName() + " loaded.");
 	}

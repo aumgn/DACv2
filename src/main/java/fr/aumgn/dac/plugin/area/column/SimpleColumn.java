@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.config.DACColor;
 public class SimpleColumn implements ColumnPattern {
 
 	@Override
-	public void place(AreaColumn column, DACColor color) {
+	public void set(AreaColumn column, DACColor color) {
 		for (Block block : column) {
 			block.setType(color.getMaterial());
 			block.setData(color.getData());

@@ -75,7 +75,7 @@ public class DACPool extends DACArea implements Pool {
 	}
 
 	public void setColumn(ColumnPattern pattern, DACColor color, int x, int z) {
-		pattern.place(new DACAreaColumn(this, x, z), color);
+		pattern.set(new DACAreaColumn(this, x, z), color);
 	}
 
 	public void putRIPSign(org.bukkit.util.Vector vec) {

@@ -6,7 +6,6 @@ import org.bukkit.World;
 
 import com.sk89q.worldedit.LocalWorld;
 
-import fr.aumgn.dac.api.area.Area;
 import fr.aumgn.dac.api.game.GameOptions;
 
 public interface Arena {
@@ -21,7 +20,7 @@ public interface Arena {
 
 	Pool getPool();
 
-	Area getStartArea();
+	StartArea getStartArea();
 
 	List<String> getModes();
 

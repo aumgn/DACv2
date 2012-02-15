@@ -13,10 +13,10 @@ public interface Area extends Iterable<Block> {
 
 	boolean contains(Player player);
 
+	void fillWith(AreaFillStrategy areaAllButOneStrategy);
+
 	void update(Region region);
 
 	Selection getSelection();
-
-	void fillWith(AreaFillStrategy areaAllButOneStrategy);
 
 }

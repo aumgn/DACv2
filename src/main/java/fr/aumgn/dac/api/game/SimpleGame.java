@@ -22,7 +22,7 @@ import fr.aumgn.dac.api.game.mode.GameModeHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayer;
-import fr.aumgn.dac.api.stage.StagePlayersManager;
+import fr.aumgn.dac.api.stage.StagePlayerManager;
 import fr.aumgn.dac.api.util.DACUtil;
 
 public class SimpleGame<T extends StagePlayer> implements Game<T> {
@@ -71,7 +71,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	
 	@Override
 	public void registerAll() {
-		StagePlayersManager playerManager = DAC.getPlayerManager();
+		StagePlayerManager playerManager = DAC.getPlayerManager();
 		for (StagePlayer player : players) {
 			playerManager.register(player);
 		}
@@ -79,7 +79,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 
 	@Override
 	public void unregisterAll() {
-		StagePlayersManager playerManager = DAC.getPlayerManager();
+		StagePlayerManager playerManager = DAC.getPlayerManager();
 		for (StagePlayer player : players) {
 			playerManager.unregister(player);
 		}

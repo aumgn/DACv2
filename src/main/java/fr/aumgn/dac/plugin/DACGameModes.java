@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.game.mode;
+package fr.aumgn.dac.plugin;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,9 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import fr.aumgn.dac.api.DAC;
+import fr.aumgn.dac.api.game.mode.DACGameMode;
+import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
+import fr.aumgn.dac.api.game.mode.GameMode;
+import fr.aumgn.dac.api.game.mode.GameModes;
 
-public class DACGameModes {
-
+public class DACGameModes implements GameModes {
 	private Map<String, GameMode<?>> modes = new HashMap<String, GameMode<?>>();
 
 	public DACGameModes() {
@@ -62,5 +65,5 @@ public class DACGameModes {
 	public GameMode<?> get(String name) {
 		return modes.get(name);
 	}
-	
+
 }

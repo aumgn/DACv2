@@ -10,7 +10,7 @@ import fr.aumgn.dac.api.config.DACColor;
 public class GlassColumn implements ColumnPattern {
 
 	@Override
-	public void place(AreaColumn column, DACColor color) {
+	public void set(AreaColumn column, DACColor color) {
 		int yMax = column.getTop();
 		for (Block block : column) {
 			if (block.getY() == yMax) {

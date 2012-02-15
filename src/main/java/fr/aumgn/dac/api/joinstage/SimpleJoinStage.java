@@ -19,7 +19,7 @@ import fr.aumgn.dac.api.event.joinstage.DACPlayerJoinEvent;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
-import fr.aumgn.dac.api.stage.StagePlayersManager;
+import fr.aumgn.dac.api.stage.StagePlayerManager;
 
 public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
 	
@@ -42,7 +42,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
 	
 	@Override
 	public void registerAll() {
-		StagePlayersManager playerManager = DAC.getPlayerManager();
+		StagePlayerManager playerManager = DAC.getPlayerManager();
 		for (StagePlayer player : players) {
 			playerManager.register(player);
 		}
@@ -50,7 +50,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
 
 	@Override
 	public void unregisterAll() {
-		StagePlayersManager playerManager = DAC.getPlayerManager();
+		StagePlayerManager playerManager = DAC.getPlayerManager();
 		for (StagePlayer player : players) {
 			playerManager.unregister(player);
 		}

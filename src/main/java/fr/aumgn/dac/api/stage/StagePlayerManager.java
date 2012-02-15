@@ -5,11 +5,11 @@ import java.util.Map;
 
 import org.bukkit.entity.Player;
 
-public class StagePlayersManager {
+public class StagePlayerManager {
 
 	private Map<Player, StagePlayer> players;
 	
-	public StagePlayersManager() {
+	public StagePlayerManager() {
 		players = new HashMap<Player, StagePlayer>();
 	}
 
