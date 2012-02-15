@@ -1,16 +1,15 @@
-package fr.aumgn.dac.plugin.suddendeathmode;
+package fr.aumgn.dac.plugin.mode.suddendeath;
 
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
-import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.plugin.area.fillstrategy.FillAllButOneStrategy;
 
 public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeathGamePlayer> {
 	
 	private Game<SuddenDeathGamePlayer> game;
 	private int playersLeftCount;
-	private StagePlayer lastPlayer;
+	private SuddenDeathGamePlayer lastPlayer;
 
 	public SuddenDeathGameModeHandler(Game<SuddenDeathGamePlayer> game) {
 		this.game = game;
@@ -24,7 +23,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 	@Override
 	public void onNewTurn() {
 		if (playersLeftCount == 0) {
-			for (StagePlayer dacPlayer : game.getPlayers()) {
+			for (SuddenDeathGamePlayer dacPlayer : game.getPlayers()) {
 				SuddenDeathGamePlayer player = (SuddenDeathGamePlayer)dacPlayer;
 				if (player.isDeadThisTurn()) {
 					playersLeftCount++;
@@ -36,7 +35,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 			game.stop();
 			return;
 		} else {
-			for (StagePlayer dacPlayer : game.getPlayers()) {
+			for (SuddenDeathGamePlayer dacPlayer : game.getPlayers()) {
 				SuddenDeathGamePlayer player = (SuddenDeathGamePlayer)dacPlayer;
 				if (player.isDeadThisTurn()) {
 					player.setDead();
@@ -48,31 +47,29 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 	}
 	
 	@Override
-	public void onTurn(SuddenDeathGamePlayer dacPlayer) {
-		SuddenDeathGamePlayer player = (SuddenDeathGamePlayer) dacPlayer;
+	public void onTurn(SuddenDeathGamePlayer player) {
 		if (player.isDead()) {
 			game.nextTurn();
 			return;
 		}
-		game.send(DACMessage.GamePlayerTurn.format(dacPlayer.getDisplayName()));
-		dacPlayer.tpToDiving();
+		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
+		player.tpToDiving();
 	}
 
 	@Override
-	public void onSuccess(SuddenDeathGamePlayer dacPlayer) {
-		lastPlayer = dacPlayer;
-		game.send(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
-		dacPlayer.tpToStart();
+	public void onSuccess(SuddenDeathGamePlayer player) {
+		lastPlayer = player;
+		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
+		player.tpToStart();
 		game.nextTurn();
 	}
 
 	@Override
-	public void onFail(SuddenDeathGamePlayer dacPlayer) {
-		SuddenDeathGamePlayer player = (SuddenDeathGamePlayer) dacPlayer;
+	public void onFail(SuddenDeathGamePlayer player) {
 		playersLeftCount--;
 		player.setDeadThisTurn();
-		game.send(DACMessage.GameJumpFail.format(dacPlayer.getDisplayName()));
-		dacPlayer.tpToStart();
+		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()));
+		player.tpToStart();
 		game.nextTurn();
 	}
 	

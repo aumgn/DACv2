@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.trainingmode;
+package fr.aumgn.dac.plugin.mode.training;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;

@@ -1,7 +1,6 @@
-package fr.aumgn.dac.plugin.trainingmode;
+package fr.aumgn.dac.plugin.mode.training;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
@@ -9,7 +8,6 @@ import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
-import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.plugin.area.column.GlassColumn;
 import fr.aumgn.dac.plugin.area.column.SimpleColumn;
 
@@ -32,8 +30,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	}
 
 	@Override
-	public void onTurn(TrainingGamePlayer dacPlayer) {
-		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
+	public void onTurn(TrainingGamePlayer player) {
 		if (!player.isPlaying()) {
 			game.nextTurn();
 		} else {
@@ -43,8 +40,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	}
 
 	@Override
-	public void onSuccess(TrainingGamePlayer dacPlayer) {
-		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
+	public void onSuccess(TrainingGamePlayer player) {
 		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
@@ -62,8 +58,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	}
 
 	@Override
-	public void onFail(TrainingGamePlayer dacPlayer) {
-		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
+	public void onFail(TrainingGamePlayer player) {
 		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 		player.tpToStart();
 		player.incrementFails();
@@ -71,11 +66,10 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	}
 	
 	@Override
-	public void onQuit(TrainingGamePlayer dacPlayer) {
-		TrainingGamePlayer player = (TrainingGamePlayer)dacPlayer;
+	public void onQuit(TrainingGamePlayer player) {
 		player.setPlaying(false);
 		int count = 0;
-		for (StagePlayer gamePlayer : game.getPlayers()) {
+		for (TrainingGamePlayer gamePlayer : game.getPlayers()) {
 			player = (TrainingGamePlayer)gamePlayer;
 			if (player.isPlaying()) {
 				count++;
@@ -88,12 +82,10 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	
 	@Override
 	public void onStop() {
-		for (StagePlayer dacPlayer : game.getPlayers()) {
-			TrainingGamePlayer gamePlayer = (TrainingGamePlayer)dacPlayer;
-			Player player = gamePlayer.getPlayer();
-			player.sendMessage("Reussi : " + gamePlayer.getSuccesses());
-			player.sendMessage("Dés a coudre : " + gamePlayer.getDACs());
-			player.sendMessage("Manqués : " + gamePlayer.getFails());
+		for (TrainingGamePlayer player : game.getPlayers()) {
+			player.send("Reussi : " + player.getSuccesses());
+			player.send("Dés a coudre : " + player.getDACs());
+			player.send("Manqués : " + player.getFails());
 		}
 	}
 

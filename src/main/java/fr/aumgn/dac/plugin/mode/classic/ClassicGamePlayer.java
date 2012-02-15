@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.classicmode;
+package fr.aumgn.dac.plugin.mode.classic;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.SimpleGamePlayer;

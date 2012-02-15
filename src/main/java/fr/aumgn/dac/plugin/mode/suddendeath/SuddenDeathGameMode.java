@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.suddendeathmode;
+package fr.aumgn.dac.plugin.mode.suddendeath;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;

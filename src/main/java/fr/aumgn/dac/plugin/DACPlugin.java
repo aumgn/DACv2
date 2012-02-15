@@ -21,10 +21,10 @@ import fr.aumgn.dac.plugin.area.fillstrategy.FillAllButOneStrategy;
 import fr.aumgn.dac.plugin.area.fillstrategy.FillDACStrategy;
 import fr.aumgn.dac.plugin.area.fillstrategy.FillFullyStrategy;
 import fr.aumgn.dac.plugin.arena.DACArenas;
-import fr.aumgn.dac.plugin.classicmode.ClassicGameMode;
 import fr.aumgn.dac.plugin.command.DACPluginCommand;
-import fr.aumgn.dac.plugin.suddendeathmode.SuddenDeathGameMode;
-import fr.aumgn.dac.plugin.trainingmode.TrainingGameMode;
+import fr.aumgn.dac.plugin.mode.classic.ClassicGameMode;
+import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
+import fr.aumgn.dac.plugin.mode.training.TrainingGameMode;
 
 public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFillStrategyProvider {
 

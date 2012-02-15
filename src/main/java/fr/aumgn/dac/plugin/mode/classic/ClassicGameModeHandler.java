@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.classicmode;
+package fr.aumgn.dac.plugin.mode.classic;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,7 +19,6 @@ import fr.aumgn.dac.api.event.game.DACGameWinEvent;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
-import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.util.DACUtil;
 import fr.aumgn.dac.plugin.area.column.GlassColumn;
 import fr.aumgn.dac.plugin.area.column.SimpleColumn;
@@ -46,14 +45,13 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 		GameOptions options = game.getOptions();
 		String livesOption = options.get("lives", "0");
 		int lives = Integer.parseInt(livesOption);
-		for (StagePlayer dacPlayer : game.getPlayers()) {
-			ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+		for (ClassicGamePlayer player : game.getPlayers()) {
 			player.setLives(lives);
 		}
 		game.send(DACMessage.GameStart);
 		game.send(DACMessage.GamePlayers);
 		int i = 1;
-		for (StagePlayer player : game.getPlayers()) {
+		for (ClassicGamePlayer player : game.getPlayers()) {
 			game.send(DACMessage.GamePlayerList.format(i, player.getDisplayName()));
 			i++;
 		}
@@ -70,8 +68,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 	}
 	
 	@Override
-	public void onTurn(ClassicGamePlayer dacPlayer) {
-		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+	public void onTurn(ClassicGamePlayer player) {
 		if (player.hasLost()) {
 			game.nextTurn();
 		} else {
@@ -82,8 +79,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 	}
 
 	@Override
-	public void onSuccess(ClassicGamePlayer dacPlayer) {
-		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+	public void onSuccess(ClassicGamePlayer player) {
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
@@ -93,40 +89,38 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 		player.tpToStart();
 		if (dac) {
 			DAC.callEvent(new DACGameDACEvent(game, player));
-			pool.setColumn(new GlassColumn(), dacPlayer.getColor(), x, z);
+			pool.setColumn(new GlassColumn(), player.getColor(), x, z);
 		} else {
-			pool.setColumn(new SimpleColumn(), dacPlayer.getColor(), x, z);
+			pool.setColumn(new SimpleColumn(), player.getColor(), x, z);
 		}
 		
 		if (player.mustConfirmate()) {
 			if (dac) {
 				player.send(DACMessage.GameDACConfirmation3);
-				player.sendToOthers(DACMessage.GameDACConfirmation.format(dacPlayer.getDisplayName()));
+				player.sendToOthers(DACMessage.GameDACConfirmation.format(player.getDisplayName()));
 				game.send(DACMessage.GameDACConfirmation2);
 			} else {
 				player.send(DACMessage.GameConfirmation2);
-				player.sendToOthers(DACMessage.GameConfirmation.format(dacPlayer.getDisplayName()));
+				player.sendToOthers(DACMessage.GameConfirmation.format(player.getDisplayName()));
 			}
 			onPlayerWin(player);
 		} else {
 			if (dac) {
 				player.winLive();
 				player.send(DACMessage.GameDAC2);
-				player.sendToOthers(DACMessage.GameDAC.format(dacPlayer.getDisplayName()));
+				player.sendToOthers(DACMessage.GameDAC.format(player.getDisplayName()));
 				player.send(DACMessage.GameLivesAfterDAC2.format(player.getLives()));
 				player.sendToOthers(DACMessage.GameLivesAfterDAC.format(player.getLives()));
 			} else {
 				player.send(DACMessage.GameJumpSuccess2);
-				player.sendToOthers(DACMessage.GameJumpSuccess.format(dacPlayer.getDisplayName()));
+				player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
 			}
 			game.nextTurn();
 		}
 	}
 
 	@Override
-	public void onFail(ClassicGamePlayer dacPlayer) {
-		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
-		
+	public void onFail(ClassicGamePlayer player) {
 		player.send(DACMessage.GameJumpFail2);
 		player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
 
@@ -155,8 +149,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 	}
 	
 	@Override
-	public void onQuit(ClassicGamePlayer dacPlayer) {
-		ClassicGamePlayer player = (ClassicGamePlayer)dacPlayer;
+	public void onQuit(ClassicGamePlayer player) {
 		player.looseAllLives();
 		onPlayerLoss(player, true);
 	}
@@ -164,10 +157,9 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 	private ClassicGamePlayer getLastPlayer() {
 		int i = 0;
 		ClassicGamePlayer playerLeft = null;
-		for (StagePlayer player : game.getPlayers()) {
-			ClassicGamePlayer gamePlayer = (ClassicGamePlayer)player;
-			if (!gamePlayer.hasLost()) {
-				playerLeft = gamePlayer;
+		for (ClassicGamePlayer player : game.getPlayers()) {
+			if (!player.hasLost()) {
+				playerLeft = player;
 				i++;
 			}
 		}
