@@ -22,7 +22,7 @@ import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.plugin.area.DACAreaColumn;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
-import fr.aumgn.dac.plugin.area.filler.AreaSimpleStrategy;
+import fr.aumgn.dac.plugin.area.fillstrategy.AreaSimpleStrategy;
 
 @SerializableAs("dac-pool")
 public class DACPool extends DACVerticalArea implements Pool {

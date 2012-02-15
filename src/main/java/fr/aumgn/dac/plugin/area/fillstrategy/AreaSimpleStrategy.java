@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.area.filler;
+package fr.aumgn.dac.plugin.area.fillstrategy;
 
 import org.bukkit.Material;
 
@@ -7,10 +7,10 @@ import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.area.AreaFillStrategy;
 import fr.aumgn.dac.api.area.VerticalArea;
+import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 
-public class AreaSimpleStrategy implements AreaFillStrategy {
+public class AreaSimpleStrategy implements FillStrategy {
 
 	private BaseBlock baseBlock;
 

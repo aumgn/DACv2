@@ -5,8 +5,8 @@ import java.util.Iterator;
 import org.apache.commons.lang.NotImplementedException;
 
 import fr.aumgn.dac.api.area.AreaColumn;
-import fr.aumgn.dac.api.area.AreaFillStrategy;
 import fr.aumgn.dac.api.area.VerticalArea;
+import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 import fr.aumgn.dac.plugin.arena.DACArena;
 
 public class DACVerticalArea extends DACArea implements VerticalArea {
@@ -24,7 +24,7 @@ public class DACVerticalArea extends DACArea implements VerticalArea {
 	}
 
 	@Override
-	public void fillWith(AreaFillStrategy filler) {
+	public void fillWith(FillStrategy filler) {
 		if (this instanceof VerticalArea) {
 			filler.fill((VerticalArea) this);
 		} else {

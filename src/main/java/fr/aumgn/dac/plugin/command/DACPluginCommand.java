@@ -18,6 +18,7 @@ public class DACPluginCommand extends CommandDispatcher implements DACCommand {
 
 		registerCommand("kick", new KickCommand());
 		registerCommand("stop", new StopCommand());
+		registerCommand("fill", new FillCommand());
 		registerCommand("reset", new ResetCommand());
 
 		registerCommand("join", new JoinCommand());

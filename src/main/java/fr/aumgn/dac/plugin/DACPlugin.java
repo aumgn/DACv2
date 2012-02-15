@@ -12,16 +12,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import fr.aumgn.dac.api.DAC;
+import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategyProvider;
+import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.exception.WorldEditNotLoaded;
 import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
+import fr.aumgn.dac.plugin.area.fillstrategy.AreaAllButOneStrategy;
+import fr.aumgn.dac.plugin.area.fillstrategy.AreaDACStrategy;
+import fr.aumgn.dac.plugin.area.fillstrategy.AreaWaterStrategy;
 import fr.aumgn.dac.plugin.arena.DACArenas;
 import fr.aumgn.dac.plugin.classicmode.ClassicGameMode;
 import fr.aumgn.dac.plugin.command.DACPluginCommand;
 import fr.aumgn.dac.plugin.suddendeathmode.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.trainingmode.TrainingGameMode;
 
-public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
+public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFillStrategyProvider {
 
 	@Override
 	public List<Class<? extends GameMode<?>>> getGameModes() {
@@ -29,6 +34,15 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 		list.add(ClassicGameMode.class);
 		list.add(TrainingGameMode.class);
 		list.add(SuddenDeathGameMode.class);
+		return list;
+	}
+
+	@Override
+	public List<Class<? extends FillStrategy>> getFillStrategies() {
+		List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(3);
+		list.add(AreaAllButOneStrategy.class);
+		list.add(AreaDACStrategy.class);
+		list.add(AreaWaterStrategy.class);
 		return list;
 	}
 
@@ -56,7 +70,8 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 
 		DACGameModes gameModes = new DACGameModes();
 		DACArenas arenas = new DACArenas();
-		DAC.init(this, (WorldEditPlugin)worldEdit, gameModes, arenas);
+		DACFillStrategies fillStrategies = new DACFillStrategies();
+		DAC.init(this, (WorldEditPlugin)worldEdit, gameModes, arenas, fillStrategies);
 		
 		getLogger().info(getDescription().getName() + " loaded.");
 	}

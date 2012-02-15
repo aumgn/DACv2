@@ -10,6 +10,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
+import fr.aumgn.dac.api.area.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.arena.Arenas;
 import fr.aumgn.dac.api.config.DACConfig;
 import fr.aumgn.dac.api.config.DACMessage;
@@ -23,6 +24,7 @@ public final class DAC {
 	private static WorldEditPlugin worldEdit = null;
 	private static GameModes gameModes; 
 	private static Arenas arenas; 
+	private static FillStrategies fillStrategies;
 	private static Random rand;
 	private static StageManager stageManager;
 	private static StagePlayerManager playerManager;
@@ -30,7 +32,7 @@ public final class DAC {
 
 	private DAC() {}
 
-	public static void init(Plugin plugin, WorldEditPlugin worldEdit, GameModes gameModes, Arenas arenas) {
+	public static void init(Plugin plugin, WorldEditPlugin worldEdit, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
 		if (DAC.plugin != null) {
 			throw new UnsupportedOperationException("Cannot init DAC twice.");
 		}
@@ -38,6 +40,7 @@ public final class DAC {
 		DAC.worldEdit = worldEdit;
 		DAC.gameModes = gameModes;
 		DAC.arenas = arenas;
+		DAC.fillStrategies = fillStrategies;
 		rand = new Random();
 		stageManager = new StageManager();
 		playerManager = new StagePlayerManager();
@@ -87,6 +90,10 @@ public final class DAC {
 		return arenas;
 	}
 	
+	public static FillStrategies getFillStrategies() {
+		return fillStrategies;
+	}
+	
 	public static StageManager getStageManager() {
 		return stageManager;
 	}
@@ -102,5 +109,5 @@ public final class DAC {
 	public static void callEvent(Event event) {
 		Bukkit.getPluginManager().callEvent(event);
 	}
-	
+
 }

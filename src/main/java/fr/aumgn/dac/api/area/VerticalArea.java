@@ -1,5 +1,7 @@
 package fr.aumgn.dac.api.area;
 
+import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+
 public interface VerticalArea extends Area {
 
 	public int getTop();
@@ -8,6 +10,6 @@ public interface VerticalArea extends Area {
 
 	Iterable<AreaColumn> columns();	
 	
-	void fillWith(AreaFillStrategy areaAllButOneStrategy);
+	void fillWith(FillStrategy areaAllButOneStrategy);
 
 }

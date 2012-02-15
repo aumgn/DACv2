@@ -52,6 +52,10 @@ commands:
         description: 'Kick un joueur.'
         usage: 'Utilisation: /<command> player'
         permission: 'dac.cmd.kick'
+    dac-fill:
+        description: 'Remplis le bassin selon la methode demande'
+        usage: 'Utilisation: /<command> <arene> <methode>'
+        permission: 'dac.cmd.fill'
     dac-reset:
         description: "Remplis le bassin d'eau"
         usage: 'Utilisation: /<command> <arene>'
@@ -97,6 +101,7 @@ permissions:
         children:
             dac.cmd.join: true
             dac.cmd.start: true
+            dac.cmd.fill: true
             dac.cmd.reset: true
             dac.cmd.quit: true
             dac.cmd.lives: true
