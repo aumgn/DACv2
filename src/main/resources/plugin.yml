@@ -3,7 +3,7 @@ version: ${project.version}
 author: aumgn
 website: aumgn.fr
 
-main: fr.aumgn.dac.bukkit.DACPlugin
+main: fr.aumgn.dac.plugin.DACPlugin
 depend: [WorldEdit]
 
 commands:
