@@ -17,6 +17,7 @@ import fr.aumgn.dac.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.event.game.DACGameStartEvent;
 import fr.aumgn.dac.event.game.DACGameStopEvent;
 import fr.aumgn.dac.event.game.DACGameSuccessEvent;
+import fr.aumgn.dac.exception.PlayerCastException;
 import fr.aumgn.dac.game.mode.GameMode;
 import fr.aumgn.dac.game.mode.GameModeHandler;
 import fr.aumgn.dac.game.options.GameOptions;
@@ -36,7 +37,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 	private boolean finished;
 	
 	@SuppressWarnings("unchecked")
-	public SimpleGame(JoinStage<? extends DACPlayer> joinStage, GameMode<T> gameMode, GameOptions options) {
+	public SimpleGame(GameMode<T> gameMode, JoinStage<? extends DACPlayer> joinStage, GameOptions options) {
 		StageManager stagesManager = DAC.getStageManager();
 		joinStage.stop();
 		this.arena = joinStage.getArena();
@@ -57,6 +58,16 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 		gameModeHandler.onStart();
 		nextTurn();
 		DAC.callEvent(new DACGameStartEvent(this));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private T castPlayer(DACPlayer player) {
+		try {
+			return (T) player;
+		} catch (ClassCastException exc) {
+			stop();
+			throw new PlayerCastException(exc);
+		}
 	}
 	
 	@Override
@@ -125,7 +136,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 
 	@Override
 	public void removePlayer(DACPlayer player) {
-		gameModeHandler.onQuit((T) player);
+		gameModeHandler.onQuit(castPlayer(player));
 	}
 
 
@@ -154,7 +165,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 			DAC.callEvent(failEvent);
 			
 			if (!failEvent.isCancelled()) {
-				gameModeHandler.onFail((T) dacPlayer);
+				gameModeHandler.onFail(castPlayer(dacPlayer));
 			}
 			
 			if (failEvent.cancelDeath()) {
@@ -179,7 +190,7 @@ public class SimpleGame<T extends DACPlayer> implements Game<T> {
 			DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, dacPlayer);
 			DAC.callEvent(successEvent);
 			if (!successEvent.isCancelled()) {
-				gameModeHandler.onSuccess((T) dacPlayer);
+				gameModeHandler.onSuccess(castPlayer(dacPlayer));
 			}
 		}
 	}

@@ -14,7 +14,7 @@ public class TrainingGameMode implements GameMode<TrainingGamePlayer> {
 
 	@Override
 	public Game<TrainingGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
-		return new SimpleGame<TrainingGamePlayer>(joinStage, this, options);
+		return new SimpleGame<TrainingGamePlayer>(this, joinStage, options);
 	}
 
 	@Override

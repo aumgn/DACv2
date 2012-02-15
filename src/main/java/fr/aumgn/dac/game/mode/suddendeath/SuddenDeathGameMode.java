@@ -14,7 +14,7 @@ public class SuddenDeathGameMode implements GameMode<SuddenDeathGamePlayer> {
 
 	@Override
 	public Game<SuddenDeathGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
-		return new SimpleGame<SuddenDeathGamePlayer>(joinStage, this, options);
+		return new SimpleGame<SuddenDeathGamePlayer>(this, joinStage, options);
 	}
 
 	@Override

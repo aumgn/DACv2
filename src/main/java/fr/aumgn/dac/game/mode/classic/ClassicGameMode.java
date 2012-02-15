@@ -14,7 +14,7 @@ public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
 
 	@Override
 	public Game<ClassicGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
-		return new SimpleGame<ClassicGamePlayer>(joinStage, this, options);
+		return new SimpleGame<ClassicGamePlayer>(this, joinStage, options);
 	}
 
 	@Override
