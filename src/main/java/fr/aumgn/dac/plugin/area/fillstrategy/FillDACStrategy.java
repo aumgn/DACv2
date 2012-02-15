@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 
 @DACFillStrategy(name="dac")
-public class AreaDACStrategy implements FillStrategy {
+public class FillDACStrategy implements FillStrategy {
 
 	private boolean sameParity;
 
@@ -18,7 +18,7 @@ public class AreaDACStrategy implements FillStrategy {
 	}
 
 	@Override
-	public void fill(VerticalArea area) {
+	public void fill(VerticalArea area, String[] args) {
 		sameParity = DAC.getRand().nextBoolean();
 		for (AreaColumn column : area.columns()) {
 			if (isDACColumn(column)) {

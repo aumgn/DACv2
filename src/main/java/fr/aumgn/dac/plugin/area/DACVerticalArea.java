@@ -24,9 +24,9 @@ public class DACVerticalArea extends DACArea implements VerticalArea {
 	}
 
 	@Override
-	public void fillWith(FillStrategy filler) {
+	public void fillWith(FillStrategy filler, String[] args) {
 		if (this instanceof VerticalArea) {
-			filler.fill((VerticalArea) this);
+			filler.fill((VerticalArea) this, args);
 		} else {
 			throw new NotImplementedException();
 		}

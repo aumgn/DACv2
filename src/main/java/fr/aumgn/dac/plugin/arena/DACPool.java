@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.Vector2D;
+import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
@@ -22,7 +23,7 @@ import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.plugin.area.DACAreaColumn;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
-import fr.aumgn.dac.plugin.area.fillstrategy.AreaSimpleStrategy;
+import fr.aumgn.dac.plugin.area.fillstrategy.FillFullyStrategy;
 
 @SerializableAs("dac-pool")
 public class DACPool extends DACVerticalArea implements Pool {
@@ -30,7 +31,12 @@ public class DACPool extends DACVerticalArea implements Pool {
 	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
 	private static final Material SIGN_MATERIAL = Material.SIGN_POST;
 	private static final Material AIR = Material.AIR; 
-	private static final AreaSimpleStrategy WATER_FILLER = new AreaSimpleStrategy(DEFAULT_MATERIAL);
+	private static final FillFullyStrategy WATER_FILLER = new FillFullyStrategy() {
+		@Override
+		protected BaseBlock getBlock(String[] args) {
+			return new BaseBlock(Material.STATIONARY_WATER.getId());
+		}
+	};
 
 	private static final int ABOVE_REGION_HEIGHT = 5;
 	private static final int ABOVE_REGION_MARGIN = 5;
@@ -46,7 +52,7 @@ public class DACPool extends DACVerticalArea implements Pool {
 			Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
 			if (block.getType() == SIGN_MATERIAL) { block.setType(AIR); }
 		}
-		fillWith(WATER_FILLER);
+		fillWith(WATER_FILLER, new String[0]);
 	}
 
 	public CuboidRegion getAboveRegion() {

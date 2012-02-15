@@ -4,7 +4,7 @@ import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.api.stage.StagePlayer;
-import fr.aumgn.dac.plugin.area.fillstrategy.AreaAllButOneStrategy;
+import fr.aumgn.dac.plugin.area.fillstrategy.FillAllButOneStrategy;
 
 public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeathGamePlayer> {
 	
@@ -44,7 +44,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 			}
 		}
 		
-		game.getArena().getPool().fillWith(new AreaAllButOneStrategy());
+		game.getArena().getPool().fillWith(new FillAllButOneStrategy(), new String[0]);
 	}
 	
 	@Override

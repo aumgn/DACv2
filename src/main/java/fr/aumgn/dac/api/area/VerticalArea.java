@@ -10,6 +10,6 @@ public interface VerticalArea extends Area {
 
 	Iterable<AreaColumn> columns();	
 	
-	void fillWith(FillStrategy areaAllButOneStrategy);
+	void fillWith(FillStrategy strategy, String[] fillArgs);
 
 }

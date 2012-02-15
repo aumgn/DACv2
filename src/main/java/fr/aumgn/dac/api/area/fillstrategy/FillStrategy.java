@@ -4,6 +4,6 @@ import fr.aumgn.dac.api.area.VerticalArea;
 
 public interface FillStrategy {
 
-	void fill(VerticalArea area);
+	void fill(VerticalArea area, String[] args);
 
 }

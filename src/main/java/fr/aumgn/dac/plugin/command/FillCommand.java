@@ -1,5 +1,7 @@
 package fr.aumgn.dac.plugin.command;
 
+import java.util.Arrays;
+
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.arena.Arena;
@@ -10,7 +12,7 @@ public class FillCommand extends PlayerCommandExecutor {
 
 	@Override
 	public boolean checkUsage(String[] args) {
-		return args.length == 2;
+		return args.length > 1;
 	}
 	
 	@Override
@@ -25,7 +27,8 @@ public class FillCommand extends PlayerCommandExecutor {
 			error("Unknown fill stratey");
 		}
 		
-		arena.getPool().fillWith(strategy);
+		String[] fillArgs = Arrays.copyOfRange(args, 2, args.length);
+		arena.getPool().fillWith(strategy, fillArgs);
 	}
 
 }

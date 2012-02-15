@@ -15,10 +15,10 @@ import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 
 @DACFillStrategy(name="all-but-one")
-public class AreaAllButOneStrategy implements FillStrategy {
+public class FillAllButOneStrategy implements FillStrategy {
 
 	@Override
-	public void fill(VerticalArea area) {
+	public void fill(VerticalArea area, String[] args) {
 		Random rand = DAC.getRand();
 		Region region = area.getWERegion();
 		Vector minPoint = region.getMinimumPoint();

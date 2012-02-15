@@ -8,22 +8,31 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.VerticalArea;
+import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 
-public class AreaSimpleStrategy implements FillStrategy {
+@DACFillStrategy(name="fully")
+public class FillFullyStrategy implements FillStrategy {
 
-	private BaseBlock baseBlock;
-
-	public AreaSimpleStrategy(Material material, byte data) {
-		this.baseBlock = new BaseBlock(material.getId(), data);
-	}
-
-	public AreaSimpleStrategy(Material material) {
-		this.baseBlock = new BaseBlock(material.getId());
+	protected BaseBlock getBlock(String[] args) {
+		if (args.length == 0) {
+			return new BaseBlock(Material.STATIONARY_WATER.getId());
+		}
+		Material material = Material.matchMaterial(args[0]);
+		System.out.println(material);
+		if (material == null) {
+			material = Material.STATIONARY_WATER;
+		}
+		if (args.length == 2) {
+			return new BaseBlock(material.getId(), Byte.parseByte(args[1]));
+		} else {
+			return new BaseBlock(material.getId());
+		}
 	}
 
 	@Override
-	public void fill(VerticalArea area) {
+	public void fill(VerticalArea area, String[] args) {
+		BaseBlock baseBlock = getBlock(args);
 		EditSession editSession = new EditSession(area.getArena().getWEWorld(), -1);
 		try {
 			editSession.setBlocks(area.getWERegion(), baseBlock);
