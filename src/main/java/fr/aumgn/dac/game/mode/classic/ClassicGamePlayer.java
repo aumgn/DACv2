@@ -15,6 +15,11 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 		this.mustConfirmate = false;
 	}
 
+	@Override
+	public String formatForList() {
+		return super.formatForList() + " : " + lives + " vie(s)";
+	}
+	
 	public int getLives() {
 		return lives;
 	}

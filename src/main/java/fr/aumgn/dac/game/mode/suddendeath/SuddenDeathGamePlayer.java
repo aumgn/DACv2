@@ -15,6 +15,11 @@ public class SuddenDeathGamePlayer extends SimpleGamePlayer {
 		this.dead = false;
 	}
 
+	@Override
+	public String formatForList() {
+		return super.formatForList() + " : " + (dead ? "Mort" : "En vie");
+	}
+
 	public boolean isDeadThisTurn() {
 		return deadThisTurn;
 	}

@@ -16,6 +16,11 @@ public class SimpleGamePlayer extends DACSimplePlayer {
 		);
 		this.index = index;
 	}
+	
+	@Override
+	public String formatForList() {
+		return " " + index + super.formatForList();
+	}
 
 	public int getIndex() {
 		return index;

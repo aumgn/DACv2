@@ -22,6 +22,8 @@ public interface DACPlayer {
 	
 	void sendToOthers(Object message);
 	
+	String formatForList();
+
 	void tpToStart();
 
 	void tpToDiving();

@@ -64,6 +64,11 @@ public class DACSimplePlayer implements DACPlayer {
 	}
 	
 	@Override
+	public String formatForList() {
+		return " " + displayName;
+	}
+
+	@Override
 	public void tpToStart() {
 		player.setFallDistance(0.0f);
 		player.teleport(startLocation);

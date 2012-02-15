@@ -22,7 +22,7 @@ public class ListCommand extends PlayerCommandExecutor {
 		}
 		
 		for (DACPlayer playerInStage : stage.getPlayers()) {
-			context.send(" " + playerInStage.getDisplayName());
+			context.send(playerInStage.formatForList());
 		}
 	}
 
