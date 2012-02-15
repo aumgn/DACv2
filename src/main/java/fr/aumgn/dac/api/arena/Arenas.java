@@ -7,6 +7,8 @@ import fr.aumgn.dac.plugin.arena.DACArena;
 
 public interface Arenas extends Iterable<DACArena> {
 
+	void load();
+	
 	void dump();
 
 	Arena get(String name);

@@ -46,14 +46,17 @@ public class DACArenas implements Arenas {
 	public DACArenas() {
 		yaml = new YamlConfiguration();
 		updated = false; 
-
+	}
+	
+	public void load() {
 		ensureDirectoryExists();
+		String fileName = getConfigFileName();
 		try {
-			yaml.load(getConfigFileName());
+			yaml.load(fileName);
 		} catch (IOException exc) {
-			DAC.getLogger().warning("Unable to find " + getConfigFileName() + " config file");
+			DAC.getLogger().warning("Unable to find " + fileName + " config file");
 		} catch (InvalidConfigurationException exception) {
-			DAC.getLogger().warning("Unable to load " + getConfigFileName() + " config file");
+			DAC.getLogger().warning("Unable to load " + fileName + " config file");
 		}		
 		arenas = new HashMap<String, DACArena>();
 		Set<String> arenaNames = yaml.getKeys(false);

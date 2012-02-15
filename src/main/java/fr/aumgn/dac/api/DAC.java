@@ -43,6 +43,7 @@ public final class DAC {
 		playerManager = new StagePlayerManager();
 		reloadConfig();
 		reloadMessages();
+		arenas.load();
 	}
 
 	public static Plugin getPlugin() {
