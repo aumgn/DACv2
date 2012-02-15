@@ -52,6 +52,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler {
 		SuddenDeathGamePlayer player = (SuddenDeathGamePlayer) dacPlayer;
 		if (player.isDead()) {
 			game.nextTurn();
+			return;
 		}
 		game.send(DACMessage.GamePlayerTurn.format(dacPlayer.getDisplayName()));
 		dacPlayer.tpToDiving();

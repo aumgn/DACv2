@@ -32,6 +32,7 @@ public class SimpleGame implements Game {
 	private GameModeHandler gameModeHandler;
 	private DACPlayer[] players;
 	private int turn;
+	private boolean finished;
 	
 	public SimpleGame(JoinStage joinStage, GameMode gameMode, GameOptions options) {
 		StageManager stagesManager = DAC.getStageManager();
@@ -50,6 +51,7 @@ public class SimpleGame implements Game {
 		}
 		gameModeHandler = gameMode.createHandler(this);
 		turn = players.length - 1;
+		finished = false;
 		stagesManager.register(this);
 		gameModeHandler.onStart();
 		nextTurn();
@@ -83,12 +85,14 @@ public class SimpleGame implements Game {
 	
 	public void nextTurn() {
 		increaseTurn();
-		DACPlayer player = players[turn];
-		gameModeHandler.onTurn(player);
+		if (!finished) {
+			DACPlayer player = players[turn];
+			gameModeHandler.onTurn(player);
+		}
 	}
 	
 	public boolean isPlayerTurn(DACPlayer player) {
-		return players[turn].equals(player);
+		return !finished && players[turn].equals(player);
 	}
 	
 	public void send(Object msg, DACPlayer exclude) {
@@ -131,6 +135,7 @@ public class SimpleGame implements Game {
 
 	@Override
 	public void stop() {
+		finished = true;
 		DAC.callEvent(new DACGameStopEvent(this));
 		gameModeHandler.onStop();
 		DAC.getStageManager().unregister(this);
