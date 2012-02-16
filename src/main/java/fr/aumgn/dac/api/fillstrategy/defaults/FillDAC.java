@@ -24,7 +24,7 @@ public class FillDAC implements FillStrategy {
 			if (isDACColumn(column)) {
 				column.set(Material.STATIONARY_WATER);
 			} else {
-				column.set(Material.WOOL);
+				column.set(Material.WOOL, (byte) 0);
 			}
 		}
 	}

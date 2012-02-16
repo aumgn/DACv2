@@ -35,7 +35,7 @@ public class FillAllButOne implements FillStrategy {
 
 		for (AreaColumn column : area.columns()) {
 			if (column.getX() != x || column.getZ() != z) {
-				column.set(Material.WOOL);
+				column.set(Material.WOOL, (byte) 0);
 			} else {
 				column.set(Material.STATIONARY_WATER);				
 			}

@@ -18,6 +18,7 @@ import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillAllButOne;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillDAC;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
+import fr.aumgn.dac.api.fillstrategy.defaults.FillRandomly;
 import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.plugin.arena.DACArenas;
@@ -39,10 +40,11 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFil
 
 	@Override
 	public List<Class<? extends FillStrategy>> getFillStrategies() {
-		List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(3);
-		list.add(FillAllButOne.class);
-		list.add(FillDAC.class);
+		List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(4);
 		list.add(FillFully.class);
+		list.add(FillRandomly.class);
+		list.add(FillDAC.class);
+		list.add(FillAllButOne.class);
 		return list;
 	}
 
