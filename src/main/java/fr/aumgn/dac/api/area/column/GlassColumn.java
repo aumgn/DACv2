@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.area.column;
+package fr.aumgn.dac.api.area.column;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

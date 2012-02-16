@@ -10,6 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.api.DAC;
+import fr.aumgn.dac.api.area.column.GlassColumn;
+import fr.aumgn.dac.api.area.column.SimpleColumn;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
@@ -20,8 +22,6 @@ import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.api.util.DACUtil;
-import fr.aumgn.dac.plugin.area.column.GlassColumn;
-import fr.aumgn.dac.plugin.area.column.SimpleColumn;
 
 public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePlayer> {
 	

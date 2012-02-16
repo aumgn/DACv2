@@ -3,13 +3,13 @@ package fr.aumgn.dac.plugin.mode.training;
 import org.bukkit.Location;
 
 import fr.aumgn.dac.api.DAC;
+import fr.aumgn.dac.api.area.column.GlassColumn;
+import fr.aumgn.dac.api.area.column.SimpleColumn;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
-import fr.aumgn.dac.plugin.area.column.GlassColumn;
-import fr.aumgn.dac.plugin.area.column.SimpleColumn;
 
 public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGamePlayer> {
 
