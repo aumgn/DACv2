@@ -21,6 +21,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACColor;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
 import fr.aumgn.dac.plugin.area.DACAreaColumn;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
@@ -44,14 +45,22 @@ public class DACPool extends DACVerticalArea implements Pool {
 	public DACPool(DACArena arena) {
 		super(arena);
 	}
-
-	public void reset() {
+	
+	private void removeSigns() {
 		World world = getArena().getWorld();
-		CuboidRegion above = getAboveRegion();
-		for (BlockVector vec : above) {
+		for (BlockVector vec : getAboveRegion()) {
 			Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ()); 
 			if (block.getType() == SIGN_MATERIAL) { block.setType(AIR); }
 		}
+	}
+	
+	@Override
+	public void fillWith(FillStrategy strategy, String[] args) {
+		removeSigns();
+		super.fillWith(strategy, args);
+	}
+
+	public void reset() {
 		fillWith(WATER_FILLER, new String[0]);
 	}
 
