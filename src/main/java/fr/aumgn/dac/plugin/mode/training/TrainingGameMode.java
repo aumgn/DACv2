@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.game.mode.GameModeHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
-@DACGameMode(name="training", minPlayers=1, allowPoolReset=true)
+@DACGameMode(name="training", minPlayers=1, allowFill=true)
 public class TrainingGameMode implements GameMode<TrainingGamePlayer> {
 
 	@Override

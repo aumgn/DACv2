@@ -20,6 +20,6 @@ public @interface DACGameMode {
 	
 	public int minPlayers() default 2;
 	
-	public boolean allowPoolReset() default false;
+	public boolean allowFill() default false;
 	
 }

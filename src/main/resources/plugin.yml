@@ -115,7 +115,7 @@ permissions:
         default: op
         children:
             dac.game.play : true
-            dac.game.reset: true
+            dac.game.fill: true
             dac.cmd.kick: true
             dac.cmd.stop: true
     dac.config:

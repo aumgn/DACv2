@@ -6,6 +6,10 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.game.Game;
+import fr.aumgn.dac.api.game.mode.DACGameMode;
+import fr.aumgn.dac.api.game.mode.GameMode;
+import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class FillCommand extends PlayerCommandExecutor {
@@ -18,17 +22,33 @@ public class FillCommand extends PlayerCommandExecutor {
 	@Override
 	public void onPlayerCommand(Context context, String[] args) {
 		Arena arena = DAC.getArenas().get(args[0]);
+		
 		if (arena == null) {
-			error(DACMessage.CmdModesUnknown);
+			error(DACMessage.CmdFillUnknown);
 		}
 		
+		Stage<?> stage = DAC.getStageManager().get(arena);
+		if (stage instanceof Game) {
+			if (!context.hasPermission("dac.game.fill")) {
+				GameMode<?> mode = ((Game<?>)stage).getMode();
+				if (!mode.getClass().getAnnotation(DACGameMode.class).allowFill()) {
+					error(DACMessage.CmdFillInGame);
+				}
+			}
+		}
+		
+		fill(context, args, arena);
+		context.success(DACMessage.CmdFillSuccess);
+	}
+	
+	protected void fill(Context context, String[] args, Arena arena) {
 		FillStrategy strategy = DAC.getFillStrategies().get(args[1]);
 		if (strategy == null) {
-			error("Unknown fill stratey");
+			error(DACMessage.CmdFillUnknownStrategy);
 		}
 		
 		String[] fillArgs = Arrays.copyOfRange(args, 2, args.length);
-		arena.getPool().fillWith(strategy, fillArgs);
+		arena.getPool().fillWith(strategy, fillArgs);		
 	}
 
 }

@@ -39,10 +39,11 @@ command:
         not-in-game: "Vous n'êtes pas dans une partie en cours."
     reload:
         success: "Configuration mise à jour."
-    reset:
+    fill:
         unknown: "Cette arène n'existe pas."
         in-game: "Cette commande ne peut pas être utilisée durant une partie."
-        success: "Bassin réinitialisé."
+        unknown-strategy: "Methode de remplissage inconnue"
+        success: "Bassin remplis."
     select:
         unknown: "Arène inconnue."
         success-pool: "La zone du bassin a été sélectionnée."
