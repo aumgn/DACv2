@@ -35,14 +35,19 @@ public class DACFillStrategies implements FillStrategies {
 			return;
 		}
 				
-		String modeName = annotation.name();
+		String strategyName = annotation.name();
 		try {
 			FillStrategy strategy = strategyCls.newInstance();
-			strategies.put(modeName, strategy);
+			strategies.put(strategyName, strategy);
+			for (String alias : annotation.aliases()) {
+				if (!strategies.containsKey(alias)) {
+					strategies.put(alias, strategy);
+				}
+			}
 		} catch (InstantiationException exc) {
-			DAC.getLogger().warning("Cannot register fill strategy " + modeName);
+			DAC.getLogger().warning("Cannot register fill strategy " + strategyName);
 		} catch (IllegalAccessException e) {
-			DAC.getLogger().warning("Cannot register fill strategy " + modeName);
+			DAC.getLogger().warning("Cannot register fill strategy " + strategyName);
 		}
 	}
 

@@ -14,7 +14,7 @@ import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
-@DACFillStrategy(name="all-but-one")
+@DACFillStrategy(name="all-but-one", aliases={"abo"})
 public class FillAllButOne implements FillStrategy {
 
 	@Override
