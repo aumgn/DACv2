@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.area.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy.defaults;
 
 import java.util.Random;
 
@@ -11,11 +11,11 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 @DACFillStrategy(name="all-but-one")
-public class FillAllButOneStrategy implements FillStrategy {
+public class FillAllButOne implements FillStrategy {
 
 	@Override
 	public void fill(VerticalArea area, String[] args) {

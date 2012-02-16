@@ -3,9 +3,9 @@ package fr.aumgn.dac.plugin.command;
 import java.util.Arrays;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class FillCommand extends PlayerCommandExecutor {

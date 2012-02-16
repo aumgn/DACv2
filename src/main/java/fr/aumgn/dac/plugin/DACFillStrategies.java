@@ -8,10 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
-import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategyProvider;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategies;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
+import fr.aumgn.dac.api.fillstrategy.DACFillStrategyProvider;
+import fr.aumgn.dac.api.fillstrategy.FillStrategies;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 public class DACFillStrategies implements FillStrategies {
 	private Map<String, FillStrategy> strategies = new HashMap<String, FillStrategy>();

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.area.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy.defaults;
 
 import org.bukkit.Material;
 
@@ -8,11 +8,11 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 @DACFillStrategy(name="fully")
-public class FillFullyStrategy implements FillStrategy {
+public class FillFully implements FillStrategy {
 
 	protected BaseBlock getBlock(String[] args) {
 		if (args.length == 0) {

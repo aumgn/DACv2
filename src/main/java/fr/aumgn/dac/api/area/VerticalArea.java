@@ -1,6 +1,6 @@
 package fr.aumgn.dac.api.area;
 
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 public interface VerticalArea extends Area {
 

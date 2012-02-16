@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.area.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy;
 
 import fr.aumgn.dac.api.area.VerticalArea;
 

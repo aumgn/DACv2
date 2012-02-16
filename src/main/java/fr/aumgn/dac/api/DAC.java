@@ -10,10 +10,10 @@ import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.arena.Arenas;
 import fr.aumgn.dac.api.config.DACConfig;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.game.mode.GameModes;
 import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayerManager;

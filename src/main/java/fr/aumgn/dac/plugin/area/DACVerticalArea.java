@@ -6,7 +6,7 @@ import org.apache.commons.lang.NotImplementedException;
 
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.plugin.arena.DACArena;
 
 public class DACVerticalArea extends DACArea implements VerticalArea {

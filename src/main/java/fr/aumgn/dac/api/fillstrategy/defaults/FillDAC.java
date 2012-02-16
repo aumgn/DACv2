@@ -1,15 +1,15 @@
-package fr.aumgn.dac.plugin.area.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy.defaults;
 
 import org.bukkit.Material;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategy;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 @DACFillStrategy(name="dac")
-public class FillDACStrategy implements FillStrategy {
+public class FillDAC implements FillStrategy {
 
 	private boolean sameParity;
 

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.area.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

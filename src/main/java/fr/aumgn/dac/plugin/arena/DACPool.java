@@ -21,9 +21,9 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACColor;
+import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
 import fr.aumgn.dac.plugin.area.DACAreaColumn;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
-import fr.aumgn.dac.plugin.area.fillstrategy.FillFullyStrategy;
 
 @SerializableAs("dac-pool")
 public class DACPool extends DACVerticalArea implements Pool {
@@ -31,7 +31,7 @@ public class DACPool extends DACVerticalArea implements Pool {
 	private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
 	private static final Material SIGN_MATERIAL = Material.SIGN_POST;
 	private static final Material AIR = Material.AIR; 
-	private static final FillFullyStrategy WATER_FILLER = new FillFullyStrategy() {
+	private static final FillFully WATER_FILLER = new FillFully() {
 		@Override
 		protected BaseBlock getBlock(String[] args) {
 			return new BaseBlock(Material.STATIONARY_WATER.getId());

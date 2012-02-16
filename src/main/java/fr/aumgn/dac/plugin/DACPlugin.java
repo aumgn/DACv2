@@ -12,14 +12,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.area.fillstrategy.DACFillStrategyProvider;
-import fr.aumgn.dac.api.area.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.exception.WorldEditNotLoaded;
+import fr.aumgn.dac.api.fillstrategy.DACFillStrategyProvider;
+import fr.aumgn.dac.api.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.defaults.FillAllButOne;
+import fr.aumgn.dac.api.fillstrategy.defaults.FillDAC;
+import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
 import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
-import fr.aumgn.dac.plugin.area.fillstrategy.FillAllButOneStrategy;
-import fr.aumgn.dac.plugin.area.fillstrategy.FillDACStrategy;
-import fr.aumgn.dac.plugin.area.fillstrategy.FillFullyStrategy;
 import fr.aumgn.dac.plugin.arena.DACArenas;
 import fr.aumgn.dac.plugin.command.DACPluginCommand;
 import fr.aumgn.dac.plugin.mode.classic.ClassicGameMode;
@@ -40,9 +40,9 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFil
 	@Override
 	public List<Class<? extends FillStrategy>> getFillStrategies() {
 		List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(3);
-		list.add(FillAllButOneStrategy.class);
-		list.add(FillDACStrategy.class);
-		list.add(FillFullyStrategy.class);
+		list.add(FillAllButOne.class);
+		list.add(FillDAC.class);
+		list.add(FillFully.class);
 		return list;
 	}
 
