@@ -19,7 +19,6 @@ public class FillFully implements FillStrategy {
 			return new BaseBlock(Material.STATIONARY_WATER.getId());
 		}
 		Material material = Material.matchMaterial(args[0]);
-		System.out.println(material);
 		if (material == null) {
 			material = Material.STATIONARY_WATER;
 		}

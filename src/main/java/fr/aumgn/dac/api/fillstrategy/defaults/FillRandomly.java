@@ -32,7 +32,7 @@ public class FillRandomly implements FillStrategy {
 		Random rand = DAC.getRand();
 		for (AreaColumn column : area.columns()) {
 			column.set(Material.STATIONARY_WATER);
-			if (rand.nextInt(101) < percentage) {
+			if (rand.nextInt(101) <= percentage) {
 				column.set(Material.WOOL, (byte) 0);
 			} else {
 				column.set(Material.STATIONARY_WATER);
