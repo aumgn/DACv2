@@ -20,71 +20,71 @@ import fr.aumgn.dac.plugin.area.vector.DACBlockVector2D;
 @SerializableAs("dac-poly")
 public class DACPolygonal extends DACSimpleRegion {
 
-	private int minY;
-	private int maxY;
-	private List<DACBlockVector2D> points;
+    private int minY;
+    private int maxY;
+    private List<DACBlockVector2D> points;
 
-	public DACPolygonal(int minY, int maxY, List<DACBlockVector2D> points) {
-		this.minY = minY;
-		this.maxY = maxY;
-		this.points = points;
-	}
+    public DACPolygonal(int minY, int maxY, List<DACBlockVector2D> points) {
+        this.minY = minY;
+        this.maxY = maxY;
+        this.points = points;
+    }
 
-	public DACPolygonal() {
-		this(0, 0, new ArrayList<DACBlockVector2D>());
-	}
+    public DACPolygonal() {
+        this(0, 0, new ArrayList<DACBlockVector2D>());
+    }
 
-	public DACPolygonal(Polygonal2DRegion region) {
-		this.minY = region.getMininumY();
-		this.maxY = region.getMaximumY();
-		this.points = new ArrayList<DACBlockVector2D>(region.getPoints().size());
-		for (BlockVector2D pt : region.getPoints()) {
-			points.add(new DACBlockVector2D(pt));
-		}
+    public DACPolygonal(Polygonal2DRegion region) {
+        this.minY = region.getMininumY();
+        this.maxY = region.getMaximumY();
+        this.points = new ArrayList<DACBlockVector2D>(region.getPoints().size());
+        for (BlockVector2D pt : region.getPoints()) {
+            points.add(new DACBlockVector2D(pt));
+        }
 
-	}
+    }
 
-	public static DACPolygonal deserialize(Map<String, Object> map) {
-		int i = 1;
-		DACPolygonal poly = new DACPolygonal();
-		poly.minY = (Integer) map.get("y-min");
-		poly.maxY = (Integer) map.get("y-max");
-		while (map.containsKey("point-" + i)) {
-			poly.points.add((DACBlockVector2D) map.get("point-" + i));
-			i++;
-		}
-		return poly;
-	}
+    public static DACPolygonal deserialize(Map<String, Object> map) {
+        int i = 1;
+        DACPolygonal poly = new DACPolygonal();
+        poly.minY = (Integer) map.get("y-min");
+        poly.maxY = (Integer) map.get("y-max");
+        while (map.containsKey("point-" + i)) {
+            poly.points.add((DACBlockVector2D) map.get("point-" + i));
+            i++;
+        }
+        return poly;
+    }
 
-	@Override
-	public Map<String, Object> serialize() {
-		int i = 1;
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		map.put("y-min", minY);
-		map.put("y-max",  maxY);
-		for (DACBlockVector2D point : points) {
-			map.put("point-" + i, point);
-			i++;
-		}
-		return map;
-	}
+    @Override
+    public Map<String, Object> serialize() {
+        int i = 1;
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("y-min", minY);
+        map.put("y-max", maxY);
+        for (DACBlockVector2D point : points) {
+            map.put("point-" + i, point);
+            i++;
+        }
+        return map;
+    }
 
-	private List<BlockVector2D> getWEPoints() {
-		List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
-		for (DACBlockVector2D point : points) {
-			wePoints.add(point.getVector());
-		}
-		return wePoints;
-	}
+    private List<BlockVector2D> getWEPoints() {
+        List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
+        for (DACBlockVector2D point : points) {
+            wePoints.add(point.getVector());
+        }
+        return wePoints;
+    }
 
-	@Override
-	public Region createWERegion(LocalWorld world) {
-		return new Polygonal2DRegion(world, getWEPoints(), minY, maxY);
-	}
+    @Override
+    public Region createWERegion(LocalWorld world) {
+        return new Polygonal2DRegion(world, getWEPoints(), minY, maxY);
+    }
 
-	@Override
-	public Selection getSelection(World world) {
-		return new Polygonal2DSelection(world, getWEPoints(), minY, maxY);
-	}
+    @Override
+    public Selection getSelection(World world) {
+        return new Polygonal2DSelection(world, getWEPoints(), minY, maxY);
+    }
 
 }

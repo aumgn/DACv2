@@ -5,16 +5,16 @@ import org.bukkit.entity.Player;
 
 public interface Arenas extends Iterable<Arena> {
 
-	void load();
-	
-	void dump();
+    void load();
 
-	Arena get(String name);
+    void dump();
 
-	Arena get(Player player);
+    Arena get(String name);
 
-	void createArena(String name, World world);
+    Arena get(Player player);
 
-	void removeArena(Arena arena);
+    void createArena(String name, World world);
+
+    void removeArena(Arena arena);
 
 }

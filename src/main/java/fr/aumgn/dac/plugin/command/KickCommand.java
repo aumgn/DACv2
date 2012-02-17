@@ -13,26 +13,26 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class KickCommand extends PlayerCommandExecutor {
 
-	@Override
-	public boolean checkUsage(String[] args) {
-		return args.length == 1;
-	}
+    @Override
+    public boolean checkUsage(String[] args) {
+        return args.length == 1;
+    }
 
-	@Override
-	public void onPlayerCommand(Context context, String[] args) {
-		StagePlayerManager playerManager = DAC.getPlayerManager();
-		for (Player player : matchPlayer(context, args[0])) {
-			StagePlayer dacPlayer = playerManager.get(player);
-			dacPlayer.getStage().removePlayer(dacPlayer);
-		}
-	}
+    @Override
+    public void onPlayerCommand(Context context, String[] args) {
+        StagePlayerManager playerManager = DAC.getPlayerManager();
+        for (Player player : matchPlayer(context, args[0])) {
+            StagePlayer dacPlayer = playerManager.get(player);
+            dacPlayer.getStage().removePlayer(dacPlayer);
+        }
+    }
 
-	public List<Player> matchPlayer(Context context, String arg) {
-		List<Player> list = Bukkit.matchPlayer(arg);
-		if (list.isEmpty()) {
-			error(DACMessage.CmdKickNoPlayerFound);
-		}
-		return list;
-	}
+    public List<Player> matchPlayer(Context context, String arg) {
+        List<Player> list = Bukkit.matchPlayer(arg);
+        if (list.isEmpty()) {
+            error(DACMessage.CmdKickNoPlayerFound);
+        }
+        return list;
+    }
 
 }

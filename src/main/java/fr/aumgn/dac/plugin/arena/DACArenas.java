@@ -29,108 +29,114 @@ import fr.aumgn.dac.plugin.area.vector.DACLocation;
 
 public class DACArenas implements Arenas {
 
-	static {
-		ConfigurationSerialization.registerClass(DACArena.class);
-		ConfigurationSerialization.registerClass(DACBlockVector.class);
-		ConfigurationSerialization.registerClass(DACBlockVector2D.class);
-		ConfigurationSerialization.registerClass(DACLocation.class);
-		ConfigurationSerialization.registerClass(DACCuboid.class);
-		ConfigurationSerialization.registerClass(DACPolygonal.class);
-		ConfigurationSerialization.registerClass(DACCylinder.class);
-		ConfigurationSerialization.registerClass(GameOptions.class);
-	}
+    static {
+        ConfigurationSerialization.registerClass(DACArena.class);
+        ConfigurationSerialization.registerClass(DACBlockVector.class);
+        ConfigurationSerialization.registerClass(DACBlockVector2D.class);
+        ConfigurationSerialization.registerClass(DACLocation.class);
+        ConfigurationSerialization.registerClass(DACCuboid.class);
+        ConfigurationSerialization.registerClass(DACPolygonal.class);
+        ConfigurationSerialization.registerClass(DACCylinder.class);
+        ConfigurationSerialization.registerClass(GameOptions.class);
+    }
 
-	private YamlConfiguration yaml;
-	private boolean updated;
-	private Map<String, DACArena> arenas;
+    private YamlConfiguration yaml;
+    private boolean updated;
+    private Map<String, DACArena> arenas;
 
-	public DACArenas() {
-		yaml = new YamlConfiguration();
-		updated = false; 
-	}
-	
-	public void load() {
-		ensureDirectoryExists();
-		String fileName = getConfigFileName();
-		try {
-			yaml.load(fileName);
-		} catch (IOException exc) {
-			DAC.getLogger().warning("Unable to find " + fileName + " config file");
-		} catch (InvalidConfigurationException exception) {
-			DAC.getLogger().warning("Unable to load " + fileName + " config file");
-		}		
-		arenas = new HashMap<String, DACArena>();
-		Set<String> arenaNames = yaml.getKeys(false);
-		for (String name : arenaNames) {
-			DACArena arena = (DACArena)yaml.get(name);
-			arena.setName(name);
-			arenas.put(name, arena);
-		}
-	}
+    public DACArenas() {
+        yaml = new YamlConfiguration();
+        updated = false;
+    }
 
-	private void ensureDirectoryExists() {
-		Plugin plugin = DAC.getPlugin();
-		if (!plugin.getDataFolder().exists()) {
-			try {
-				plugin.getDataFolder().mkdir();
-			} catch (SecurityException exc) {
-				DAC.getLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
-			}
-		}
-	}
+    @Override
+    public void load() {
+        ensureDirectoryExists();
+        String fileName = getConfigFileName();
+        try {
+            yaml.load(fileName);
+        } catch (IOException exc) {
+            DAC.getLogger().warning("Unable to find " + fileName + " config file");
+        } catch (InvalidConfigurationException exception) {
+            DAC.getLogger().warning("Unable to load " + fileName + " config file");
+        }
+        arenas = new HashMap<String, DACArena>();
+        Set<String> arenaNames = yaml.getKeys(false);
+        for (String name : arenaNames) {
+            DACArena arena = (DACArena) yaml.get(name);
+            arena.setName(name);
+            arenas.put(name, arena);
+        }
+    }
 
-	private String getConfigFileName() {
-		return DAC.getPlugin().getDataFolder() + File.separator + "DAC.yml";
-	}
+    private void ensureDirectoryExists() {
+        Plugin plugin = DAC.getPlugin();
+        if (!plugin.getDataFolder().exists()) {
+            try {
+                plugin.getDataFolder().mkdir();
+            } catch (SecurityException exc) {
+                DAC.getLogger().warning("Unable to create " + plugin.getDataFolder() + " directory");
+            }
+        }
+    }
 
-	public void createArena(String name, World world) {
-		arenas.put(name, new DACArena(name, world));
-	}
+    private String getConfigFileName() {
+        return DAC.getPlugin().getDataFolder() + File.separator + "DAC.yml";
+    }
 
-	public void removeArena(Arena arena) {
-		yaml.set(arena.getName(), null);
-		arenas.remove(arena.getName());
-		updated = true;
-	}
+    @Override
+    public void createArena(String name, World world) {
+        arenas.put(name, new DACArena(name, world));
+    }
 
-	public DACArena get(String name) {
-		return arenas.get(name);
-	}
+    @Override
+    public void removeArena(Arena arena) {
+        yaml.set(arena.getName(), null);
+        arenas.remove(arena.getName());
+        updated = true;
+    }
 
-	public DACArena get(Player player) {
-		return get(player.getLocation());
-	}
+    @Override
+    public DACArena get(String name) {
+        return arenas.get(name);
+    }
 
-	public DACArena get(Location location) {
-		for (DACArena arena : arenas.values()) {
-			if (arena.getStartArea().contains(location)) {
-				return arena;				
-			}
-		}
-		return null;
-	}
+    @Override
+    public DACArena get(Player player) {
+        return get(player.getLocation());
+    }
 
-	public void dump() {
-		boolean needSave = updated;
-		for (DACArena arena : arenas.values()) {
-			if (arena.isUpdated()) {
-				needSave = true;
-				yaml.set(arena.getName(), arena);
-			}
-		}
-		if (needSave) {
-			try {
-				ensureDirectoryExists();
-				yaml.save(getConfigFileName());
-			} catch (IOException e) {
-				DAC.getLogger().severe("Unable to save " + getConfigFileName() + " config file");
-			}
-		}
-	}
+    public DACArena get(Location location) {
+        for (DACArena arena : arenas.values()) {
+            if (arena.getStartArea().contains(location)) {
+                return arena;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public Iterator<Arena> iterator() {
-		return new ArrayList<Arena>(arenas.values()).iterator();
-	}
+    @Override
+    public void dump() {
+        boolean needSave = updated;
+        for (DACArena arena : arenas.values()) {
+            if (arena.isUpdated()) {
+                needSave = true;
+                yaml.set(arena.getName(), arena);
+            }
+        }
+        if (needSave) {
+            try {
+                ensureDirectoryExists();
+                yaml.save(getConfigFileName());
+            } catch (IOException e) {
+                DAC.getLogger().severe("Unable to save " + getConfigFileName() + " config file");
+            }
+        }
+    }
+
+    @Override
+    public Iterator<Arena> iterator() {
+        return new ArrayList<Arena>(arenas.values()).iterator();
+    }
 
 }

@@ -4,8 +4,8 @@ import org.bukkit.Location;
 
 public interface DivingBoard {
 
-	Location getLocation();
+    Location getLocation();
 
-	void update(Location location);
+    void update(Location location);
 
 }

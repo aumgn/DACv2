@@ -30,60 +30,60 @@ import fr.aumgn.dac.plugin.mode.training.TrainingGameMode;
 
 public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFillStrategyProvider {
 
-	@Override
-	public List<Class<? extends GameMode<?>>> getGameModes() {
-		List<Class<? extends GameMode<?>>> list = new ArrayList<Class<? extends GameMode<?>>>(3);
-		list.add(ClassicGameMode.class);
-		list.add(TrainingGameMode.class);
-		list.add(SuddenDeathGameMode.class);
-		return list;
-	}
+    @Override
+    public List<Class<? extends GameMode<?>>> getGameModes() {
+        List<Class<? extends GameMode<?>>> list = new ArrayList<Class<? extends GameMode<?>>>(3);
+        list.add(ClassicGameMode.class);
+        list.add(TrainingGameMode.class);
+        list.add(SuddenDeathGameMode.class);
+        return list;
+    }
 
-	@Override
-	public List<Class<? extends FillStrategy>> getFillStrategies() {
-		List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(4);
-		list.add(FillFully.class);
-		list.add(FillRandomly.class);
-		list.add(FillDAC.class);
-		list.add(FillAllButOne.class);
-		return list;
-	}
+    @Override
+    public List<Class<? extends FillStrategy>> getFillStrategies() {
+        List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(4);
+        list.add(FillFully.class);
+        list.add(FillRandomly.class);
+        list.add(FillDAC.class);
+        list.add(FillAllButOne.class);
+        return list;
+    }
 
-	@Override
-	public void onEnable() {
-		PluginManager pm = Bukkit.getPluginManager();
+    @Override
+    public void onEnable() {
+        PluginManager pm = Bukkit.getPluginManager();
 
-		if (!new File(getDataFolder(), "config.yml").exists()) {
-			saveDefaultConfig();
-		}
-		if (!new File(getDataFolder(), "messages.yml").exists()) {
-			saveResource("messages.yml", false);
-		}
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            saveDefaultConfig();
+        }
+        if (!new File(getDataFolder(), "messages.yml").exists()) {
+            saveResource("messages.yml", false);
+        }
 
-		Plugin worldEdit = pm.getPlugin("WorldEdit");
-		if (!(worldEdit instanceof WorldEditPlugin)) {
-			throw new WorldEditNotLoaded();
-		}
+        Plugin worldEdit = pm.getPlugin("WorldEdit");
+        if (!(worldEdit instanceof WorldEditPlugin)) {
+            throw new WorldEditNotLoaded();
+        }
 
-		DACPluginCommand dacCommand = new DACPluginCommand();
-		Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
+        DACPluginCommand dacCommand = new DACPluginCommand();
+        Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
 
-		DACListener dacPlayerListener = new DACListener();
-		pm.registerEvents(dacPlayerListener, this);
+        DACListener dacPlayerListener = new DACListener();
+        pm.registerEvents(dacPlayerListener, this);
 
-		DACGameModes gameModes = new DACGameModes();
-		DACArenas arenas = new DACArenas();
-		DACFillStrategies fillStrategies = new DACFillStrategies();
-		DAC.init(this, (WorldEditPlugin)worldEdit, new DACPluginConfig(), gameModes, arenas, fillStrategies);
-		
-		getLogger().info(getDescription().getName() + " loaded.");
-	}
+        DACGameModes gameModes = new DACGameModes();
+        DACArenas arenas = new DACArenas();
+        DACFillStrategies fillStrategies = new DACFillStrategies();
+        DAC.init(this, (WorldEditPlugin) worldEdit, new DACPluginConfig(), gameModes, arenas, fillStrategies);
 
-	@Override
-	public void onDisable() {
-		Bukkit.getScheduler().cancelTasks(this);
-		DAC.getArenas().dump();
-		getLogger().info(getDescription().getName() + " unloaded.");
-	}
+        getLogger().info(getDescription().getName() + " loaded.");
+    }
+
+    @Override
+    public void onDisable() {
+        Bukkit.getScheduler().cancelTasks(this);
+        DAC.getArenas().dump();
+        getLogger().info(getDescription().getName() + " unloaded.");
+    }
 
 }

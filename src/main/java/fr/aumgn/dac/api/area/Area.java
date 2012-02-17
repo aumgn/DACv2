@@ -11,16 +11,16 @@ import fr.aumgn.dac.api.arena.Arena;
 
 public interface Area extends Iterable<Block> {
 
-	Arena getArena();
+    Arena getArena();
 
-	boolean contains(Location location);
+    boolean contains(Location location);
 
-	boolean contains(Player player);
+    boolean contains(Player player);
 
-	void update(Region region);
+    void update(Region region);
 
-	Selection getSelection();
+    Selection getSelection();
 
-	Region getWERegion();
+    Region getWERegion();
 
 }

@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface DACFillStrategyProvider {
 
-	List<Class<? extends FillStrategy>> getFillStrategies();
-	
+    List<Class<? extends FillStrategy>> getFillStrategies();
+
 }

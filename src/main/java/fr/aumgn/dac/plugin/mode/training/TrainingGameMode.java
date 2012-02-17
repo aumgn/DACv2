@@ -9,22 +9,22 @@ import fr.aumgn.dac.api.game.mode.GameModeHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
-@DACGameMode(name="training", minPlayers=1, allowFill=true)
+@DACGameMode(name = "training", minPlayers = 1, allowFill = true)
 public class TrainingGameMode implements GameMode<TrainingGamePlayer> {
 
-	@Override
-	public Game<TrainingGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
-		return new SimpleGame<TrainingGamePlayer>(this, joinStage, options);
-	}
+    @Override
+    public Game<TrainingGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
+        return new SimpleGame<TrainingGamePlayer>(this, joinStage, options);
+    }
 
-	@Override
-	public GameModeHandler<TrainingGamePlayer> createHandler(Game<TrainingGamePlayer> game) {
-		return new TrainingGameModeHandler(game);
-	}
+    @Override
+    public GameModeHandler<TrainingGamePlayer> createHandler(Game<TrainingGamePlayer> game) {
+        return new TrainingGameModeHandler(game);
+    }
 
-	@Override
-	public TrainingGamePlayer createPlayer(Game<TrainingGamePlayer> game, StagePlayer player, int index) {
-		return new TrainingGamePlayer(game, player, index);
-	}
+    @Override
+    public TrainingGamePlayer createPlayer(Game<TrainingGamePlayer> game, StagePlayer player, int index) {
+        return new TrainingGamePlayer(game, player, index);
+    }
 
 }

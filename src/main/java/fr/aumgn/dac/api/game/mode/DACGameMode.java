@@ -9,17 +9,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DACGameMode {
 
-	/**
-	* Name of the game mode
-	*
-	* @return Name of the game mode.
-	*/
-	public String name();
-	
-	public boolean isDefault() default true;
-	
-	public int minPlayers() default 2;
-	
-	public boolean allowFill() default false;
-	
+    /**
+     * Name of the game mode
+     * 
+     * @return Name of the game mode.
+     */
+    public String name();
+
+    public boolean isDefault() default true;
+
+    public int minPlayers() default 2;
+
+    public boolean allowFill() default false;
+
 }

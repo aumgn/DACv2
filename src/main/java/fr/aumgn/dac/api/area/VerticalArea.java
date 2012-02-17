@@ -4,14 +4,14 @@ import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 public interface VerticalArea extends Area {
 
-	public int getTop();
+    public int getTop();
 
-	public int getBottom();
+    public int getBottom();
 
-	Iterable<AreaColumn> columns();	
-	
-	boolean isFull();
+    Iterable<AreaColumn> columns();
 
-	void fillWith(FillStrategy strategy, String[] fillArgs);
+    boolean isFull();
+
+    void fillWith(FillStrategy strategy, String[] fillArgs);
 
 }

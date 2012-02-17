@@ -14,41 +14,41 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class FillCommand extends PlayerCommandExecutor {
 
-	@Override
-	public boolean checkUsage(String[] args) {
-		return args.length > 1;
-	}
-	
-	@Override
-	public void onPlayerCommand(Context context, String[] args) {
-		Arena arena = DAC.getArenas().get(args[0]);
-		
-		if (arena == null) {
-			error(DACMessage.CmdFillUnknown);
-		}
-		
-		Stage<?> stage = DAC.getStageManager().get(arena);
-		if (stage instanceof Game) {
-			if (!context.hasPermission("dac.game.fill")) {
-				GameMode<?> mode = ((Game<?>)stage).getMode();
-				if (!mode.getClass().getAnnotation(DACGameMode.class).allowFill()) {
-					error(DACMessage.CmdFillInGame);
-				}
-			}
-		}
-		
-		fill(context, args, arena);
-		context.success(DACMessage.CmdFillSuccess);
-	}
-	
-	protected void fill(Context context, String[] args, Arena arena) {
-		FillStrategy strategy = DAC.getFillStrategies().get(args[1]);
-		if (strategy == null) {
-			error(DACMessage.CmdFillUnknownStrategy);
-		}
-		
-		String[] fillArgs = Arrays.copyOfRange(args, 2, args.length);
-		arena.getPool().fillWith(strategy, fillArgs);		
-	}
+    @Override
+    public boolean checkUsage(String[] args) {
+        return args.length > 1;
+    }
+
+    @Override
+    public void onPlayerCommand(Context context, String[] args) {
+        Arena arena = DAC.getArenas().get(args[0]);
+
+        if (arena == null) {
+            error(DACMessage.CmdFillUnknown);
+        }
+
+        Stage<?> stage = DAC.getStageManager().get(arena);
+        if (stage instanceof Game) {
+            if (!context.hasPermission("dac.game.fill")) {
+                GameMode<?> mode = ((Game<?>) stage).getMode();
+                if (!mode.getClass().getAnnotation(DACGameMode.class).allowFill()) {
+                    error(DACMessage.CmdFillInGame);
+                }
+            }
+        }
+
+        fill(context, args, arena);
+        context.success(DACMessage.CmdFillSuccess);
+    }
+
+    protected void fill(Context context, String[] args, Arena arena) {
+        FillStrategy strategy = DAC.getFillStrategies().get(args[1]);
+        if (strategy == null) {
+            error(DACMessage.CmdFillUnknownStrategy);
+        }
+
+        String[] fillArgs = Arrays.copyOfRange(args, 2, args.length);
+        arena.getPool().fillWith(strategy, fillArgs);
+    }
 
 }

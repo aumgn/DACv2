@@ -7,19 +7,19 @@ import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class StopCommand extends PlayerCommandExecutor {
 
-	@Override
-	public boolean checkUsage(String[] args) {
-		return args.length == 0;
-	}
+    @Override
+    public boolean checkUsage(String[] args) {
+        return args.length == 0;
+    }
 
-	@Override
-	public void onPlayerCommand(Context context, String[] args) {
-		Stage<?> stage = DAC.getStageManager().get(context.getPlayer());
-		if (stage == null) {
-			error(DACMessage.CmdStopNoGameToStop);
-		}
-		stage.send(DACMessage.GameStopped);
-		stage.stop();
-	}
+    @Override
+    public void onPlayerCommand(Context context, String[] args) {
+        Stage<?> stage = DAC.getStageManager().get(context.getPlayer());
+        if (stage == null) {
+            error(DACMessage.CmdStopNoGameToStop);
+        }
+        stage.send(DACMessage.GameStopped);
+        stage.stop();
+    }
 
 }

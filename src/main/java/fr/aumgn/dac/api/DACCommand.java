@@ -4,6 +4,6 @@ import fr.aumgn.utils.command.BasicCommandExecutor;
 
 public interface DACCommand {
 
-	void registerCommand(String name, BasicCommandExecutor executor);
-	
+    void registerCommand(String name, BasicCommandExecutor executor);
+
 }

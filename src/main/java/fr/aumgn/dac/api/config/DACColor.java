@@ -5,12 +5,12 @@ import org.bukkit.Material;
 
 public interface DACColor {
 
-	String getName();
-	
-	ChatColor getChatColor();
-	
-	Material getMaterial();
-	
-	byte getData();
-	
+    String getName();
+
+    ChatColor getChatColor();
+
+    Material getMaterial();
+
+    byte getData();
+
 }

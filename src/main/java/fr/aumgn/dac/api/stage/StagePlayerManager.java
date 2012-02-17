@@ -7,28 +7,28 @@ import org.bukkit.entity.Player;
 
 public class StagePlayerManager {
 
-	private Map<Player, StagePlayer> players;
-	
-	public StagePlayerManager() {
-		players = new HashMap<Player, StagePlayer>();
-	}
+    private Map<Player, StagePlayer> players;
 
-	public StagePlayer get(Player player) {
-		return players.get(player);
-	}
-	
-	public void register(StagePlayer player) {
-		if (players.containsKey(player.getPlayer())) {
-			throw new RuntimeException();
-		}
-		players.put(player.getPlayer(), player);
-	}
+    public StagePlayerManager() {
+        players = new HashMap<Player, StagePlayer>();
+    }
 
-	public void unregister(StagePlayer player) {
-		if (!players.containsKey(player.getPlayer())) {
-			throw new RuntimeException();
-		}
-		players.remove(player.getPlayer());
-	}
-	
+    public StagePlayer get(Player player) {
+        return players.get(player);
+    }
+
+    public void register(StagePlayer player) {
+        if (players.containsKey(player.getPlayer())) {
+            throw new RuntimeException();
+        }
+        players.put(player.getPlayer(), player);
+    }
+
+    public void unregister(StagePlayer player) {
+        if (!players.containsKey(player.getPlayer())) {
+            throw new RuntimeException();
+        }
+        players.remove(player.getPlayer());
+    }
+
 }

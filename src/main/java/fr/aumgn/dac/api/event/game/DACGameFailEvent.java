@@ -8,16 +8,16 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class DACGameFailEvent extends DACGamePlayerEvent implements Cancellable {
 
-	private static final long serialVersionUID = 1L;
-	private static final HandlerList handlers = new HandlerList();
+    private static final long serialVersionUID = 1L;
+    private static final HandlerList handlers = new HandlerList();
 
-	private boolean isCancelled = false;
-	private boolean cancelDeath = true; 
-	
-	public DACGameFailEvent(Game<?> game, StagePlayer player) {
-		super("DACGameFailEvent", game, player);
-	}
-	
+    private boolean isCancelled = false;
+    private boolean cancelDeath = true;
+
+    public DACGameFailEvent(Game<?> game, StagePlayer player) {
+        super("DACGameFailEvent", game, player);
+    }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
@@ -26,23 +26,23 @@ public class DACGameFailEvent extends DACGamePlayerEvent implements Cancellable 
     public static HandlerList getHandlerList() {
         return handlers;
     }
-    
-	@Override
-	public boolean isCancelled() {
-		return isCancelled;
-	}
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		isCancelled = cancelled;
-	}
+    @Override
+    public boolean isCancelled() {
+        return isCancelled;
+    }
 
-	public boolean cancelDeath() {
-		return cancelDeath;
-	}
+    @Override
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
+    }
 
-	public void setCancelDeath(boolean cancelDeath) {
-		this.cancelDeath = cancelDeath;
-	}
+    public boolean cancelDeath() {
+        return cancelDeath;
+    }
+
+    public void setCancelDeath(boolean cancelDeath) {
+        this.cancelDeath = cancelDeath;
+    }
 
 }

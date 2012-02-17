@@ -14,32 +14,32 @@ import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
-@DACFillStrategy(name="all-but-one", aliases={"abo"})
+@DACFillStrategy(name = "all-but-one", aliases = { "abo" })
 public class FillAllButOne implements FillStrategy {
 
-	@Override
-	public void fill(VerticalArea area, String[] args) {
-		Random rand = DAC.getRand();
-		Region region = area.getWERegion();
-		Vector minPoint = region.getMinimumPoint();
-		Vector maxPoint = region.getMaximumPoint();
-		int x, z, y = minPoint.getBlockY();
-		int minX = minPoint.getBlockX();
-		int minZ = minPoint.getBlockZ();
-		int xRange = maxPoint.getBlockX() - minX;
-		int zRange = maxPoint.getBlockZ() - minZ;
-		do {
-			x = minX + rand.nextInt(xRange);
-			z = minZ + rand.nextInt(zRange);
-		} while (!region.contains(new BlockVector(x, y, z)));
+    @Override
+    public void fill(VerticalArea area, String[] args) {
+        Random rand = DAC.getRand();
+        Region region = area.getWERegion();
+        Vector minPoint = region.getMinimumPoint();
+        Vector maxPoint = region.getMaximumPoint();
+        int x, z, y = minPoint.getBlockY();
+        int minX = minPoint.getBlockX();
+        int minZ = minPoint.getBlockZ();
+        int xRange = maxPoint.getBlockX() - minX;
+        int zRange = maxPoint.getBlockZ() - minZ;
+        do {
+            x = minX + rand.nextInt(xRange);
+            z = minZ + rand.nextInt(zRange);
+        } while (!region.contains(new BlockVector(x, y, z)));
 
-		for (AreaColumn column : area.columns()) {
-			if (column.getX() != x || column.getZ() != z) {
-				column.set(Material.WOOL, (byte) 0);
-			} else {
-				column.set(Material.STATIONARY_WATER);				
-			}
-		}
-	}
+        for (AreaColumn column : area.columns()) {
+            if (column.getX() != x || column.getZ() != z) {
+                column.set(Material.WOOL, (byte) 0);
+            } else {
+                column.set(Material.STATIONARY_WATER);
+            }
+        }
+    }
 
 }

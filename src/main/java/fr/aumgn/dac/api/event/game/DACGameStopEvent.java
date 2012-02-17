@@ -6,13 +6,13 @@ import fr.aumgn.dac.api.game.Game;
 
 public class DACGameStopEvent extends DACGameEvent {
 
-	private static final long serialVersionUID = 1L;
-	private static final HandlerList handlers = new HandlerList();
-	
-	public DACGameStopEvent(Game<?> game) {
-		super("DACGameStopEvent", game);
-	}
-	
+    private static final long serialVersionUID = 1L;
+    private static final HandlerList handlers = new HandlerList();
+
+    public DACGameStopEvent(Game<?> game) {
+        super("DACGameStopEvent", game);
+    }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
@@ -21,6 +21,5 @@ public class DACGameStopEvent extends DACGameEvent {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-    
 
 }

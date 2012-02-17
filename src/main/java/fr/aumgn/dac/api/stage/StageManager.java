@@ -11,57 +11,57 @@ import fr.aumgn.dac.api.game.Game;
 
 public class StageManager {
 
-	private Map<Arena, Stage<?>> stages;
-	
-	public StageManager() {
-		stages = new HashMap<Arena, Stage<?>>();
-	}
-	
-	public boolean hasStage(Arena arena) {
-		return stages.containsKey(arena);
-	}
-	
-	public Stage<?> get(Arena arena) {
-		return stages.get(arena);
-	}
-	
-	public Stage<?> get(Player player) {
-		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
-		if (dacPlayer == null) {
-			return null;
-		}
-		return dacPlayer.getStage();
-	}
-	
-	private Game<?> castGame(Stage<?> stage) {
-		if (stage instanceof Game) {
-			return (Game<?>) stage;
-		}
-		return null;
-	}
-	
-	public Game<?> getGame(Arena arena) {
-		return castGame(get(arena));
-	}
-	
-	public Game<?> getGame(Player player) {
-		return castGame(get(player));
-	}
-	
-	public void register(Stage<?> stage) {
-		if (stages.containsKey(stage.getArena())) {
-			throw new RuntimeException();
-		}
-		stages.put(stage.getArena(), stage);
-		stage.registerAll();
-	}
+    private Map<Arena, Stage<?>> stages;
 
-	public void unregister(Stage<?> stage) {
-		if (!stages.containsKey(stage.getArena())) {
-			throw new RuntimeException();
-		}
-		stages.remove(stage.getArena());
-		stage.unregisterAll();
-	}
-	
+    public StageManager() {
+        stages = new HashMap<Arena, Stage<?>>();
+    }
+
+    public boolean hasStage(Arena arena) {
+        return stages.containsKey(arena);
+    }
+
+    public Stage<?> get(Arena arena) {
+        return stages.get(arena);
+    }
+
+    public Stage<?> get(Player player) {
+        StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
+        if (dacPlayer == null) {
+            return null;
+        }
+        return dacPlayer.getStage();
+    }
+
+    private Game<?> castGame(Stage<?> stage) {
+        if (stage instanceof Game) {
+            return (Game<?>) stage;
+        }
+        return null;
+    }
+
+    public Game<?> getGame(Arena arena) {
+        return castGame(get(arena));
+    }
+
+    public Game<?> getGame(Player player) {
+        return castGame(get(player));
+    }
+
+    public void register(Stage<?> stage) {
+        if (stages.containsKey(stage.getArena())) {
+            throw new RuntimeException();
+        }
+        stages.put(stage.getArena(), stage);
+        stage.registerAll();
+    }
+
+    public void unregister(Stage<?> stage) {
+        if (!stages.containsKey(stage.getArena())) {
+            throw new RuntimeException();
+        }
+        stages.remove(stage.getArena());
+        stage.unregisterAll();
+    }
+
 }

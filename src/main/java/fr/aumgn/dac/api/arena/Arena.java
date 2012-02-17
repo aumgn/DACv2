@@ -10,26 +10,26 @@ import fr.aumgn.dac.api.game.GameOptions;
 
 public interface Arena {
 
-	LocalWorld getWEWorld();
+    LocalWorld getWEWorld();
 
-	World getWorld();
+    World getWorld();
 
-	String getName();
+    String getName();
 
-	DivingBoard getDivingBoard();
+    DivingBoard getDivingBoard();
 
-	Pool getPool();
+    Pool getPool();
 
-	StartArea getStartArea();
+    StartArea getStartArea();
 
-	List<String> getModes();
+    List<String> getModes();
 
-	boolean hasMode(String string);
+    boolean hasMode(String string);
 
-	void addMode(String modeName);
+    void addMode(String modeName);
 
-	void removeMode(String modeName);
+    void removeMode(String modeName);
 
-	GameOptions getOptions();
+    GameOptions getOptions();
 
 }

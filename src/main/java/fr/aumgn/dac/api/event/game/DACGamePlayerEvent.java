@@ -6,15 +6,15 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 @SuppressWarnings("serial")
 public class DACGamePlayerEvent extends DACGameEvent {
 
-	private StagePlayer player;
-	
-	public DACGamePlayerEvent(String name, Game<?> game, StagePlayer player) {
-		super(name, game);
-		this.player = player;
-	}
+    private StagePlayer player;
 
-	public StagePlayer getPlayer() {
-		return player;
-	}
-	
+    public DACGamePlayerEvent(String name, Game<?> game, StagePlayer player) {
+        super(name, game);
+        this.player = player;
+    }
+
+    public StagePlayer getPlayer() {
+        return player;
+    }
+
 }

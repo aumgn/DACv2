@@ -10,25 +10,25 @@ import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 public interface Game<T extends StagePlayer> extends Stage<T> {
-	
-	GameMode<T> getMode();
-	
-	void nextTurn();
-	
-	boolean isPlayerTurn(T player);
-	
-	void onFallDamage(EntityDamageEvent event);
-	
-	void onMove(PlayerMoveEvent event);
 
-	GameOptions getOptions();
-	
-	boolean addSpectator(Player player);
-	
-	boolean removeSpectator(Player player);
+    GameMode<T> getMode();
 
-	Vector getPropulsion();
-	
-	int getPropulsionDelay();
-	
+    void nextTurn();
+
+    boolean isPlayerTurn(T player);
+
+    void onFallDamage(EntityDamageEvent event);
+
+    void onMove(PlayerMoveEvent event);
+
+    GameOptions getOptions();
+
+    boolean addSpectator(Player player);
+
+    boolean removeSpectator(Player player);
+
+    Vector getPropulsion();
+
+    int getPropulsionDelay();
+
 }

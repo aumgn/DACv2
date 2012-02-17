@@ -4,23 +4,23 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 public interface AreaColumn extends Iterable<AreaColumnBlock> {
-	
-	World getWorld();
 
-	int getX();
+    World getWorld();
 
-	int getZ();
+    int getX();
 
-	int getBottom();
+    int getZ();
 
-	int getTop();
-	
-	int getHeight();
-	
-	AreaColumnBlock get(int index);
-	
-	void set(Material material);
-	
-	void set(Material material, byte data);
+    int getBottom();
+
+    int getTop();
+
+    int getHeight();
+
+    AreaColumnBlock get(int index);
+
+    void set(Material material);
+
+    void set(Material material, byte data);
 
 }

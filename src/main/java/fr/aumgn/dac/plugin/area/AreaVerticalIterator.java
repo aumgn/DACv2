@@ -15,30 +15,31 @@ import fr.aumgn.dac.api.area.VerticalArea;
 
 public class AreaVerticalIterator implements Iterator<AreaColumn> {
 
-	private VerticalArea area;
-	private Region region;
-	private int x;
-	private int z;
-	private int minX;
-	private int maxX;
-	private int maxZ;
-	private int y;
+    private VerticalArea area;
+    private Region region;
+    private int x;
+    private int z;
+    private int minX;
+    private int maxX;
+    private int maxZ;
+    private int y;
 
-	public AreaVerticalIterator(VerticalArea area) {
-		this.area = area;
-		this.region = area.getWERegion();
-		Vector minPoint = region.getMinimumPoint();
-		Vector maxPoint = region.getMaximumPoint();
-		this.minX = minPoint.getBlockX();
-		this.x = minX;
-		this.z = minPoint.getBlockZ();
-		this.maxX = maxPoint.getBlockX();
-		this.maxZ = maxPoint.getBlockZ();
-		this.y = minPoint.getBlockY();
-		
-		forward();
-	}
+    public AreaVerticalIterator(VerticalArea area) {
+        this.area = area;
+        this.region = area.getWERegion();
+        Vector minPoint = region.getMinimumPoint();
+        Vector maxPoint = region.getMaximumPoint();
+        this.minX = minPoint.getBlockX();
+        this.x = minX;
+        this.z = minPoint.getBlockZ();
+        this.maxX = maxPoint.getBlockX();
+        this.maxZ = maxPoint.getBlockZ();
+        this.y = minPoint.getBlockY();
 
+        forward();
+    }
+
+    @Override
     public boolean hasNext() {
         return x != Integer.MIN_VALUE;
     }
@@ -49,8 +50,11 @@ public class AreaVerticalIterator implements Iterator<AreaColumn> {
         }
     }
 
+    @Override
     public AreaColumn next() {
-        if (!hasNext()) throw new java.util.NoSuchElementException();
+        if (!hasNext()) {
+            throw new java.util.NoSuchElementException();
+        }
 
         AreaColumn answer = new DACAreaColumn(area, x, z);
 
@@ -72,9 +76,9 @@ public class AreaVerticalIterator implements Iterator<AreaColumn> {
         x = Integer.MIN_VALUE;
     }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 
 }

@@ -20,95 +20,95 @@ import fr.aumgn.dac.api.stage.StagePlayerManager;
 
 public final class DAC {
 
-	private static Plugin plugin = null;
-	private static WorldEditPlugin worldEdit = null;
-	private static GameModes gameModes; 
-	private static Arenas arenas; 
-	private static FillStrategies fillStrategies;
-	private static Random rand;
-	private static StageManager stageManager;
-	private static StagePlayerManager playerManager;
-	private static DACConfig config;
+    private static Plugin plugin = null;
+    private static WorldEditPlugin worldEdit = null;
+    private static GameModes gameModes;
+    private static Arenas arenas;
+    private static FillStrategies fillStrategies;
+    private static Random rand;
+    private static StageManager stageManager;
+    private static StagePlayerManager playerManager;
+    private static DACConfig config;
 
-	private DAC() {}
+    private DAC() {}
 
-	public static void init(Plugin plugin, WorldEditPlugin worldEdit, DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
-		if (DAC.plugin != null) {
-			throw new UnsupportedOperationException("Cannot init DAC twice.");
-		}
-		DAC.plugin = plugin;
-		DAC.worldEdit = worldEdit;
-		DAC.gameModes = gameModes;
-		DAC.arenas = arenas;
-		DAC.fillStrategies = fillStrategies;
-		rand = new Random();
-		stageManager = new StageManager();
-		playerManager = new StagePlayerManager();
-		DAC.config = config;
-		reloadConfig();
-		reloadMessages();
-		arenas.load();
-	}
+    public static void init(Plugin plugin, WorldEditPlugin worldEdit, DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
+        if (DAC.plugin != null) {
+            throw new UnsupportedOperationException("Cannot init DAC twice.");
+        }
+        DAC.plugin = plugin;
+        DAC.worldEdit = worldEdit;
+        DAC.gameModes = gameModes;
+        DAC.arenas = arenas;
+        DAC.fillStrategies = fillStrategies;
+        rand = new Random();
+        stageManager = new StageManager();
+        playerManager = new StagePlayerManager();
+        DAC.config = config;
+        reloadConfig();
+        reloadMessages();
+        arenas.load();
+    }
 
-	public static Plugin getPlugin() {
-		return plugin;
-	}
-	
-	public static DACCommand getCommand() {
-		PluginCommand plCmd = Bukkit.getPluginCommand("dac");
-		if (plCmd.getExecutor() instanceof DACCommand) {
-			return (DACCommand) plCmd.getExecutor();
-		}
-		return null;
-	}
+    public static Plugin getPlugin() {
+        return plugin;
+    }
 
-	public static Logger getLogger() {
-		return plugin.getLogger();
-	}
-	
-	public static Random getRand() {
-		return rand;
-	}
+    public static DACCommand getCommand() {
+        PluginCommand plCmd = Bukkit.getPluginCommand("dac");
+        if (plCmd.getExecutor() instanceof DACCommand) {
+            return (DACCommand) plCmd.getExecutor();
+        }
+        return null;
+    }
 
-	public static void reloadConfig() {
-		plugin.reloadConfig();
-		config.load(plugin.getConfig());
-	}	
+    public static Logger getLogger() {
+        return plugin.getLogger();
+    }
 
-	public static void reloadMessages() {
-		DACMessage.reload(plugin);
-	}
+    public static Random getRand() {
+        return rand;
+    }
 
-	public static DACConfig getConfig() {
-		return config;
-	}
-	
-	public static GameModes getModes() {
-		return gameModes;
-	}
+    public static void reloadConfig() {
+        plugin.reloadConfig();
+        config.load(plugin.getConfig());
+    }
 
-	public static Arenas getArenas() {
-		return arenas;
-	}
-	
-	public static FillStrategies getFillStrategies() {
-		return fillStrategies;
-	}
-	
-	public static StageManager getStageManager() {
-		return stageManager;
-	}
-	
-	public static StagePlayerManager getPlayerManager() {
-		return playerManager;
-	}
-	
-	public static WorldEditPlugin getWorldEdit() {
-		return worldEdit;
-	}
+    public static void reloadMessages() {
+        DACMessage.reload(plugin);
+    }
 
-	public static void callEvent(Event event) {
-		Bukkit.getPluginManager().callEvent(event);
-	}
+    public static DACConfig getConfig() {
+        return config;
+    }
+
+    public static GameModes getModes() {
+        return gameModes;
+    }
+
+    public static Arenas getArenas() {
+        return arenas;
+    }
+
+    public static FillStrategies getFillStrategies() {
+        return fillStrategies;
+    }
+
+    public static StageManager getStageManager() {
+        return stageManager;
+    }
+
+    public static StagePlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    public static WorldEditPlugin getWorldEdit() {
+        return worldEdit;
+    }
+
+    public static void callEvent(Event event) {
+        Bukkit.getPluginManager().callEvent(event);
+    }
 
 }

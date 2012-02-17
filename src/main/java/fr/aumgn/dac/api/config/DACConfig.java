@@ -4,26 +4,26 @@ import org.bukkit.configuration.Configuration;
 
 public interface DACConfig {
 
-	void load(Configuration config);
-	
-	boolean getResetOnStart();
+    void load(Configuration config);
 
-	boolean getResetOnEnd();
+    boolean getResetOnStart();
 
-	int getTurnTimeOut();
+    boolean getResetOnEnd();
 
-	boolean getTpAfterJump();
+    int getTurnTimeOut();
 
-	boolean getTpAfterFail();
+    boolean getTpAfterJump();
 
-	int getTpAfterSuccessDelay();
+    boolean getTpAfterFail();
 
-	int getTpAfterFailDelay();
+    int getTpAfterSuccessDelay();
 
-	int getMaxPlayers();
+    int getTpAfterFailDelay();
 
-	String getDeathSignFirstLine();
+    int getMaxPlayers();
 
-	DACColors getColors();
+    String getDeathSignFirstLine();
+
+    DACColors getColors();
 
 }

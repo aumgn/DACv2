@@ -26,118 +26,129 @@ import fr.aumgn.dac.plugin.area.vector.DACLocation;
 @SerializableAs("dac-arena")
 public class DACArena implements Arena, ConfigurationSerializable {
 
-	private String name;
-	private boolean updated;
-	private World world;
-	private Set<String> modes; 
-	private DACDivingBoard divingBoard;
-	private DACPool pool;
-	private DACStartArea startArea;
-	private GameOptions options;
+    private String name;
+    private boolean updated;
+    private World world;
+    private Set<String> modes;
+    private DACDivingBoard divingBoard;
+    private DACPool pool;
+    private DACStartArea startArea;
+    private GameOptions options;
 
-	public DACArena(String name, World world) {
-		this.name = name;
-		updated = false;
-		this.world = world;
-		modes = DAC.getModes().getDefaults();
-		divingBoard = new DACDivingBoard(this);
-		pool = new DACPool(this);
-		startArea = new DACStartArea(this);
-		options = new GameOptions();
-	}
+    public DACArena(String name, World world) {
+        this.name = name;
+        updated = false;
+        this.world = world;
+        modes = DAC.getModes().getDefaults();
+        divingBoard = new DACDivingBoard(this);
+        pool = new DACPool(this);
+        startArea = new DACStartArea(this);
+        options = new GameOptions();
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void updated() {
-		updated = true;
-	}
+    public void updated() {
+        updated = true;
+    }
 
-	public boolean isUpdated() {
-		return updated;
-	}
+    public boolean isUpdated() {
+        return updated;
+    }
 
-	public World getWorld() {
-		return world;
-	}
+    @Override
+    public World getWorld() {
+        return world;
+    }
 
-	public BukkitWorld getWEWorld() {
-		return new BukkitWorld(getWorld());
-	}
-	
-	public boolean hasMode(String name) {
-		return modes.contains(name);
-	}
+    @Override
+    public BukkitWorld getWEWorld() {
+        return new BukkitWorld(getWorld());
+    }
 
-	public void addMode(String mode) {
-		modes.add(mode);
-		updated();
-	}
-	
-	public void removeMode(String mode) {
-		modes.remove(mode);
-		updated();
-	}
+    @Override
+    public boolean hasMode(String name) {
+        return modes.contains(name);
+    }
 
-	public List<String> getModes() {
-		return new ArrayList<String>(modes);
-	}
-	
-	public String getName() {
-		return name;
-	}
+    @Override
+    public void addMode(String mode) {
+        modes.add(mode);
+        updated();
+    }
 
-	public DivingBoard getDivingBoard() {
-		return divingBoard;
-	}
+    @Override
+    public void removeMode(String mode) {
+        modes.remove(mode);
+        updated();
+    }
 
-	public Pool getPool() {
-		return pool;
-	}
+    @Override
+    public List<String> getModes() {
+        return new ArrayList<String>(modes);
+    }
 
-	public StartArea getStartArea() {
-		return startArea;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	public GameOptions getOptions() {
-		return options;
-	}
-	
-	public static DACArena deserialize(Map<String, Object> map) {
-		String world = (String)map.get("world");
-		DACArena arena = new DACArena("", Bukkit.getWorld(world));
-		if (map.containsKey("modes")) {
-			Object modes = map.get("modes");
-			if (modes instanceof List<?>) {
-				List<?> modesValues = (List<?>) modes;
-				arena.modes = new HashSet<String>();
-				for (Object obj : modesValues) {
-					if (obj instanceof String) {
-						arena.modes.add((String) obj);
-					}
-				}
-			}
-		}
-		arena.divingBoard.setDACLocation((DACLocation)map.get("diving-board"));
-		arena.pool.setRegion((DACRegion) map.get("pool"));
-		arena.startArea.setRegion((DACRegion) map.get("start-area"));
-		if (map.containsKey("options")) {
-			arena.options = (GameOptions) map.get("options");
-		}
-		return arena;
-	}
+    @Override
+    public DivingBoard getDivingBoard() {
+        return divingBoard;
+    }
 
-	@Override
-	public Map<String, Object> serialize() {
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
-		map.put("world", world.getName());
-		map.put("modes", new ArrayList<String>(modes));
-		map.put("diving-board", divingBoard.getDACLocation());
-		map.put("pool", pool.getRegion());
-		map.put("start-area", startArea.getRegion());
-		map.put("options", options);
-		return map;
-	}
+    @Override
+    public Pool getPool() {
+        return pool;
+    }
+
+    @Override
+    public StartArea getStartArea() {
+        return startArea;
+    }
+
+    @Override
+    public GameOptions getOptions() {
+        return options;
+    }
+
+    public static DACArena deserialize(Map<String, Object> map) {
+        String world = (String) map.get("world");
+        DACArena arena = new DACArena("", Bukkit.getWorld(world));
+        if (map.containsKey("modes")) {
+            Object modes = map.get("modes");
+            if (modes instanceof List<?>) {
+                List<?> modesValues = (List<?>) modes;
+                arena.modes = new HashSet<String>();
+                for (Object obj : modesValues) {
+                    if (obj instanceof String) {
+                        arena.modes.add((String) obj);
+                    }
+                }
+            }
+        }
+        arena.divingBoard.setDACLocation((DACLocation) map.get("diving-board"));
+        arena.pool.setRegion((DACRegion) map.get("pool"));
+        arena.startArea.setRegion((DACRegion) map.get("start-area"));
+        if (map.containsKey("options")) {
+            arena.options = (GameOptions) map.get("options");
+        }
+        return arena;
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("world", world.getName());
+        map.put("modes", new ArrayList<String>(modes));
+        map.put("diving-board", divingBoard.getDACLocation());
+        map.put("pool", pool.getRegion());
+        map.put("start-area", startArea.getRegion());
+        map.put("options", options);
+        return map;
+    }
 
 }

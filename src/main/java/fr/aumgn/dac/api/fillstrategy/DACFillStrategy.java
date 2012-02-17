@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DACFillStrategy {
 
-	public String name();
-	
-	public String[] aliases() default {};
-	
+    public String name();
+
+    public String[] aliases() default {};
+
 }

@@ -9,14 +9,14 @@ import fr.aumgn.dac.api.config.DACColor;
 
 public interface Pool extends VerticalArea {
 
-	boolean isAbove(Player player);
+    boolean isAbove(Player player);
 
-	void reset();
+    void reset();
 
-	void rip(Vector value, String displayName);
+    void rip(Vector value, String displayName);
 
-	boolean isADACPattern(int x, int z);
+    boolean isADACPattern(int x, int z);
 
-	void setColumn(ColumnPattern pattern, DACColor color, int x, int z);
+    void setColumn(ColumnPattern pattern, DACColor color, int x, int z);
 
 }

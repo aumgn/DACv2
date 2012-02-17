@@ -5,10 +5,10 @@ import java.util.Set;
 
 public interface GameModes {
 
-	Set<String> getDefaults();
-	
-	Collection<String> getNames();
-	
-	GameMode<?> get(String name);
-	
+    Set<String> getDefaults();
+
+    Collection<String> getNames();
+
+    GameMode<?> get(String name);
+
 }

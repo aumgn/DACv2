@@ -8,8 +8,8 @@ import fr.aumgn.dac.plugin.area.DACArea;
 @SerializableAs("dac-start")
 public class DACStartArea extends DACArea implements StartArea {
 
-	public DACStartArea(DACArena arena) {
-		super(arena);
-	}
+    public DACStartArea(DACArena arena) {
+        super(arena);
+    }
 
 }

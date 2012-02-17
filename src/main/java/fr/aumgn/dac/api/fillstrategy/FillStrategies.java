@@ -4,8 +4,8 @@ import java.util.Collection;
 
 public interface FillStrategies {
 
-	Collection<String> getNames();
-	
-	FillStrategy get(String name);
+    Collection<String> getNames();
+
+    FillStrategy get(String name);
 
 }

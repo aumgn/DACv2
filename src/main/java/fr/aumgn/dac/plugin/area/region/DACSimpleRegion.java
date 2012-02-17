@@ -8,17 +8,19 @@ import com.sk89q.worldedit.regions.Region;
 
 public abstract class DACSimpleRegion implements DACRegion {
 
-	private Region region; 
+    private Region region;
 
-	public abstract Region createWERegion(LocalWorld world);
+    public abstract Region createWERegion(LocalWorld world);
 
-	public abstract Selection getSelection(World world);
+    @Override
+    public abstract Selection getSelection(World world);
 
-	public Region getRegion(LocalWorld world) {
-		if (region == null || region.getWorld() != world) {
-			region = createWERegion(world);
-		}
-		return region;
-	}
+    @Override
+    public Region getRegion(LocalWorld world) {
+        if (region == null || region.getWorld() != world) {
+            region = createWERegion(world);
+        }
+        return region;
+    }
 
 }

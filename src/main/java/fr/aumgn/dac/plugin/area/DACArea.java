@@ -24,68 +24,70 @@ import fr.aumgn.dac.plugin.arena.DACArena;
 
 public class DACArea implements Area {
 
-	private DACArena arena;
-	private DACRegion region;
+    private DACArena arena;
+    private DACRegion region;
 
-	public DACArea(DACArena arena) {
-		this.arena = arena;
-		this.region = new DACCuboid();
-	}
+    public DACArea(DACArena arena) {
+        this.arena = arena;
+        this.region = new DACCuboid();
+    }
 
-	@Override
-	public void update(Region region) {
-		if (region instanceof CuboidRegion) {
-			CuboidRegion cuboid = (CuboidRegion)region;
-			this.region = new DACCuboid(cuboid);
-		} else if (region instanceof Polygonal2DRegion) {
-			Polygonal2DRegion poly = (Polygonal2DRegion)region;
-			this.region = new DACPolygonal(poly);
-		} else if (region instanceof CylinderRegion) {
-			CylinderRegion cyl = (CylinderRegion)region;
-			this.region = new DACCylinder(cyl);
-		} else {
-			throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());			
-		}
-		arena.updated();
-	}
+    @Override
+    public void update(Region region) {
+        if (region instanceof CuboidRegion) {
+            CuboidRegion cuboid = (CuboidRegion) region;
+            this.region = new DACCuboid(cuboid);
+        } else if (region instanceof Polygonal2DRegion) {
+            Polygonal2DRegion poly = (Polygonal2DRegion) region;
+            this.region = new DACPolygonal(poly);
+        } else if (region instanceof CylinderRegion) {
+            CylinderRegion cyl = (CylinderRegion) region;
+            this.region = new DACCylinder(cyl);
+        } else {
+            throw new InvalidRegionType("CuboidRegion", "Polygonal2DRegion", region.getClass());
+        }
+        arena.updated();
+    }
 
-	@Override
-	public Arena getArena() {
-		return arena;
-	}
+    @Override
+    public Arena getArena() {
+        return arena;
+    }
 
-	public DACRegion getRegion() {
-		return region;
-	}
+    public DACRegion getRegion() {
+        return region;
+    }
 
-	@Override
-	public Region getWERegion() {
-		return region.getRegion(arena.getWEWorld());
-	}
+    @Override
+    public Region getWERegion() {
+        return region.getRegion(arena.getWEWorld());
+    }
 
-	public void setRegion(DACRegion region) {
-		this.region = region;
-	}
+    public void setRegion(DACRegion region) {
+        this.region = region;
+    }
 
-	@Override
-	public Selection getSelection() {
-		return region.getSelection(arena.getWorld());
-	}
+    @Override
+    public Selection getSelection() {
+        return region.getSelection(arena.getWorld());
+    }
 
-	public boolean contains(Player player) {
-		return contains(player.getLocation());
-	}
+    @Override
+    public boolean contains(Player player) {
+        return contains(player.getLocation());
+    }
 
-	public boolean contains(Location location) {
-		int x = location.getBlockX();
-		int y = location.getBlockY();
-		int z = location.getBlockZ();
-		return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
-	}
-	
-	@Override
-	public Iterator<Block> iterator() {
-		return new AreaIterator(this, getWERegion().iterator());
-	}
-	
+    @Override
+    public boolean contains(Location location) {
+        int x = location.getBlockX();
+        int y = location.getBlockY();
+        int z = location.getBlockZ();
+        return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
+    }
+
+    @Override
+    public Iterator<Block> iterator() {
+        return new AreaIterator(this, getWERegion().iterator());
+    }
+
 }

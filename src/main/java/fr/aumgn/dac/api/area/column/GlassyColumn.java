@@ -8,10 +8,10 @@ import fr.aumgn.dac.api.config.DACColor;
 
 public class GlassyColumn implements ColumnPattern {
 
-	@Override
-	public void set(AreaColumn column, DACColor color) {
-		column.set(color.getMaterial(), color.getData());
-		column.get(-1).setType(Material.GLASS);
-	}
+    @Override
+    public void set(AreaColumn column, DACColor color) {
+        column.set(color.getMaterial(), color.getData());
+        column.get(-1).setType(Material.GLASS);
+    }
 
 }

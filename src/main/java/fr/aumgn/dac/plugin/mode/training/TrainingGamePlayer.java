@@ -6,45 +6,45 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class TrainingGamePlayer extends SimpleGamePlayer {
 
-	private boolean playing = true;
-	private int successes = 0;
-	private int dacs = 0;
-	private int fails = 0;
-	
-	public TrainingGamePlayer(Game<TrainingGamePlayer> stage, StagePlayer player, int index) {
-		super(stage, player, index);
-	}
+    private boolean playing = true;
+    private int successes = 0;
+    private int dacs = 0;
+    private int fails = 0;
 
-	public boolean isPlaying() {
-		return playing;
-	}
+    public TrainingGamePlayer(Game<TrainingGamePlayer> stage, StagePlayer player, int index) {
+        super(stage, player, index);
+    }
 
-	public void setPlaying(boolean playing) {
-		this.playing = playing;
-	}
-	
-	public int getSuccesses() {
-		return successes;
-	}
+    public boolean isPlaying() {
+        return playing;
+    }
 
-	public void incrementSuccesses() {
-		this.successes++;
-	}
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+    }
 
-	public int getDACs() {
-		return dacs;
-	}
+    public int getSuccesses() {
+        return successes;
+    }
 
-	public void incrementDACs() {
-		this.dacs++;
-	}
+    public void incrementSuccesses() {
+        this.successes++;
+    }
 
-	public int getFails() {
-		return fails;
-	}
+    public int getDACs() {
+        return dacs;
+    }
 
-	public void incrementFails() {
-		this.fails++;
-	}
+    public void incrementDACs() {
+        this.dacs++;
+    }
+
+    public int getFails() {
+        return fails;
+    }
+
+    public void incrementFails() {
+        this.fails++;
+    }
 
 }
