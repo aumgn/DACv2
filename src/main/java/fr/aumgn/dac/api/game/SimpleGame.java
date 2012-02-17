@@ -2,8 +2,10 @@ package fr.aumgn.dac.api.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -32,6 +34,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	private GameOptions options;
 	private GameModeHandler<T> gameModeHandler;
 	private T[] players;
+	private Set<Player> spectators; 
 	private int turn;
 	private boolean finished;
 	
@@ -55,6 +58,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 			players[i] = gameMode.createPlayer(this, dacPlayer, i+1);
 		}
 		gameModeHandler = gameMode.createHandler(this);
+		spectators = new HashSet<Player>();
 		turn = players.length - 1;
 		finished = false;
 		stagesManager.register(this);
@@ -116,6 +120,9 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 				player.getPlayer().sendMessage(msg.toString());
 			}
 		}
+		for (Player spectator : spectators) {
+			spectator.sendMessage(msg.toString());
+		}
 	}
 	
 	public void send(Object msg) {
@@ -157,6 +164,16 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 		if (DAC.getConfig().getResetOnEnd()) {
 			arena.getPool().reset();
 		}
+	}
+
+	@Override
+	public boolean addSpectator(Player player) {
+		return spectators.add(player);
+	}
+
+	@Override
+	public boolean removeSpectator(Player player) {
+		return spectators.remove(player);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package fr.aumgn.dac.api.game;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -20,5 +21,9 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
 	void onMove(PlayerMoveEvent event);
 
 	GameOptions getOptions();
+	
+	boolean addSpectator(Player player);
+	
+	boolean removeSpectator(Player player);
 	
 }

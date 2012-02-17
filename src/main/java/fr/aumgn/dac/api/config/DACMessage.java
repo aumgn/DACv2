@@ -62,7 +62,12 @@ public enum DACMessage {
 	CmdStartUnavailableMode ("command.start.unavailable-mode"),
 	CmdStartMinNotReached   ("command.start.min-not-reached"),
 	CmdStopNoGameToStop     ("command.stop.no-game-to-stop"),
-
+	CmdWatchNotInArena      ("command.watch.not-in-arena"),
+	CmdWatchUnknown         ("command.watch.unknown"),
+	CmdWatchNotInGame       ("command.watch.not-in-game"),
+	CmdWatchAlreadyWatching ("command.watch.already-watching"),
+	CmdWatchSuccess         ("command.watch.success"),
+	
 	JoinNewGame             ("join.new-game"),
 	JoinNewGame2            ("join.new-game2"),
 	JoinCurrentPlayers      ("join.current-players"),

@@ -42,8 +42,8 @@ command:
     fill:
         unknown: "Cette arène n'existe pas."
         in-game: "Cette commande ne peut pas être utilisée durant une partie."
-        unknown-strategy: "Methode de remplissage inconnue"
-        success: "Bassin remplis."
+        unknown-strategy: "Méthode de remplissage inconnue"
+        success: "Bassin rempli."
     select:
         unknown: "Arène inconnue."
         success-pool: "La zone du bassin a été sélectionnée."
@@ -64,6 +64,12 @@ command:
         min-not-reached: "Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter."
     stop:
         no-game-to-stop: "Il n'y a aucune partie en cours."
+    watch:
+        not-in-arena: "Vous ne vous trouvez pas dans une arene, specifier son nom si besoin."
+        unknown: "Arène %1$s inconnue."
+        not-in-game: "Il n'y a pas de partie dans l'arène %1$s."
+        already-watching: "Vous êtiez déjà spectateur de la partie dans l'arène %1$s."
+        success: "Vous êtes maintenant spectateur de %1$s."
 
 join:
     new-game: "<blue>Une nouvelle partie de Dé à coudre dans l'arène de <white>%1$s <blue>a été débutée."
