@@ -67,6 +67,7 @@ public enum DACMessage {
 	CmdWatchNotInGame       ("command.watch.not-in-game"),
 	CmdWatchAlreadyWatching ("command.watch.already-watching"),
 	CmdWatchSuccess         ("command.watch.success"),
+	CmdUnwatchSuccess       ("command.unwatch.succes"),
 	
 	JoinNewGame             ("join.new-game"),
 	JoinNewGame2            ("join.new-game2"),

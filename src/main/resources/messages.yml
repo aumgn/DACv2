@@ -70,6 +70,8 @@ command:
         not-in-game: "Il n'y a pas de partie dans l'arène %1$s."
         already-watching: "Vous êtiez déjà spectateur de la partie dans l'arène %1$s."
         success: "Vous êtes maintenant spectateur de %1$s."
+    unwatch:
+        success: "Vous n'êtes maintenant plus spectateur de %1$s."
 
 join:
     new-game: "<blue>Une nouvelle partie de Dé à coudre dans l'arène de <white>%1$s <blue>a été débutée."
