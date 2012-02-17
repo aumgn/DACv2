@@ -62,7 +62,9 @@ public final class DACUtil {
 		}
 	}
 
-	private static int getRelativeModValue(double decimal) {
+	private static int getRelativeModValue(double value) {
+		double abs = Math.abs(value); 
+		double decimal = abs - Math.floor(abs);
 		if (decimal < BLOCK_LIMIT_LEFT)  { return -1; }
 		if (decimal > BLOCK_LIMIT_RIGHT) { return  1; }
 		return 0;
@@ -79,12 +81,8 @@ public final class DACUtil {
 			return new BlockVector(block.getX(), block.getY() + 1, block.getZ());
 		}
 
-		double x = Math.abs(loc.getX());
-		double z = Math.abs(loc.getZ());
-		double xDec = x - Math.floor(x);
-		double zDec = z - Math.floor(z);
-		int modX = getRelativeModValue(xDec);
-		int modZ = getRelativeModValue(zDec);
+		int modX = getRelativeModValue(loc.getX());
+		int modZ = getRelativeModValue(loc.getZ());
 
 		if (modX != 0 && isRelativeBlockSolid(block, modX, 0)) {
 			return new BlockVector(block.getX() + modX, block.getY() + 1, block.getZ());
