@@ -27,6 +27,8 @@ public class DACPluginCommand extends CommandDispatcher implements DACCommand {
 		registerCommand("goto", new GotoCommand());
 		registerCommand("quit", new QuitCommand());
 		registerCommand("colors", new ColorsCommand());
+		registerCommand("watch", new WatchCommand());
+		registerCommand("unwatch", new UnwatchCommand());
 	}
 
 }

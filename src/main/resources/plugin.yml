@@ -90,9 +90,14 @@ commands:
         description: "Liste l'ensemble des couleurs disponibles"
         usage: 'Utilisation: /<command>'
         permission: 'dac.cmd.colors'
-    dac-test:
-        description: "Test"
-        usage: "Utilisation: /<command> <arene>"
+    dac-watch:
+        description: "Permets de s'enregistrer en tant que spectateur d'une ou plusieurs partie(s)"
+        usage: 'Utilisation: /<command> [arene1[ arene2[ ...]]]'
+        permission: 'dac.cmd.watch'
+    dac-unwatch:
+        description: "Permets de se retirer des spectateurs d'une ou plusieurs partie(s)"
+        usage: 'Utilisation: /<command> [arene1[ arene2[ ...]]]'
+        permission: 'dac.cmd.unwatch'
         
 permissions:
     dac.game.play:
@@ -107,6 +112,8 @@ permissions:
             dac.cmd.lives: true
             dac.cmd.goto: true
             dac.cmd.colors: true
+            dac.cmd.watch: true
+            dac.cmd.unwatch: true
     dac.game.reset:
         description: "Permets de remettre a zéro le bassin in-game"
         default: op
