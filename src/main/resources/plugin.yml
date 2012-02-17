@@ -114,8 +114,8 @@ permissions:
             dac.cmd.colors: true
             dac.cmd.watch: true
             dac.cmd.unwatch: true
-    dac.game.reset:
-        description: "Permets de remettre a zéro le bassin in-game"
+    dac.game.fill:
+        description: "Permets de remplir le bassin in-game"
         default: op
     dac.game.manage:
         description: "Permets de gerer le deroulement d'une partie et de jouer."
