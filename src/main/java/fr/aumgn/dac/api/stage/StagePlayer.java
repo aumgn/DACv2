@@ -25,6 +25,10 @@ public interface StagePlayer {
 
 	void tpToStart();
 
-	void tpToDiving();
+	void tpAfterJump();
+	
+	void tpAfterFail();
 
+	void tpToDiving();
+	
 }

@@ -1,12 +1,23 @@
 package fr.aumgn.dac.api.stage;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACColor;
+import fr.aumgn.dac.api.config.DACConfig;
 
 public class SimpleStagePlayer implements StagePlayer {
+	
+	private Runnable tpToStart = new Runnable() {
+		@Override
+		public void run() {
+			player.setFallDistance(0.0f);
+			player.teleport(startLocation);
+		}
+	};
 
 	private Player player;
 	private Stage<? extends SimpleStagePlayer> stage;
@@ -69,10 +80,38 @@ public class SimpleStagePlayer implements StagePlayer {
 
 	@Override
 	public void tpToStart() {
-		player.setFallDistance(0.0f);
-		player.teleport(startLocation);
+		tpToStart.run();
 	}
 	
+	@Override
+	public void tpAfterFail() {
+		DACConfig config = DAC.getConfig();
+		if (config.getTpAfterFail()) {
+			int delay = config.getTpAfterFailDelay();
+			if (delay == 0) {
+				tpToStart.run();
+			} else {
+				player.setNoDamageTicks(delay);
+				Bukkit.getScheduler().scheduleAsyncDelayedTask(DAC.getPlugin(), tpToStart, delay);
+			}
+		} else {
+			player.setNoDamageTicks(20);
+		}
+	}
+	
+	@Override
+	public void tpAfterJump() {
+		DACConfig config = DAC.getConfig();
+		if (config.getTpAfterJump()) {
+			int delay = config.getTpAfterSuccessDelay(); 
+			if (delay == 0) {
+				tpToStart.run();
+			} else {
+				Bukkit.getScheduler().scheduleAsyncDelayedTask(DAC.getPlugin(), tpToStart, delay);
+			}
+		}
+	}
+
 	@Override
 	public void tpToDiving() {
 		player.setFallDistance(0.0f);

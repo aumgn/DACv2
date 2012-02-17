@@ -62,7 +62,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 		lastPlayer = player;
 		player.send(DACMessage.GameJumpSuccess2);
 		player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
-		player.tpToStart();
+		player.tpAfterJump();
 		game.nextTurn();
 	}
 
@@ -72,7 +72,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 		player.setDeadThisTurn();
 		player.send(DACMessage.GameJumpFail2);
 		player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
-		player.tpToStart();
+		player.tpAfterJump();
 		game.nextTurn();
 	}
 	

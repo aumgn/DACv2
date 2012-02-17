@@ -98,15 +98,12 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 		Pool pool = arena.getPool();
 		boolean dac = pool.isADACPattern(x, z);
 
-		player.tpToStart();
 		if (dac) {
 			DAC.callEvent(new DACGameDACEvent(game, player));
 			pool.setColumn(new GlassyColumn(), player.getColor(), x, z);
 		} else {
 			pool.setColumn(new UniformColumn(), player.getColor(), x, z);
 		}
-		
-		System.out.println(pool.isFull());
 		
 		if (player.mustConfirmate()) {
 			if (dac) {
@@ -140,6 +137,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 			} else {
 				game.nextTurn();
 			}
+			
+			player.tpAfterJump();
 		}
 	}
 	
@@ -193,7 +192,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 				game.nextTurn();
 			}
 		}
-		player.tpToStart();		
+		player.tpAfterFail();
 	}
 	
 	@Override
