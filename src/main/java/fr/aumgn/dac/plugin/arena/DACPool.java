@@ -42,8 +42,11 @@ public class DACPool extends DACVerticalArea implements Pool {
 	private static final int ABOVE_REGION_HEIGHT = 5;
 	private static final int ABOVE_REGION_MARGIN = 5;
 
+	private CuboidRegion aboveRegion;
+	
 	public DACPool(DACArena arena) {
 		super(arena);
+		updateAboveRegion();
 	}
 	
 	private void removeSigns() {
@@ -63,8 +66,8 @@ public class DACPool extends DACVerticalArea implements Pool {
 	public void reset() {
 		fillWith(WATER_FILLER, new String[0]);
 	}
-
-	public CuboidRegion getAboveRegion() {
+	
+	private void updateAboveRegion() {
 		int minY, maxY;
 		Vector poolMinPt, poolMaxPt, minPt, maxPt;
 		Region region = getWERegion();
@@ -77,7 +80,11 @@ public class DACPool extends DACVerticalArea implements Pool {
 		minPt = poolMinPt.subtract(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(minY);
 		maxPt = poolMaxPt.add(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(maxY);
 
-		return new CuboidRegion(region.getWorld(), minPt, maxPt);
+		aboveRegion = new CuboidRegion(region.getWorld(), minPt, maxPt);		
+	}
+
+	private CuboidRegion getAboveRegion() {
+		return aboveRegion;
 	}
 
 	public boolean isAbove(Player player) {
@@ -87,6 +94,12 @@ public class DACPool extends DACVerticalArea implements Pool {
 				player.getLocation().getBlockZ()
 				);
 		return getAboveRegion().contains(vec);
+	}
+	
+	@Override
+	public void update(Region region) {
+		super.update(region);
+		updateAboveRegion();
 	}
 
 	public void setColumn(ColumnPattern pattern, DACColor color, int x, int z) {
