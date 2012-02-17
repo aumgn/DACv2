@@ -1,6 +1,7 @@
 package fr.aumgn.dac.api.stage;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
@@ -9,7 +10,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.game.Game;
 
-public class StageManager {
+public class StageManager implements Iterable<Stage<?>>{
 
     private Map<Arena, Stage<?>> stages;
 
@@ -62,6 +63,11 @@ public class StageManager {
         }
         stages.remove(stage.getArena());
         stage.unregisterAll();
+    }
+
+    @Override
+    public Iterator<Stage<?>> iterator() {
+        return stages.values().iterator();
     }
 
 }

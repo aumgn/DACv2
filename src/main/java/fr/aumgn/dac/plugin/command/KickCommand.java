@@ -1,8 +1,7 @@
 package fr.aumgn.dac.plugin.command;
 
-import java.util.List;
-
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.DAC;
@@ -20,19 +19,22 @@ public class KickCommand extends PlayerCommandExecutor {
 
     @Override
     public void onPlayerCommand(Context context, String[] args) {
+        int count = 0;
         StagePlayerManager playerManager = DAC.getPlayerManager();
-        for (Player player : matchPlayer(context, args[0])) {
-            StagePlayer dacPlayer = playerManager.get(player);
-            dacPlayer.getStage().removePlayer(dacPlayer);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            StagePlayer stagePlayer = playerManager.get(player);
+            if (stagePlayer != null) {
+                if (ChatColor.stripColor(stagePlayer.getDisplayName()).startsWith(args[0])) {
+                    stagePlayer.getStage().removePlayer(stagePlayer);
+                    count++;
+                }
+            }
         }
-    }
-
-    public List<Player> matchPlayer(Context context, String arg) {
-        List<Player> list = Bukkit.matchPlayer(arg);
-        if (list.isEmpty()) {
+        if (count == 0) {
             error(DACMessage.CmdKickNoPlayerFound);
+        } else {
+            context.success(DACMessage.CmdKickSuccess.format(count));
         }
-        return list;
     }
 
 }

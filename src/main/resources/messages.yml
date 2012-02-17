@@ -18,8 +18,8 @@ command:
         in-game: "Une partie est déjà en cours dans cette arène."
         max-reached: "Il y a déjà %1$d joueurs dans la partie"
     kick:
-        not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         no-player-found: "Aucun joueur trouvé avec ce nom."
+        success: "%1$s joueur(s) kické(s)."
     modes:
         unknown: "Aucune arène ne porte ce nom"
         list: "Modes de jeu disponibles :"
