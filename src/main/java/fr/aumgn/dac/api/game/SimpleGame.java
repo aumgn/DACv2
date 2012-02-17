@@ -22,7 +22,6 @@ import fr.aumgn.dac.api.exception.PlayerCastException;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameModeHandler;
 import fr.aumgn.dac.api.stage.Stage;
-import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
 import fr.aumgn.dac.api.util.DACUtil;
@@ -42,29 +41,33 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 		this(gameMode, stage, stage.getPlayers(), options);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, List<? extends StagePlayer> playersList, GameOptions options) {
-		StageManager stagesManager = DAC.getStageManager();
 		stage.stop();
 		this.arena = stage.getArena();
 		this.mode = gameMode;
 		this.options = options;
 		List<StagePlayer> roulette = new ArrayList<StagePlayer>(playersList);
-		players = (T[]) new StagePlayer[roulette.size()];
-		Random rand = DAC.getRand();
-		for (int i=0; i< players.length; i++) {
-			int j = rand.nextInt(roulette.size());
-			StagePlayer dacPlayer = roulette.remove(j);
-			players[i] = gameMode.createPlayer(this, dacPlayer, i+1);
-		}
+		players = shufflePlayers(gameMode, roulette);
 		gameModeHandler = gameMode.createHandler(this);
 		spectators = new HashSet<Player>();
 		turn = players.length - 1;
 		finished = false;
-		stagesManager.register(this);
+		DAC.getStageManager().register(this);
 		gameModeHandler.onStart();
 		nextTurn();
 		DAC.callEvent(new DACGameStartEvent(this));
+	}
+	
+	@SuppressWarnings("unchecked")
+	private T[] shufflePlayers(GameMode<T> gameMode, List<? extends StagePlayer> roulette) {
+		T[] ary = (T[]) new StagePlayer[roulette.size()];
+		Random rand = DAC.getRand();
+		for (int i=0; i< ary.length; i++) {
+			int j = rand.nextInt(roulette.size());
+			StagePlayer dacPlayer = roulette.remove(j);
+			ary[i] = gameMode.createPlayer(this, dacPlayer, i+1);
+		}
+		return ary;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -147,6 +150,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	@Override
 	public void removePlayer(StagePlayer player) {
 		gameModeHandler.onQuit(castPlayer(player));
+		DAC.getPlayerManager().unregister(player);
 	}
 
 

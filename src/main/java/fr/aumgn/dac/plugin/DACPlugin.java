@@ -23,6 +23,7 @@ import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.plugin.arena.DACArenas;
 import fr.aumgn.dac.plugin.command.DACPluginCommand;
+import fr.aumgn.dac.plugin.config.DACPluginConfig;
 import fr.aumgn.dac.plugin.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.mode.training.TrainingGameMode;
@@ -73,7 +74,7 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFil
 		DACGameModes gameModes = new DACGameModes();
 		DACArenas arenas = new DACArenas();
 		DACFillStrategies fillStrategies = new DACFillStrategies();
-		DAC.init(this, (WorldEditPlugin)worldEdit, gameModes, arenas, fillStrategies);
+		DAC.init(this, (WorldEditPlugin)worldEdit, new DACPluginConfig(), gameModes, arenas, fillStrategies);
 		
 		getLogger().info(getDescription().getName() + " loaded.");
 	}

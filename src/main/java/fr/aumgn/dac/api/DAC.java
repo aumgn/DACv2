@@ -32,7 +32,7 @@ public final class DAC {
 
 	private DAC() {}
 
-	public static void init(Plugin plugin, WorldEditPlugin worldEdit, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
+	public static void init(Plugin plugin, WorldEditPlugin worldEdit, DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
 		if (DAC.plugin != null) {
 			throw new UnsupportedOperationException("Cannot init DAC twice.");
 		}
@@ -44,6 +44,7 @@ public final class DAC {
 		rand = new Random();
 		stageManager = new StageManager();
 		playerManager = new StagePlayerManager();
+		DAC.config = config;
 		reloadConfig();
 		reloadMessages();
 		arenas.load();
@@ -71,7 +72,7 @@ public final class DAC {
 
 	public static void reloadConfig() {
 		plugin.reloadConfig();
-		config = new DACConfig(plugin.getConfig());
+		config.load(plugin.getConfig());
 	}	
 
 	public static void reloadMessages() {

@@ -9,15 +9,61 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import fr.aumgn.dac.api.area.AreaColumn;
+import fr.aumgn.dac.api.area.AreaColumnBlock;
 import fr.aumgn.dac.api.area.VerticalArea;
 
 public class DACAreaColumn implements AreaColumn {
 	
-	private class DACColumnIterator implements Iterator<Block> {
+	public class DACAreaColumnBlock implements AreaColumnBlock {
+		
+		private int index;
+		private Block block;
+		
+		public DACAreaColumnBlock(int index, Block block) {
+			this.index = index;
+			this.block = block;
+		}
 
+		@Override
+		public int getIndex() {
+			return index;
+		}
+
+		@Override
+		public Material getType() {
+			return block.getType();
+		}
+
+		@Override
+		public byte getData() {
+			return block.getData();
+		}
+
+		@Override
+		public void setType(Material material) {
+			block.setType(material);
+		}
+		
+		@Override
+		public void setType(Material material, byte data) {
+			setType(material);
+			setData(data);
+		}
+
+		@Override
+		public void setData(byte data) {
+			block.setData(data);
+		}
+		
+	}
+	
+	private class DACColumnIterator implements Iterator<AreaColumnBlock> {
+
+		private int i;
 		private int y;
 
 		public DACColumnIterator() {
+			this.i = 0;
 			this.y = bottom;
 		}
 
@@ -27,14 +73,14 @@ public class DACAreaColumn implements AreaColumn {
 		}
 
 		@Override
-		public Block next() {
+		public AreaColumnBlock next() {
 			if (!hasNext()) {
 				throw new NoSuchElementException();
 			}
 
 			Block block = world.getBlockAt(x, y, z);
 			y++;
-			return block;
+			return new DACAreaColumnBlock(i++, block);
 		}
 
 		@Override
@@ -58,42 +104,60 @@ public class DACAreaColumn implements AreaColumn {
 		this.z = z;
 	}
 
+	@Override
 	public World getWorld() {
 		return world;
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public int getZ() {
 		return z;
 	}
 
+	@Override
 	public int getBottom() {
 		return bottom;
 	}
 
+	@Override
 	public int getTop() {
 		return top;
 	}
 
-	public void set(Material material, byte data) {
-		for (Block block : this) {
-			block.setType(material);
-			block.setData(data);
-		}
+	@Override
+	public Iterator<AreaColumnBlock> iterator() {
+		return new DACColumnIterator(); 
 	}
 
+	@Override
+	public int getHeight() {
+		return top - bottom + 1;
+	}
+
+	@Override
+	public AreaColumnBlock get(int index) {
+		int i = index % getHeight();
+		if (i < 0) { i += getHeight(); } 
+		return new DACAreaColumnBlock(i, world.getBlockAt(x, bottom + i, z));
+	}
+
+	@Override
 	public void set(Material material) {
-		for (Block block : this) {
+		for (AreaColumnBlock block : this) {
 			block.setType(material);
 		}
 	}
 
 	@Override
-	public Iterator<Block> iterator() {
-		return new DACColumnIterator(); 
+	public void set(Material material, byte data) {
+		for (AreaColumnBlock block : this) {
+			block.setType(material, data);
+		}
 	}
 
 }

@@ -2,10 +2,9 @@ package fr.aumgn.dac.api.area;
 
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 
-public interface AreaColumn extends Iterable<Block> {
-
+public interface AreaColumn extends Iterable<AreaColumnBlock> {
+	
 	World getWorld();
 
 	int getX();
@@ -15,9 +14,13 @@ public interface AreaColumn extends Iterable<Block> {
 	int getBottom();
 
 	int getTop();
-
-	void set(Material material, byte data);
-
+	
+	int getHeight();
+	
+	AreaColumnBlock get(int index);
+	
 	void set(Material material);
+	
+	void set(Material material, byte data);
 
 }

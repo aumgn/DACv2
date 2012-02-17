@@ -3,8 +3,8 @@ package fr.aumgn.dac.plugin.mode.training;
 import org.bukkit.Location;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.area.column.GlassColumn;
-import fr.aumgn.dac.api.area.column.SimpleColumn;
+import fr.aumgn.dac.api.area.column.GlassyColumn;
+import fr.aumgn.dac.api.area.column.UniformColumn;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
@@ -49,12 +49,12 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 		Pool pool = arena.getPool(); 
 		if (pool.isADACPattern(x, z)) {
 			player.incrementDACs();
-			pool.setColumn(new GlassColumn(), player.getColor(), x, z);
+			pool.setColumn(new GlassyColumn(), player.getColor(), x, z);
 			player.send(DACMessage.GameDAC2);
 			player.sendToOthers(DACMessage.GameDAC.format(player.getDisplayName()));
 		} else {
 			player.incrementSuccesses();
-			pool.setColumn(new SimpleColumn(), player.getColor(), x, z);
+			pool.setColumn(new UniformColumn(), player.getColor(), x, z);
 			player.send(DACMessage.GameJumpSuccess2);
 			player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
 		}
