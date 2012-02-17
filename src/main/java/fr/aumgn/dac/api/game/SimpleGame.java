@@ -19,7 +19,7 @@ import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
 import fr.aumgn.dac.api.exception.PlayerCastException;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameModeHandler;
-import fr.aumgn.dac.api.joinstage.JoinStage;
+import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
@@ -35,20 +35,24 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	private int turn;
 	private boolean finished;
 	
+	public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, GameOptions options) {
+		this(gameMode, stage, stage.getPlayers(), options);
+	}
+	
 	@SuppressWarnings("unchecked")
-	public SimpleGame(GameMode<T> gameMode, JoinStage<? extends StagePlayer> joinStage, GameOptions options) {
+	public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, List<? extends StagePlayer> playersList, GameOptions options) {
 		StageManager stagesManager = DAC.getStageManager();
-		joinStage.stop();
-		this.arena = joinStage.getArena();
+		stage.stop();
+		this.arena = stage.getArena();
 		this.mode = gameMode;
 		this.options = options;
-		List<StagePlayer> roulette = new ArrayList<StagePlayer>(joinStage.getPlayers());
+		List<StagePlayer> roulette = new ArrayList<StagePlayer>(playersList);
 		players = (T[]) new StagePlayer[roulette.size()];
 		Random rand = DAC.getRand();
 		for (int i=0; i< players.length; i++) {
 			int j = rand.nextInt(roulette.size());
 			StagePlayer dacPlayer = roulette.remove(j);
-			players[i] = gameMode.createPlayer(this, dacPlayer, i);
+			players[i] = gameMode.createPlayer(this, dacPlayer, i+1);
 		}
 		gameModeHandler = gameMode.createHandler(this);
 		turn = players.length - 1;

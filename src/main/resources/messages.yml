@@ -107,3 +107,8 @@ game:
     rank: "<gray>%1$s<blue>. %2$s"
     stopped: "<blue>La partie a été arretée."
     display-lives: "%1$s : <gray>%2$s"
+    
+stats:
+    success: "<green>Reussi : %1$s"
+    dac: "<gold>Dés à coudre : %1$s"
+    fail: "<red>Manqués : %1$s"

@@ -20,8 +20,12 @@ import fr.aumgn.dac.api.event.game.DACGameLooseEvent;
 import fr.aumgn.dac.api.event.game.DACGameWinEvent;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
+import fr.aumgn.dac.api.game.SimpleGame;
+import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.api.util.DACUtil;
+import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
+import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGamePlayer;
 
 public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePlayer> {
 	
@@ -94,6 +98,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 			pool.setColumn(new SimpleColumn(), player.getColor(), x, z);
 		}
 		
+		System.out.println(pool.isFull());
+		
 		if (player.mustConfirmate()) {
 			if (dac) {
 				player.send(DACMessage.GameDACConfirmation3);
@@ -115,8 +121,42 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 				player.send(DACMessage.GameJumpSuccess2);
 				player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
 			}
-			game.nextTurn();
+			
+			if (pool.isFull()) {
+				List<ClassicGamePlayer> playersLeft = getPlayersLeftForSuddenDeath(player);
+				if (playersLeft.size() > 1) {
+					switchToSuddenDeath(playersLeft);
+				} else {
+					onPlayerWin(playersLeft.get(0));
+				}
+			} else {
+				game.nextTurn();
+			}
 		}
+	}
+	
+	private List<ClassicGamePlayer> getPlayersLeftForSuddenDeath(ClassicGamePlayer player) {
+		int max = 0;
+		List<ClassicGamePlayer> playersLeft = new ArrayList<ClassicGamePlayer>();
+		int i = player.getIndex();
+		List<ClassicGamePlayer> players = game.getPlayers();
+		for (int j = 0; j < players.size(); j++) {
+			ClassicGamePlayer playerLeft = players.get((i + j) % players.size());
+			int lives = playerLeft.getLives();
+			if (lives > max) {
+				max = lives;
+				playersLeft = new ArrayList<ClassicGamePlayer>();
+				playersLeft.add(playerLeft);
+			} else if (lives == max) {
+				playersLeft.add(playerLeft);
+			}
+		}
+		return playersLeft;
+	}
+
+	private void switchToSuddenDeath(List<ClassicGamePlayer> players) {
+		GameMode<SuddenDeathGamePlayer> mode = new SuddenDeathGameMode();
+		new SimpleGame<SuddenDeathGamePlayer>(mode, game, players, game.getOptions());
 	}
 
 	@Override
@@ -210,6 +250,4 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 		game.stop();
 	}
 	
-	
-
 }

@@ -34,14 +34,14 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 		if (!player.isPlaying()) {
 			game.nextTurn();
 		} else {
-			game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()), player);
+			player.send(DACMessage.GamePlayerTurn2);
+			player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 			player.tpToDiving();
 		}
 	}
 
 	@Override
 	public void onSuccess(TrainingGamePlayer player) {
-		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()), player);
 		Location loc = player.getPlayer().getLocation();
 		int x = loc.getBlockX();
 		int z = loc.getBlockZ();
@@ -50,18 +50,23 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 		if (pool.isADACPattern(x, z)) {
 			player.incrementDACs();
 			pool.setColumn(new GlassColumn(), player.getColor(), x, z);
+			player.send(DACMessage.GameDAC2);
+			player.sendToOthers(DACMessage.GameDAC.format(player.getDisplayName()));
 		} else {
 			player.incrementSuccesses();
 			pool.setColumn(new SimpleColumn(), player.getColor(), x, z);
+			player.send(DACMessage.GameJumpSuccess2);
+			player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
 		}
 		game.nextTurn();
 	}
 
 	@Override
 	public void onFail(TrainingGamePlayer player) {
-		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()), player);
 		player.tpToStart();
 		player.incrementFails();
+		player.send(DACMessage.GameJumpFail2);
+		player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
 		game.nextTurn();	
 	}
 	
@@ -83,9 +88,9 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 	@Override
 	public void onStop() {
 		for (TrainingGamePlayer player : game.getPlayers()) {
-			player.send("Reussi : " + player.getSuccesses());
-			player.send("Dés a coudre : " + player.getDACs());
-			player.send("Manqués : " + player.getFails());
+			player.send(DACMessage.StatsSuccess.format(player.getSuccesses()));
+			player.send(DACMessage.StatsDAC.format(player.getDACs()));
+			player.send(DACMessage.StatsFail.format(player.getFails()));
 		}
 	}
 

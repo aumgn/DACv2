@@ -10,6 +10,8 @@ public interface VerticalArea extends Area {
 
 	Iterable<AreaColumn> columns();	
 	
+	boolean isFull();
+
 	void fillWith(FillStrategy strategy, String[] fillArgs);
 
 }

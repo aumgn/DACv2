@@ -52,14 +52,16 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 			game.nextTurn();
 			return;
 		}
-		game.send(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
+		player.send(DACMessage.GamePlayerTurn2);
+		player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
 		player.tpToDiving();
 	}
 
 	@Override
 	public void onSuccess(SuddenDeathGamePlayer player) {
 		lastPlayer = player;
-		game.send(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
+		player.send(DACMessage.GameJumpSuccess2);
+		player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
 		player.tpToStart();
 		game.nextTurn();
 	}
@@ -68,7 +70,8 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
 	public void onFail(SuddenDeathGamePlayer player) {
 		playersLeftCount--;
 		player.setDeadThisTurn();
-		game.send(DACMessage.GameJumpFail.format(player.getDisplayName()));
+		player.send(DACMessage.GameJumpFail2);
+		player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
 		player.tpToStart();
 		game.nextTurn();
 	}

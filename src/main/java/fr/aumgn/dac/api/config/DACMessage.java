@@ -102,7 +102,11 @@ public enum DACMessage {
 	GameWinner              ("game.winner"),
 	GameRank                ("game.rank"),
 	GameStopped             ("game.stopped"),
-	GameDisplayLives        ("game.display-lives");
+	GameDisplayLives        ("game.display-lives"),
+	
+	StatsSuccess            ("stats.success"),
+	StatsDAC                ("stats.dac"),
+	StatsFail               ("stats.fail");
 	
 	private static final String MESSAGES_FILENAME = "messages.yml";
 
