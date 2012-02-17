@@ -100,10 +100,17 @@ commands:
         permission: 'dac.cmd.unwatch'
         
 permissions:
+    dac.game.watch:
+        description: 'Permets de s'enregistrer en tant que spectateur d'une partie.'
+        default: true
+        children:
+            dac.cmd.watch: true
+            dac.cmd.unwatch: true
     dac.game.play:
         description: 'Permets de jouer.'
         default: true
         children:
+            dac.game.watch: true
             dac.cmd.join: true
             dac.cmd.start: true
             dac.cmd.fill: true
@@ -112,8 +119,6 @@ permissions:
             dac.cmd.lives: true
             dac.cmd.goto: true
             dac.cmd.colors: true
-            dac.cmd.watch: true
-            dac.cmd.unwatch: true
     dac.game.fill:
         description: "Permets de remplir le bassin in-game"
         default: op
