@@ -1,6 +1,9 @@
 package fr.aumgn.dac.plugin.mode.suddendeath;
 
+import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.event.game.DACGameLooseEvent;
+import fr.aumgn.dac.api.event.game.DACGameWinEvent;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillAllButOne;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
@@ -31,6 +34,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
                 }
             }
         } else if (playersLeftCount == 1) {
+            DAC.callEvent(new DACGameWinEvent(game, lastPlayer));
             game.send(DACMessage.GameWinner.format(lastPlayer.getDisplayName()));
             game.stop();
             return;
@@ -38,6 +42,7 @@ public class SuddenDeathGameModeHandler extends SimpleGameModeHandler<SuddenDeat
             for (SuddenDeathGamePlayer dacPlayer : game.getPlayers()) {
                 SuddenDeathGamePlayer player = dacPlayer;
                 if (player.isDeadThisTurn()) {
+                    DAC.callEvent(new DACGameLooseEvent(game, player));
                     player.setDead();
                 }
             }
