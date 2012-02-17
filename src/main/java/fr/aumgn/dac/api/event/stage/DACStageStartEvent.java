@@ -1,16 +1,16 @@
-package fr.aumgn.dac.api.event.game;
+package fr.aumgn.dac.api.event.stage;
 
 import org.bukkit.event.HandlerList;
 
-import fr.aumgn.dac.api.game.Game;
+import fr.aumgn.dac.api.stage.Stage;
 
-public class DACGameStartEvent extends DACGameEvent {
+public class DACStageStartEvent extends DACStageEvent {
 
     private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
 
-    public DACGameStartEvent(Game<?> game) {
-        super("DACGameStartEvent", game);
+    public DACStageStartEvent(Stage<?> stage) {
+        super("DACStageStartEvent", stage);
     }
 
     @Override

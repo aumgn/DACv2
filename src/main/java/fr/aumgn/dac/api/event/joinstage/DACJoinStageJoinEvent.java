@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList;
 import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 
-public class DACPlayerJoinEvent extends DACJoinStageEvent implements Cancellable {
+public class DACJoinStageJoinEvent extends DACJoinStageEvent implements Cancellable {
     private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
 
@@ -17,8 +17,8 @@ public class DACPlayerJoinEvent extends DACJoinStageEvent implements Cancellable
     private Location startLocation;
     private boolean isCancelled = false;
 
-    public DACPlayerJoinEvent(JoinStage<?> joinStage, Player player, DACColor color, Location location) {
-        super("DACPlayerJoinEvent", joinStage);
+    public DACJoinStageJoinEvent(JoinStage<?> joinStage, Player player, DACColor color, Location location) {
+        super("DACJoinStageJoinEvent", joinStage);
         this.player = player;
         this.color = color;
         this.startLocation = location;

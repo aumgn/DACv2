@@ -19,9 +19,10 @@ import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.event.game.DACGameFailEvent;
 import fr.aumgn.dac.api.event.game.DACGameNewTurnEvent;
-import fr.aumgn.dac.api.event.game.DACGameStartEvent;
-import fr.aumgn.dac.api.event.game.DACGameStopEvent;
 import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
+import fr.aumgn.dac.api.event.stage.DACStagePlayerQuitEvent;
+import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
+import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
 import fr.aumgn.dac.api.exception.PlayerCastException;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameModeHandler;
@@ -70,7 +71,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         DAC.getStageManager().register(this);
         gameModeHandler.onStart();
         nextTurn();
-        DAC.callEvent(new DACGameStartEvent(this));
+        DAC.callEvent(new DACStageStartEvent(this));
     }
 
     private int parseInteger(String str) {
@@ -211,6 +212,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 
     @Override
     public void removePlayer(StagePlayer player) {
+        DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
         gameModeHandler.onQuit(castPlayer(player));
         DAC.getPlayerManager().unregister(player);
     }
@@ -224,7 +226,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     public void stop() {
         finished = true;
         Bukkit.getScheduler().cancelTask(turnTimeOutTaskId);
-        DAC.callEvent(new DACGameStopEvent(this));
+        DAC.callEvent(new DACStageStopEvent(this));
         gameModeHandler.onStop();
         DAC.getStageManager().unregister(this);
         if (DAC.getConfig().getResetOnEnd()) {

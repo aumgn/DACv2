@@ -8,12 +8,12 @@ public class DACJoinStageEvent extends DACEvent {
 
     private JoinStage<?> joinStage;
 
-    public DACJoinStageEvent(String name, JoinStage<?> joinStage) {
+    public DACJoinStageEvent(String name, JoinStage<?> stage) {
         super(name);
-        this.joinStage = joinStage;
+        this.joinStage = stage;
     }
 
-    public JoinStage<?> getGame() {
+    public JoinStage<?> getJoinStage() {
         return joinStage;
     }
 

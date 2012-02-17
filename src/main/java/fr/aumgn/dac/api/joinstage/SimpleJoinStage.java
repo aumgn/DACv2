@@ -13,9 +13,10 @@ import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.api.config.DACColors;
 import fr.aumgn.dac.api.config.DACMessage;
-import fr.aumgn.dac.api.event.joinstage.DACJoinStageStartEvent;
-import fr.aumgn.dac.api.event.joinstage.DACJoinStageStopEvent;
-import fr.aumgn.dac.api.event.joinstage.DACPlayerJoinEvent;
+import fr.aumgn.dac.api.event.joinstage.DACJoinStageJoinEvent;
+import fr.aumgn.dac.api.event.stage.DACStagePlayerQuitEvent;
+import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
+import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -37,7 +38,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
             player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
             player.sendMessage(DACMessage.JoinNewGame2.getValue());
         }
-        DAC.callEvent(new DACJoinStageStartEvent(this));
+        DAC.callEvent(new DACStageStartEvent(this));
     }
 
     @Override
@@ -99,14 +100,14 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
     }
 
     private void addPlayer(Player player, DACColor color) {
-        DACPlayerJoinEvent event = new DACPlayerJoinEvent(this, player, color, player.getLocation());
+        DACJoinStageJoinEvent event = new DACJoinStageJoinEvent(this, player, color, player.getLocation());
         DAC.callEvent(event);
 
         if (!event.isCancelled()) {
             SimpleJoinStagePlayer dacPlayer = new SimpleJoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
             players.add(dacPlayer);
             DAC.getPlayerManager().register(dacPlayer);
-            colorsMap.add(color);
+            colorsMap.add(event.getColor());
             dacPlayer.send(DACMessage.JoinCurrentPlayers);
             for (StagePlayer currentPlayer : players) {
                 dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
@@ -132,6 +133,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
 
     @Override
     public void removePlayer(StagePlayer player) {
+        DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
         send(DACMessage.JoinPlayerQuit.format(player.getDisplayName()));
         players.remove(player);
         DAC.getPlayerManager().unregister(player);
@@ -148,7 +150,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
 
     @Override
     public void stop() {
-        DAC.callEvent(new DACJoinStageStopEvent(this));
+        DAC.callEvent(new DACStageStopEvent(this));
         DAC.getStageManager().unregister(this);
     }
 
