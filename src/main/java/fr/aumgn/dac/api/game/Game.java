@@ -3,6 +3,7 @@ package fr.aumgn.dac.api.game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
@@ -25,5 +26,9 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
 	boolean addSpectator(Player player);
 	
 	boolean removeSpectator(Player player);
+
+	Vector getPropulsion();
+	
+	int getPropulsionDelay();
 	
 }

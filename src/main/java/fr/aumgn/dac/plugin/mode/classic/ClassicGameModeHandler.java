@@ -41,14 +41,22 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 		this.playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
 	}
 	
+	private int parseLivesOption() {
+		GameOptions options = game.getOptions();
+		String livesOption = options.get("lives", "0");
+		try {
+			return Integer.parseInt(livesOption);
+		} catch (NumberFormatException exc) {
+			return 0;
+		}
+	}
+	
 	@Override
 	public void onStart() {
 		if (DAC.getConfig().getResetOnStart()) {
 			arena.getPool().reset();
 		}
-		GameOptions options = game.getOptions();
-		String livesOption = options.get("lives", "0");
-		int lives = Integer.parseInt(livesOption);
+		int lives = parseLivesOption();
 		for (ClassicGamePlayer player : game.getPlayers()) {
 			player.setLives(lives);
 		}

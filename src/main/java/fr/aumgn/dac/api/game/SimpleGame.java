@@ -10,6 +10,7 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
@@ -33,7 +34,9 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	private GameOptions options;
 	private GameModeHandler<T> gameModeHandler;
 	private T[] players;
-	private Set<Player> spectators; 
+	private Set<Player> spectators;
+	private Vector propulsion;
+	private int propulsionDelay;
 	private int turn;
 	private boolean finished;
 	
@@ -46,6 +49,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 		this.arena = stage.getArena();
 		this.mode = gameMode;
 		this.options = options;
+		parsePropulsion();
 		List<StagePlayer> roulette = new ArrayList<StagePlayer>(playersList);
 		players = shufflePlayers(gameMode, roulette);
 		gameModeHandler = gameMode.createHandler(this);
@@ -56,6 +60,38 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 		gameModeHandler.onStart();
 		nextTurn();
 		DAC.callEvent(new DACGameStartEvent(this));
+	}
+	
+	private int parseInteger(String str) {
+		try {
+			return Integer.parseInt(str);
+		} catch (NumberFormatException exc) {
+			return 0;
+		}
+	}
+	
+	private void parsePropulsion() {
+		String prop = options.get("propulsion", "0");
+		String[] splitted = prop.split(",");
+		if (splitted.length == 1) {
+			propulsion = new Vector(0, parseInteger(splitted[0]), 0);
+			propulsionDelay = 0;
+		} else if (splitted.length == 2) {
+			propulsion = new Vector(0, parseInteger(splitted[0]), 0);
+			propulsionDelay = parseInteger(splitted[1]);
+		} else if (splitted.length == 3) {
+			propulsion = new Vector(
+				parseInteger(splitted[0]),
+				parseInteger(splitted[1]),
+				parseInteger(splitted[2]));
+			propulsionDelay = 0;
+		} else {
+			propulsion = new Vector(
+				parseInteger(splitted[0]),
+				parseInteger(splitted[1]),
+				parseInteger(splitted[2]));
+			propulsionDelay = parseInteger(splitted[3]);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -113,7 +149,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 		}
 	}
 	
-	public boolean isPlayerTurn(StagePlayer player) {
+	public boolean isPlayerTurn(T player) {
 		return !finished && players[turn].equals(player);
 	}
 	
@@ -179,17 +215,26 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	public boolean removeSpectator(Player player) {
 		return spectators.remove(player);
 	}
+	
+	@Override
+	public Vector getPropulsion() {
+		return propulsion;
+	}
+
+	public int getPropulsionDelay() {
+		return propulsionDelay;
+	}
 
 	@Override
 	public void onFallDamage(EntityDamageEvent event) {
 		Player player = (Player)event.getEntity();
-		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
-		if (isPlayerTurn(dacPlayer) && arena.getPool().isAbove(player)) {
-			DACGameFailEvent failEvent = new DACGameFailEvent(this, dacPlayer);
+		T gamePlayer = castPlayer(DAC.getPlayerManager().get(player));
+		if (isPlayerTurn(gamePlayer) && arena.getPool().isAbove(player)) {
+			DACGameFailEvent failEvent = new DACGameFailEvent(this, gamePlayer);
 			DAC.callEvent(failEvent);
 			
 			if (!failEvent.isCancelled()) {
-				gameModeHandler.onFail(castPlayer(dacPlayer));
+				gameModeHandler.onFail(gamePlayer);
 			}
 			
 			if (failEvent.cancelDeath()) {
@@ -209,12 +254,12 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	@Override
 	public void onMove(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
-		StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
-		if (isPlayerTurn(dacPlayer) && arena.getPool().contains(player)) {
-			DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, dacPlayer);
+		T gamePlayer = castPlayer(DAC.getPlayerManager().get(player));
+		if (isPlayerTurn(gamePlayer) && arena.getPool().contains(player)) {
+			DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, gamePlayer);
 			DAC.callEvent(successEvent);
 			if (!successEvent.isCancelled()) {
-				gameModeHandler.onSuccess(castPlayer(dacPlayer));
+				gameModeHandler.onSuccess(gamePlayer);
 			}
 		}
 	}
