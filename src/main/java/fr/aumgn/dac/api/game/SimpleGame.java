@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
+import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.event.game.DACGameFailEvent;
 import fr.aumgn.dac.api.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.api.event.game.DACGameStartEvent;
@@ -38,7 +41,12 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	private Vector propulsion;
 	private int propulsionDelay;
 	private int turn;
+	private int turnTimeOutTaskId; 
 	private boolean finished;
+	private Runnable turnTimeOutRunnable = new Runnable() {
+		@Override
+		public void run() { turnTimedOut(); }
+		};
 	
 	public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, GameOptions options) {
 		this(gameMode, stage, stage.getPlayers(), options);
@@ -55,6 +63,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 		gameModeHandler = gameMode.createHandler(this);
 		spectators = new HashSet<Player>();
 		turn = players.length - 1;
+		turnTimeOutTaskId = -1;
 		finished = false;
 		DAC.getStageManager().register(this);
 		gameModeHandler.onStart();
@@ -142,11 +151,22 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	}
 	
 	public void nextTurn() {
+		BukkitScheduler scheduler = Bukkit.getScheduler();
+		if (turnTimeOutTaskId != -1) {
+			scheduler.cancelTask(turnTimeOutTaskId);
+		}
 		increaseTurn();
 		if (!finished) {
 			T player = players[turn];
+			scheduler.scheduleAsyncDelayedTask(DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut());
 			gameModeHandler.onTurn(player);
 		}
+	}
+	
+	private void turnTimedOut() {
+		T player = players[turn];
+		send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
+		removePlayer(player);
 	}
 	
 	public boolean isPlayerTurn(T player) {
@@ -198,6 +218,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 	@Override
 	public void stop() {
 		finished = true;
+		Bukkit.getScheduler().cancelTask(turnTimeOutTaskId);
 		DAC.callEvent(new DACGameStopEvent(this));
 		gameModeHandler.onStop();
 		DAC.getStageManager().unregister(this);
