@@ -9,57 +9,14 @@ import org.bukkit.block.Block;
 
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.AreaColumnBlock;
+import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
 
 public class DACAreaColumn implements AreaColumn {
 
-    public class DACAreaColumnBlock implements AreaColumnBlock {
-
-        private int index;
-        private Block block;
-
-        public DACAreaColumnBlock(int index, Block block) {
-            this.index = index;
-            this.block = block;
-        }
-
-        @Override
-        public int getIndex() {
-            return index;
-        }
-
-        @Override
-        public Material getType() {
-            return block.getType();
-        }
-
-        @Override
-        public byte getData() {
-            return block.getData();
-        }
-
-        @Override
-        public void setType(Material material) {
-            block.setType(material);
-        }
-
-        @Override
-        public void setType(Material material, byte data) {
-            setType(material);
-            setData(data);
-        }
-
-        @Override
-        public void setData(byte data) {
-            block.setData(data);
-        }
-
-    }
-
     private class DACColumnIterator implements Iterator<AreaColumnBlock> {
 
-        private int i;
-        private int y;
+        private int i, y;
 
         public DACColumnIterator() {
             this.i = 0;
@@ -146,6 +103,11 @@ public class DACAreaColumn implements AreaColumn {
         }
         return new DACAreaColumnBlock(i, world.getBlockAt(x, bottom + i, z));
     }
+    
+    @Override
+    public void set(ColumnPattern pattern) {
+        pattern.set(this);
+    }
 
     @Override
     public void set(Material material) {
@@ -159,6 +121,12 @@ public class DACAreaColumn implements AreaColumn {
         for (AreaColumnBlock block : this) {
             block.setType(material, data);
         }
+    }
+
+    @Override
+    public boolean isWater() {
+        Material type = get(-1).getType();
+        return type.equals(Material.WATER) || type.equals(Material.STATIONARY_WATER);
     }
 
 }

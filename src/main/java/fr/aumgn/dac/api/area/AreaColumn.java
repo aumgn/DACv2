@@ -19,8 +19,12 @@ public interface AreaColumn extends Iterable<AreaColumnBlock> {
 
     AreaColumnBlock get(int index);
 
+    void set(ColumnPattern pattern);
+
     void set(Material material);
 
     void set(Material material, byte data);
+
+    boolean isWater();
 
 }

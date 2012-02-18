@@ -51,12 +51,12 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
         Pool pool = arena.getPool();
         if (pool.isADACPattern(x, z)) {
             player.incrementDACs();
-            pool.setColumn(new GlassyColumn(), player.getColor(), x, z);
+            pool.getColumn(x, z).set(new GlassyColumn(player.getColor()));
             player.send(DACMessage.GameDAC2);
             player.sendToOthers(DACMessage.GameDAC.format(player.getDisplayName()));
         } else {
             player.incrementSuccesses();
-            pool.setColumn(new UniformColumn(), player.getColor(), x, z);
+            pool.getColumn(x, z).set(new UniformColumn(player.getColor()));
             player.send(DACMessage.GameJumpSuccess2);
             player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
         }

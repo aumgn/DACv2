@@ -103,9 +103,9 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 
         if (dac) {
             DAC.callEvent(new DACGameDACEvent(game, player));
-            pool.setColumn(new GlassyColumn(), player.getColor(), x, z);
+            pool.getColumn(x, z).set(new GlassyColumn(player.getColor()));
         } else {
-            pool.setColumn(new UniformColumn(), player.getColor(), x, z);
+            pool.getColumn(x, z).set(new UniformColumn(player.getColor()));
         }
 
         if (player.mustConfirmate()) {

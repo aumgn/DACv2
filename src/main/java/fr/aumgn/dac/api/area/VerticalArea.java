@@ -14,4 +14,6 @@ public interface VerticalArea extends Area {
 
     void fillWith(FillStrategy strategy, String[] fillArgs);
 
+    AreaColumn getColumn(int x, int z);
+
 }

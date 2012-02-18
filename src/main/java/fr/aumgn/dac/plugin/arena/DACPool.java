@@ -17,20 +17,16 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.arena.Pool;
-import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
 import fr.aumgn.dac.api.util.DACUtil;
-import fr.aumgn.dac.plugin.area.DACAreaColumn;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
 import fr.aumgn.dac.plugin.area.region.DACRegion;
 
 @SerializableAs("dac-pool")
 public class DACPool extends DACVerticalArea implements Pool {
 
-    private static final Material DEFAULT_MATERIAL = Material.STATIONARY_WATER;
     private static final Material SIGN_MATERIAL = Material.SIGN_POST;
     private static final Material AIR = Material.AIR;
     private static final FillFully WATER_FILLER = new FillFully() {
@@ -108,12 +104,7 @@ public class DACPool extends DACVerticalArea implements Pool {
         super.setRegion(region);
         updateAboveRegion();
     }
-
-    @Override
-    public void setColumn(ColumnPattern pattern, DACColor color, int x, int z) {
-        pattern.set(new DACAreaColumn(this, x, z), color);
-    }
-
+    
     public void putRIPSign(org.bukkit.util.Vector vec) {
         Location diving = getArena().getDivingBoard().getLocation();
 
@@ -151,19 +142,14 @@ public class DACPool extends DACVerticalArea implements Pool {
         }
     }
 
-    private boolean isColumnAt(int x, int z) {
-        Block blk = getArena().getWorld().getBlockAt(x, getWERegion().getMinimumPoint().getBlockY(), z);
-        return !blk.getType().equals(DEFAULT_MATERIAL);
-    }
-
     @Override
     public boolean isADACPattern(int x, int z) {
-        boolean dac;
-        dac = isColumnAt(x - 1, z);
-        dac &= isColumnAt(x, z - 1);
-        dac &= isColumnAt(x + 1, z);
-        dac &= isColumnAt(x, z + 1);
-        return dac;
+        boolean water;
+        water =  getColumn(x - 1, z).isWater();
+        water |= getColumn(x, z - 1).isWater();
+        water |= getColumn(x + 1, z).isWater();
+        water |= getColumn(x, z + 1).isWater();
+        return !water;
     }
 
 }

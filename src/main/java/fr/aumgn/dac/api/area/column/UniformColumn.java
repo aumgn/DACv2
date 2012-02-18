@@ -6,8 +6,14 @@ import fr.aumgn.dac.api.config.DACColor;
 
 public class UniformColumn implements ColumnPattern {
 
+    private DACColor color; 
+    
+    public UniformColumn(DACColor color) {
+        this.color = color; 
+    }
+
     @Override
-    public void set(AreaColumn column, DACColor color) {
+    public void set(AreaColumn column) {
         column.set(color.getMaterial(), color.getData());
     }
 
