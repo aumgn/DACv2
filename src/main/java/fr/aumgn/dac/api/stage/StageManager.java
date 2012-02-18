@@ -58,7 +58,7 @@ public class StageManager implements Iterable<Stage<?>>{
         stages.put(stage.getArena(), stage);
         stage.registerAll();
     }
-
+    
     public void unregister(Stage<?> stage) {
         if (!stages.containsKey(stage.getArena())) {
             throw new StageNotRegistered();

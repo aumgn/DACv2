@@ -21,14 +21,22 @@ public class StagePlayerManager {
     }
 
     public void register(StagePlayer player) {
-        if (players.containsKey(player.getPlayer())) {
+        register(player, false);
+    }
+            
+    public void register(StagePlayer player, boolean soft) {
+        if (!soft && players.containsKey(player.getPlayer())) {
             throw new PlayerAlreadyRegistered();
         }
         players.put(player.getPlayer(), player);
     }
 
     public void unregister(StagePlayer player) {
-        if (!players.containsKey(player.getPlayer())) {
+        unregister(player, false);
+    }
+
+    public void unregister(StagePlayer player, boolean soft) {
+        if (!soft && !players.containsKey(player.getPlayer())) {
             throw new PlayerNotRegistered();
         }
         players.remove(player.getPlayer());

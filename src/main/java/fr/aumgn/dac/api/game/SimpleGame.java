@@ -140,7 +140,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     public void unregisterAll() {
         StagePlayerManager playerManager = DAC.getPlayerManager();
         for (StagePlayer player : players) {
-            playerManager.unregister(player);
+            playerManager.unregister(player, true);
         }
     }
 
@@ -213,8 +213,8 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     @Override
     public void removePlayer(StagePlayer player) {
         DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
-        gameModeHandler.onQuit(castPlayer(player));
         DAC.getPlayerManager().unregister(player);
+        gameModeHandler.onQuit(castPlayer(player));
     }
 
     @Override
