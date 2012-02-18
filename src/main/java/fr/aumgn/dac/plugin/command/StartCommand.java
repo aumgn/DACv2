@@ -40,11 +40,14 @@ public class StartCommand extends PlayerCommandExecutor {
             mode = DAC.getModes().get("classic");
         }
 
-        GameOptions options = joinStage.getArena().getOptions();
-        if (args.length > 1) {
+        GameOptions options;
+        if (args.length == 0) {
+            options = new GameOptions();
+        } else {
             String[] commandOptions = Arrays.copyOfRange(args, 1, args.length);
-            options = options.merge(GameOptions.parse(commandOptions));
+            options = GameOptions.parse(commandOptions);            
         }
+        options = stage.getArena().mergeOptions(options);
 
         if (!joinStage.isMinReached(mode)) {
             error(DACMessage.CmdStartMinNotReached);

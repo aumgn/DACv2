@@ -84,8 +84,6 @@ public class DACPool extends DACVerticalArea implements Pool {
         minPt = poolMinPt.subtract(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(minY);
         maxPt = poolMaxPt.add(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(maxY);
 
-        System.out.println(minPt);
-        System.out.println(maxPt);
         aboveRegion = new CuboidRegion(region.getWorld(), minPt, maxPt);
     }
 

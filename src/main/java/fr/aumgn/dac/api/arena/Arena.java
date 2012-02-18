@@ -1,6 +1,7 @@
 package fr.aumgn.dac.api.arena;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.World;
 
@@ -29,7 +30,13 @@ public interface Arena {
     void addMode(String modeName);
 
     void removeMode(String modeName);
+    
+    Iterable<Map.Entry<String, String>> options();
 
-    GameOptions getOptions();
+    GameOptions mergeOptions(GameOptions options);
+
+    void setOption(String name, String value);
+
+    void removeOption(String name);
 
 }

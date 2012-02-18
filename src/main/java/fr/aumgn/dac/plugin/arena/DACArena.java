@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
@@ -111,8 +112,25 @@ public class DACArena implements Arena, ConfigurationSerializable {
     }
 
     @Override
-    public GameOptions getOptions() {
-        return options;
+    public Iterable<Entry<String, String>> options() {
+        return options();
+    }
+
+    @Override
+    public GameOptions mergeOptions(GameOptions options) {
+        return this.options.merge(options);
+    }
+
+    @Override
+    public void setOption(String name, String value) {
+        options.set(name, value);
+        updated();
+    }
+
+    @Override
+    public void removeOption(String name) {
+        options.remove(name);
+        updated();
     }
 
     public static DACArena deserialize(Map<String, Object> map) {
