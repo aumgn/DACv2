@@ -24,6 +24,7 @@ import fr.aumgn.dac.api.game.SimpleGame;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.SimpleGameModeHandler;
 import fr.aumgn.dac.api.util.DACUtil;
+import fr.aumgn.dac.api.util.RIPSign;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGamePlayer;
 
@@ -72,9 +73,12 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 
     @Override
     public void onNewTurn() {
+        Pool pool = arena.getPool();
         for (Entry<ClassicGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
             lostOrder.add(entry.getKey().getDisplayName());
-            arena.getPool().rip(entry.getValue(), entry.getKey().getDisplayName());
+            RIPSign sign = new RIPSign(pool, entry.getValue()); 
+            sign.rip(entry.getKey().getDisplayName());
+            //arena.getPool().rip(entry.getValue(), entry.getKey().getDisplayName());
         }
         playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
     }
@@ -241,9 +245,11 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 
         game.send(DACMessage.GameFinished);
 
+        Pool pool = arena.getPool();
         for (Entry<ClassicGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
             ClassicGamePlayer dacPlayer = entry.getKey();
-            arena.getPool().rip(entry.getValue(), dacPlayer.getDisplayName());
+            RIPSign sign = new RIPSign(pool, entry.getValue()); 
+            sign.rip(entry.getKey().getDisplayName());
             lostOrder.add(dacPlayer.getDisplayName());
         }
 

@@ -1,26 +1,20 @@
 package fr.aumgn.dac.plugin.arena;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Sign;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.Vector2D;
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
-import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
-import fr.aumgn.dac.api.util.DACUtil;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
 import fr.aumgn.dac.plugin.area.region.DACRegion;
 
@@ -89,7 +83,10 @@ public class DACPool extends DACVerticalArea implements Pool {
 
     @Override
     public boolean isAbove(Player player) {
-        Vector vec = new BlockVector(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+        Vector vec = new BlockVector(
+                player.getLocation().getBlockX(),
+                player.getLocation().getBlockY(),
+                player.getLocation().getBlockZ());
         return getAboveRegion().contains(vec);
     }
 
@@ -105,43 +102,6 @@ public class DACPool extends DACVerticalArea implements Pool {
         updateAboveRegion();
     }
     
-    public void putRIPSign(org.bukkit.util.Vector vec) {
-        Location diving = getArena().getDivingBoard().getLocation();
-
-        Vector2D dir = new Vector2D(diving.getX() - vec.getX(), diving.getZ() - vec.getZ());
-        BlockFace face = DACUtil.getHorizontalFaceFor(dir);
-
-        Block block = getArena().getWorld().getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
-        block.setType(Material.SIGN_POST);
-
-        org.bukkit.material.Sign signBlock = new org.bukkit.material.Sign(Material.SIGN_POST, block.getData());
-        signBlock.setFacingDirection(face);
-        block.setData(signBlock.getData());
-
-        Sign sign = (Sign) block.getState();
-        sign.setLine(0, DAC.getConfig().getDeathSignFirstLine());
-        sign.update();
-    }
-
-    @Override
-    public void rip(org.bukkit.util.Vector vec, String name) {
-        if (vec == null) {
-            return;
-        }
-        Block block = getArena().getWorld().getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
-        if (block.getType() != Material.SIGN_POST) {
-            putRIPSign(vec);
-        }
-        for (int i = 1; i < DACUtil.SIGN_LINES; i++) {
-            Sign sign = (Sign) block.getState();
-            if (sign.getLine(i).isEmpty()) {
-                sign.setLine(i, name);
-                break;
-            }
-            sign.update();
-        }
-    }
-
     @Override
     public boolean isADACPattern(int x, int z) {
         boolean water;

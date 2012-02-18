@@ -6,10 +6,7 @@ import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.util.BlockVector;
-
-import com.sk89q.worldedit.Vector2D;
 
 import fr.aumgn.dac.api.DAC;
 
@@ -23,51 +20,9 @@ public final class DACUtil {
     private static final double BLOCK_LIMIT_LEFT = 0.3;
     private static final double BLOCK_LIMIT_RIGHT = 0.7;
 
-    private static final int SIGN_HORIZONTAL_FACES = 16;
-    private static final double SIGN_FACES_ANGLE = Math.PI / SIGN_HORIZONTAL_FACES;
-    private static final double MOD_0_TO_1 = Math.cos(7 * SIGN_FACES_ANGLE);
-    private static final double MOD_1_TO_2 = Math.cos(3 * SIGN_FACES_ANGLE);
-    private static final double MOD_2_TO_1 = Math.cos(SIGN_FACES_ANGLE);
-
     private static final Pattern COLORS_PATTERN = Pattern.compile("<([A-Za-z]+)>");
 
     private DACUtil() {}
-
-    private static int getBlockFaceModValue(double i) {
-        if (i < -1 || i > 1) {
-            throw new IllegalArgumentException("Value must be between -1 and 1");
-        } else if (i < -MOD_2_TO_1) {
-            return -1;
-        } else if (i < -MOD_1_TO_2) {
-            return -2;
-        } else if (i < -MOD_0_TO_1) {
-            return -1;
-        } else if (i > MOD_2_TO_1) {
-            return 1;
-        } else if (i > MOD_1_TO_2) {
-            return 2;
-        } else if (i > MOD_0_TO_1) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    public static BlockFace getHorizontalFaceFor(Vector2D vec) {
-        try {
-            Vector2D dir = vec.normalize();
-            int modX = getBlockFaceModValue(dir.getX());
-            int modZ = getBlockFaceModValue(dir.getZ());
-            for (BlockFace face : BlockFace.values()) {
-                if (face.getModY() == 0 && face.getModX() == modX && face.getModZ() == modZ) {
-                    return face;
-                }
-            }
-            return BlockFace.SELF;
-        } catch (IllegalArgumentException exc) {
-            return BlockFace.SELF;
-        }
-    }
 
     private static int getRelativeModValue(double value) {
         double abs = Math.abs(value);
