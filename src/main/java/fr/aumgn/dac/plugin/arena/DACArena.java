@@ -113,7 +113,7 @@ public class DACArena implements Arena, ConfigurationSerializable {
 
     @Override
     public Iterable<Entry<String, String>> options() {
-        return options();
+        return options;
     }
 
     @Override

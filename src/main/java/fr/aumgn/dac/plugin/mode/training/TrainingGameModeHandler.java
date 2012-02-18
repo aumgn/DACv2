@@ -45,6 +45,9 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
         Location loc = player.getPlayer().getLocation();
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
+        
+        player.tpAfterJump();
+        
         Pool pool = arena.getPool();
         if (pool.isADACPattern(x, z)) {
             player.incrementDACs();
@@ -57,16 +60,15 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
             player.send(DACMessage.GameJumpSuccess2);
             player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
         }
-        player.tpAfterJump();
         game.nextTurn();
     }
 
     @Override
     public void onFail(TrainingGamePlayer player) {
+        player.tpAfterFail();
         player.incrementFails();
         player.send(DACMessage.GameJumpFail2);
         player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
-        player.tpAfterFail();
         game.nextTurn();
     }
 

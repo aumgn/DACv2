@@ -98,18 +98,7 @@ public class SimpleStagePlayer implements StagePlayer {
 
     @Override
     public void tpAfterJump() {
-        DACConfig config = DAC.getConfig();
-        if (stage.getPlayers().size() > 1 && config.getTpAfterJump()) {
-            int delay = config.getTpAfterSuccessDelay();
-            if (delay == 0) {
-                tpToStart.run();
-            } else {
-                player.setNoDamageTicks(delay+1);
-                Bukkit.getScheduler().scheduleAsyncDelayedTask(DAC.getPlugin(), tpToStart, delay);
-            }
-        } else {
-            player.setNoDamageTicks(20);
-        }
+        tpToStart();
     }
 
     @Override

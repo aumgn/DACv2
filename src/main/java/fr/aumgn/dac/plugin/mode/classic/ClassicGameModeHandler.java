@@ -95,6 +95,9 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
         Location loc = player.getPlayer().getLocation();
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
+        
+        player.tpAfterJump();
+
         Pool pool = arena.getPool();
         boolean dac = pool.isADACPattern(x, z);
 
@@ -137,8 +140,6 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
             } else {
                 game.nextTurn();
             }
-
-            player.tpAfterJump();
         }
     }
 
@@ -171,6 +172,8 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
         player.send(DACMessage.GameJumpFail2);
         player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
 
+        player.tpAfterFail();
+
         if (player.mustConfirmate()) {
             player.send(DACMessage.GameConfirmationFail2);
             player.sendToOthers(DACMessage.GameConfirmationFail);
@@ -192,7 +195,6 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
                 game.nextTurn();
             }
         }
-        player.tpAfterFail();
     }
 
     @Override

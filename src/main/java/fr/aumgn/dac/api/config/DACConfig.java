@@ -12,11 +12,7 @@ public interface DACConfig {
 
     int getTurnTimeOut();
 
-    boolean getTpAfterJump();
-
     boolean getTpAfterFail();
-
-    int getTpAfterSuccessDelay();
 
     int getTpAfterFailDelay();
 

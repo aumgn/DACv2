@@ -13,9 +13,7 @@ public class DACPluginConfig implements DACConfig {
     private boolean resetOnStart = false;
     private boolean resetOnEnd = false;
     private int turnTimeOut;
-    private boolean tpAfterJump;
     private boolean tpAfterFail;
-    private int tpAfterJumpDelay = 0;
     private int tpAfterFailDelay = 0;
     private String deathSignFirstLine;
     private DACColors colors;
@@ -34,13 +32,8 @@ public class DACPluginConfig implements DACConfig {
             resetOnEnd = true;
         }
         turnTimeOut = config.getInt("turn-timeout");
-        int tpAfterJumpConfig = config.getInt("tp-after-jump");
         int tpAfterFailConfig = config.getInt("tp-after-fail");
-        tpAfterJump = tpAfterJumpConfig >= 0;
         tpAfterFail = tpAfterFailConfig >= 0;
-        if (tpAfterJump) {
-            tpAfterJumpDelay = tpAfterJumpConfig;
-        }
         if (tpAfterFail) {
             tpAfterFailDelay = tpAfterFailConfig;
         }
@@ -70,18 +63,8 @@ public class DACPluginConfig implements DACConfig {
     }
 
     @Override
-    public boolean getTpAfterJump() {
-        return tpAfterJump;
-    }
-
-    @Override
     public boolean getTpAfterFail() {
         return tpAfterFail;
-    }
-
-    @Override
-    public int getTpAfterSuccessDelay() {
-        return tpAfterJumpDelay;
     }
 
     @Override
