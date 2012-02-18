@@ -11,12 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-//import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
-//import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.event.game.DACGameFailEvent;
 import fr.aumgn.dac.api.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
@@ -44,12 +44,12 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     private int turn;
     private int turnTimeOutTaskId;
     private boolean finished;
-    /*private Runnable turnTimeOutRunnable = new Runnable() {
+    private Runnable turnTimeOutRunnable = new Runnable() {
         @Override
         public void run() {
             turnTimedOut();
         }
-    };*/
+    };
 
     public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, GameOptions options) {
         this(gameMode, stage, stage.getPlayers(), options);
@@ -155,23 +155,23 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 
     @Override
     public void nextTurn() {
-        /*BukkitScheduler scheduler = Bukkit.getScheduler();
+        BukkitScheduler scheduler = Bukkit.getScheduler();
         if (turnTimeOutTaskId != -1) {
             scheduler.cancelTask(turnTimeOutTaskId);
-        }*/
+        }
         increaseTurn();
         if (!finished) {
             T player = players[turn];
-            //turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut());
+            turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut());
             gameModeHandler.onTurn(player);
         }
     }
 
-    /*private void turnTimedOut() {
+    private void turnTimedOut() {
         T player = players[turn];
         send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
         removePlayer(player);
-    }*/
+    }
 
     @Override
     public boolean isPlayerTurn(T player) {

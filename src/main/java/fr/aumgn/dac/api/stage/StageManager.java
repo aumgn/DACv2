@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
+import fr.aumgn.dac.api.exception.StageAlreadyRegistered;
+import fr.aumgn.dac.api.exception.StageNotRegistered;
 import fr.aumgn.dac.api.game.Game;
 
 public class StageManager implements Iterable<Stage<?>>{
@@ -51,7 +53,7 @@ public class StageManager implements Iterable<Stage<?>>{
 
     public void register(Stage<?> stage) {
         if (stages.containsKey(stage.getArena())) {
-            throw new RuntimeException();
+            throw new StageAlreadyRegistered();
         }
         stages.put(stage.getArena(), stage);
         stage.registerAll();
@@ -59,7 +61,7 @@ public class StageManager implements Iterable<Stage<?>>{
 
     public void unregister(Stage<?> stage) {
         if (!stages.containsKey(stage.getArena())) {
-            throw new RuntimeException();
+            throw new StageNotRegistered();
         }
         stages.remove(stage.getArena());
         stage.unregisterAll();
