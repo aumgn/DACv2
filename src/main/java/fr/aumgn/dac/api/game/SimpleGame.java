@@ -51,18 +51,35 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         }
     };
 
-    public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, GameOptions options) {
-        this(gameMode, stage, stage.getPlayers(), options);
+    private static List<StagePlayer> shuffle(List<? extends StagePlayer> roulette) {
+        List<StagePlayer> list = new ArrayList<StagePlayer>(roulette.size());
+        Random rand = DAC.getRand();
+        int length = roulette.size();
+        for (int i = 0; i < length; i++) {
+            int j = rand.nextInt(roulette.size());
+            StagePlayer player = roulette.remove(j);
+            list.add(player);
+        }
+        return list;
     }
 
+    public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, GameOptions options) {
+        this(gameMode, stage, shuffle(stage.getPlayers()), options);
+    }
+
+    @SuppressWarnings("unchecked")
     public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, List<? extends StagePlayer> playersList, GameOptions options) {
         stage.stop();
         this.arena = stage.getArena();
         this.mode = gameMode;
         this.options = options;
         parsePropulsion();
-        List<StagePlayer> roulette = new ArrayList<StagePlayer>(playersList);
-        players = shufflePlayers(gameMode, roulette);
+        players = (T[]) new StagePlayer[playersList.size()];
+        int i = 0;
+        for (StagePlayer player : playersList) {
+            players[i] = gameMode.createPlayer(this, player, i + 1);
+            i++;
+        }
         gameModeHandler = gameMode.createHandler(this);
         spectators = new HashSet<Player>();
         turn = players.length - 1;
@@ -104,18 +121,6 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
                     parseInteger(splitted[2]));
             propulsionDelay = parseInteger(splitted[3]);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private T[] shufflePlayers(GameMode<T> gameMode, List<? extends StagePlayer> roulette) {
-        T[] ary = (T[]) new StagePlayer[roulette.size()];
-        Random rand = DAC.getRand();
-        for (int i = 0; i < ary.length; i++) {
-            int j = rand.nextInt(roulette.size());
-            StagePlayer dacPlayer = roulette.remove(j);
-            ary[i] = gameMode.createPlayer(this, dacPlayer, i + 1);
-        }
-        return ary;
     }
 
     @SuppressWarnings("unchecked")
