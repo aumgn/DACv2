@@ -101,7 +101,7 @@ commands:
         
 permissions:
     dac.game.watch:
-        description: 'Permets de s'enregistrer en tant que spectateur d'une partie.'
+        description: "Permets de s'enregistrer en tant que spectateur d'une partie."
         default: true
         children:
             dac.cmd.watch: true

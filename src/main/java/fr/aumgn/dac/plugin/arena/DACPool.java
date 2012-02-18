@@ -25,6 +25,7 @@ import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
 import fr.aumgn.dac.api.util.DACUtil;
 import fr.aumgn.dac.plugin.area.DACAreaColumn;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
+import fr.aumgn.dac.plugin.area.region.DACRegion;
 
 @SerializableAs("dac-pool")
 public class DACPool extends DACVerticalArea implements Pool {
@@ -76,13 +77,15 @@ public class DACPool extends DACVerticalArea implements Pool {
         Region region = getWERegion();
         poolMinPt = region.getMinimumPoint();
         poolMaxPt = region.getMaximumPoint();
-
+        
         minY = poolMaxPt.getBlockY() + 1;
         maxY = minY + ABOVE_REGION_HEIGHT;
 
         minPt = poolMinPt.subtract(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(minY);
         maxPt = poolMaxPt.add(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(maxY);
 
+        System.out.println(minPt);
+        System.out.println(maxPt);
         aboveRegion = new CuboidRegion(region.getWorld(), minPt, maxPt);
     }
 
@@ -99,6 +102,12 @@ public class DACPool extends DACVerticalArea implements Pool {
     @Override
     public void update(Region region) {
         super.update(region);
+        updateAboveRegion();
+    }
+    
+    @Override
+    public void setRegion(DACRegion region) {
+        super.setRegion(region);
         updateAboveRegion();
     }
 
