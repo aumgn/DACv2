@@ -4,7 +4,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
- * Class responsible for managing available {@link DACArena}. 
+ * Class responsible for managing available {@link Arena}. 
  */
 public interface Arenas extends Iterable<Arena> {
 

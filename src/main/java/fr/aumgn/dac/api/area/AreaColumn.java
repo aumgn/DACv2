@@ -8,7 +8,7 @@ import org.bukkit.Material;
 public interface AreaColumn extends Iterable<AreaColumnBlock> {
 
     /**
-     * Gets the {@VerticalArea} associated with this column.
+     * Gets the {@link VerticalArea} associated with this column.
      * 
      * @return the vertical area inside which this column is. 
      */

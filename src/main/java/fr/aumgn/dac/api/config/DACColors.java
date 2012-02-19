@@ -9,7 +9,7 @@ public interface DACColors extends Iterable<DACColor> {
      * Gets the color with the given name.
      * 
      * @param name the name of the color to return
-     * @return
+     * @return the color
      */
     DACColor get(String name);
 

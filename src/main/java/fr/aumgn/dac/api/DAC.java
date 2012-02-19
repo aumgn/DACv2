@@ -19,7 +19,7 @@ import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
 
 /**
- * Core static class for access to all main component
+ * Core static class which offers access to all main component
  */
 public final class DAC {
 
@@ -68,6 +68,9 @@ public final class DAC {
         return plugin;
     }
 
+    /**
+     * @see DACCommand
+     */
     public static DACCommand getCommand() {
         PluginCommand plCmd = Bukkit.getPluginCommand("dac");
         if (plCmd.getExecutor() instanceof DACCommand) {
@@ -99,26 +102,44 @@ public final class DAC {
         DACMessage.reload(plugin);
     }
 
+    /**
+     * @see DACConfig
+     */
     public static DACConfig getConfig() {
         return config;
     }
 
+    /**
+     * @see GameModes
+     */    
     public static GameModes getModes() {
         return gameModes;
     }
 
+    /**
+     * @see Arenas
+     */
     public static Arenas getArenas() {
         return arenas;
     }
 
+    /**
+     * @see FillStrategies
+     */
     public static FillStrategies getFillStrategies() {
         return fillStrategies;
     }
 
+    /**
+     * @see StageManager
+     */
     public static StageManager getStageManager() {
         return stageManager;
     }
 
+    /**
+     * @see StagePlayerManager
+     */
     public static StagePlayerManager getPlayerManager() {
         return playerManager;
     }

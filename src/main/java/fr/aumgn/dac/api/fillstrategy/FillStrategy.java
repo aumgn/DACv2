@@ -11,7 +11,7 @@ public interface FillStrategy {
      * Fills the {@link VerticalArea}.
      * 
      * @param area the area to fill
-     * @param optional optional fill options. 
+     * @param options optional fill options. 
      */
     void fill(VerticalArea area, String[] options);
 

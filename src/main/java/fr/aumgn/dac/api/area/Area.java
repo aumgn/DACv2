@@ -25,7 +25,7 @@ public interface Area extends Iterable<Block> {
     /**
      * Checks if the area contains the given location.
      * 
-     * @param Location location to check
+     * @param location the location to check
      * @return whether the location is inside or not
      */
     boolean contains(Location location);
@@ -33,7 +33,7 @@ public interface Area extends Iterable<Block> {
     /**
      * Checks if the area contains the given player.
      * 
-     * @param Player player to check
+     * @param player the player to check
      * @return whether the player is inside or not
      */
     boolean contains(Player player);
@@ -45,7 +45,7 @@ public interface Area extends Iterable<Block> {
      * others will raise an exception.
      * 
      * @throws InvalidRegionType if region type is not supported.
-     * @param region to update the area with
+     * @param region the region to update the area with
      */
     void update(Region region);
 

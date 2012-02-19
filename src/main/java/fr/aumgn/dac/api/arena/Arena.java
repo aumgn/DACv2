@@ -56,31 +56,31 @@ public interface Arena {
     StartArea getStartArea();
 
     /**
-     * Gets the {@link GameMode} names allowed for this arena.
+     * Gets the {@link fr.aumgn.dac.api.game.mode#GameMode} names allowed for this arena.
      * 
      * @return a list of name of the game modes allowed in this arena  
      */
     List<String> getModes();
 
     /**
-     * Checks if this allows the {@link GameMode} represented by this name.
+     * Checks if this allows the {@link fr.aumgn.dac.api.game.mode#GameMode} represented by this name.
      *  
-     * @param name the name of the {@link GameMode} to check
-     * @return whether or not this {@link GameMode} is allowed
+     * @param name the name of the {@link fr.aumgn.dac.api.game.mode#GameMode} to check
+     * @return whether or not this {@link fr.aumgn.dac.api.game.mode#GameMode} is allowed
      */
     boolean hasMode(String name);
 
     /**
      * Add this name as a game mode allowed. 
      *  
-     * @param name the name of the {@link GameMode} to add
+     * @param name the name of the {@link fr.aumgn.dac.api.game.mode#GameMode} to add
      */
     void addMode(String name);
 
     /**
      * Removes this name as a game mode allowed. 
      *  
-     * @param name the name of the {@link GameMode} to remove
+     * @param name the name of the {@link fr.aumgn.dac.api.game.mode#GameMode} to remove
      */
     void removeMode(String name);
     
