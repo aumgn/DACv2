@@ -9,34 +9,119 @@ import com.sk89q.worldedit.LocalWorld;
 
 import fr.aumgn.dac.api.game.GameOptions;
 
+/**
+ * Represents a DAC arena.
+ */
 public interface Arena {
 
-    LocalWorld getWEWorld();
-
-    World getWorld();
-
+    /**
+     * Gets the name of this arena.
+     * 
+     * @return the name of this arena
+     */
     String getName();
 
+    /**
+     * Gets the world this arena is in.
+     * 
+     * @return the world of this arena
+     */
+    World getWorld();
+    
+    /**
+     * Gets the WorldEdit world wrapper.
+     * @see #getWorld()
+     */
+    LocalWorld getWEWorld();
+
+    /**
+     * Gets the {@link DivingBoard} of this arena.
+     * 
+     * @return the diving board
+     */
     DivingBoard getDivingBoard();
 
+    /**
+     * Gets the {@link Pool} of this arena.
+     * 
+     * @return the pool
+     */
     Pool getPool();
 
+    /**
+     * Gets the {@link StartArea} of this arena.
+     * 
+     * @return the start area
+     */
     StartArea getStartArea();
 
+    /**
+     * Gets the {@link GameMode} names allowed for this arena.
+     * 
+     * @return a list of name of the game modes allowed in this arena  
+     */
     List<String> getModes();
 
-    boolean hasMode(String string);
+    /**
+     * Checks if this allows the {@link GameMode} represented by this name.
+     *  
+     * @param name the name of the {@link GameMode} to check
+     * @return whether or not this {@link GameMode} is allowed
+     */
+    boolean hasMode(String name);
 
-    void addMode(String modeName);
+    /**
+     * Add this name as a game mode allowed. 
+     *  
+     * @param name the name of the {@link GameMode} to add
+     */
+    void addMode(String name);
 
-    void removeMode(String modeName);
+    /**
+     * Removes this name as a game mode allowed. 
+     *  
+     * @param name the name of the {@link GameMode} to remove
+     */
+    void removeMode(String name);
     
+    /** 
+     * Gets an iterator over the options associated with this arena.
+     * The options are represented as a Map.Entry with option name as
+     * the key and option value as the ... value.
+     *   
+     * @return an iterator of the available options 
+     */
     Iterable<Map.Entry<String, String>> options();
 
+    /**
+     * Get a new {@link GameOptions} object by merging this arena
+     * options with the given options.
+     * <p/>
+     * In case of conflict, the priority is given to the argument options.
+     * (ie. options of argument will override options of this arenas). 
+     *  
+     * @param options the options to merge with
+     * @return the new options after merge
+     */
     GameOptions mergeOptions(GameOptions options);
 
+    /**
+     * Add an option to this arena
+     * <p/>
+     * If the option already exists, it will be overwritten.
+     * 
+     * @param name the name of the option to add
+     * @param value the value of the option to add
+     */
     void setOption(String name, String value);
 
+    /**
+     * Remove an option to this arena
+     * <p/>
+     * If the option doesn't exists, does nothing.
+     * 
+     * @param name the name of the option to remove
+     */
     void removeOption(String name);
 
 }

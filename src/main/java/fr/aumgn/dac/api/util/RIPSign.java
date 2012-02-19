@@ -13,6 +13,9 @@ import com.sk89q.worldedit.Vector2D;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Pool;
 
+/**
+ * Utility class responsible for placing and adding line to sign
+ */
 public class RIPSign {
     
     private static final int SIGN_HORIZONTAL_FACES = 16;
@@ -21,6 +24,13 @@ public class RIPSign {
     private static final double MOD_1_TO_2 = Math.cos(3 * SIGN_FACES_ANGLE);
     private static final double MOD_2_TO_1 = Math.cos(SIGN_FACES_ANGLE);
 
+    /**
+     * Gets the modifier value which can be used for 
+     * finding the horizontal BlockFace for the given direction.
+     *  
+     * @param i the value to get block face modifier for
+     * @return the block face modifier
+     */
     private static int getBlockFaceModValue(double i) {
         if (i < -1 || i > 1) {
             throw new IllegalArgumentException("Value must be between -1 and 1");
@@ -41,6 +51,12 @@ public class RIPSign {
         }
     }
 
+    /**
+     * Gets the horizontal BlockFace represented y this vector.
+     * 
+     * @param vec the vector to convert to BlockFace 
+     * @return the BlockFace represented
+     */
     public static BlockFace getHorizontalFaceFor(Vector2D vec) {
         try {
             Vector2D dir = vec.normalize();
@@ -82,6 +98,13 @@ public class RIPSign {
         sign.update();
     }
     
+    /**
+     * Add player name to this the sign this instance represents.
+     * <p/>
+     * If the sign do not exists it will automatically create it.  
+     * 
+     * @param name
+     */
     public void rip(String name) {
         World world = pool.getArena().getWorld();
         if (vector == null) {

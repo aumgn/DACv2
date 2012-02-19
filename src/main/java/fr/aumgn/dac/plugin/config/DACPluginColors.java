@@ -87,7 +87,7 @@ public class DACPluginColors implements DACColors {
     }
 
     @Override
-    public DACColor defaut() {
+    public DACColor first() {
         return colors.values().iterator().next();
     }
 

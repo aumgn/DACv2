@@ -4,6 +4,9 @@ import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.config.DACColor;
 
+/**
+ * Represents a uniform column
+ */
 public class UniformColumn implements ColumnPattern {
 
     private DACColor color; 

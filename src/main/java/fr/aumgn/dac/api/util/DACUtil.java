@@ -10,6 +10,9 @@ import org.bukkit.util.BlockVector;
 
 import fr.aumgn.dac.api.DAC;
 
+/**
+ * Utilities static class
+ */
 public final class DACUtil {
 
     public static final int TICKS_PER_SECONDS = 20;
@@ -24,6 +27,15 @@ public final class DACUtil {
 
     private DACUtil() {}
 
+    /**
+     * Gets the block relative modifier for the given value.
+     * That is if the value is :
+     *   decimal(value) < 0.3 => -1
+     *   decimal(value) > 0.7 => 1  
+     * 
+     * @param value the value to get the modifier for
+     * @return the relative modifier
+     */
     private static int getRelativeModValue(double value) {
         double abs = Math.abs(value);
         double decimal = abs - Math.floor(abs);
@@ -36,12 +48,24 @@ public final class DACUtil {
         return 0;
     }
 
+    /**
+     * Checks if relative blocks is solid
+     *  (ie. isn't empty or liquid)
+     * 
+     * @return whether the relative block is solid
+     */
     private static boolean isRelativeBlockSolid(Block from, int modX, int modZ) {
         Block block = from.getRelative(modX, 0, modZ);
         return !block.isEmpty() && !block.isLiquid();
     }
 
-    public static BlockVector getDeathBlockVector(Location loc) {
+    /**
+     * Gets the BlockVector of the block which is responsible for player's damage.
+     * 
+     * @param loc the location where the player die
+     * @return the block vector responsible for player's damage
+     */
+    public static BlockVector getDamageBlockVector(Location loc) {
         Block block = loc.getBlock().getRelative(0, -1, 0);
         if (!block.isEmpty() && !block.isLiquid()) {
             return new BlockVector(block.getX(), block.getY() + 1, block.getZ());
@@ -63,6 +87,13 @@ public final class DACUtil {
         return null;
     }
 
+    /**
+     * Parses colors markups.
+     * For example : ({@literal '<red>'} will be converted to ChatColor.RED.toString()
+     *    
+     * @param message the messages to parse
+     * @return the parsed message
+     */
     public static String parseColorsMarkup(String message) {
         StringBuffer parsed = new StringBuffer();
         Matcher matcher = COLORS_PATTERN.matcher(message);

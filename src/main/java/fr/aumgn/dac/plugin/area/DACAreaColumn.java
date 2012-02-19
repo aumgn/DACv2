@@ -17,10 +17,12 @@ public class DACAreaColumn implements AreaColumn {
     private class DACColumnIterator implements Iterator<AreaColumnBlock> {
 
         private int i, y;
-
+        private World world;
+        
         public DACColumnIterator() {
             this.i = 0;
             this.y = bottom;
+            this.world = area.getArena().getWorld();
         }
 
         @Override
@@ -46,25 +48,25 @@ public class DACAreaColumn implements AreaColumn {
 
     }
 
-    private World world;
+    private VerticalArea area;
     private int bottom;
     private int top;
     private int x;
     private int z;
 
     public DACAreaColumn(VerticalArea area, int x, int z) {
-        this.world = area.getArena().getWorld();
+        this.area = area;
         this.bottom = area.getBottom();
         this.top = area.getTop();
         this.x = x;
         this.z = z;
     }
-
+    
     @Override
-    public World getWorld() {
-        return world;
+    public VerticalArea getArea() {
+        return area;
     }
-
+    
     @Override
     public int getX() {
         return x;
@@ -101,7 +103,7 @@ public class DACAreaColumn implements AreaColumn {
         if (i < 0) {
             i += getHeight();
         }
-        return new DACAreaColumnBlock(i, world.getBlockAt(x, bottom + i, z));
+        return new DACAreaColumnBlock(i, area.getArena().getWorld().getBlockAt(x, bottom + i, z));
     }
     
     @Override

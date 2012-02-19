@@ -18,6 +18,9 @@ import fr.aumgn.dac.api.game.mode.GameModes;
 import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
 
+/**
+ * Core static class for access to all main component
+ */
 public final class DAC {
 
     private static Plugin plugin = null;
@@ -32,6 +35,12 @@ public final class DAC {
 
     private DAC() {}
 
+    /**
+     * Init DAC class
+     * <p/>
+     * This method is called by the main plugin in order to initialize components
+     * and will raise an exception if called a second time. 
+     */
     public static void init(Plugin plugin, WorldEditPlugin worldEdit, DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
         if (DAC.plugin != null) {
             throw new UnsupportedOperationException("Cannot init DAC twice.");
@@ -50,6 +59,11 @@ public final class DAC {
         arenas.load();
     }
 
+    /**
+     * Gets the main DAC plugin instance.
+     * 
+     * @return DAC plugin instance
+     */
     public static Plugin getPlugin() {
         return plugin;
     }
@@ -70,11 +84,17 @@ public final class DAC {
         return rand;
     }
 
+    /**
+     * Reloads DAC configuration.
+     */
     public static void reloadConfig() {
         plugin.reloadConfig();
         config.load(plugin.getConfig());
     }
 
+    /**
+     * Reloads DAC messages.
+     */
     public static void reloadMessages() {
         DACMessage.reload(plugin);
     }
@@ -107,6 +127,9 @@ public final class DAC {
         return worldEdit;
     }
 
+    /**
+     * Calls an {@link Event} event.
+     */
     public static void callEvent(Event event) {
         Bukkit.getPluginManager().callEvent(event);
     }

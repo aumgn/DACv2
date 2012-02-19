@@ -190,7 +190,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
         } else {
             player.looseLive();
             if (player.hasLost()) {
-                Vector vec = DACUtil.getDeathBlockVector(player.getPlayer().getLocation());
+                Vector vec = DACUtil.getDamageBlockVector(player.getPlayer().getLocation());
                 playersWhoLostLastTurn.put(player, vec);
                 onPlayerLoss(player, false);
             } else {

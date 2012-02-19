@@ -11,6 +11,9 @@ import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
+/**
+ * Replaces all column of a {@link VerticalArea} with the given block. 
+ */
 @DACFillStrategy(name = "fully")
 public class FillFully implements FillStrategy {
 

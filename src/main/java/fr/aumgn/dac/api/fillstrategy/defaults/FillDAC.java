@@ -8,6 +8,9 @@ import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
+/**
+ * Replace one column over two of a {@link VerticalArea} with wool. 
+ */
 @DACFillStrategy(name = "dac")
 public class FillDAC implements FillStrategy {
 

@@ -16,10 +16,27 @@ public @interface DACGameMode {
      */
     public String name();
 
+    /**
+     * Indicates if the {@link GameMode} should be added to a 
+     * new arena as an available game mode.
+     * 
+     * @return whether or not the game mode should be added
+     */
     public boolean isDefault() default true;
 
+    /**
+     * Gets the required amount of players to start a game with this mode. 
+     * 
+     * @return the required amount of players
+     */
     public int minPlayers() default 2;
 
+    /**
+     * Indicates if the game mode allows any player to fill the pool
+     * even while in game.
+     * 
+     * @return whether or not any player is allowed to fill the pool.
+     */
     public boolean allowFill() default false;
 
 }

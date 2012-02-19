@@ -96,7 +96,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
             }
         }
         // Should never be reached
-        return colors.defaut();
+        return colors.first();
     }
 
     private void addPlayer(Player player, DACColor color) {
