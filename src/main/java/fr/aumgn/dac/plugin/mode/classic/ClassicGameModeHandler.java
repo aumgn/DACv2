@@ -1,10 +1,8 @@
 package fr.aumgn.dac.plugin.mode.classic;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Stack;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -16,8 +14,6 @@ import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.event.game.DACGameDACEvent;
-import fr.aumgn.dac.api.event.game.DACGameLooseEvent;
-import fr.aumgn.dac.api.event.game.DACGameWinEvent;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
 import fr.aumgn.dac.api.game.SimpleGame;
@@ -32,14 +28,12 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
 
     private Game<ClassicGamePlayer> game;
     private Arena arena;
-    private List<String> lostOrder;
-    private Map<ClassicGamePlayer, Vector> playersWhoLostLastTurn;
+    private Stack<String> lostOrder;
 
     public ClassicGameModeHandler(Game<ClassicGamePlayer> game) {
         this.game = game;
         this.arena = game.getArena();
-        this.lostOrder = new ArrayList<String>();
-        this.playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
+        this.lostOrder = new Stack<String>();
     }
 
     private int parseLivesOption() {
@@ -74,24 +68,21 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
     @Override
     public void onNewTurn() {
         Pool pool = arena.getPool();
-        for (Entry<ClassicGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
-            lostOrder.add(entry.getKey().getDisplayName());
-            RIPSign sign = new RIPSign(pool, entry.getValue()); 
-            sign.rip(entry.getKey().getDisplayName());
-            //arena.getPool().rip(entry.getValue(), entry.getKey().getDisplayName());
+        for (ClassicGamePlayer player : game.getPlayers()) {
+            if (player.isDead()) {
+                lostOrder.add(player.getDisplayName());
+                RIPSign sign = new RIPSign(pool, player.getDeathPosition()); 
+                sign.rip(player.getDisplayName());
+                game.onLoose(player);
+            }
         }
-        playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
     }
 
     @Override
     public void onTurn(ClassicGamePlayer player) {
-        if (player.hasLost()) {
-            game.nextTurn();
-        } else {
-            player.send(DACMessage.GamePlayerTurn2.getValue());
-            player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
-            player.tpToDiving();
-        }
+        player.send(DACMessage.GamePlayerTurn2.getValue());
+        player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
+        player.tpToDiving();
     }
 
     @Override
@@ -99,7 +90,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
         Location loc = player.getPlayer().getLocation();
         int x = loc.getBlockX();
         int z = loc.getBlockZ();
-        
+
         player.tpAfterJump();
 
         Pool pool = arena.getPool();
@@ -181,17 +172,15 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
         if (player.mustConfirmate()) {
             player.send(DACMessage.GameConfirmationFail2);
             player.sendToOthers(DACMessage.GameConfirmationFail);
-            for (ClassicGamePlayer playerWhoLost : playersWhoLostLastTurn.keySet()) {
-                playerWhoLost.resetLives();
+            for (ClassicGamePlayer gamePlayer : game.getPlayers()) {
+                gamePlayer.resetLives();
             }
-            playersWhoLostLastTurn = new LinkedHashMap<ClassicGamePlayer, Vector>();
             player.setMustConfirmate(false);
             game.nextTurn();
         } else {
-            player.looseLive();
-            if (player.hasLost()) {
+            if (player.looseLive()) {
                 Vector vec = DACUtil.getDamageBlockVector(player.getPlayer().getLocation());
-                playersWhoLostLastTurn.put(player, vec);
+                player.setDeathPosition(vec);
                 onPlayerLoss(player, false);
             } else {
                 player.send(DACMessage.GameLivesAfterFail2.format(player.getLives()));
@@ -211,7 +200,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
         int i = 0;
         ClassicGamePlayer playerLeft = null;
         for (ClassicGamePlayer player : game.getPlayers()) {
-            if (!player.hasLost()) {
+            if (!player.isDead()) {
                 playerLeft = player;
                 i++;
             }
@@ -220,10 +209,7 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
     }
 
     public void onPlayerLoss(ClassicGamePlayer player, boolean force) {
-        ClassicGamePlayer lastPlayer = getLastPlayer();
-
-        DAC.callEvent(new DACGameLooseEvent(game, player));
-
+        ClassicGamePlayer lastPlayer = getLastPlayer();  
         if (lastPlayer != null) {
             if (!force && lastPlayer.getIndex() > player.getIndex() && lastPlayer.getLives() == 0) {
                 lastPlayer.setMustConfirmate(true);
@@ -241,28 +227,28 @@ public class ClassicGameModeHandler extends SimpleGameModeHandler<ClassicGamePla
     }
 
     public void onPlayerWin(ClassicGamePlayer player) {
-        DAC.callEvent(new DACGameWinEvent(game, player));
+        Pool pool = arena.getPool();
+
+        for (ClassicGamePlayer gamePlayer : game.getPlayers()) {
+            if (gamePlayer.isDead()) {
+                RIPSign sign = new RIPSign(pool, gamePlayer.getDeathPosition()); 
+                sign.rip(gamePlayer.getDisplayName());
+                lostOrder.add(gamePlayer.getDisplayName());
+            }
+        }
+
+        game.onWin(player);
 
         game.send(DACMessage.GameFinished);
-
-        Pool pool = arena.getPool();
-        for (Entry<ClassicGamePlayer, Vector> entry : playersWhoLostLastTurn.entrySet()) {
-            ClassicGamePlayer dacPlayer = entry.getKey();
-            RIPSign sign = new RIPSign(pool, entry.getValue()); 
-            sign.rip(entry.getKey().getDisplayName());
-            lostOrder.add(dacPlayer.getDisplayName());
-        }
-
         game.send(DACMessage.GameWinner.format(player.getDisplayName()));
-
         int i = 2;
-        for (int index = lostOrder.size() - 1; index >= 0; index--) {
-            String name = lostOrder.get(index);
-            game.send(DACMessage.GameRank.format(i, name));
-            i++;
+        if (!lostOrder.empty()) {
+            for (String name = lostOrder.pop(); !lostOrder.empty(); name = lostOrder.pop()) {
+                game.send(DACMessage.GameRank.format(i, name));
+                i++;
+            }
         }
 
-        game.stop();
     }
 
 }

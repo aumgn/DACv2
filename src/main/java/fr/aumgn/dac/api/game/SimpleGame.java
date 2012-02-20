@@ -1,7 +1,6 @@
 package fr.aumgn.dac.api.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -18,8 +17,10 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.event.game.DACGameFailEvent;
+import fr.aumgn.dac.api.event.game.DACGameLooseEvent;
 import fr.aumgn.dac.api.event.game.DACGameNewTurnEvent;
 import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
+import fr.aumgn.dac.api.event.game.DACGameWinEvent;
 import fr.aumgn.dac.api.event.stage.DACStagePlayerQuitEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
@@ -37,7 +38,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     private GameMode<T> mode;
     private GameOptions options;
     private GameModeHandler<T> gameModeHandler;
-    private T[] players;
+    private List<T> players;
     private Set<Player> spectators;
     private Vector propulsion;
     private int propulsionDelay;
@@ -67,22 +68,21 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         this(gameMode, stage, shuffle(stage.getPlayers()), options);
     }
 
-    @SuppressWarnings("unchecked")
     public SimpleGame(GameMode<T> gameMode, Stage<? extends StagePlayer> stage, List<? extends StagePlayer> playersList, GameOptions options) {
         stage.stop();
         this.arena = stage.getArena();
         this.mode = gameMode;
         this.options = options;
         parsePropulsion();
-        players = (T[]) new StagePlayer[playersList.size()];
+        players = new ArrayList<T>(playersList.size());
         int i = 0;
         for (StagePlayer player : playersList) {
-            players[i] = gameMode.createPlayer(this, player, i + 1);
+            players.add(gameMode.createPlayer(this, player, i + 1));
             i++;
         }
         gameModeHandler = gameMode.createHandler(this);
         spectators = new HashSet<Player>();
-        turn = players.length - 1;
+        turn = players.size() - 1;
         turnTimeOutTaskId = -1;
         finished = false;
         DAC.getStageManager().register(this);
@@ -151,7 +151,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
 
     private void increaseTurn() {
         turn++;
-        if (turn == players.length) {
+        if (turn == players.size()) {
             turn = 0;
             DAC.callEvent(new DACGameNewTurnEvent(this));
             gameModeHandler.onNewTurn();
@@ -166,21 +166,21 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         }
         increaseTurn();
         if (!finished) {
-            T player = players[turn];
+            T player = players.get(turn);
             turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut());
             gameModeHandler.onTurn(player);
         }
     }
 
     private void turnTimedOut() {
-        T player = players[turn];
+        T player = players.get(turn);
         send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
         removePlayer(player);
     }
 
     @Override
     public boolean isPlayerTurn(T player) {
-        return !finished && players[turn].equals(player);
+        return !finished && players.get(turn).equals(player);
     }
 
     @Override
@@ -218,13 +218,14 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     @Override
     public void removePlayer(StagePlayer player) {
         DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
+        players.remove(player);
         DAC.getPlayerManager().unregister(player);
         gameModeHandler.onQuit(castPlayer(player));
     }
 
     @Override
     public List<T> getPlayers() {
-        return Arrays.asList(players);
+        return new ArrayList<T>(players);
     }
 
     @Override
@@ -296,6 +297,19 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
                 gameModeHandler.onSuccess(gamePlayer);
             }
         }
+    }
+
+    @Override
+    public void onLoose(T player) {
+        DAC.callEvent(new DACGameLooseEvent(this, player));
+        removePlayer(player);
+        addSpectator(player.getPlayer());
+    }
+
+    @Override
+    public void onWin(T player) {
+        DAC.callEvent(new DACGameWinEvent(this, player));
+        stop();
     }
 
 }

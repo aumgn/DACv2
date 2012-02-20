@@ -49,6 +49,20 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
      * @param event the PlayerMoveEvent
      */
     void onMove(PlayerMoveEvent event);
+    
+    /**
+     * Handles player loose.
+     * 
+     * @param player the player who lost 
+     */
+    void onLoose(T player);
+    
+    /**
+     * Handles player win.
+     * 
+     * @param player the player who won
+     */
+    void onWin(T player);
 
     /**
      * Gets the {@link GameOptions} of this game.

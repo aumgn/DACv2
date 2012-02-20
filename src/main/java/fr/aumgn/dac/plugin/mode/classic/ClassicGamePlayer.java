@@ -1,5 +1,7 @@
 package fr.aumgn.dac.plugin.mode.classic;
 
+import org.bukkit.util.Vector;
+
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.SimpleGamePlayer;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -8,6 +10,7 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 
     private int lives;
     private boolean mustConfirmate;
+    private Vector deathPosition;
 
     public ClassicGamePlayer(Game<ClassicGamePlayer> game, StagePlayer player, int index) {
         super(game, player, index);
@@ -17,7 +20,8 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 
     @Override
     public String formatForList() {
-        return super.formatForList() + " : " + lives + " vie(s)";
+        String livesF = (lives == -1) ? lives + " vie(s)" : "En sursis"; 
+        return super.formatForList() + " : " + livesF;
     }
 
     public int getLives() {
@@ -28,6 +32,14 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
         this.lives = lives;
     }
 
+    public boolean isDead() {
+        return lives == -1;
+    }
+    
+    public Vector getDeathPosition() {
+        return deathPosition;
+    }
+    
     public boolean mustConfirmate() {
         return mustConfirmate;
     }
@@ -40,19 +52,21 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
         lives++;
     }
 
-    public void looseLive() {
+    public boolean looseLive() {
         lives--;
+        return isDead();
     }
-
+    
     public void looseAllLives() {
-        lives = -1;
+        lives = -2;
     }
 
-    public boolean hasLost() {
-        return lives == -1;
+    public void setDeathPosition(Vector vec) {
+        deathPosition = vec;
     }
 
     public void setMustConfirmate(boolean bool) {
         mustConfirmate = bool;
     }
+
 }
