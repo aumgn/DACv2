@@ -1,7 +1,5 @@
 package fr.aumgn.dac.plugin.command;
 
-import org.bukkit.ChatColor;
-
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
@@ -44,9 +42,9 @@ public class WatchCommand extends PlayerCommandExecutor {
             return;
         }
         if (((Game<?>) stage).addSpectator(context.getPlayer())) {
-            context.send(ChatColor.YELLOW.toString() + DACMessage.CmdWatchAlreadyWatching.format(arena.getName()));
-        } else {
             context.success(DACMessage.CmdWatchSuccess.format(arena.getName()));
+        } else {
+            context.send(DACMessage.CmdWatchAlreadyWatching.format(arena.getName()));
         }
     }
 
