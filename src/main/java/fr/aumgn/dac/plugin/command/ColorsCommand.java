@@ -2,6 +2,7 @@ package fr.aumgn.dac.plugin.command;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACColor;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class ColorsCommand extends PlayerCommandExecutor {
@@ -12,7 +13,7 @@ public class ColorsCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         int i = 0;
         StringBuilder msg = new StringBuilder(32);
         for (DACColor color : DAC.getConfig().getColors()) {

@@ -5,6 +5,7 @@ import fr.aumgn.dac.api.area.Area;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.exception.InvalidRegionType;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SelectCommand extends PlayerCommandExecutor {
@@ -17,7 +18,7 @@ public class SelectCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Arena arena = DAC.getArenas().get(args[0]);
         if (arena == null) {
             error(DACMessage.CmdSelectUnknown);

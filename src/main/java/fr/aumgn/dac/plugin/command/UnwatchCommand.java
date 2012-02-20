@@ -5,6 +5,7 @@ import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.Stage;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class UnwatchCommand extends PlayerCommandExecutor {
@@ -15,7 +16,7 @@ public class UnwatchCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         if (args.length == 0) {
             for (Arena arena : DAC.getArenas()) {
                 processArena(context, arena);
@@ -32,7 +33,7 @@ public class UnwatchCommand extends PlayerCommandExecutor {
         }
     }
 
-    private void processArena(Context context, Arena arena) {
+    private void processArena(PlayerCommandContext context, Arena arena) {
         Stage<?> stage = DAC.getStageManager().get(arena);
         if (!(stage instanceof Game)) {
             return;

@@ -8,6 +8,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class KickCommand extends PlayerCommandExecutor {
@@ -18,7 +19,7 @@ public class KickCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         int count = 0;
         StagePlayerManager playerManager = DAC.getPlayerManager();
         for (Player player : Bukkit.getOnlinePlayers()) {

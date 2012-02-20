@@ -10,6 +10,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.exception.InvalidRegionType;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class SetCommand extends PlayerCommandExecutor {
@@ -23,7 +24,7 @@ public class SetCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Arena arena = DAC.getArenas().get(args[0]);
         if (arena == null) {
             error(DACMessage.CmdSetUnknown);
@@ -53,7 +54,7 @@ public class SetCommand extends PlayerCommandExecutor {
         }
     }
 
-    private Region getRegion(Context context) throws IncompleteRegionException {
+    private Region getRegion(PlayerCommandContext context) throws IncompleteRegionException {
         WorldEditPlugin worldEdit = DAC.getWorldEdit();
         BukkitWorld world = new BukkitWorld(context.getPlayer().getWorld());
         RegionSelector selector;

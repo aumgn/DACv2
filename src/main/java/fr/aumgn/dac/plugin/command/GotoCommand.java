@@ -6,6 +6,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class GotoCommand extends PlayerCommandExecutor {
@@ -16,7 +17,7 @@ public class GotoCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Player player = context.getPlayer();
         StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
         if (dacPlayer == null || !(dacPlayer.getStage() instanceof Game)) {

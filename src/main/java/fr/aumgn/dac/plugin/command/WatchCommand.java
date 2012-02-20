@@ -5,6 +5,7 @@ import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.Stage;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class WatchCommand extends PlayerCommandExecutor {
@@ -15,7 +16,7 @@ public class WatchCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         if (args.length == 0) {
             Arena arena = DAC.getArenas().get(context.getPlayer());
             if (arena == null) {
@@ -35,7 +36,7 @@ public class WatchCommand extends PlayerCommandExecutor {
 
     }
 
-    private void processArena(Context context, Arena arena) {
+    private void processArena(PlayerCommandContext context, Arena arena) {
         Stage<?> stage = DAC.getStageManager().get(arena);
         if (!(stage instanceof Game)) {
             context.error(DACMessage.CmdWatchNotInGame.format(arena.getName()));

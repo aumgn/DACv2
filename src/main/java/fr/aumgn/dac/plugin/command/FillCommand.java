@@ -10,6 +10,7 @@ import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class FillCommand extends PlayerCommandExecutor {
@@ -20,7 +21,7 @@ public class FillCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Arena arena = DAC.getArenas().get(args[0]);
 
         if (arena == null) {
@@ -41,7 +42,7 @@ public class FillCommand extends PlayerCommandExecutor {
         context.success(DACMessage.CmdFillSuccess);
     }
 
-    protected void fill(Context context, String[] args, Arena arena) {
+    protected void fill(PlayerCommandContext context, String[] args, Arena arena) {
         FillStrategy strategy = DAC.getFillStrategies().get(args[1]);
         if (strategy == null) {
             error(DACMessage.CmdFillUnknownStrategy);

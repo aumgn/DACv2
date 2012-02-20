@@ -5,6 +5,7 @@ import java.util.Map;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.utils.command.BasicCommandContext;
 import fr.aumgn.utils.command.BasicCommandExecutor;
 
 public class OptionsCommand extends BasicCommandExecutor {
@@ -20,7 +21,7 @@ public class OptionsCommand extends BasicCommandExecutor {
     }
 
     @Override
-    public void onCommand(Context context, String[] args) {
+    public void onCommand(BasicCommandContext context, String[] args) {
         Arena arena = DAC.getArenas().get(args[0]);
         if (arena == null) {
             error(DACMessage.CmdOptionsUnknown);

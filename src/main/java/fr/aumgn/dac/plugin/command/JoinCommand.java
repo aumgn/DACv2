@@ -8,12 +8,18 @@ import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.joinstage.SimpleJoinStage;
 import fr.aumgn.dac.api.stage.Stage;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class JoinCommand extends PlayerCommandExecutor {
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public boolean checkUsage(String[] args) {
+        return true;
+    }
+    
+    @Override
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Player player = context.getPlayer();
 
         Stage<?> stage = DAC.getStageManager().get(player);

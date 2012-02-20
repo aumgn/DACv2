@@ -3,6 +3,7 @@ package fr.aumgn.dac.plugin.command;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class DeleteCommand extends PlayerCommandExecutor {
@@ -13,7 +14,7 @@ public class DeleteCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Arena arena = DAC.getArenas().get(args[0]);
         if (arena == null) {
             error(DACMessage.CmdDeleteUnknown);

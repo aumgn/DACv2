@@ -3,6 +3,7 @@ package fr.aumgn.dac.plugin.command;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.utils.command.BasicCommandContext;
 import fr.aumgn.utils.command.BasicCommandExecutor;
 
 public class ModesCommand extends BasicCommandExecutor {
@@ -18,7 +19,7 @@ public class ModesCommand extends BasicCommandExecutor {
     }
 
     @Override
-    public void onCommand(Context context, String[] args) {
+    public void onCommand(BasicCommandContext context, String[] args) {
         if (args.length == 0) {
             context.send(DACMessage.CmdModesList);
             for (String modeName : DAC.getModes().getNames()) {

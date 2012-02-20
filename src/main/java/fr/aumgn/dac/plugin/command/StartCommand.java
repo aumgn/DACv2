@@ -10,6 +10,7 @@ import fr.aumgn.dac.api.game.GameOptions;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.Stage;
+import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
 public class StartCommand extends PlayerCommandExecutor {
@@ -20,7 +21,7 @@ public class StartCommand extends PlayerCommandExecutor {
     }
 
     @Override
-    public void onPlayerCommand(Context context, String[] args) {
+    public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Player player = context.getPlayer();
         Stage<?> stage = DAC.getStageManager().get(player);
         if (!(stage instanceof JoinStage)) {
