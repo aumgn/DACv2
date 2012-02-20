@@ -4,14 +4,18 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
  * A class which is responsible for handling specifics 
- * behavior of the game mode
+ * behavior of the game mode.
  * 
- * @param <T> the subclass of {@link StagePlayer} used by the game mode 
+ * @param <T> the subclass of {@link StagePlayer} used by this game mode 
  */
 public interface GameModeHandler<T extends StagePlayer> {
 
     /**
-     * Called when a new game start.
+     * Called when a new game starts
+     * (ie. just after the game has been initialized.)
+     * <p/>
+     * You should use this method to initialize your handler 
+     * rather than the constructor. 
      */
     void onStart();
 
@@ -44,7 +48,8 @@ public interface GameModeHandler<T extends StagePlayer> {
 
     /**
      * Called when a player quit the game.
-     * 
+     * (with 'dac quit' command or by being disconnected of the server.)
+     *  
      * @param player the player
      */
     void onQuit(T player);

@@ -88,8 +88,8 @@ public class StageManager implements Iterable<Stage<?>> {
     }
 
     /**
-     * Register the given stage.
-     * It also register all associated players.
+     * Registers the given stage.
+     * It also registers all associated players.
      * 
      * @param stage the stage to register 
      */
@@ -102,8 +102,8 @@ public class StageManager implements Iterable<Stage<?>> {
     }
     
     /**
-     * Unregister the given stage.
-     * It also unregister all associated players.
+     * Unregisters the given stage.
+     * It also unregisters all associated players.
      * 
      * @param stage the stage to unregister 
      */

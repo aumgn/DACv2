@@ -31,7 +31,7 @@ public interface JoinStage<T extends StagePlayer> extends Stage<T> {
 
     /**
      * Checks if the maximum amount of players has been reached.
-     * This depends on the number of color available in {@link fr.aumgn.dac.api.config#DACColors}. 
+     * This depends on the value specified in {@link fr.aumgn.dac.api.config#DACConfig}. 
      * 
      * @return whether the maximum amount has been reached
      */

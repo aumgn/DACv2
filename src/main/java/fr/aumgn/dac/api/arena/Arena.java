@@ -71,7 +71,7 @@ public interface Arena {
     boolean hasMode(String name);
 
     /**
-     * Add this name as a game mode allowed. 
+     * Adds this name as a game mode allowed. 
      *  
      * @param name the name of the {@link fr.aumgn.dac.api.game.mode#GameMode} to add
      */
@@ -94,13 +94,13 @@ public interface Arena {
     Iterable<Map.Entry<String, String>> options();
 
     /**
-     * Get a new {@link GameOptions} object by merging this arena
+     * Gets a new {@link GameOptions} object by merging this arena
      * options with the given options.
      * <p/>
      * In case of conflict, the priority is given to the argument options.
      * (ie. options of argument will override options of this arenas). 
      *  
-     * @param options the options to merge with
+     * @param options the options to merge into
      * @return the new options after merge
      */
     GameOptions mergeOptions(GameOptions options);
@@ -116,9 +116,9 @@ public interface Arena {
     void setOption(String name, String value);
 
     /**
-     * Remove an option to this arena
+     * Removes an option to this arena
      * <p/>
-     * If the option doesn't exists, does nothing.
+     * If the option doesn't exists, this does nothing.
      * 
      * @param name the name of the option to remove
      */

@@ -49,7 +49,7 @@ public interface VerticalArea extends Area {
     void fillWith(FillStrategy strategy, String[] fillArgs);
 
     /**
-    * Get the iterator.
+    * Gets an iterator.
     *
     * @return iterator of column inside this vertical area.
     */

@@ -9,17 +9,17 @@ import org.bukkit.entity.Player;
 public interface Arenas extends Iterable<Arena> {
 
     /**
-     * Load arenas.
+     * Loads arenas.
      */
     void load();
 
     /**
-     * Save arenas.
+     * Saves arenas.
      */
     void dump();
 
     /**
-     * Get the arena by the given name. Returns null if does not exist. 
+     * Gets the arena by the given name. Returns null if does not exist. 
      * 
      * @param name the name of the arena to get
      * @return the arena or null if doesn't exist
@@ -27,7 +27,7 @@ public interface Arenas extends Iterable<Arena> {
     Arena get(String name);
     
     /**
-     * Get the arena in which start area the given player is.
+     * Gets the arena in which start area the given player is.
      * Returns null if player is not in an arena.
      * 
      * @param player the player in the arena to looks up for

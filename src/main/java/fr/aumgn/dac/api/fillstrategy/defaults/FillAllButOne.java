@@ -15,7 +15,7 @@ import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
- * Replace all column (except a random one) of a {@link VerticalArea} with wool column. 
+ * Replaces all column (except a random one) of a {@link VerticalArea} with wool column. 
  */
 @DACFillStrategy(name = "all-but-one", aliases = { "abo" })
 public class FillAllButOne implements FillStrategy {

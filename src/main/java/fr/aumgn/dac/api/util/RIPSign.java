@@ -52,7 +52,7 @@ public class RIPSign {
     }
 
     /**
-     * Gets the horizontal BlockFace represented y this vector.
+     * Gets the horizontal BlockFace represented by this vector.
      * 
      * @param vec the vector to convert to BlockFace 
      * @return the BlockFace represented

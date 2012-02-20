@@ -3,7 +3,7 @@ package fr.aumgn.dac.api;
 import fr.aumgn.utils.command.BasicCommandExecutor;
 
 /** 
- * Represents the main "/dac" command which manages all subcommand.  
+ * Represents the main "/dac" command which manages all subcommands.  
  */
 public interface DACCommand {
 

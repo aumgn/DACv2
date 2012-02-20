@@ -36,10 +36,12 @@ public final class DAC {
     private DAC() {}
 
     /**
-     * Init DAC class
+     * Initialize DAC class
      * <p/>
      * This method is called by the main plugin in order to initialize components
      * and will raise an exception if called a second time. 
+     * 
+     * @throws UnsupportedOperationException if already initialized
      */
     public static void init(Plugin plugin, WorldEditPlugin worldEdit, DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
         if (DAC.plugin != null) {

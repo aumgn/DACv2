@@ -12,7 +12,7 @@ import fr.aumgn.dac.api.arena.Arena;
 public interface Stage<T extends StagePlayer> {
 
     /**
-     * Gets the arena this stage in which this stage takes place.
+     * Gets the arena in which this stage takes place.
      * 
      * @return the arena in which this stage takes place
      */
@@ -26,9 +26,9 @@ public interface Stage<T extends StagePlayer> {
     void removePlayer(StagePlayer player);
 
     /**
-     * Gets the players in this stage. 
+     * Gets players in this stage. 
      * 
-     * @return a list of player in this stage  
+     * @return a list of players in this stage  
      */
     List<T> getPlayers();
 
@@ -43,17 +43,17 @@ public interface Stage<T extends StagePlayer> {
     void unregisterAll();
 
     /**
-     * Broadcast a message to all players in this stage.
+     * Broadcasts a message to all players in this stage.
      * 
      * @param message the message to send
      */
     void send(Object message);
 
     /**
-     * Broadcast a message to all players in this stage except the given one.
+     * Broadcasts a message to all players in this stage except the given one.
      * 
      * @param message the message to send
-     * @param exclude a player to exclude 
+     * @param exclude the player to exclude 
      */
     void send(Object message, StagePlayer exclude);
 

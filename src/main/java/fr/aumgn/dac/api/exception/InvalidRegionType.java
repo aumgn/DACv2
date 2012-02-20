@@ -2,6 +2,9 @@ package fr.aumgn.dac.api.exception;
 
 import com.sk89q.worldedit.regions.Region;
 
+/**
+ * Thrown when trying to use a region type which is not supported. 
+ */
 public class InvalidRegionType extends RuntimeException {
     private static final long serialVersionUID = 1L;
 

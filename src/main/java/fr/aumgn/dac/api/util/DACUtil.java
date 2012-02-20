@@ -11,18 +11,39 @@ import org.bukkit.util.BlockVector;
 import fr.aumgn.dac.api.DAC;
 
 /**
- * Utilities static class
+ * Utility static class
  */
 public final class DACUtil {
 
+    /**
+     * Theoric ticks per seconds.
+     */
     public static final int TICKS_PER_SECONDS = 20;
+    /**
+     * Maximum player health.
+     */
     public static final int PLAYER_MAX_HEALTH = 20;
+    /**
+     * Maximum number of character per sign line. 
+     */
     public static final int SIGN_MAX_CHAR = 16;
+    /**
+     * Number of lines per sign.
+     */
     public static final int SIGN_LINES = 4;
 
+    /**
+     * Decimal Minecraft block bounding box left limit. 
+     */
     private static final double BLOCK_LIMIT_LEFT = 0.3;
+    /**
+     * Decimal Minecraft block bounding box right limit. 
+     */
     private static final double BLOCK_LIMIT_RIGHT = 0.7;
 
+    /**
+     * Colors markups pattern.
+     */
     private static final Pattern COLORS_PATTERN = Pattern.compile("<([A-Za-z]+)>");
 
     private DACUtil() {}
@@ -31,7 +52,8 @@ public final class DACUtil {
      * Gets the block relative modifier for the given value.
      * That is if the value is :
      *   decimal(value) < 0.3 => -1
-     *   decimal(value) > 0.7 => 1  
+     *   decimal(value) > 0.7 => 1
+     *   anything else => 0 
      * 
      * @param value the value to get the modifier for
      * @return the relative modifier

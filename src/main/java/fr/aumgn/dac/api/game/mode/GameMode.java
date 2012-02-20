@@ -6,7 +6,7 @@ import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
- * Game factory which represents a game mode.
+ * Game factory class which represents a game mode.
  * 
  * @param <T> the subclass of {@link StagePlayer} used by this mode 
  */

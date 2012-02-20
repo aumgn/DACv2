@@ -3,7 +3,7 @@ package fr.aumgn.dac.api.fillstrategy;
 import fr.aumgn.dac.api.area.VerticalArea;
 
 /**
- * A Strategy responsible for filling a {@link VerticalArea}.
+ * A strategy responsible for filling a {@link VerticalArea}.
  */
 public interface FillStrategy {
 

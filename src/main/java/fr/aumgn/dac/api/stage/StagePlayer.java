@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.api.config.DACColor;
 
 /**
- * Player Wrapper for player which is in stage.
+ * Player wrapper for a bukkit player which is in a stage.
  */
 public interface StagePlayer {
 
@@ -25,7 +25,7 @@ public interface StagePlayer {
     Player getPlayer();
 
     /**
-     * Gets the display name of this player used in dac stages.
+     * Gets the display name of this player used in stages.
      * 
      * @return the display name of this player
      */
@@ -61,7 +61,7 @@ public interface StagePlayer {
     void sendToOthers(Object message);
 
     /**
-     * Get the formatted name for players list.
+     * Gets the formatted name for players list.
      * 
      * @return the formatted name
      */

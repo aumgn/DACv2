@@ -30,10 +30,12 @@ public class StagePlayerManager {
     }
 
     /**
-     * Register the given player.
+     * Registers the given player.
+     * 
+     * @throws PlayerAlreadyRegistered if soft is false and player is already registered  
      * 
      * @param player the player to register
-     * @param soft indicates if an exception should be raised 
+     * @param soft indicates that no exception should be raised 
      *          if player is already registered.  
      */
     public void register(StagePlayer player, boolean soft) {
@@ -53,8 +55,10 @@ public class StagePlayerManager {
     /**
      * Unregister the given player.
      * 
+     * @throws PlayerNotRegistered if soft is false and player is not registered
+     * 
      * @param player the player to unregister
-     * @param soft indicates if an exception should be raised 
+     * @param soft indicates that no exception should be raised 
      *          if player is not registered.  
      */
     public void unregister(StagePlayer player, boolean soft) {

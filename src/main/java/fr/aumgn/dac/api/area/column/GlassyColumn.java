@@ -7,7 +7,7 @@ import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.config.DACColor;
 
 /**
- * Represents A column which have a glass block on top.
+ * Represents a column which has a glass block on top.
  */
 public class GlassyColumn implements ColumnPattern {
     

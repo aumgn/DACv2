@@ -5,7 +5,7 @@ import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.config.DACColor;
 
 /**
- * Represents a uniform column
+ * Represents an uniform column
  */
 public class UniformColumn implements ColumnPattern {
 

@@ -12,7 +12,7 @@ import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
  * Replaces random column of a {@link VerticalArea} with wool.
- * Uses a weight options.  
+ * Uses a weight percentage options.  
  */
 @DACFillStrategy(name = "randomly")
 public class FillRandomly implements FillStrategy {

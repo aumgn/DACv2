@@ -19,12 +19,12 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
     /**
      * Gets the {@link GameMode} for this game.
      * 
-     * @return the mode of this game
+     * @return the game mode of this game
      */
     GameMode<T> getMode();
 
     /**
-     * Switch to next player.
+     * Changes turn to the next player.
      */
     void nextTurn();
 
@@ -59,17 +59,21 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
 
     /**
      * Adds a spectator to this game.
+     * <p/>
+     * Returns false if player was already watching game, true otherwise.
      * 
      * @param player the player to add as a spectator
-     * @return false if player was already watching game, false otherwise  
+     * @return false if player was already watching game, true otherwise  
      */
     boolean addSpectator(Player player);
 
     /**
      * Removes a spectator to this game.
+     * <p/>
+     * Returns true if player was not watching game, false otherwise.
      * 
      * @param player the player to remove as a spectator
-     * @return false if player was not watching game, false otherwise  
+     * @return true if player was not watching game, false otherwise  
      */
     boolean removeSpectator(Player player);
 
