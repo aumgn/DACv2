@@ -3,13 +3,12 @@ package fr.aumgn.dac.api.event.joinstage;
 import fr.aumgn.dac.api.event.DACEvent;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 
-@SuppressWarnings("serial")
-public class DACJoinStageEvent extends DACEvent {
+public abstract class DACJoinStageEvent extends DACEvent {
 
     private JoinStage<?> joinStage;
 
-    public DACJoinStageEvent(String name, JoinStage<?> stage) {
-        super(name);
+    public DACJoinStageEvent(JoinStage<?> stage) {
+        super();
         this.joinStage = stage;
     }
 

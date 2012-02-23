@@ -7,11 +7,10 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class DACGameLooseEvent extends DACGamePlayerEvent {
 
-    private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
 
     public DACGameLooseEvent(Game<?> game, StagePlayer player) {
-        super("DACClassicLooseEvent", game, player);
+        super(game, player);
     }
 
     @Override

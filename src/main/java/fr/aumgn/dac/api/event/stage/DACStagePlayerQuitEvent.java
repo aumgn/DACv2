@@ -7,13 +7,12 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class DACStagePlayerQuitEvent extends DACStageEvent {
 
-    private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
     
     private StagePlayer player;
 
     public DACStagePlayerQuitEvent(Stage<?> stage, StagePlayer player) {
-        super("DACStagePlayerQuitEvent", stage);
+        super(stage);
         this.player = player;
         
     }

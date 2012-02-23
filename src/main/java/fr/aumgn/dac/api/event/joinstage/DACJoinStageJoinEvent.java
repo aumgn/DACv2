@@ -9,7 +9,6 @@ import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 
 public class DACJoinStageJoinEvent extends DACJoinStageEvent implements Cancellable {
-    private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
 
     private Player player;
@@ -18,7 +17,7 @@ public class DACJoinStageJoinEvent extends DACJoinStageEvent implements Cancella
     private boolean isCancelled = false;
 
     public DACJoinStageJoinEvent(JoinStage<?> joinStage, Player player, DACColor color, Location location) {
-        super("DACJoinStageJoinEvent", joinStage);
+        super(joinStage);
         this.player = player;
         this.color = color;
         this.startLocation = location;

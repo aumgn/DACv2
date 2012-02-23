@@ -6,11 +6,10 @@ import fr.aumgn.dac.api.stage.Stage;
 
 public class DACStageStopEvent extends DACStageEvent {
 
-    private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
 
     public DACStageStopEvent(Stage<?> stage) {
-        super("DACStageStopEvent", stage);
+        super(stage);
     }
 
     @Override

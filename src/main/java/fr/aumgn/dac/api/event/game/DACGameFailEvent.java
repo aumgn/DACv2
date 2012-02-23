@@ -8,14 +8,13 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class DACGameFailEvent extends DACGamePlayerEvent implements Cancellable {
 
-    private static final long serialVersionUID = 1L;
     private static final HandlerList handlers = new HandlerList();
 
     private boolean isCancelled = false;
     private boolean cancelDeath = true;
 
     public DACGameFailEvent(Game<?> game, StagePlayer player) {
-        super("DACGameFailEvent", game, player);
+        super(game, player);
     }
 
     @Override
