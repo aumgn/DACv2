@@ -191,7 +191,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
             }
         }
         for (Player spectator : spectators) {
-            spectator.sendMessage(msg.toString());
+            spectator.sendMessage("[" + arena.getName() + "] " + msg.toString());
         }
     }
 
