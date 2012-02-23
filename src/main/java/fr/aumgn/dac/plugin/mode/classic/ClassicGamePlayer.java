@@ -20,7 +20,7 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 
     @Override
     public String formatForList() {
-        String livesF = (lives == -1) ? lives + " vie(s)" : "En sursis"; 
+        String livesF = (lives == -1) ? "En sursis" : lives + " vie(s)"; 
         return super.formatForList() + " : " + livesF;
     }
 

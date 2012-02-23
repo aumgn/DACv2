@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
-import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
@@ -20,13 +19,12 @@ public class QuitCommand extends PlayerCommandExecutor {
     public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Player player = context.getPlayer();
 
-        StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
-        Stage<?> stage = dacPlayer.getStage();
+        StagePlayer stagePlayer = DAC.getPlayerManager().get(player);
 
-        if (stage == null) {
+        if (stagePlayer == null || stagePlayer.getStage() == null) {
             error(DACMessage.CmdQuitNotInGame);
         }
-        stage.removePlayer(dacPlayer);
+        stagePlayer.getStage().removePlayer(stagePlayer);
     }
 
 }
