@@ -5,7 +5,7 @@ import fr.aumgn.dac.api.game.GameOptions;
 import fr.aumgn.dac.api.game.SimpleGame;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
-import fr.aumgn.dac.api.game.mode.GameModeHandler;
+import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
@@ -18,8 +18,8 @@ public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
     }
 
     @Override
-    public GameModeHandler<ClassicGamePlayer> createHandler(Game<ClassicGamePlayer> game) {
-        return new ClassicGameModeHandler(game);
+    public GameHandler<ClassicGamePlayer> createHandler(Game<ClassicGamePlayer> game) {
+        return new ClassicGameHandler(game);
     }
 
     @Override

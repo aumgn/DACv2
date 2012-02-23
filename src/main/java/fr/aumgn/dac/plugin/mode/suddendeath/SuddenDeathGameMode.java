@@ -5,7 +5,7 @@ import fr.aumgn.dac.api.game.GameOptions;
 import fr.aumgn.dac.api.game.SimpleGame;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
-import fr.aumgn.dac.api.game.mode.GameModeHandler;
+import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
@@ -18,8 +18,8 @@ public class SuddenDeathGameMode implements GameMode<SuddenDeathGamePlayer> {
     }
 
     @Override
-    public GameModeHandler<SuddenDeathGamePlayer> createHandler(Game<SuddenDeathGamePlayer> game) {
-        return new SuddenDeathGameModeHandler(game);
+    public GameHandler<SuddenDeathGamePlayer> createHandler(Game<SuddenDeathGamePlayer> game) {
+        return new SuddenDeathGameHandler(game);
     }
 
     @Override

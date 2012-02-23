@@ -22,12 +22,12 @@ public interface GameMode<T extends StagePlayer> {
     Game<T> createGame(JoinStage<?> joinStage, GameOptions options);
 
     /**
-     * Creates the {@link GameModeHandler} for this game mode.
+     * Creates the {@link GameHandler} for this game mode.
      * 
      * @param game the game for which to create the handler 
      * @return the created handler
      */
-    GameModeHandler<T> createHandler(Game<T> game);
+    GameHandler<T> createHandler(Game<T> game);
 
     /**
      * Creates the inherited instance of {@link StagePlayer} associated with this game mode.

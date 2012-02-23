@@ -26,7 +26,7 @@ import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
 import fr.aumgn.dac.api.exception.PlayerCastException;
 import fr.aumgn.dac.api.game.mode.GameMode;
-import fr.aumgn.dac.api.game.mode.GameModeHandler;
+import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
@@ -37,7 +37,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     private Arena arena;
     private GameMode<T> mode;
     private GameOptions options;
-    private GameModeHandler<T> gameModeHandler;
+    private GameHandler<T> gameHandler;
     private List<T> players;
     private Set<Player> spectators;
     private Vector propulsion;
@@ -80,13 +80,13 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
             players.add(gameMode.createPlayer(this, player, i + 1));
             i++;
         }
-        gameModeHandler = gameMode.createHandler(this);
+        gameHandler = gameMode.createHandler(this);
         spectators = new HashSet<Player>();
         turn = players.size() - 1;
         turnTimeOutTaskId = -1;
         finished = false;
         DAC.getStageManager().register(this);
-        gameModeHandler.onStart();
+        gameHandler.onStart();
         nextTurn();
         DAC.callEvent(new DACStageStartEvent(this));
     }
@@ -154,7 +154,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         if (turn == players.size()) {
             turn = 0;
             DAC.callEvent(new DACGameNewTurnEvent(this));
-            gameModeHandler.onNewTurn();
+            gameHandler.onNewTurn();
         }
     }
 
@@ -168,7 +168,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         if (!finished) {
             T player = players.get(turn);
             turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(DAC.getPlugin(), turnTimeOutRunnable, DAC.getConfig().getTurnTimeOut());
-            gameModeHandler.onTurn(player);
+            gameHandler.onTurn(player);
         }
     }
 
@@ -220,7 +220,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
         players.remove(player);
         DAC.getPlayerManager().unregister(player);
-        gameModeHandler.onQuit(castPlayer(player));
+        gameHandler.onQuit(castPlayer(player));
     }
 
     @Override
@@ -233,7 +233,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
         finished = true;
         Bukkit.getScheduler().cancelTask(turnTimeOutTaskId);
         DAC.callEvent(new DACStageStopEvent(this));
-        gameModeHandler.onStop();
+        gameHandler.onStop();
         DAC.getStageManager().unregister(this);
         if (DAC.getConfig().getResetOnEnd()) {
             arena.getPool().reset();
@@ -281,7 +281,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
             DAC.callEvent(failEvent);
 
             if (!failEvent.isCancelled()) {
-                gameModeHandler.onFail(gamePlayer);
+                gameHandler.onFail(gamePlayer);
             }
 
             if (failEvent.cancelDeath()) {
@@ -306,7 +306,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
             DACGameSuccessEvent successEvent = new DACGameSuccessEvent(this, gamePlayer);
             DAC.callEvent(successEvent);
             if (!successEvent.isCancelled()) {
-                gameModeHandler.onSuccess(gamePlayer);
+                gameHandler.onSuccess(gamePlayer);
             }
         }
     }
