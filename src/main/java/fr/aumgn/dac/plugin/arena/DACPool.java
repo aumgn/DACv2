@@ -12,6 +12,7 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 
+import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
@@ -30,19 +31,16 @@ public class DACPool extends DACVerticalArea implements Pool {
         }
     };
 
-    private static final int ABOVE_REGION_HEIGHT = 5;
-    private static final int ABOVE_REGION_MARGIN = 5;
-
-    private CuboidRegion aboveRegion;
+    private CuboidRegion safeRegion;
 
     public DACPool(DACArena arena) {
         super(arena);
-        updateAboveRegion();
+        updateSafeRegion();
     }
 
     private void removeSigns() {
         World world = getArena().getWorld();
-        for (BlockVector vec : getAboveRegion()) {
+        for (BlockVector vec : getSafeRegion()) {
             Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
             if (block.getType() == SIGN_MATERIAL) {
                 block.setType(AIR);
@@ -61,45 +59,48 @@ public class DACPool extends DACVerticalArea implements Pool {
         fillWith(WATER_FILLER, new String[0]);
     }
 
-    private void updateAboveRegion() {
+    @Override
+    public void updateSafeRegion() {
         int minY, maxY;
         Vector poolMinPt, poolMaxPt, minPt, maxPt;
+        int height = DAC.getConfig().getSafeRegionHeight();
+        int margin = DAC.getConfig().getSafeRegionMargin();
         Region region = getWERegion();
         poolMinPt = region.getMinimumPoint();
         poolMaxPt = region.getMaximumPoint();
         
         minY = poolMaxPt.getBlockY() + 1;
-        maxY = minY + ABOVE_REGION_HEIGHT;
+        maxY = minY + height;
 
-        minPt = poolMinPt.subtract(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(minY);
-        maxPt = poolMaxPt.add(ABOVE_REGION_MARGIN, 0, ABOVE_REGION_MARGIN).setY(maxY);
+        minPt = poolMinPt.subtract(margin, 0, margin).setY(minY);
+        maxPt = poolMaxPt.add(margin, 0, margin).setY(maxY);
 
-        aboveRegion = new CuboidRegion(region.getWorld(), minPt, maxPt);
+        safeRegion = new CuboidRegion(region.getWorld(), minPt, maxPt);
     }
 
-    private CuboidRegion getAboveRegion() {
-        return aboveRegion;
+    private CuboidRegion getSafeRegion() {
+        return safeRegion;
     }
 
     @Override
-    public boolean isAbove(Player player) {
+    public boolean isSafe(Player player) {
         Vector vec = new BlockVector(
                 player.getLocation().getBlockX(),
                 player.getLocation().getBlockY(),
                 player.getLocation().getBlockZ());
-        return getAboveRegion().contains(vec);
+        return getSafeRegion().contains(vec);
     }
 
     @Override
     public void update(Region region) {
         super.update(region);
-        updateAboveRegion();
+        updateSafeRegion();
     }
     
     @Override
     public void setRegion(DACRegion region) {
         super.setRegion(region);
-        updateAboveRegion();
+        updateSafeRegion();
     }
     
     @Override

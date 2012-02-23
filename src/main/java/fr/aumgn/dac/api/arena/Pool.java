@@ -15,7 +15,7 @@ public interface Pool extends VerticalArea {
      * @param player the player to checks with
      * @return whether or not the given player is above the pool
      */
-    boolean isAbove(Player player);
+    boolean isSafe(Player player);
 
     /**
      * Resets the pool. (ie. fill it with water) 
@@ -32,5 +32,10 @@ public interface Pool extends VerticalArea {
      * @return whether or not this position is a 'dé a coudre'
      */
     boolean isADACPattern(int x, int z);
+
+    /**
+     * Updates this pool's safe region.
+     */
+	void updateSafeRegion();
 
 }

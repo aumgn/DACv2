@@ -4,6 +4,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 
 import fr.aumgn.dac.api.DAC;
+import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACColors;
 import fr.aumgn.dac.api.config.DACConfig;
 import fr.aumgn.dac.api.util.DACUtil;
@@ -12,6 +13,8 @@ public class DACPluginConfig implements DACConfig {
 
     private boolean resetOnStart = false;
     private boolean resetOnEnd = false;
+    private int safeRegionHeight;
+    private int safeRegionMargin;
     private int turnTimeOut;
     private boolean tpAfterFail;
     private int tpAfterFailDelay = 0;
@@ -31,6 +34,8 @@ public class DACPluginConfig implements DACConfig {
             resetOnStart = true;
             resetOnEnd = true;
         }
+        safeRegionHeight = config.getInt("safe-region-height");
+        safeRegionMargin = config.getInt("safe-region-margin");
         turnTimeOut = config.getInt("turn-timeout");
         int tpAfterFailConfig = config.getInt("tp-after-fail");
         tpAfterFail = tpAfterFailConfig >= 0;
@@ -45,6 +50,11 @@ public class DACPluginConfig implements DACConfig {
         ConfigurationSection colorsConfig = config.getConfigurationSection("colors");
         ConfigurationSection defColorsConfig = config.getDefaults().getConfigurationSection("colors");
         colors = new DACPluginColors(colorsConfig, defColorsConfig);
+
+        // Update cached safe regions. 
+        for (Arena arena : DAC.getArenas()) {
+        	arena.getPool().updateSafeRegion();
+        }
     }
 
     @Override
@@ -55,6 +65,16 @@ public class DACPluginConfig implements DACConfig {
     @Override
     public boolean getResetOnEnd() {
         return resetOnEnd;
+    }
+    
+    @Override
+    public int getSafeRegionHeight() {
+    	return safeRegionHeight;
+    }
+    
+    @Override
+    public int getSafeRegionMargin() {
+    	return safeRegionMargin;
     }
 
     @Override

@@ -276,7 +276,7 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
     public void onFallDamage(EntityDamageEvent event) {
         Player player = (Player) event.getEntity();
         T gamePlayer = castPlayer(DAC.getPlayerManager().get(player));
-        if (isPlayerTurn(gamePlayer) && arena.getPool().isAbove(player)) {
+        if (isPlayerTurn(gamePlayer) && arena.getPool().isSafe(player)) {
             DACGameFailEvent failEvent = new DACGameFailEvent(this, gamePlayer);
             DAC.callEvent(failEvent);
 

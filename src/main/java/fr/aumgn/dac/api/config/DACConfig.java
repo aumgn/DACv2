@@ -28,6 +28,20 @@ public interface DACConfig {
     boolean getResetOnEnd();
 
     /**
+     * Gets safe region height.
+     * 
+     * @return the safe region height
+     */
+    int getSafeRegionHeight();
+    
+    /**
+     * Gets safe region margin.
+     * 
+     * @return the safe region margin
+     */
+    int getSafeRegionMargin();
+    
+    /**
      * Indicates the number of ticks before a player turn is aborted.  
      * 
      * @return the number of ticks before a player turn is aborted
