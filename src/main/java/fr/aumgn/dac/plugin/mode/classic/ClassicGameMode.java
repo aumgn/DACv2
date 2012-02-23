@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
-@DACGameMode(name = "classic")
+@DACGameMode(name = "classic", aliases = {"default", "def"})
 public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
 
     @Override

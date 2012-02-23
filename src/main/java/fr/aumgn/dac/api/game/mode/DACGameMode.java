@@ -10,11 +10,18 @@ import java.lang.annotation.Target;
 public @interface DACGameMode {
 
     /**
-     * Name of the game mode
+     * Name of the game mode.
      * 
-     * @return Name of the game mode.
+     * @return Name of the game mode
      */
     public String name();
+    
+    /**
+     * Aliases of the game mode.
+     * 
+     * @return aliases of the game mode
+     */
+    public String[] aliases() default {};
 
     /**
      * Indicates if the {@link GameMode} should be added to a 

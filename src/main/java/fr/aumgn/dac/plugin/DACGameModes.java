@@ -16,7 +16,9 @@ import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameModes;
 
 public class DACGameModes implements GameModes {
-    private Map<String, GameMode<?>> modes = new HashMap<String, GameMode<?>>();
+	
+    private final Map<String, GameMode<?>> modes = new HashMap<String, GameMode<?>>();
+    private final Map<String, GameMode<?>> modesByAlias = new HashMap<String, GameMode<?>>();
 
     public DACGameModes() {
         for (Plugin bukkitPlugin : Bukkit.getPluginManager().getPlugins()) {
@@ -41,6 +43,10 @@ public class DACGameModes implements GameModes {
         try {
             GameMode<?> mode = modeCls.newInstance();
             modes.put(modeName, mode);
+            modesByAlias.put(modeName, mode);
+            for (String alias : annotation.aliases()) {
+            	modesByAlias.put(alias, mode);
+            }
         } catch (InstantiationException exc) {
             DAC.getLogger().warning("Cannot register game mode " + modeName);
         } catch (IllegalAccessException e) {
@@ -66,7 +72,7 @@ public class DACGameModes implements GameModes {
 
     @Override
     public GameMode<?> get(String name) {
-        return modes.get(name);
+        return modesByAlias.get(name);
     }
 
 }

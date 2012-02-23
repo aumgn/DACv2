@@ -8,7 +8,7 @@ import java.util.Collection;
 public interface FillStrategies {
 
     /**
-     * Gets the names of available fill strategies.
+     * Gets the names of available fill strategies. (Not aliases aware.)
      * 
      * @return a collection of available strategies names 
      */

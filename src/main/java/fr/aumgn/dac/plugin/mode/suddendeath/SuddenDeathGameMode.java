@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
-@DACGameMode(name = "sudden-death", isDefault = false)
+@DACGameMode(name = "sudden-death", isDefault = false, aliases = {"sd"})
 public class SuddenDeathGameMode implements GameMode<SuddenDeathGamePlayer> {
 
     @Override
