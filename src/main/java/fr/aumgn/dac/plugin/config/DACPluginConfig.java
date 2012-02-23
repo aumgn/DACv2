@@ -28,7 +28,9 @@ public class DACPluginConfig implements DACConfig {
         String autoReset = config.getString("auto-reset");
         if (autoReset.equals("start")) {
             resetOnStart = true;
+            resetOnEnd = false;
         } else if (autoReset.equals("end")) {
+        	resetOnStart = false;
             resetOnEnd = true;
         } else if (autoReset.equals("both")) {
             resetOnStart = true;
