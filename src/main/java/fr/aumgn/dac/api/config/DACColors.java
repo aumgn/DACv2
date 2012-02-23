@@ -26,5 +26,12 @@ public interface DACColors extends Iterable<DACColor> {
      * @return the number of colors available
      */
     int size();
+    
+    /**
+     * Gets a random color
+     * 
+     * @return a random color
+     */
+    DACColor random();
 
 }

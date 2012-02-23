@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.config.DACColor;
  */
 public class UniformColumn implements ColumnPattern {
 
-    private DACColor color; 
+    protected DACColor color; 
     
     public UniformColumn(DACColor color) {
         this.color = color; 

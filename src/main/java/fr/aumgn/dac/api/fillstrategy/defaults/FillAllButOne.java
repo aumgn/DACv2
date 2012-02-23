@@ -10,7 +10,9 @@ import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
+import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
+import fr.aumgn.dac.api.area.column.RandomUniformColor;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
@@ -36,9 +38,10 @@ public class FillAllButOne implements FillStrategy {
             z = minZ + rand.nextInt(zRange);
         } while (!region.contains(new BlockVector(x, y, z)));
 
+        ColumnPattern pattern = new RandomUniformColor();
         for (AreaColumn column : area.columns()) {
             if (column.getX() != x || column.getZ() != z) {
-                column.set(Material.WOOL, (byte) 0);
+                column.set(pattern);
             } else {
                 column.set(Material.STATIONARY_WATER);
             }

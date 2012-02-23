@@ -6,7 +6,9 @@ import org.bukkit.Material;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
+import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
+import fr.aumgn.dac.api.area.column.RandomUniformColor;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
@@ -33,10 +35,11 @@ public class FillRandomly implements FillStrategy {
             }
         }
         Random rand = DAC.getRand();
+        ColumnPattern pattern = new RandomUniformColor();
         for (AreaColumn column : area.columns()) {
             column.set(Material.STATIONARY_WATER);
             if (rand.nextInt(101) <= percentage) {
-                column.set(Material.WOOL, (byte) 0);
+                column.set(pattern);
             } else {
                 column.set(Material.STATIONARY_WATER);
             }

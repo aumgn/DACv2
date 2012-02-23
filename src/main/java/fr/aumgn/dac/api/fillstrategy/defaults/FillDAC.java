@@ -4,7 +4,9 @@ import org.bukkit.Material;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
+import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
+import fr.aumgn.dac.api.area.column.RandomUniformColor;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
@@ -23,11 +25,12 @@ public class FillDAC implements FillStrategy {
     @Override
     public void fill(VerticalArea area, String[] args) {
         sameParity = DAC.getRand().nextBoolean();
+        ColumnPattern pattern = new RandomUniformColor();
         for (AreaColumn column : area.columns()) {
             if (isDACColumn(column)) {
                 column.set(Material.STATIONARY_WATER);
             } else {
-                column.set(Material.WOOL, (byte) 0);
+                column.set(pattern);
             }
         }
     }
