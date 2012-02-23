@@ -54,9 +54,9 @@ public class DACPluginConfig implements DACConfig {
         colors = new DACPluginColors(colorsConfig, defColorsConfig);
 
         // Update cached safe regions. 
-        for (Arena arena : DAC.getArenas()) {
-        	arena.getPool().updateSafeRegion();
-        }
+       	for (Arena arena : DAC.getArenas()) {
+       		arena.getPool().updateSafeRegion();
+       	}
     }
 
     @Override

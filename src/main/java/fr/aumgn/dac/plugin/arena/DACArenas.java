@@ -136,7 +136,11 @@ public class DACArenas implements Arenas {
 
     @Override
     public Iterator<Arena> iterator() {
-        return new ArrayList<Arena>(arenas.values()).iterator();
+    	if (arenas == null) {
+    		return new ArrayList<Arena>().iterator();
+    	} else { 
+    		return new ArrayList<Arena>(arenas.values()).iterator();
+    	}
     }
 
 }

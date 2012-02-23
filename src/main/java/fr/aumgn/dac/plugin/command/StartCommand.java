@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.GameOptions;
+import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.Stage;
@@ -34,7 +35,9 @@ public class StartCommand extends PlayerCommandExecutor {
             mode = DAC.getModes().get(args[0]);
             if (mode == null) {
                 error(DACMessage.CmdStartUnknownMode);
-            } else if (!joinStage.getArena().hasMode(args[0])) {
+            }
+            String modeName = mode.getClass().getAnnotation(DACGameMode.class).name();
+            if (!joinStage.getArena().hasMode(modeName)) {
                 error(DACMessage.CmdStartUnavailableMode);
             }
         } else {
