@@ -1,5 +1,7 @@
 package fr.aumgn.dac.plugin.command;
 
+import org.bukkit.entity.Player;
+
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
@@ -42,7 +44,10 @@ public class WatchCommand extends PlayerCommandExecutor {
             context.error(DACMessage.CmdWatchNotInGame.format(arena.getName()));
             return;
         }
-        if (((Game<?>) stage).addSpectator(context.getPlayer())) {
+        Player player = context.getPlayer();
+        Game<?> game = (Game<?>) stage;
+        if (game.canWatch(player)) {
+            game.addSpectator(player);
             context.success(DACMessage.CmdWatchSuccess.format(arena.getName()));
         } else {
             context.send(DACMessage.CmdWatchAlreadyWatching.format(arena.getName()));

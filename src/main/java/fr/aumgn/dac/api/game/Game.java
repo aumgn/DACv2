@@ -70,6 +70,14 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
      * @return the gameOptions
      */
     GameOptions getOptions();
+    
+    /**
+     * Indicates if a player can watch a game.
+     * 
+     * @param player the player
+     * @return true if it can, false otherwise
+     */
+    public boolean canWatch(Player player);
 
     /**
      * Adds a spectator to this game.

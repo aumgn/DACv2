@@ -239,6 +239,18 @@ public class SimpleGame<T extends StagePlayer> implements Game<T> {
             arena.getPool().reset();
         }
     }
+    
+    @Override
+    public boolean canWatch(Player player) {
+        StagePlayer stagePlayer = DAC.getPlayerManager().get(player);
+        if (stagePlayer == null) {
+            return true;
+        }
+        if (stagePlayer.getStage() == this) {
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public boolean addSpectator(Player player) {
