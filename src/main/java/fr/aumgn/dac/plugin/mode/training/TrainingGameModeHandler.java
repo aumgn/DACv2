@@ -31,13 +31,9 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
 
     @Override
     public void onTurn(TrainingGamePlayer player) {
-        if (!player.isPlaying()) {
-            game.nextTurn();
-        } else {
-            player.send(DACMessage.GamePlayerTurn2);
-            player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
-            player.tpToDiving();
-        }
+        player.send(DACMessage.GamePlayerTurn2);
+        player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
+        player.tpToDiving();
     }
 
     @Override
@@ -71,18 +67,17 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
         player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
         game.nextTurn();
     }
+    
+    private void sendStats(TrainingGamePlayer player) {
+        player.send(DACMessage.StatsSuccess.format(player.getSuccesses()));
+        player.send(DACMessage.StatsDAC.format(player.getDACs()));
+        player.send(DACMessage.StatsFail.format(player.getFails()));
+    }
 
     @Override
     public void onQuit(TrainingGamePlayer player) {
-        player.setPlaying(false);
-        int count = 0;
-        for (TrainingGamePlayer gamePlayer : game.getPlayers()) {
-            player = gamePlayer;
-            if (player.isPlaying()) {
-                count++;
-            }
-        }
-        if (count == 0) {
+        sendStats(player);
+        if (game.getPlayers().size() == 0) {
             game.stop();
         }
     }
@@ -90,9 +85,7 @@ public class TrainingGameModeHandler extends SimpleGameModeHandler<TrainingGameP
     @Override
     public void onStop() {
         for (TrainingGamePlayer player : game.getPlayers()) {
-            player.send(DACMessage.StatsSuccess.format(player.getSuccesses()));
-            player.send(DACMessage.StatsDAC.format(player.getDACs()));
-            player.send(DACMessage.StatsFail.format(player.getFails()));
+            sendStats(player);
         }
     }
 
