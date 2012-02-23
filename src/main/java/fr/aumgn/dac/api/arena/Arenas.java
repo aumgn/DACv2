@@ -36,7 +36,7 @@ public interface Arenas extends Iterable<Arena> {
     Arena get(Player player);
 
     /**
-     * Creates a new arena in the given World with the given world.
+     * Creates a new arena in the given world.
      *  
      * @param name the name of the new Arena
      * @param world the world of the new Arena

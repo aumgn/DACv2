@@ -16,7 +16,7 @@ public interface DivingBoard {
     Location getLocation();
 
     /**
-     * Updates the diving board whit the given location.
+     * Updates the diving board with the given location.
      * @param location the location to update this diving board with.
      */
     void update(Location location);
