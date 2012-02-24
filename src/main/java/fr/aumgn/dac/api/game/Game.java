@@ -3,7 +3,6 @@ package fr.aumgn.dac.api.game;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.util.Vector;
 
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
@@ -49,14 +48,14 @@ public interface Game extends Stage {
      * @param event the PlayerMoveEvent
      */
     void onMove(PlayerMoveEvent event);
-    
+
     /**
      * Handles player loose.
      * 
      * @param player the player who lost 
      */
     void onLoose(StagePlayer player);
-    
+
     /**
      * Handles player win.
      * 
@@ -70,7 +69,7 @@ public interface Game extends Stage {
      * @return the gameOptions
      */
     GameOptions getOptions();
-    
+
     /**
      * Indicates if a player can watch a game.
      * 
@@ -98,19 +97,5 @@ public interface Game extends Stage {
      * @return true if player was not watching game, false otherwise  
      */
     boolean removeSpectator(Player player);
-
-    /**
-     * Gets the parsed propulsion game option.
-     * 
-     * @return the parsed propulsion Vector
-     */
-    Vector getPropulsion();
-
-    /**
-     * Gets the parsed propulsion delay option.
-     * 
-     * @return the parsed propulsion delay
-     */
-    int getPropulsionDelay();
 
 }

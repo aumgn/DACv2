@@ -19,18 +19,17 @@ import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
+import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
-import fr.aumgn.dac.api.stage.StagePlayerManager;
 
-public class SimpleJoinStage implements JoinStage {
+public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
-    private Arena arena;
     private DACColors colors;
     private Set<DACColor> colorsMap;
     private List<SimpleJoinStagePlayer> players;
 
     public SimpleJoinStage(Arena arena) {
-        this.arena = arena;
+        super(arena);
         colors = DAC.getConfig().getColors();
         colorsMap = new HashSet<DACColor>();
         players = new ArrayList<SimpleJoinStagePlayer>();
@@ -39,41 +38,6 @@ public class SimpleJoinStage implements JoinStage {
             player.sendMessage(DACMessage.JoinNewGame2.getValue());
         }
         DAC.callEvent(new DACStageStartEvent(this));
-    }
-
-    @Override
-    public void registerAll() {
-        StagePlayerManager playerManager = DAC.getPlayerManager();
-        for (StagePlayer player : players) {
-            playerManager.register(player);
-        }
-    }
-
-    @Override
-    public void unregisterAll() {
-        StagePlayerManager playerManager = DAC.getPlayerManager();
-        for (StagePlayer player : players) {
-            playerManager.unregister(player);
-        }
-    }
-
-    @Override
-    public void send(Object msg, StagePlayer exclude) {
-        for (StagePlayer player : players) {
-            if (player != exclude) {
-                player.getPlayer().sendMessage(msg.toString());
-            }
-        }
-    }
-
-    @Override
-    public void send(Object msg) {
-        send(msg, null);
-    }
-
-    @Override
-    public Arena getArena() {
-        return arena;
     }
 
     private boolean isColorAvailable(String name) {

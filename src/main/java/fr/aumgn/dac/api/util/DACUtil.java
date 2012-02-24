@@ -133,4 +133,12 @@ public final class DACUtil {
         return parsed.toString();
     }
 
+    public static int parseInteger(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException exc) {
+            return 0;
+        }
+    }
+
 }

@@ -13,11 +13,11 @@ public class SimpleGamePlayer extends SimpleStagePlayer {
     private Vector propulsion;
     private int propulsionDelay;
 
-    public SimpleGamePlayer(Game stage, StagePlayer player, int index) {
-        super(player.getPlayer(), stage, player.getColor(), player.getStartLocation());
+    public SimpleGamePlayer(Game game, StagePlayer player, int index) {
+        super(player.getPlayer(), game, player.getColor(), player.getStartLocation());
         this.index = index;
-        propulsion = stage.getPropulsion();
-        propulsionDelay = stage.getPropulsionDelay();
+        propulsion = game.getOptions().getPropulsion();
+        propulsionDelay = game.getOptions().getPropulsionDelay();
     }
 
     @Override

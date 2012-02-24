@@ -8,11 +8,16 @@ import java.util.Map.Entry;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.util.Vector;
+
+import static fr.aumgn.dac.api.util.DACUtil.parseInteger;
 
 @SerializableAs("dac-game-options")
 public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entry<String, String>> {
 
     private Map<String, String> options;
+    private Vector propulsion;
+    private int propulsionDelay;
 
     public static GameOptions parse(String[] options) {
         Map<String, String> map = new HashMap<String, String>();
@@ -81,8 +86,41 @@ public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entr
         options.remove(name);
     }
 
+    public void parsePropulsion() {
+        String prop = get("propulsion", "0");
+        String[] splitted = prop.split(",");
+        if (splitted.length == 1) {
+            propulsion = new Vector(0, parseInteger(splitted[0]), 0);
+            propulsionDelay = 0;
+        } else if (splitted.length == 2) {
+            propulsion = new Vector(0, parseInteger(splitted[0]), 0);
+            propulsionDelay = parseInteger(splitted[1]);
+        } else if (splitted.length == 3) {
+            propulsion = new Vector(
+                    parseInteger(splitted[0]),
+                    parseInteger(splitted[1]),
+                    parseInteger(splitted[2]));
+            propulsionDelay = 0;
+        } else {
+            propulsion = new Vector(
+                    parseInteger(splitted[0]),
+                    parseInteger(splitted[1]),
+                    parseInteger(splitted[2]));
+            propulsionDelay = parseInteger(splitted[3]);
+        }
+    }
+
+    public Vector getPropulsion() {
+        return propulsion;
+    }
+
+    public int getPropulsionDelay() {
+        return propulsionDelay;
+    }
+
     @Override
     public Iterator<Entry<String, String>> iterator() {
         return options.entrySet().iterator();
     }
+
 }

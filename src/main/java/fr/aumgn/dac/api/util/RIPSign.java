@@ -17,7 +17,7 @@ import fr.aumgn.dac.api.arena.Pool;
  * Utility class responsible for placing and adding line to sign
  */
 public class RIPSign {
-    
+
     private static final int SIGN_HORIZONTAL_FACES = 16;
     private static final double SIGN_FACES_ANGLE = Math.PI / SIGN_HORIZONTAL_FACES;
     private static final double MOD_0_TO_1 = Math.cos(7 * SIGN_FACES_ANGLE);
@@ -75,12 +75,12 @@ public class RIPSign {
 
     private Pool pool;
     private Vector vector;
-    
+
     public RIPSign(Pool pool, Vector vec) {
         this.pool = pool;
         this.vector = vec;
     }
-    
+
     private void createRIPSign(Block block) {
         Location diving = pool.getArena().getDivingBoard().getLocation();
 
@@ -97,7 +97,7 @@ public class RIPSign {
         sign.setLine(0, DAC.getConfig().getDeathSignFirstLine());
         sign.update();
     }
-    
+
     /**
      * Add player name to this the sign this instance represents.
      * <p/>
@@ -110,12 +110,12 @@ public class RIPSign {
         if (vector == null) {
             return;
         }
-        
+
         Block block = world.getBlockAt(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
         if (block.getType() != Material.SIGN_POST) {
             createRIPSign(block);
         }
-        
+
         for (int i = 1; i < DACUtil.SIGN_LINES; i++) {
             Sign sign = (Sign) block.getState();
             if (sign.getLine(i).isEmpty()) {

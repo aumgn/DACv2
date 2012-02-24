@@ -1,5 +1,7 @@
 package fr.aumgn.dac.api.area;
 
+import com.sk89q.worldedit.BlockVector2D;
+
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
@@ -20,6 +22,17 @@ public interface VerticalArea extends Area {
      * @return the upper y
      */
     public int getTop();
+
+    /**
+     * Gets the column at the given vector position.
+     * <p/>
+     * For now, this method do not check if the column 
+     * is actually in the pool.
+     *   
+     * @param vec the vector 
+     * @return the column for the given x and y position.
+     */
+	AreaColumn getColumn(BlockVector2D vec);
 
     /**
      * Gets the column at the given x and y position.
