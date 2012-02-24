@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -142,10 +143,10 @@ public class SimpleGame extends SimpleStage implements Game {
     }
 
     @Override
-    public void send(Object msg, StagePlayer exclude) {
-        super.send(msg, exclude);
+    public void send(Object msg) {
+        super.send(msg);
         for (Player spectator : spectators) {
-            spectator.sendMessage("[" + arena.getName() + "] " + msg.toString());
+            spectator.sendMessage(ChatColor.BLUE + "[" + arena.getName() + "] " + msg.toString());
         }
     }
 

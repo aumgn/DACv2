@@ -53,14 +53,6 @@ public interface StagePlayer {
     void send(Object message);
 
     /**
-     * Sends a message to all players of this player's stage 
-     * except himself.
-     * 
-     * @param message the message to send
-     */
-    void sendToOthers(Object message);
-
-    /**
      * Gets the formatted name for players list.
      * 
      * @return the formatted name

@@ -2,7 +2,7 @@ package fr.aumgn.dac.api.game.mode;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
-import fr.aumgn.dac.api.joinstage.JoinStage;
+import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
@@ -15,11 +15,11 @@ public interface GameMode {
     /**
      * Creates a new game with the given join stage and options.
      * 
-     * @param joinStage the joinStage to create the new game with
+     * @param stage the stage to create the new game with
      * @param options the options to use in the new game
      * @return the created game
      */
-    Game createGame(JoinStage joinStage, GameOptions options);
+    Game createGame(Stage stage, GameOptions options);
 
     /**
      * Creates the {@link GameHandler} for this game mode.

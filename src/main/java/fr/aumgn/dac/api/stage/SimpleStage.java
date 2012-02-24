@@ -33,17 +33,10 @@ public abstract class SimpleStage implements Stage {
     }
 
     @Override
-    public void send(Object msg, StagePlayer exclude) {
-        for (StagePlayer player : getPlayers()) {
-            if (player != exclude) {
-                player.getPlayer().sendMessage(msg.toString());
-            }
-        }
-    }
-
-    @Override
     public void send(Object msg) {
-        send(msg, null);
+        for (StagePlayer player : getPlayers()) {
+            player.getPlayer().sendMessage(msg.toString());
+        }
     }
 
 }

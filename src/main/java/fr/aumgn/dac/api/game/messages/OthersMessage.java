@@ -19,7 +19,11 @@ public class OthersMessage implements GameMessage {
 	
 	@Override
 	public void send() {
-		player.sendToOthers(contents);
+	    for (StagePlayer stagePlayer : player.getStage().getPlayers()) {
+	        if (!player.getPlayer().equals(stagePlayer.getPlayer())) {
+	            player.send(contents);
+	        }
+	    }
 	}
 
 }

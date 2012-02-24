@@ -24,7 +24,7 @@ public abstract class GamePlayerEvent extends GameEvent {
 		if (player.getClass().isAssignableFrom(cls)) {
 			return cls.cast(player);
 		} else {
-			throw new PlayerCastException(new RuntimeException("Woot !"));
+			throw new PlayerCastException();
 		}
 	}
 	

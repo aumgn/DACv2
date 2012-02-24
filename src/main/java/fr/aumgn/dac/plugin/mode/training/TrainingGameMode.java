@@ -6,15 +6,15 @@ import fr.aumgn.dac.api.game.SimpleGame;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameHandler;
-import fr.aumgn.dac.api.joinstage.JoinStage;
+import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 @DACGameMode(name = "training", minPlayers = 1, allowFill = true, aliases = {"tr", "t"})
 public class TrainingGameMode implements GameMode {
 
     @Override
-    public Game createGame(JoinStage joinStage, GameOptions options) {
-        return new SimpleGame(this, joinStage, options);
+    public Game createGame(Stage stage, GameOptions options) {
+        return new SimpleGame(this, stage, options);
     }
 
     @Override

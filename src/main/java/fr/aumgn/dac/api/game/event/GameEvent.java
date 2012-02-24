@@ -31,7 +31,7 @@ public abstract class GameEvent {
 			if (player.getClass().isAssignableFrom(cls)) {
 				list.add(cls.cast(player));
 			} else {
-				throw new PlayerCastException(new RuntimeException("Woot !"));
+				throw new PlayerCastException();
 			}
 		}
 		return list;

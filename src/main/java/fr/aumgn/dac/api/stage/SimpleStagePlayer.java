@@ -69,11 +69,6 @@ public class SimpleStagePlayer implements StagePlayer {
     }
 
     @Override
-    public void sendToOthers(Object message) {
-        stage.send(message.toString(), this);
-    }
-
-    @Override
     public String formatForList() {
         return " " + displayName;
     }

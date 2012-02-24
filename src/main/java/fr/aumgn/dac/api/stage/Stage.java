@@ -52,14 +52,6 @@ public interface Stage {
     void send(Object message);
 
     /**
-     * Broadcasts a message to all players in this stage except the given one.
-     * 
-     * @param message the message to send
-     * @param exclude the player to exclude 
-     */
-    void send(Object message, StagePlayer exclude);
-
-    /**
      * Stops the stage. 
      */
     void stop();

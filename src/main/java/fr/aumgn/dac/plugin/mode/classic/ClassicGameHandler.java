@@ -177,8 +177,8 @@ public class ClassicGameHandler extends SimpleGameHandler {
         ClassicGamePlayer player = fail.getPlayer(ClassicGamePlayer.class);
         
         if (player.mustConfirmate()) {
-            player.send(DACMessage.GameConfirmationFail2);
-            player.sendToOthers(DACMessage.GameConfirmationFail);
+            fail.sendToPlayer(DACMessage.GameConfirmationFail2);
+            fail.sendToOthers(DACMessage.GameConfirmationFail);
             for (ClassicGamePlayer gamePlayer : fail.getPlayers(ClassicGamePlayer.class)) {
                 if (gamePlayer.isDead()) {
                 	gamePlayer.resetLives();

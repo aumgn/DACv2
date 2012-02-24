@@ -77,7 +77,7 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
             for (StagePlayer currentPlayer : players) {
                 dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
             }
-            dacPlayer.sendToOthers(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+            send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
         }
     }
 
