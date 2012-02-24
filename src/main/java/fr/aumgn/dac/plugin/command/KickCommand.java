@@ -8,6 +8,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
+import fr.aumgn.dac.api.stage.StageQuitReason;
 import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
@@ -26,7 +27,7 @@ public class KickCommand extends PlayerCommandExecutor {
             StagePlayer stagePlayer = playerManager.get(player);
             if (stagePlayer != null) {
                 if (ChatColor.stripColor(stagePlayer.getDisplayName()).startsWith(args[0])) {
-                    stagePlayer.getStage().removePlayer(stagePlayer);
+                    stagePlayer.getStage().removePlayer(stagePlayer, StageQuitReason.Forced);
                     count++;
                 }
             }

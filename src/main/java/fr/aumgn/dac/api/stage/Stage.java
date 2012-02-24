@@ -19,11 +19,13 @@ public interface Stage {
     Arena getArena();
 
     /**
-     * Removes the player from the stage.
+     * Same as {@link Stage#removePlayer(StagePlayer)} but specify the reason.
      * 
-     * @param player the player to remove 
+     * @param player the player to remove as a spectator
+     * @param reason the Quit reason
+     * @return true if player was not watching game, false otherwise  
      */
-    void removePlayer(StagePlayer player);
+    void removePlayer(StagePlayer player, StageQuitReason reason);
 
     /**
      * Gets players in this stage. 

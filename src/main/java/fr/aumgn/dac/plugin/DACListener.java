@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.stage.StageQuitReason;
 
 public class DACListener implements Listener {
 
@@ -46,7 +47,7 @@ public class DACListener implements Listener {
             return;
         }
 
-        player.getStage().removePlayer(player);
+        player.getStage().removePlayer(player, StageQuitReason.Disconnected);
     }
 
 }

@@ -24,7 +24,6 @@ import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 import fr.aumgn.dac.api.game.event.GameLoose;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
 import fr.aumgn.dac.api.game.event.GameQuit;
-import fr.aumgn.dac.api.game.event.GameQuit.QuitReason;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.event.GameWin;
@@ -35,6 +34,7 @@ import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.stage.StageQuitReason;
 
 public class SimpleGame extends SimpleStage implements Game {
 
@@ -133,7 +133,7 @@ public class SimpleGame extends SimpleStage implements Game {
     private void turnTimedOut() {
         StagePlayer player = players.get(turn);
         send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
-        removePlayer(player);
+        removePlayer(player, StageQuitReason.TurnTimeOut);
     }
 
     @Override
@@ -199,8 +199,8 @@ public class SimpleGame extends SimpleStage implements Game {
     }
 
     @Override
-    public void removePlayer(StagePlayer player) {
-        onLoose(player, new GameQuit(player, QuitReason.COMMAND));
+    public void removePlayer(StagePlayer player, StageQuitReason reason) {
+        onLoose(player, new GameQuit(player, reason));
     }
 
     @Override

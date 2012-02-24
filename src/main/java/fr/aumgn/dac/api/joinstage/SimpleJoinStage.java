@@ -21,6 +21,7 @@ import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.stage.StageQuitReason;
 
 public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
@@ -96,7 +97,7 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
     }
 
     @Override
-    public void removePlayer(StagePlayer player) {
+    public void removePlayer(StagePlayer player, StageQuitReason reason) {
         DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
         send(DACMessage.JoinPlayerQuit.format(player.getDisplayName()));
         players.remove(player);
