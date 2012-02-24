@@ -8,7 +8,7 @@ public class DACGameNewTurnEvent extends DACGameEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public DACGameNewTurnEvent(Game<?> game) {
+    public DACGameNewTurnEvent(Game game) {
         super(game);
     }
 

@@ -28,10 +28,10 @@ public class FillCommand extends PlayerCommandExecutor {
             error(DACMessage.CmdFillUnknown);
         }
 
-        Stage<?> stage = DAC.getStageManager().get(arena);
+        Stage stage = DAC.getStageManager().get(arena);
         if (stage instanceof Game) {
             if (!context.hasPermission("dac.game.fill")) {
-                GameMode<?> mode = ((Game<?>) stage).getMode();
+                GameMode mode = ((Game) stage).getMode();
                 if (!mode.getClass().getAnnotation(DACGameMode.class).allowFill()) {
                     error(DACMessage.CmdFillInGame);
                 }

@@ -22,7 +22,7 @@ import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
 
-public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
+public class SimpleJoinStage implements JoinStage {
 
     private Arena arena;
     private DACColors colors;
@@ -144,8 +144,8 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
     }
 
     @Override
-    public List<SimpleJoinStagePlayer> getPlayers() {
-        return new ArrayList<SimpleJoinStagePlayer>(players);
+    public List<StagePlayer> getPlayers() {
+        return new ArrayList<StagePlayer>(players);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class SimpleJoinStage implements JoinStage<SimpleJoinStagePlayer> {
     }
 
     @Override
-    public boolean isMinReached(GameMode<?> mode) {
+    public boolean isMinReached(GameMode mode) {
         int minimum = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
         return players.size() >= minimum;
     }

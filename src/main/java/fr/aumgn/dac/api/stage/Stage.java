@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.arena.Arena;
  * 
  * @param <T> the subclass of {@link StagePlayer} used by this stage
  */
-public interface Stage<T extends StagePlayer> {
+public interface Stage {
 
     /**
      * Gets the arena in which this stage takes place.
@@ -30,7 +30,7 @@ public interface Stage<T extends StagePlayer> {
      * 
      * @return a list of players in this stage  
      */
-    List<T> getPlayers();
+    List<StagePlayer> getPlayers();
 
     /**
      * Registers all players in {@link StagePlayerManager}.

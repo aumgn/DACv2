@@ -11,7 +11,7 @@ import fr.aumgn.dac.api.stage.StagePlayer;
  * 
  * @param <T> the subclass of {@link StagePlayer} used by this join stage
  */
-public interface JoinStage<T extends StagePlayer> extends Stage<T> {
+public interface JoinStage extends Stage {
 
     /**
      * Adds a player to the join stage.
@@ -27,7 +27,7 @@ public interface JoinStage<T extends StagePlayer> extends Stage<T> {
      * @param mode the game mode to check with 
      * @return whether the required amount has been reached
      */
-    boolean isMinReached(GameMode<?> mode);
+    boolean isMinReached(GameMode mode);
 
     /**
      * Checks if the maximum amount of players has been reached.

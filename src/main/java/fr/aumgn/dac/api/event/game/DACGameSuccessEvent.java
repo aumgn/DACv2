@@ -12,7 +12,7 @@ public class DACGameSuccessEvent extends DACGamePlayerEvent implements Cancellab
 
     private boolean isCancelled = false;
 
-    public DACGameSuccessEvent(Game<?> game, StagePlayer player) {
+    public DACGameSuccessEvent(Game game, StagePlayer player) {
         super(game, player);
     }
 

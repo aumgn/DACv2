@@ -34,11 +34,11 @@ public class UnwatchCommand extends PlayerCommandExecutor {
     }
 
     private void processArena(PlayerCommandContext context, Arena arena) {
-        Stage<?> stage = DAC.getStageManager().get(arena);
+        Stage stage = DAC.getStageManager().get(arena);
         if (!(stage instanceof Game)) {
             return;
         }
-        if (((Game<?>) stage).removeSpectator(context.getPlayer())) {
+        if (((Game) stage).removeSpectator(context.getPlayer())) {
             context.success(DACMessage.CmdUnwatchSuccess.format(arena.getName()));
         }
     }

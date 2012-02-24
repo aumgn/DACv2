@@ -15,12 +15,12 @@ import fr.aumgn.dac.api.game.Game;
 /**
  * Class responsible for managing all ongoing stages 
  */
-public class StageManager implements Iterable<Stage<?>> {
+public class StageManager implements Iterable<Stage> {
 
-    private Map<Arena, Stage<?>> stages;
+    private Map<Arena, Stage> stages;
 
     public StageManager() {
-        stages = new HashMap<Arena, Stage<?>>();
+        stages = new HashMap<Arena, Stage>();
     }
 
     /**
@@ -39,7 +39,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * @param arena the arena
      * @return the stage for the given arena or null if none.
      */
-    public Stage<?> get(Arena arena) {
+    public Stage get(Arena arena) {
         return stages.get(arena);
     }
 
@@ -50,7 +50,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * @param player the player
      * @return the stage for this player
      */
-    public Stage<?> get(Player player) {
+    public Stage get(Player player) {
         StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
         if (dacPlayer == null) {
             return null;
@@ -58,9 +58,9 @@ public class StageManager implements Iterable<Stage<?>> {
         return dacPlayer.getStage();
     }
 
-    private Game<?> castGame(Stage<?> stage) {
+    private Game castGame(Stage stage) {
         if (stage instanceof Game) {
-            return (Game<?>) stage;
+            return (Game) stage;
         }
         return null;
     }
@@ -72,7 +72,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * or return null if can't.
      * @see #get(Arena) 
      */
-    public Game<?> getGame(Arena arena) {
+    public Game getGame(Arena arena) {
         return castGame(get(arena));
     }
 
@@ -83,7 +83,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * or return null if can't.
      * @see #get(Player) 
      */
-    public Game<?> getGame(Player player) {
+    public Game getGame(Player player) {
         return castGame(get(player));
     }
 
@@ -93,7 +93,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * 
      * @param stage the stage to register 
      */
-    public void register(Stage<?> stage) {
+    public void register(Stage stage) {
         if (stages.containsKey(stage.getArena())) {
             throw new StageAlreadyRegistered();
         }
@@ -107,7 +107,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * 
      * @param stage the stage to unregister 
      */
-    public void unregister(Stage<?> stage) {
+    public void unregister(Stage stage) {
         if (!stages.containsKey(stage.getArena())) {
             throw new StageNotRegistered();
         }
@@ -119,7 +119,7 @@ public class StageManager implements Iterable<Stage<?>> {
      * Gets an iterator over the current stages.  
      */
     @Override
-    public Iterator<Stage<?>> iterator() {
+    public Iterator<Stage> iterator() {
         return stages.values().iterator();
     }
 

@@ -16,14 +16,14 @@ public class DACJoinStageJoinEvent extends DACJoinStageEvent implements Cancella
     private Location startLocation;
     private boolean isCancelled = false;
 
-    public DACJoinStageJoinEvent(JoinStage<?> joinStage, Player player, DACColor color, Location location) {
+    public DACJoinStageJoinEvent(JoinStage joinStage, Player player, DACColor color, Location location) {
         super(joinStage);
         this.player = player;
         this.color = color;
         this.startLocation = location;
     }
 
-    @Override
+	@Override
     public HandlerList getHandlers() {
         return handlers;
     }

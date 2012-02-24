@@ -5,14 +5,14 @@ import fr.aumgn.dac.api.stage.Stage;
 
 public abstract class DACStageEvent extends DACEvent {
 
-    private Stage<?> stage;
+    private Stage stage;
 
-    public DACStageEvent(Stage<?> stage) {
+    public DACStageEvent(Stage stage) {
         super();
         this.stage = stage;
     }
 
-    public Stage<?> getStage() {
+    public Stage getStage() {
         return stage;
     }
 

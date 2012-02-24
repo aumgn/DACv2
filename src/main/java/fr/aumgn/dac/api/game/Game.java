@@ -14,14 +14,14 @@ import fr.aumgn.dac.api.stage.StagePlayer;
  * 
  * @param <T> the subclass of {@link StagePlayer} used by this game
  */
-public interface Game<T extends StagePlayer> extends Stage<T> {
+public interface Game extends Stage {
 
     /**
      * Gets the {@link GameMode} for this game.
      * 
      * @return the game mode of this game
      */
-    GameMode<T> getMode();
+    GameMode getMode();
 
     /**
      * Changes turn to the next player.
@@ -34,7 +34,7 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
      * @param player the player to checks.
      * @return whether or not it's the player turn.
      */
-    boolean isPlayerTurn(T player);
+    boolean isPlayerTurn(StagePlayer player);
 
     /**
      * Handles fall damage event.
@@ -55,14 +55,14 @@ public interface Game<T extends StagePlayer> extends Stage<T> {
      * 
      * @param player the player who lost 
      */
-    void onLoose(T player);
+    void onLoose(StagePlayer player);
     
     /**
      * Handles player win.
      * 
      * @param player the player who won
      */
-    void onWin(T player);
+    void onWin(StagePlayer player);
 
     /**
      * Gets the {@link GameOptions} of this game.

@@ -14,6 +14,6 @@ public interface DACGameModeProvider {
      * 
      * @return a list of the game modes
      */
-    List<Class<? extends GameMode<?>>> getGameModes();
+    List<Class<? extends GameMode>> getGameModes();
 
 }

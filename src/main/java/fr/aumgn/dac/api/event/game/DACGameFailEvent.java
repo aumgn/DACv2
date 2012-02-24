@@ -13,7 +13,7 @@ public class DACGameFailEvent extends DACGamePlayerEvent implements Cancellable 
     private boolean isCancelled = false;
     private boolean cancelDeath = true;
 
-    public DACGameFailEvent(Game<?> game, StagePlayer player) {
+    public DACGameFailEvent(Game game, StagePlayer player) {
         super(game, player);
     }
 

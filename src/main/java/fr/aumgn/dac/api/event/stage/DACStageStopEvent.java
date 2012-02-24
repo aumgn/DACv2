@@ -8,7 +8,7 @@ public class DACStageStopEvent extends DACStageEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public DACStageStopEvent(Stage<?> stage) {
+    public DACStageStopEvent(Stage stage) {
         super(stage);
     }
 

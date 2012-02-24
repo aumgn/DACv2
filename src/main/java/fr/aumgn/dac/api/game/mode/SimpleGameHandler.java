@@ -1,28 +1,41 @@
 package fr.aumgn.dac.api.game.mode;
 
-import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.game.event.GameFinish;
+import fr.aumgn.dac.api.game.event.GameJumpFail;
+import fr.aumgn.dac.api.game.event.GameJumpSuccess;
+import fr.aumgn.dac.api.game.event.GameLoose;
+import fr.aumgn.dac.api.game.event.GameNewTurn;
+import fr.aumgn.dac.api.game.event.GameStart;
+import fr.aumgn.dac.api.game.event.GameTurn;
 
-public class SimpleGameHandler<T extends StagePlayer> implements GameHandler<T> {
+public class SimpleGameHandler implements GameHandler {
 
-    @Override
-    public void onStart() {}
+	@Override
+	public void onStart(GameStart start) {
+	}
 
-    @Override
-    public void onNewTurn() {}
+	@Override
+	public void onNewTurn(GameNewTurn newTurn) {
+	}
 
-    @Override
-    public void onTurn(T player) {}
+	@Override
+	public void onTurn(GameTurn turn) {
+	}
 
-    @Override
-    public void onSuccess(T player) {}
+	@Override
+	public void onSuccess(GameJumpSuccess success) {
+	}
 
-    @Override
-    public void onFail(T player) {}
+	@Override
+	public void onFail(GameJumpFail fail) {
+	}
 
-    @Override
-    public void onQuit(T player) {}
+	@Override
+	public void onLoose(GameLoose quit) {
+	}
 
-    @Override
-    public void onStop() {}
+	@Override
+	public void onFinish(GameFinish finished) {
+	}
 
 }

@@ -8,7 +8,7 @@ public class SuddenDeathGamePlayer extends SimpleGamePlayer {
 
     private boolean deadThisTurn;
 
-    public SuddenDeathGamePlayer(Game<SuddenDeathGamePlayer> game, StagePlayer player, int index) {
+    public SuddenDeathGamePlayer(Game game, StagePlayer player, int index) {
         super(game, player, index);
         this.deadThisTurn = false;
     }

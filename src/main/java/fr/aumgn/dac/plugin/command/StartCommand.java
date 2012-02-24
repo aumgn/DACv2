@@ -24,13 +24,13 @@ public class StartCommand extends PlayerCommandExecutor {
     @Override
     public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Player player = context.getPlayer();
-        Stage<?> stage = DAC.getStageManager().get(player);
+        Stage stage = DAC.getStageManager().get(player);
         if (!(stage instanceof JoinStage)) {
             error(DACMessage.CmdStartNotInGame);
         }
-        JoinStage<?> joinStage = (JoinStage<?>) stage;
+        JoinStage joinStage = (JoinStage) stage;
 
-        GameMode<?> mode;
+        GameMode mode;
         if (args.length > 0) {
             mode = DAC.getModes().get(args[0]);
             if (mode == null) {

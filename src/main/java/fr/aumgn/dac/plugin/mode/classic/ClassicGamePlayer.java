@@ -12,7 +12,7 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
     private boolean mustConfirmate;
     private Vector deathPosition;
 
-    public ClassicGamePlayer(Game<ClassicGamePlayer> game, StagePlayer player, int index) {
+    public ClassicGamePlayer(Game game, StagePlayer player, int index) {
         super(game, player, index);
         this.lives = 0;
         this.mustConfirmate = false;

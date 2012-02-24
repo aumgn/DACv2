@@ -11,7 +11,7 @@ import org.bukkit.plugin.Plugin;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.util.DACUtil;
 
-public enum DACMessage {
+public enum DACMessage implements fr.aumgn.dac.api.DACMessage {
 
     CmdDefineExists         ("command.define.exists"),
     CmdDefineSuccess        ("command.define.success"),
@@ -159,6 +159,10 @@ public enum DACMessage {
 
     public String getValue() {
         return value;
+    }
+    
+    public String getValue(Object... args)  {
+    	return format(args);
     }
 
     private void setValue(String value) {

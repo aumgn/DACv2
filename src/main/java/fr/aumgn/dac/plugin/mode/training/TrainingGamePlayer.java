@@ -10,7 +10,7 @@ public class TrainingGamePlayer extends SimpleGamePlayer {
     private int dacs = 0;
     private int fails = 0;
 
-    public TrainingGamePlayer(Game<TrainingGamePlayer> stage, StagePlayer player, int index) {
+    public TrainingGamePlayer(Game stage, StagePlayer player, int index) {
         super(stage, player, index);
     }
 

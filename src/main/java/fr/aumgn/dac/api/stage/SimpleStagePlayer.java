@@ -20,12 +20,12 @@ public class SimpleStagePlayer implements StagePlayer {
     };
 
     private Player player;
-    private Stage<? extends SimpleStagePlayer> stage;
+    private Stage stage;
     private String displayName;
     private DACColor color;
     private Location startLocation;
 
-    public SimpleStagePlayer(Player player, Stage<? extends SimpleStagePlayer> stage, DACColor color, Location startLocation) {
+    public SimpleStagePlayer(Player player, Stage stage, DACColor color, Location startLocation) {
         this.player = player;
         this.stage = stage;
         String name = ChatColor.stripColor(player.getDisplayName());
@@ -34,12 +34,12 @@ public class SimpleStagePlayer implements StagePlayer {
         this.color = color;
     }
 
-    public SimpleStagePlayer(StagePlayer player, Stage<? extends SimpleStagePlayer> stage) {
+    public SimpleStagePlayer(StagePlayer player, Stage stage) {
         this(player.getPlayer(), stage, player.getColor(), player.getStartLocation());
     }
 
     @Override
-    public Stage<?> getStage() {
+    public Stage getStage() {
         return stage;
     }
 

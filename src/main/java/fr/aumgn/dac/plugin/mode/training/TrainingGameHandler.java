@@ -1,71 +1,51 @@
 package fr.aumgn.dac.plugin.mode.training;
 
-import org.bukkit.Location;
-
-import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.column.GlassyColumn;
 import fr.aumgn.dac.api.area.column.UniformColumn;
-import fr.aumgn.dac.api.arena.Arena;
-import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
-import fr.aumgn.dac.api.game.Game;
+import fr.aumgn.dac.api.game.event.GameFinish;
+import fr.aumgn.dac.api.game.event.GameJumpFail;
+import fr.aumgn.dac.api.game.event.GameJumpSuccess;
+import fr.aumgn.dac.api.game.event.GameLoose;
+import fr.aumgn.dac.api.game.event.GameStart;
+import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
 
-public class TrainingGameHandler extends SimpleGameHandler<TrainingGamePlayer> {
+public class TrainingGameHandler extends SimpleGameHandler {
 
-    private Game<TrainingGamePlayer> game;
-    private Arena arena;
-
-    public TrainingGameHandler(Game<TrainingGamePlayer> game) {
-        this.game = game;
-        this.arena = game.getArena();
+    @Override
+    public void onStart(GameStart start) {
+        start.send(DACMessage.GameStart);
     }
 
     @Override
-    public void onStart() {
-        if (DAC.getConfig().getResetOnStart()) {
-            arena.getPool().reset();
-        }
-        game.send(DACMessage.GameStart);
+    public void onTurn(GameTurn turn) {
+        turn.sendToPlayer(DACMessage.GamePlayerTurn2);
+        turn.sendToOthers(DACMessage.GamePlayerTurn);
     }
 
     @Override
-    public void onTurn(TrainingGamePlayer player) {
-        player.send(DACMessage.GamePlayerTurn2);
-        player.sendToOthers(DACMessage.GamePlayerTurn.format(player.getDisplayName()));
-        player.tpToDiving();
-    }
-
-    @Override
-    public void onSuccess(TrainingGamePlayer player) {
-        Location loc = player.getPlayer().getLocation();
-        int x = loc.getBlockX();
-        int z = loc.getBlockZ();
-        
-        player.tpAfterJump();
-        
-        Pool pool = arena.getPool();
-        if (pool.isADACPattern(x, z)) {
+    public void onSuccess(GameJumpSuccess success) {
+    	TrainingGamePlayer player = success.getPlayer(TrainingGamePlayer.class);
+        if (success.isADAC()) {
             player.incrementDACs();
-            pool.getColumn(x, z).set(new GlassyColumn(player.getColor()));
-            player.send(DACMessage.GameDAC2);
-            player.sendToOthers(DACMessage.GameDAC.format(player.getDisplayName()));
+            success.setColumnPattern(new GlassyColumn(player.getColor()));
+            success.sendToPlayer(DACMessage.GameDAC2);
+            success.sendToOthers(DACMessage.GameDAC);
         } else {
             player.incrementSuccesses();
-            pool.getColumn(x, z).set(new UniformColumn(player.getColor()));
-            player.send(DACMessage.GameJumpSuccess2);
-            player.sendToOthers(DACMessage.GameJumpSuccess.format(player.getDisplayName()));
+            success.setColumnPattern(new UniformColumn(player.getColor()));
+            success.sendToPlayer(DACMessage.GameJumpSuccess2);
+            success.sendToOthers(DACMessage.GameJumpSuccess);
         }
-        game.nextTurn();
     }
 
     @Override
-    public void onFail(TrainingGamePlayer player) {
-        player.tpAfterFail();
+    public void onFail(GameJumpFail fail) {
+    	TrainingGamePlayer player = fail.getPlayer(TrainingGamePlayer.class);
         player.incrementFails();
-        player.send(DACMessage.GameJumpFail2);
-        player.sendToOthers(DACMessage.GameJumpFail.format(player.getDisplayName()));
-        game.nextTurn();
+        fail.sendToPlayer(DACMessage.GameJumpFail2);
+        fail.sendToOthers(DACMessage.GameJumpFail);
     }
     
     private void sendStats(TrainingGamePlayer player) {
@@ -75,16 +55,13 @@ public class TrainingGameHandler extends SimpleGameHandler<TrainingGamePlayer> {
     }
 
     @Override
-    public void onQuit(TrainingGamePlayer player) {
-        sendStats(player);
-        if (game.getPlayers().size() == 0) {
-            game.stop();
-        }
+    public void onLoose(GameLoose loose) {
+        sendStats(loose.getPlayer(TrainingGamePlayer.class));
     }
 
     @Override
-    public void onStop() {
-        for (TrainingGamePlayer player : game.getPlayers()) {
+    public void onFinish(GameFinish finish) {
+        for (TrainingGamePlayer player : finish.getPlayers(TrainingGamePlayer.class)) {
             sendStats(player);
         }
     }

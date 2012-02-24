@@ -5,14 +5,14 @@ import fr.aumgn.dac.api.game.Game;
 
 public abstract class DACGameEvent extends DACEvent {
 
-    private Game<?> game;
+    private Game game;
 
-    public DACGameEvent(Game<?> game) {
+    public DACGameEvent(Game game) {
         super();
         this.game = game;
     }
 
-    public Game<?> getGame() {
+   public Game getGame() {
         return game;
     }
 

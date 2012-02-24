@@ -10,20 +10,20 @@ import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 @DACGameMode(name = "classic", aliases = {"default", "def"})
-public class ClassicGameMode implements GameMode<ClassicGamePlayer> {
+public class ClassicGameMode implements GameMode {
 
     @Override
-    public Game<ClassicGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
-        return new SimpleGame<ClassicGamePlayer>(this, joinStage, options);
+    public Game createGame(JoinStage joinStage, GameOptions options) {
+        return new SimpleGame(this, joinStage, options);
     }
 
     @Override
-    public GameHandler<ClassicGamePlayer> createHandler(Game<ClassicGamePlayer> game) {
-        return new ClassicGameHandler(game);
+    public GameHandler createHandler() {
+        return new ClassicGameHandler();
     }
 
     @Override
-    public ClassicGamePlayer createPlayer(Game<ClassicGamePlayer> game, StagePlayer player, int index) {
+    public ClassicGamePlayer createPlayer(Game game, StagePlayer player, int index) {
         return new ClassicGamePlayer(game, player, index);
     }
 

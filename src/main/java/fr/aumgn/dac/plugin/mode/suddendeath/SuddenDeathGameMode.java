@@ -10,20 +10,20 @@ import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 @DACGameMode(name = "sudden-death", isDefault = false, aliases = {"sd"})
-public class SuddenDeathGameMode implements GameMode<SuddenDeathGamePlayer> {
+public class SuddenDeathGameMode implements GameMode {
 
     @Override
-    public Game<SuddenDeathGamePlayer> createGame(JoinStage<?> joinStage, GameOptions options) {
-        return new SimpleGame<SuddenDeathGamePlayer>(this, joinStage, options);
+    public Game createGame(JoinStage joinStage, GameOptions options) {
+        return new SimpleGame(this, joinStage, options);
     }
 
     @Override
-    public GameHandler<SuddenDeathGamePlayer> createHandler(Game<SuddenDeathGamePlayer> game) {
-        return new SuddenDeathGameHandler(game);
+    public GameHandler createHandler() {
+        return new SuddenDeathGameHandler();
     }
 
     @Override
-    public SuddenDeathGamePlayer createPlayer(Game<SuddenDeathGamePlayer> game, StagePlayer player, int index) {
+    public SuddenDeathGamePlayer createPlayer(Game game, StagePlayer player, int index) {
         return new SuddenDeathGamePlayer(game, player, index);
     }
 

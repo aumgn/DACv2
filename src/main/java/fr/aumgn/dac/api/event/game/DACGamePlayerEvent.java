@@ -7,7 +7,7 @@ public abstract class DACGamePlayerEvent extends DACGameEvent {
 
     private StagePlayer player;
 
-    public DACGamePlayerEvent(Game<?> game, StagePlayer player) {
+    public DACGamePlayerEvent(Game game, StagePlayer player) {
         super(game);
         this.player = player;
     }

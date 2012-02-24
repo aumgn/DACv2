@@ -9,7 +9,7 @@ public class DACGameLooseEvent extends DACGamePlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public DACGameLooseEvent(Game<?> game, StagePlayer player) {
+    public DACGameLooseEvent(Game game, StagePlayer player) {
         super(game, player);
     }
 

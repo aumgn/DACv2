@@ -10,7 +10,7 @@ import fr.aumgn.dac.api.stage.StagePlayer;
  * 
  * @param <T> the subclass of {@link StagePlayer} used by this mode 
  */
-public interface GameMode<T extends StagePlayer> {
+public interface GameMode {
 
     /**
      * Creates a new game with the given join stage and options.
@@ -19,7 +19,7 @@ public interface GameMode<T extends StagePlayer> {
      * @param options the options to use in the new game
      * @return the created game
      */
-    Game<T> createGame(JoinStage<?> joinStage, GameOptions options);
+    Game createGame(JoinStage joinStage, GameOptions options);
 
     /**
      * Creates the {@link GameHandler} for this game mode.
@@ -27,7 +27,7 @@ public interface GameMode<T extends StagePlayer> {
      * @param game the game for which to create the handler 
      * @return the created handler
      */
-    GameHandler<T> createHandler(Game<T> game);
+    GameHandler createHandler();
 
     /**
      * Creates the inherited instance of {@link StagePlayer} associated with this game mode.
@@ -37,6 +37,6 @@ public interface GameMode<T extends StagePlayer> {
      * @param index the index of the player in the game  
      * @return the created inherited instance of StagePlayer
      */
-    T createPlayer(Game<T> game, StagePlayer player, int index);
+    StagePlayer createPlayer(Game game, StagePlayer player, int index);
 
 }

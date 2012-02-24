@@ -1,5 +1,12 @@
 package fr.aumgn.dac.api.game.mode;
 
+import fr.aumgn.dac.api.game.event.GameFinish;
+import fr.aumgn.dac.api.game.event.GameJumpFail;
+import fr.aumgn.dac.api.game.event.GameJumpSuccess;
+import fr.aumgn.dac.api.game.event.GameLoose;
+import fr.aumgn.dac.api.game.event.GameNewTurn;
+import fr.aumgn.dac.api.game.event.GameStart;
+import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
@@ -8,55 +15,63 @@ import fr.aumgn.dac.api.stage.StagePlayer;
  * 
  * @param <T> the subclass of {@link StagePlayer} used by this game mode 
  */
-public interface GameHandler<T extends StagePlayer> {
+public interface GameHandler {
 
     /**
      * Called when a new game starts
      * (ie. just after the game has been initialized.)
      * <p/>
      * You should use this method to initialize your handler 
-     * rather than the constructor. 
+     * rather than the constructor.
+     * 
+     * @param start the start event
      */
-    void onStart();
+    void onStart(GameStart start);
 
     /**
      * Called when a new turn starts.
-     * (ie. when all players have played their turn) 
+     * (ie. before the first player own turn) 
+     * 
+     * @param newTurn the new turn event
      */
-    void onNewTurn();
+    void onNewTurn(GameNewTurn newTurn);
 
     /**
      * Called when a player turn starts.
      * 
-     * @param player the player
+     * @param turn the turn event
      */
-    void onTurn(T player);
+    void onTurn(GameTurn turn);
 
     /**
      * Called when a player succeeds.
      * 
-     * @param player the player
+     * @param success the success event
      */
-    void onSuccess(T player);
+    void onSuccess(GameJumpSuccess success);
 
     /**
      * Called when a player fails.
      * 
-     * @param player the player
+     * @param fail the fail event
      */
-    void onFail(T player);
-
+    void onFail(GameJumpFail fail);
+    
     /**
-     * Called when a player quit the game.
-     * (with 'dac quit' command or by being disconnected of the server.)
+     * Called when a player loose.
+     * Can be because he simply loose or because he has 
+     * for one reason or another quit the game.
      *  
-     * @param player the player
+     * @param loose the loose event
      */
-    void onQuit(T player);
+    void onLoose(GameLoose loose);    
 
     /**
-     * Called when the game stop.
+     * Called when the game finishes.
+     * Can be because a player won or because has been stopped. 
+     * 
+     * @param finish the finish event
      */
-    void onStop();
+    void onFinish(GameFinish finish);
 
 }

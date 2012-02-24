@@ -15,7 +15,7 @@ public interface StagePlayer {
      * 
      * @return the stage this player is in
      */
-    Stage<?> getStage();
+    Stage getStage();
 
     /**
      * Gets the wrapped player. 

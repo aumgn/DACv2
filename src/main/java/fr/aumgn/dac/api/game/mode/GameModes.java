@@ -29,6 +29,6 @@ public interface GameModes {
      * @param name the name of the {@link GameMode} 
      * @return the GameMode for this name
      */
-    GameMode<?> get(String name);
+    GameMode get(String name);
 
 }

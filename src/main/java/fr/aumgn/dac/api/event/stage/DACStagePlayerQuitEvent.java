@@ -11,7 +11,7 @@ public class DACStagePlayerQuitEvent extends DACStageEvent {
     
     private StagePlayer player;
 
-    public DACStagePlayerQuitEvent(Stage<?> stage, StagePlayer player) {
+    public DACStagePlayerQuitEvent(Stage stage, StagePlayer player) {
         super(stage);
         this.player = player;
         
