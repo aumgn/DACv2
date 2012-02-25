@@ -2,7 +2,7 @@ package fr.aumgn.dac.plugin.mode.suddendeath;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
-import fr.aumgn.dac.api.game.SimpleGame;
+import fr.aumgn.dac.api.game.TurnBasedGame;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameHandler;
@@ -14,7 +14,7 @@ public class SuddenDeathGameMode implements GameMode {
 
     @Override
     public Game createGame(Stage stage, GameOptions options) {
-        return new SimpleGame(this, stage, options);
+        return new TurnBasedGame(this, stage, options);
     }
 
     @Override

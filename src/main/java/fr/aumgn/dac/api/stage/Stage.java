@@ -21,7 +21,7 @@ public interface Stage {
     /**
      * Same as {@link Stage#removePlayer(StagePlayer)} but specify the reason.
      * 
-     * @param player the player to remove as a spectator
+     * @param player the player to remove
      * @param reason the Quit reason
      * @return true if player was not watching game, false otherwise  
      */

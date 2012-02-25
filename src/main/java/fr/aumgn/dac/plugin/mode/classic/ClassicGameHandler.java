@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.column.GlassyColumn;
 import fr.aumgn.dac.api.area.column.UniformColumn;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.GameOptions;
-import fr.aumgn.dac.api.game.SimpleGame;
+import fr.aumgn.dac.api.game.TurnBasedGame;
 import fr.aumgn.dac.api.game.event.GameEvent;
 import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
@@ -23,7 +24,6 @@ import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.util.RIPSign;
-import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 
 public class ClassicGameHandler extends SimpleGameHandler {
 
@@ -57,8 +57,8 @@ public class ClassicGameHandler extends SimpleGameHandler {
     }
 
     private void switchToSuddenDeath(Game game, List<ClassicGamePlayer> players) {
-        GameMode mode = new SuddenDeathGameMode();
-        new SimpleGame(mode, game, players, game.getOptions());
+        GameMode mode = DAC.getModes().get("sudden-death");
+        new TurnBasedGame(mode, game, players, game.getOptions());
     }
 
     private ClassicGamePlayer lookForLastPlayer(GameEvent event) {

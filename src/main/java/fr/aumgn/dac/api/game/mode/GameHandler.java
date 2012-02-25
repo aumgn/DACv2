@@ -7,13 +7,10 @@ import fr.aumgn.dac.api.game.event.GameLoose;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
-import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
  * A class which is responsible for handling specifics 
  * behavior of the game mode.
- * 
- * @param <T> the subclass of {@link StagePlayer} used by this game mode 
  */
 public interface GameHandler {
 

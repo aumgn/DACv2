@@ -23,6 +23,41 @@ public interface Game extends Stage {
     GameMode getMode();
 
     /**
+     * Gets the {@link GameOptions} of this game.
+     * 
+     * @return the gameOptions
+     */
+    GameOptions getOptions();
+
+    /**
+     * Indicates if a player can watch a game.
+     * 
+     * @param player the player
+     * @return true if it can, false otherwise
+     */
+    public boolean canWatch(Player player);
+
+    /**
+     * Adds a spectator to this game.
+     * <p/>
+     * Returns false if player was already watching game, true otherwise.
+     * 
+     * @param player the player to add as a spectator
+     * @return false if player was already watching game, true otherwise  
+     */
+    boolean addSpectator(Player player);
+
+    /**
+     * Removes a spectator to this game.
+     * <p/>
+     * Returns true if player was not watching game, false otherwise.
+     * 
+     * @param player the player to remove as a spectator
+     * @return true if player was not watching game, false otherwise  
+     */
+    boolean removeSpectator(Player player);
+
+    /**
      * Changes turn to the next player.
      */
     void nextTurn();
@@ -62,40 +97,5 @@ public interface Game extends Stage {
      * @param player the player who won
      */
     void onWin(StagePlayer player);
-
-    /**
-     * Gets the {@link GameOptions} of this game.
-     * 
-     * @return the gameOptions
-     */
-    GameOptions getOptions();
-
-    /**
-     * Indicates if a player can watch a game.
-     * 
-     * @param player the player
-     * @return true if it can, false otherwise
-     */
-    public boolean canWatch(Player player);
-
-    /**
-     * Adds a spectator to this game.
-     * <p/>
-     * Returns false if player was already watching game, true otherwise.
-     * 
-     * @param player the player to add as a spectator
-     * @return false if player was already watching game, true otherwise  
-     */
-    boolean addSpectator(Player player);
-
-    /**
-     * Removes a spectator to this game.
-     * <p/>
-     * Returns true if player was not watching game, false otherwise.
-     * 
-     * @param player the player to remove as a spectator
-     * @return true if player was not watching game, false otherwise  
-     */
-    boolean removeSpectator(Player player);
 
 }
