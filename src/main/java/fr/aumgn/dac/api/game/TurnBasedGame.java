@@ -13,6 +13,13 @@ import org.bukkit.scheduler.BukkitScheduler;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.event.game.DACGameFailEvent;
+import fr.aumgn.dac.api.event.game.DACGameLooseEvent;
+import fr.aumgn.dac.api.event.game.DACGameNewTurnEvent;
+import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
+import fr.aumgn.dac.api.event.game.DACGameTurnEvent;
+import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
+import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
 import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
@@ -43,7 +50,6 @@ public class TurnBasedGame extends SimpleGame {
         }
     };
 
-
     public TurnBasedGame(GameMode gameMode, Stage stage, GameOptions options) {
         this(gameMode, stage, shuffle(stage.getPlayers()), options);
     }
@@ -60,6 +66,7 @@ public class TurnBasedGame extends SimpleGame {
         if (start.getPoolReset()) {
             arena.getPool().reset();
         }
+        DAC.callEvent(new DACStageStartEvent(this));
         sendEventMessages(start);
         nextTurn();        
     }
@@ -70,6 +77,7 @@ public class TurnBasedGame extends SimpleGame {
             turn = 0;
             GameNewTurn newTurn = new GameNewTurn(this);
             gameHandler.onNewTurn(newTurn);
+            DAC.callEvent(new DACGameNewTurnEvent(newTurn));
             sendEventMessages(newTurn);
         }
     }
@@ -85,6 +93,7 @@ public class TurnBasedGame extends SimpleGame {
         DAC.getPlayerManager().unregister(player);
         players.remove(player);
         gameHandler.onLoose(loose);
+        DAC.callEvent(new DACGameLooseEvent(loose));
         sendEventMessages(loose);
         int min = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
         if (players.size() == min - 1) {
@@ -97,10 +106,11 @@ public class TurnBasedGame extends SimpleGame {
     }
 
     private void stop(GameFinish finish) {
+        gameHandler.onFinish(finish);
+        DAC.callEvent(new DACStageStopEvent(this));
+        sendEventMessages(finish);
         finished = true;
         Bukkit.getScheduler().cancelTask(turnTimeOutTaskId);
-        gameHandler.onFinish(finish);
-        sendEventMessages(finish);
         DAC.getStageManager().unregister(this);
         if (finish.getPoolReset()) {
             arena.getPool().reset();
@@ -136,6 +146,7 @@ public class TurnBasedGame extends SimpleGame {
                     DAC.getConfig().getTurnTimeOut());
             GameTurn gameTurn = new GameTurn(player);
             gameHandler.onTurn(gameTurn);
+            DAC.callEvent(new DACGameTurnEvent(gameTurn));
             sendEventMessages(gameTurn);
             if (gameTurn.getTeleport()) {
                 player.tpToDiving();
@@ -163,6 +174,7 @@ public class TurnBasedGame extends SimpleGame {
             int z = player.getLocation().getBlockZ();
             GameJumpFail jumpFail = new GameJumpFail(stagePlayer, x, z);
             gameHandler.onFail(jumpFail);
+            DAC.callEvent(new DACGameFailEvent(jumpFail));
             if (!jumpFail.isCancelled()) {
                 if (jumpFail.getCancelDeath()) {
                     event.setCancelled(true);
@@ -189,6 +201,7 @@ public class TurnBasedGame extends SimpleGame {
             int z = player.getLocation().getBlockZ();
             GameJumpSuccess jumpSuccess = new GameJumpSuccess(stagePlayer, x, z);
             gameHandler.onSuccess(jumpSuccess);
+            DAC.callEvent(new DACGameSuccessEvent(jumpSuccess));
             if (!jumpSuccess.isCancelled()) {
                 if (jumpSuccess.getMustTeleport()) {
                     stagePlayer.tpAfterJump();

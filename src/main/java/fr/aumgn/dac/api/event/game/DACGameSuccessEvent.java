@@ -2,15 +2,16 @@ package fr.aumgn.dac.api.event.game;
 
 import org.bukkit.event.HandlerList;
 
-import fr.aumgn.dac.api.game.Game;
-import fr.aumgn.dac.api.stage.StagePlayer;
+import com.sk89q.worldedit.Vector2D;
+
+import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 
 public class DACGameSuccessEvent extends DACGamePlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public DACGameSuccessEvent(Game game, StagePlayer player) {
-        super(game, player);
+    public DACGameSuccessEvent(GameJumpSuccess success) {
+        super(success);
     }
 
     @Override
@@ -20,6 +21,19 @@ public class DACGameSuccessEvent extends DACGamePlayerEvent {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+    
+    @Override
+    protected GameJumpSuccess getGameEvent() {
+        return (GameJumpSuccess) gameEvent;
+    }
+    
+    public Vector2D getPos() {
+        return getGameEvent().getPos();
+    }
+    
+    public boolean isADAC() {
+        return getGameEvent().isADAC();
     }
 
 }

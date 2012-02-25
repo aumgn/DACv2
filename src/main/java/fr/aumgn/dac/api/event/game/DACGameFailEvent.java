@@ -2,17 +2,16 @@ package fr.aumgn.dac.api.event.game;
 
 import org.bukkit.event.HandlerList;
 
-import fr.aumgn.dac.api.game.Game;
-import fr.aumgn.dac.api.stage.StagePlayer;
+import com.sk89q.worldedit.Vector2D;
+
+import fr.aumgn.dac.api.game.event.GameJumpFail;
 
 public class DACGameFailEvent extends DACGamePlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private boolean cancelDeath = true;
-
-    public DACGameFailEvent(Game game, StagePlayer player) {
-        super(game, player);
+    public DACGameFailEvent(GameJumpFail gameFail) {
+        super(gameFail);
     }
 
     @Override
@@ -24,12 +23,13 @@ public class DACGameFailEvent extends DACGamePlayerEvent {
         return handlers;
     }
 
-    public boolean cancelDeath() {
-        return cancelDeath;
+    @Override
+    protected GameJumpFail getGameEvent() {
+        return (GameJumpFail) gameEvent;
     }
-
-    public void setCancelDeath(boolean cancelDeath) {
-        this.cancelDeath = cancelDeath;
+    
+    public Vector2D getPos() {
+        return getGameEvent().getPos();
     }
 
 }

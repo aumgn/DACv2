@@ -2,15 +2,14 @@ package fr.aumgn.dac.api.event.game;
 
 import org.bukkit.event.HandlerList;
 
-import fr.aumgn.dac.api.game.Game;
-import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.game.event.GameTurn;
 
-public class DACGameDACEvent extends DACGamePlayerEvent {
+public class DACGameTurnEvent extends DACGamePlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public DACGameDACEvent(Game game, StagePlayer player) {
-        super(game, player);
+    public DACGameTurnEvent(GameTurn turn) {
+        super(turn);
     }
 
     @Override
@@ -21,5 +20,5 @@ public class DACGameDACEvent extends DACGamePlayerEvent {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-
+    
 }
