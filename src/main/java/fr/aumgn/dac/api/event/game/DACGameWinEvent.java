@@ -1,8 +1,11 @@
 package fr.aumgn.dac.api.event.game;
 
+import java.util.Iterator;
+
 import org.bukkit.event.HandlerList;
 
 import fr.aumgn.dac.api.game.event.GameWin;
+import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class DACGameWinEvent extends DACGameEvent {
 
@@ -26,8 +29,17 @@ public class DACGameWinEvent extends DACGameEvent {
         return (GameWin) gameEvent;
     }
     
-    public Iterable<String> getRanking() {
-        return getGameEvent().getRanking();
+    public StagePlayer getWinner() {
+        Iterator<StagePlayer> ranking = getRanking().iterator(); 
+        if (ranking.hasNext()) {
+            return getRanking().iterator().next();
+        } else {
+            return null;
+        }
     }
 
+    public Iterable<StagePlayer> getRanking() {
+        return getGameEvent().getRanking();
+    }
+    
 }

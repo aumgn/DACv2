@@ -1,7 +1,6 @@
 package fr.aumgn.dac.plugin.mode.classic;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import fr.aumgn.dac.api.DAC;
@@ -155,17 +154,15 @@ public class ClassicGameHandler extends SimpleGameHandler {
     public void onFinish(GameFinish finish) {
     	finish.send(DACMessage.GameFinished);
     	if (finish instanceof GameWin) {
-    		Iterator<String> ranking = ((GameWin) finish).getRanking().iterator();
-    		if (ranking.hasNext()) {
-    			String name = ranking.next(); 
-    			finish.send(DACMessage.GameWinner, name);
-    			int i = 2;
-    			while (ranking.hasNext()) {
-    				name = ranking.next();
-    				finish.send(DACMessage.GameRank, i, name);
-    				i++;
-    			}
-    		}
+    	    int i = 1;
+    	    for (StagePlayer player : ((GameWin) finish).getRanking()) {
+    	        if (i==1) {
+    	            finish.send(DACMessage.GameWinner, player.getDisplayName());
+    	        } else {
+    	            finish.send(DACMessage.GameRank, i, player.getDisplayName());
+    	        }
+    	        i++;
+    	    }
     	}
     }
 

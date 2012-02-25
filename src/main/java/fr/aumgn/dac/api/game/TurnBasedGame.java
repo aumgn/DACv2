@@ -38,7 +38,7 @@ import fr.aumgn.dac.api.stage.StageQuitReason;
 
 public class TurnBasedGame extends SimpleGame {
 
-    private Stack<String> ranking;
+    private Stack<StagePlayer> ranking;
     private int turn;
     private int turnTimeOutTaskId;
     private boolean finished;
@@ -56,7 +56,7 @@ public class TurnBasedGame extends SimpleGame {
 
     public TurnBasedGame(GameMode gameMode, Stage stage, List<? extends StagePlayer> playersList, GameOptions options) {
         super(gameMode, stage, playersList, options);
-        ranking = new Stack<String>();
+        ranking = new Stack<StagePlayer>();
         turn = players.size() - 1;
         turnTimeOutTaskId = -1;
         finished = false;
@@ -89,7 +89,7 @@ public class TurnBasedGame extends SimpleGame {
     }
 
     private void onLoose(StagePlayer player, GameLoose loose) {
-        ranking.add(player.getDisplayName());
+        ranking.add(player);
         DAC.getPlayerManager().unregister(player);
         players.remove(player);
         gameHandler.onLoose(loose);
