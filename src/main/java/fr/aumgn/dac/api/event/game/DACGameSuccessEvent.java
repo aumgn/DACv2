@@ -1,16 +1,13 @@
 package fr.aumgn.dac.api.event.game;
 
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
-public class DACGameSuccessEvent extends DACGamePlayerEvent implements Cancellable {
+public class DACGameSuccessEvent extends DACGamePlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
-
-    private boolean isCancelled = false;
 
     public DACGameSuccessEvent(Game game, StagePlayer player) {
         super(game, player);
@@ -23,16 +20,6 @@ public class DACGameSuccessEvent extends DACGamePlayerEvent implements Cancellab
 
     public static HandlerList getHandlerList() {
         return handlers;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
     }
 
 }
