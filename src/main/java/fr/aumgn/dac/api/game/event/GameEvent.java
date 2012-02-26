@@ -41,8 +41,10 @@ public abstract class GameEvent {
 		return game.getArena();
 	}
 	
-	public List<GameMessage> getMessages() {
-		return new ArrayList<GameMessage>(messages);
+	public void sendMessages() {
+	    for (GameMessage message : messages) {
+	        message.send();
+	    }
 	}
 	
 	public void send(String message) {

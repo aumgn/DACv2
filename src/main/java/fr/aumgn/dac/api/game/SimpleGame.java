@@ -10,8 +10,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.DAC;
-import fr.aumgn.dac.api.game.event.GameEvent;
-import fr.aumgn.dac.api.game.messages.GameMessage;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.stage.SimpleStage;
@@ -56,12 +54,6 @@ public abstract class SimpleGame extends SimpleStage implements Game {
         }
         gameHandler = gameMode.createHandler();
         spectators = new HashSet<Player>();
-    }
-
-    protected void sendEventMessages(GameEvent gameEvent) {
-        for (GameMessage message : gameEvent.getMessages()) {
-            message.send();
-        }
     }
 
     @Override

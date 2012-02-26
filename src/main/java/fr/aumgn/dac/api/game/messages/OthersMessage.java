@@ -21,7 +21,7 @@ public class OthersMessage implements GameMessage {
 	public void send() {
 	    for (StagePlayer stagePlayer : player.getStage().getPlayers()) {
 	        if (!player.getPlayer().equals(stagePlayer.getPlayer())) {
-	            player.send(contents);
+	            stagePlayer.send(contents);
 	        }
 	    }
 	}

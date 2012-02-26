@@ -55,6 +55,7 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
 
     @Override
     public void onSuccess(GameJumpSuccess success) {
+        success.setColumnPattern(null);
         success.sendToPlayer(DACMessage.GameJumpSuccess2);
         success.sendToOthers(DACMessage.GameJumpSuccess);
     }

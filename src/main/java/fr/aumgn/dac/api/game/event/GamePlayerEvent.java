@@ -37,7 +37,7 @@ public abstract class GamePlayerEvent extends GameEvent {
 	}
 	
 	public void sendToOthers(String message) {
-		messages.add(new PlayerMessage(player, message));
+		messages.add(new OthersMessage(player, message));
 	}
 	
 	public void sendToOthers(DACMessage message, Object... args) {

@@ -82,7 +82,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
         start.send(DACMessage.GamePlayers);
         for (ClassicGamePlayer player : start.getPlayers(ClassicGamePlayer.class)) {
         	player.getDisplayName();
-            start.send(DACMessage.GamePlayerList, player.getIndex());
+            start.send(DACMessage.GamePlayerList, player.getIndex(), player.getDisplayName());
         }
         start.send(DACMessage.GameEnjoy);
     }
