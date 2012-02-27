@@ -94,7 +94,7 @@ game:
     confirmation2: "<green>Vous avez confirmé."
     dac-confirmation: "%1$s <gold>a confirmé avec un Dé à coudre."
     dac-confirmation2: "<gold>Quelle classe !"
-    dac-confirmation3: "Vous avez confirmé avec un Dé à coudre"
+    dac-confirmation3: "<gold>Vous avez confirmé avec un Dé à coudre"
     dac: "%1$s <gold>a reussi un dé à coudre."
     dac2: "<gold>Vous avez reussi un dé à coudre."
     lives-after-dac: "<gold>Il/Elle a maintenant %1$s vie(s)."

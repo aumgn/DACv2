@@ -70,14 +70,14 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
         if (!event.isCancelled()) {
             SimpleJoinStagePlayer dacPlayer = new SimpleJoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
-            players.add(dacPlayer);
-            DAC.getPlayerManager().register(dacPlayer);
-            colorsMap.add(event.getColor());
-            dacPlayer.send(DACMessage.JoinCurrentPlayers);
             for (StagePlayer currentPlayer : players) {
                 dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
             }
             send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+            players.add(dacPlayer);
+            DAC.getPlayerManager().register(dacPlayer);
+            colorsMap.add(event.getColor());
+            dacPlayer.send(DACMessage.JoinCurrentPlayers);
         }
     }
 
