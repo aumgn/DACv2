@@ -30,7 +30,7 @@ public class OptionsCommand extends BasicCommandExecutor {
         if (args.length == 1) {
             context.send(DACMessage.CmdOptionsList);
             for (Map.Entry<String, String> option : arena.options()) {
-                context.send(DACMessage.CmdOptionsOption.format(option.getKey(), option.getValue()));
+                context.send(DACMessage.CmdOptionsOption.getContent(option.getKey(), option.getValue()));
             }
             return;
         }

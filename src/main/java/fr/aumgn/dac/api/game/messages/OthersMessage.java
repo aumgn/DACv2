@@ -1,6 +1,5 @@
 package fr.aumgn.dac.api.game.messages;
 
-import fr.aumgn.dac.api.DACMessage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class OthersMessage implements GameMessage {
@@ -8,8 +7,8 @@ public class OthersMessage implements GameMessage {
     private StagePlayer player;
     private String contents;
 
-    public OthersMessage(StagePlayer player, DACMessage message, Object... args) {
-        this(player, args.length > 0 ? message.getValue(args) : message.getValue());
+    public OthersMessage(StagePlayer player, GameMessageContent message, Object... args) {
+        this(player, args.length > 0 ? message.getContent(args) : message.getContent());
     }
 
     public OthersMessage(StagePlayer player, String contents) {

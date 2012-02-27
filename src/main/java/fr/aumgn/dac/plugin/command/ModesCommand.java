@@ -23,7 +23,7 @@ public class ModesCommand extends BasicCommandExecutor {
         if (args.length == 0) {
             context.send(DACMessage.CmdModesList);
             for (String modeName : DAC.getModes().getNames()) {
-                context.send(DACMessage.CmdModesMode.format(modeName));
+                context.send(DACMessage.CmdModesMode.getContent(modeName));
             }
             return;
         }
@@ -36,7 +36,7 @@ public class ModesCommand extends BasicCommandExecutor {
         if (args.length == 1) {
             context.send(DACMessage.CmdModesList);
             for (String modeName : arena.getModes()) {
-                context.send(DACMessage.CmdModesMode.format(modeName));
+                context.send(DACMessage.CmdModesMode.getContent(modeName));
             }
             return;
         }

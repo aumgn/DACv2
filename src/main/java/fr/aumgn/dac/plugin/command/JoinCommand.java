@@ -46,7 +46,7 @@ public class JoinCommand extends PlayerCommandExecutor {
         }
 
         if (joinStage.isMaxReached()) {
-            error(DACMessage.CmdJoinMaxReached.format(DAC.getConfig().getMaxPlayers()));
+            error(DACMessage.CmdJoinMaxReached.getContent(DAC.getConfig().getMaxPlayers()));
         }
 
         joinStage.addPlayer(player, args);

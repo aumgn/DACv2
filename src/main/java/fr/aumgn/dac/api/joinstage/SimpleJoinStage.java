@@ -35,8 +35,8 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
         colorsMap = new HashSet<DACColor>();
         players = new ArrayList<SimpleJoinStagePlayer>();
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendMessage(DACMessage.JoinNewGame.format(arena.getName()));
-            player.sendMessage(DACMessage.JoinNewGame2.getValue());
+            player.sendMessage(DACMessage.JoinNewGame.getContent(arena.getName()));
+            player.sendMessage(DACMessage.JoinNewGame2.getContent());
         }
         DAC.callEvent(new DACStageStartEvent(this));
     }
@@ -71,9 +71,9 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
         if (!event.isCancelled()) {
             SimpleJoinStagePlayer dacPlayer = new SimpleJoinStagePlayer(this, player, event.getColor(), event.getStartLocation());
             for (StagePlayer currentPlayer : players) {
-                dacPlayer.send(DACMessage.JoinPlayerList.format(currentPlayer.getDisplayName()));
+                dacPlayer.send(DACMessage.JoinPlayerList.getContent(currentPlayer.getDisplayName()));
             }
-            send(DACMessage.JoinPlayerJoin.format(dacPlayer.getDisplayName()));
+            send(DACMessage.JoinPlayerJoin.getContent(dacPlayer.getDisplayName()));
             players.add(dacPlayer);
             DAC.getPlayerManager().register(dacPlayer);
             colorsMap.add(event.getColor());
@@ -99,7 +99,7 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
     @Override
     public void removePlayer(StagePlayer player, StageQuitReason reason) {
         DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
-        send(DACMessage.JoinPlayerQuit.format(player.getDisplayName()));
+        send(DACMessage.JoinPlayerQuit.getContent(player.getDisplayName()));
         players.remove(player);
         DAC.getPlayerManager().unregister(player);
         colorsMap.remove(player.getColor());

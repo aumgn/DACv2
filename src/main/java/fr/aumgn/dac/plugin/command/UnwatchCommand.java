@@ -25,7 +25,7 @@ public class UnwatchCommand extends PlayerCommandExecutor {
             for (String arg : args) {
                 Arena arena = DAC.getArenas().get(arg);
                 if (arena == null) {
-                    context.error(DACMessage.CmdWatchUnknown.format(arg));
+                    context.error(DACMessage.CmdWatchUnknown.getContent(arg));
                 } else {
                     processArena(context, arena);
                 }
@@ -39,7 +39,7 @@ public class UnwatchCommand extends PlayerCommandExecutor {
             return;
         }
         if (((Game) stage).removeSpectator(context.getPlayer())) {
-            context.success(DACMessage.CmdUnwatchSuccess.format(arena.getName()));
+            context.success(DACMessage.CmdUnwatchSuccess.getContent(arena.getName()));
         }
     }
 

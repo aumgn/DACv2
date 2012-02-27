@@ -9,9 +9,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import fr.aumgn.dac.api.DAC;
+import fr.aumgn.dac.api.game.messages.GameMessageContent;
 import fr.aumgn.dac.api.util.DACUtil;
 
-public enum DACMessage implements fr.aumgn.dac.api.DACMessage {
+public enum DACMessage implements GameMessageContent {
 
     CmdDefineExists         ("command.define.exists"),
     CmdDefineSuccess        ("command.define.success"),
@@ -116,6 +117,19 @@ public enum DACMessage implements fr.aumgn.dac.api.DACMessage {
 
     private static final String MESSAGES_FILENAME = "messages.yml";
 
+    private static void load(Configuration config, Configuration defaults) {
+        for (DACMessage message : DACMessage.values()) {
+            String node = message.getNode();
+            if (config.isString(node)) {
+                message.set(DACUtil.parseColorsMarkup(config.getString(node)));
+            } else if (defaults.isString(node)) {
+                message.set(DACUtil.parseColorsMarkup(defaults.getString(node)));
+            } else {
+                message.set("");
+            }
+        }
+    }
+
     public static void reload(Plugin plugin) {
         YamlConfiguration newMessages = new YamlConfiguration();
         YamlConfiguration defaultMessages = new YamlConfiguration();
@@ -132,19 +146,6 @@ public enum DACMessage implements fr.aumgn.dac.api.DACMessage {
         }
     }
 
-    private static void load(Configuration config, Configuration defaults) {
-        for (DACMessage message : DACMessage.values()) {
-            String node = message.getNode();
-            if (config.isString(node)) {
-                message.setValue(DACUtil.parseColorsMarkup(config.getString(node)));
-            } else if (defaults.isString(node)) {
-                message.setValue(DACUtil.parseColorsMarkup(defaults.getString(node)));
-            } else {
-                message.setValue("");
-            }
-        }
-    }
-
     private String node;
     private String value;
 
@@ -153,29 +154,25 @@ public enum DACMessage implements fr.aumgn.dac.api.DACMessage {
         this.value = "";
     }
 
-    public String getNode() {
+    private String getNode() {
         return node;
     }
 
-    public String getValue() {
+    private void set(String value) {
+        this.value = value;
+    }
+
+    public String getContent() {
         return value;
     }
 
-    public String getValue(Object... args)  {
-        return format(args);
-    }
-
-    private void setValue(String value) {
-        this.value = value;
+    public String getContent(Object... args) {
+        return String.format(getContent(), args);
     }
 
     @Override
     public String toString() {
-        return getValue();
-    }
-
-    public String format(Object... args) {
-        return String.format(getValue(), args);
+        return getContent();
     }
 
 }

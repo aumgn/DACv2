@@ -35,7 +35,7 @@ public class KickCommand extends PlayerCommandExecutor {
         if (count == 0) {
             error(DACMessage.CmdKickNoPlayerFound);
         } else {
-            context.success(DACMessage.CmdKickSuccess.format(count));
+            context.success(DACMessage.CmdKickSuccess.getContent(count));
         }
     }
 

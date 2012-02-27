@@ -17,7 +17,7 @@ public class ArenasCommand extends BasicCommandExecutor {
     public void onCommand(BasicCommandContext context, String[] args) {
         context.send(DACMessage.CmdArenasList);
         for (Arena arena : DAC.getArenas()) {
-            context.send(DACMessage.CmdArenasArena.format(arena.getName(), arena.getWorld().getName()));
+            context.send(DACMessage.CmdArenasArena.getContent(arena.getName(), arena.getWorld().getName()));
         }
     }
 

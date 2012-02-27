@@ -47,9 +47,9 @@ public class TrainingGameHandler extends SimpleGameHandler {
     }
 
     private void sendStats(TrainingGamePlayer player) {
-        player.send(DACMessage.StatsSuccess.format(player.getSuccesses()));
-        player.send(DACMessage.StatsDAC.format(player.getDACs()));
-        player.send(DACMessage.StatsFail.format(player.getFails()));
+        player.send(DACMessage.StatsSuccess.getContent(player.getSuccesses()));
+        player.send(DACMessage.StatsDAC.getContent(player.getDACs()));
+        player.send(DACMessage.StatsFail.getContent(player.getFails()));
     }
 
     @Override

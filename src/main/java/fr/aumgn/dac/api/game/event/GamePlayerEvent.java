@@ -1,8 +1,8 @@
 package fr.aumgn.dac.api.game.event;
 
-import fr.aumgn.dac.api.DACMessage;
 import fr.aumgn.dac.api.exception.PlayerCastException;
 import fr.aumgn.dac.api.game.Game;
+import fr.aumgn.dac.api.game.messages.GameMessageContent;
 import fr.aumgn.dac.api.game.messages.OthersMessage;
 import fr.aumgn.dac.api.game.messages.PlayerMessage;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -32,7 +32,7 @@ public abstract class GamePlayerEvent extends GameEvent {
         messages.add(new PlayerMessage(player, message));
     }
 
-    public void sendToPlayer(DACMessage message, Object... args) {
+    public void sendToPlayer(GameMessageContent message, Object... args) {
         messages.add(new PlayerMessage(player, message, args));
     }
 
@@ -40,7 +40,7 @@ public abstract class GamePlayerEvent extends GameEvent {
         messages.add(new OthersMessage(player, message));
     }
 
-    public void sendToOthers(DACMessage message, Object... args) {
+    public void sendToOthers(GameMessageContent message, Object... args) {
         messages.add(new OthersMessage(player, message, player.getDisplayName(), args));
     }
 }

@@ -29,7 +29,7 @@ public class WatchCommand extends PlayerCommandExecutor {
             for (String arg : args) {
                 Arena arena = DAC.getArenas().get(arg);
                 if (arena == null) {
-                    context.error(DACMessage.CmdWatchUnknown.format(arg));
+                    context.error(DACMessage.CmdWatchUnknown.getContent(arg));
                 } else {
                     processArena(context, arena);
                 }
@@ -41,16 +41,16 @@ public class WatchCommand extends PlayerCommandExecutor {
     private void processArena(PlayerCommandContext context, Arena arena) {
         Stage stage = DAC.getStageManager().get(arena);
         if (!(stage instanceof Game)) {
-            context.error(DACMessage.CmdWatchNotInGame.format(arena.getName()));
+            context.error(DACMessage.CmdWatchNotInGame.getContent(arena.getName()));
             return;
         }
         Player player = context.getPlayer();
         Game game = (Game) stage;
         if (game.canWatch(player)) {
             game.addSpectator(player);
-            context.success(DACMessage.CmdWatchSuccess.format(arena.getName()));
+            context.success(DACMessage.CmdWatchSuccess.getContent(arena.getName()));
         } else {
-            context.send(DACMessage.CmdWatchAlreadyWatching.format(arena.getName()));
+            context.send(DACMessage.CmdWatchAlreadyWatching.getContent(arena.getName()));
         }
     }
 

@@ -85,7 +85,7 @@ public class TurnBasedGame extends SimpleGame {
 
     private void turnTimedOut() {
         StagePlayer player = players.get(turn);
-        send(DACMessage.GameTurnTimedOut.format(player.getDisplayName()));
+        send(DACMessage.GameTurnTimedOut.getContent(player.getDisplayName()));
         removePlayer(player, StageQuitReason.TurnTimeOut);
     }
 
