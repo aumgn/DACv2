@@ -3,9 +3,9 @@ package fr.aumgn.dac.api.area.column;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 
-public class RandomUniformColor extends UniformColumn {
+public class RandomUniformColumn extends UniformColumn {
 	
-	public RandomUniformColor() {
+	public RandomUniformColumn() {
 		super(DAC.getConfig().getColors().random());
 	}
 

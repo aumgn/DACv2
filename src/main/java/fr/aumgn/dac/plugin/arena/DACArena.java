@@ -27,7 +27,7 @@ import fr.aumgn.dac.plugin.area.vector.DACLocation;
 @SerializableAs("dac-arena")
 public class DACArena implements Arena, ConfigurationSerializable {
 
-	private String name;
+    private String name;
     private boolean updated;
     private World world;
     private Set<String> modes;
@@ -170,20 +170,20 @@ public class DACArena implements Arena, ConfigurationSerializable {
     }
 
     @Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-		DACArena other = (DACArena) obj;
-		return name.equals(other.name);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        DACArena other = (DACArena) obj;
+        return name.equals(other.name);
+    }
 
 }

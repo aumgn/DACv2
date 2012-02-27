@@ -24,14 +24,43 @@ public class RIPSign {
     private static final double MOD_1_TO_2 = Math.cos(3 * SIGN_FACES_ANGLE);
     private static final double MOD_2_TO_1 = Math.cos(SIGN_FACES_ANGLE);
 
+    private Pool pool;
+    private Vector vector;
+
+    public RIPSign(Pool pool, Vector vec) {
+        this.pool = pool;
+        this.vector = vec;
+    }
+
     /**
-     * Gets the modifier value which can be used for 
-     * finding the horizontal BlockFace for the given direction.
-     *  
-     * @param i the value to get block face modifier for
-     * @return the block face modifier
+     * Add player name to this the sign this instance represents.
+     * <p/>
+     * If the sign do not exists it will be automatically created.  
+     * 
+     * @param name
      */
-    private static int getBlockFaceModValue(double i) {
+    public void rip(String name) {
+        World world = pool.getArena().getWorld();
+        if (vector == null) {
+            return;
+        }
+
+        Block block = world.getBlockAt(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
+        if (block.getType() != Material.SIGN_POST) {
+            createRIPSign(block);
+        }
+
+        for (int i = 1; i < DACUtil.SIGN_LINES; i++) {
+            Sign sign = (Sign) block.getState();
+            if (sign.getLine(i).isEmpty()) {
+                sign.setLine(i, name);
+                sign.update();
+                return;
+            }
+        }
+    }
+
+    private int getBlockFaceModValue(double i) {
         if (i < -1 || i > 1) {
             throw new IllegalArgumentException("Value must be between -1 and 1");
         } else if (i < -MOD_2_TO_1) {
@@ -51,13 +80,7 @@ public class RIPSign {
         }
     }
 
-    /**
-     * Gets the horizontal BlockFace represented by this vector.
-     * 
-     * @param vec the vector to convert to BlockFace 
-     * @return the BlockFace represented
-     */
-    public static BlockFace getHorizontalFaceFor(Vector2D vec) {
+    private BlockFace getHorizontalFaceFor(Vector2D vec) {
         try {
             Vector2D dir = vec.normalize();
             int modX = getBlockFaceModValue(dir.getX());
@@ -71,14 +94,6 @@ public class RIPSign {
         } catch (IllegalArgumentException exc) {
             return BlockFace.SELF;
         }
-    }
-
-    private Pool pool;
-    private Vector vector;
-
-    public RIPSign(Pool pool, Vector vec) {
-        this.pool = pool;
-        this.vector = vec;
     }
 
     private void createRIPSign(Block block) {
@@ -96,34 +111,6 @@ public class RIPSign {
         Sign sign = (Sign) block.getState();
         sign.setLine(0, DAC.getConfig().getDeathSignFirstLine());
         sign.update();
-    }
-
-    /**
-     * Add player name to this the sign this instance represents.
-     * <p/>
-     * If the sign do not exists it will automatically create it.  
-     * 
-     * @param name
-     */
-    public void rip(String name) {
-        World world = pool.getArena().getWorld();
-        if (vector == null) {
-            return;
-        }
-
-        Block block = world.getBlockAt(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
-        if (block.getType() != Material.SIGN_POST) {
-            createRIPSign(block);
-        }
-
-        for (int i = 1; i < DACUtil.SIGN_LINES; i++) {
-            Sign sign = (Sign) block.getState();
-            if (sign.getLine(i).isEmpty()) {
-                sign.setLine(i, name);
-                break;
-            }
-            sign.update();
-        }
     }
 
 }

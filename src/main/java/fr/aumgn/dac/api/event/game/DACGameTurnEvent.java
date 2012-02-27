@@ -20,5 +20,5 @@ public class DACGameTurnEvent extends DACGamePlayerEvent {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-    
+
 }

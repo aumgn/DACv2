@@ -15,7 +15,7 @@ public @interface DACGameMode {
      * @return Name of the game mode
      */
     public String name();
-    
+
     /**
      * Aliases of the game mode.
      * 

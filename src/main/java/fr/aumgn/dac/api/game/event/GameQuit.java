@@ -5,15 +5,15 @@ import fr.aumgn.dac.api.stage.StageQuitReason;
 
 public class GameQuit extends GameLoose {
 
-	private StageQuitReason reason;
-	
-	public GameQuit(StagePlayer player, StageQuitReason reason) {
-		super(player);
-		this.reason = reason;
-	}
-	
-	public StageQuitReason getReason() {
-		return reason;
-	}
-	
+    private StageQuitReason reason;
+
+    public GameQuit(StagePlayer player, StageQuitReason reason) {
+        super(player);
+        this.reason = reason;
+    }
+
+    public StageQuitReason getReason() {
+        return reason;
+    }
+
 }

@@ -3,7 +3,6 @@ package fr.aumgn.dac.plugin.arena;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.BlockVector;
@@ -15,11 +14,10 @@ import com.sk89q.worldedit.regions.Region;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Pool;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
-import fr.aumgn.dac.api.fillstrategy.defaults.FillFully;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
 import fr.aumgn.dac.plugin.area.region.DACRegion;
+import fr.aumgn.dac.plugin.fillstrategy.FillFully;
 
-@SerializableAs("dac-pool")
 public class DACPool extends DACVerticalArea implements Pool {
 
     private static final Material SIGN_MATERIAL = Material.SIGN_POST;
@@ -36,6 +34,10 @@ public class DACPool extends DACVerticalArea implements Pool {
     public DACPool(DACArena arena) {
         super(arena);
         updateSafeRegion();
+    }
+
+    private CuboidRegion getSafeRegion() {
+        return safeRegion;
     }
 
     private void removeSigns() {
@@ -68,7 +70,7 @@ public class DACPool extends DACVerticalArea implements Pool {
         Region region = getWERegion();
         poolMinPt = region.getMinimumPoint();
         poolMaxPt = region.getMaximumPoint();
-        
+
         minY = poolMaxPt.getBlockY() + 1;
         maxY = minY + height;
 
@@ -76,10 +78,6 @@ public class DACPool extends DACVerticalArea implements Pool {
         maxPt = poolMaxPt.add(margin, 0, margin).setY(maxY);
 
         safeRegion = new CuboidRegion(region.getWorld(), minPt, maxPt);
-    }
-
-    private CuboidRegion getSafeRegion() {
-        return safeRegion;
     }
 
     @Override
@@ -96,13 +94,13 @@ public class DACPool extends DACVerticalArea implements Pool {
         super.update(region);
         updateSafeRegion();
     }
-    
+
     @Override
     public void setRegion(DACRegion region) {
         super.setRegion(region);
         updateSafeRegion();
     }
-    
+
     @Override
     public boolean isADACPattern(int x, int z) {
         boolean water;

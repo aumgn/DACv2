@@ -22,16 +22,16 @@ public class DACGameSuccessEvent extends DACGamePlayerEvent {
     public static HandlerList getHandlerList() {
         return handlers;
     }
-    
+
     @Override
     protected GameJumpSuccess getGameEvent() {
         return (GameJumpSuccess) gameEvent;
     }
-    
+
     public Vector2D getPos() {
         return getGameEvent().getPos();
     }
-    
+
     public boolean isADAC() {
         return getGameEvent().isADAC();
     }

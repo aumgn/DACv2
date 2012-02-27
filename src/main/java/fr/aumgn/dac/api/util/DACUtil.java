@@ -133,6 +133,12 @@ public final class DACUtil {
         return parsed.toString();
     }
 
+    /**
+     * Safely parses an integer value.
+     * 
+     * @param str the string to parse
+     * @return the parsed integer or 0
+     */
     public static int parseInteger(String str) {
         try {
             return Integer.parseInt(str);

@@ -32,7 +32,7 @@ public interface VerticalArea extends Area {
      * @param vec the vector 
      * @return the column for the given x and y position.
      */
-	AreaColumn getColumn(BlockVector2D vec);
+    AreaColumn getColumn(BlockVector2D vec);
 
     /**
      * Gets the column at the given x and y position.
@@ -62,10 +62,10 @@ public interface VerticalArea extends Area {
     void fillWith(FillStrategy strategy, String[] fillArgs);
 
     /**
-    * Gets an iterator.
-    *
-    * @return iterator of column inside this vertical area.
-    */
+     * Gets an iterator.
+     *
+     * @return iterator of column inside this vertical area.
+     */
     Iterable<AreaColumn> columns();
 
 }

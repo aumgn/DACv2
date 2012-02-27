@@ -53,7 +53,7 @@ public interface GameHandler {
      * @param fail the fail event
      */
     void onFail(GameJumpFail fail);
-    
+
     /**
      * Called when a player loose.
      * Can be because he simply loose or because he has 

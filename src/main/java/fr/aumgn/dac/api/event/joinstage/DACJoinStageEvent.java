@@ -8,7 +8,6 @@ public abstract class DACJoinStageEvent extends DACEvent {
     private JoinStage joinStage;
 
     public DACJoinStageEvent(JoinStage stage) {
-        super();
         this.joinStage = stage;
     }
 

@@ -32,6 +32,7 @@ import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.event.GameWin;
 import fr.aumgn.dac.api.game.event.GameFinish.FinishReason;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
+import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -51,17 +52,16 @@ public class TurnBasedGame extends SimpleGame {
         }
     };
 
-    public TurnBasedGame(GameMode gameMode, Stage stage, GameOptions options) {
-        this(gameMode, stage, shuffle(stage.getPlayers()), options);
+    public TurnBasedGame(Stage stage, GameMode gameMode, GameHandler handler, GameOptions options) {
+        this(stage, gameMode, handler, shuffle(stage.getPlayers()), options);
     }
 
-    public TurnBasedGame(GameMode gameMode, Stage stage, List<? extends StagePlayer> playersList, GameOptions options) {
-        super(gameMode, stage, playersList, options);
+    public TurnBasedGame(Stage stage, GameMode gameMode, GameHandler handler, List<? extends StagePlayer> playersList, GameOptions options) {
+        super(stage, gameMode, handler, playersList, options);
         ranking = new ArrayDeque<StagePlayer>();
         turn = players.size() - 1;
         turnTimeOutTaskId = -1;
         finished = false;
-        DAC.getStageManager().register(this);
         GameStart start = new GameStart(this);
         gameHandler.onStart(start);
         if (start.getPoolReset()) {

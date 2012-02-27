@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.fillstrategy.defaults;
+package fr.aumgn.dac.plugin.fillstrategy;
 
 import org.bukkit.Material;
 
@@ -14,7 +14,7 @@ import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 /**
  * Replaces all column of a {@link VerticalArea} with the given block. 
  */
-@DACFillStrategy(name = "fully")
+@DACFillStrategy(name = "fully", aliases = { "fl" })
 public class FillFully implements FillStrategy {
 
     protected BaseBlock getBlock(String[] args) {

@@ -14,7 +14,7 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
 
     public ClassicGamePlayer(Game game, StagePlayer player, int index) {
         super(game, player, index);
-        this.lives = 0;
+        this.lives = game.getOptions().getLives();
         this.mustConfirmate = false;
     }
 
@@ -35,11 +35,11 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
     public boolean isDead() {
         return lives == -1;
     }
-    
+
     public Vector getDeathPosition() {
         return deathPosition;
     }
-    
+
     public boolean mustConfirmate() {
         return mustConfirmate;
     }
@@ -56,7 +56,7 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
         lives--;
         return isDead();
     }
-    
+
     public void looseAllLives() {
         lives = -2;
     }

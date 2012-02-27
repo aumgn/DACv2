@@ -36,6 +36,6 @@ public interface Pool extends VerticalArea {
     /**
      * Updates this pool's safe region.
      */
-	void updateSafeRegion();
+    void updateSafeRegion();
 
 }

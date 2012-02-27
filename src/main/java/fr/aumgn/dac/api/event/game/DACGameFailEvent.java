@@ -27,7 +27,7 @@ public class DACGameFailEvent extends DACGamePlayerEvent {
     protected GameJumpFail getGameEvent() {
         return (GameJumpFail) gameEvent;
     }
-    
+
     public Vector2D getPos() {
         return getGameEvent().getPos();
     }

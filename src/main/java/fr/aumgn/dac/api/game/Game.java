@@ -10,8 +10,6 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
  * Represents a running dé a coudre game. 
- * 
- * @param <T> the subclass of {@link StagePlayer} used by this game
  */
 public interface Game extends Stage {
 

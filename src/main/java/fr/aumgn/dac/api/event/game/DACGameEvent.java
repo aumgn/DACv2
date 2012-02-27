@@ -9,7 +9,6 @@ public abstract class DACGameEvent extends DACEvent {
     protected GameEvent gameEvent;
 
     public DACGameEvent(GameEvent gameEvent) {
-        super();
         this.gameEvent = gameEvent;
     }
 
@@ -20,9 +19,9 @@ public abstract class DACGameEvent extends DACEvent {
     public Game getGame() {
         return gameEvent.getGame();
     }
-    
+
     public void send(String message) {
         gameEvent.send(message);
     }
-    
+
 }

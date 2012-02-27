@@ -22,14 +22,6 @@ public interface GameMode {
     Game createGame(Stage stage, GameOptions options);
 
     /**
-     * Creates the {@link GameHandler} for this game mode.
-     * 
-     * @param game the game for which to create the handler 
-     * @return the created handler
-     */
-    GameHandler createHandler();
-
-    /**
      * Creates the inherited instance of {@link StagePlayer} associated with this game mode.
      * 
      * @param game the game for which to create the player

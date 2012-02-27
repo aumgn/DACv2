@@ -6,8 +6,6 @@ import fr.aumgn.dac.api.arena.Arena;
 
 /**
  * Represents a stage
- * 
- * @param <T> the subclass of {@link StagePlayer} used by this stage
  */
 public interface Stage {
 
@@ -19,7 +17,7 @@ public interface Stage {
     Arena getArena();
 
     /**
-     * Same as {@link Stage#removePlayer(StagePlayer)} but specify the reason.
+     * Removes the player from the stage with the given reason.
      * 
      * @param player the player to remove
      * @param reason the Quit reason

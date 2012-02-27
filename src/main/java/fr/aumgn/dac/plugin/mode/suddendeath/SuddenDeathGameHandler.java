@@ -1,7 +1,6 @@
 package fr.aumgn.dac.plugin.mode.suddendeath;
 
 import fr.aumgn.dac.api.config.DACMessage;
-import fr.aumgn.dac.api.fillstrategy.defaults.FillAllButOne;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
@@ -9,21 +8,22 @@ import fr.aumgn.dac.api.game.event.GameLoose;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
+import fr.aumgn.dac.plugin.fillstrategy.FillAllButOne;
 
 public class SuddenDeathGameHandler extends SimpleGameHandler {
-	
+
 
     @Override
     public void onNewTurn(GameNewTurn newTurn) {
-    	SuddenDeathGamePlayer lastPlayer = null;
-    	Game game = newTurn.getGame();
+        SuddenDeathGamePlayer lastPlayer = null;
+        Game game = newTurn.getGame();
         Iterable<SuddenDeathGamePlayer> players = newTurn.getPlayers(SuddenDeathGamePlayer.class);
         int playersLeftCount = game.getPlayers().size();
         for (SuddenDeathGamePlayer player : players) {
             if (player.isDeadThisTurn()) {
                 playersLeftCount--;
             } else {
-            	lastPlayer = player;
+                lastPlayer = player;
             }
         }
         if (playersLeftCount == 0) {
@@ -66,10 +66,10 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
         fail.sendToPlayer(DACMessage.GameJumpFail2);
         fail.sendToOthers(DACMessage.GameJumpFail);
     }
-    
+
     @Override
     public void onLoose(GameLoose loose) {
-    	loose.send(DACMessage.GamePlayerQuit, loose.getPlayer().getDisplayName());
+        loose.send(DACMessage.GamePlayerQuit, loose.getPlayer().getDisplayName());
     }
 
 }

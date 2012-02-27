@@ -5,24 +5,24 @@ import fr.aumgn.dac.api.area.column.UniformColumn;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class GameJumpSuccess extends GameJumpEvent {
-	
-	ColumnPattern pattern;
 
-	public GameJumpSuccess(StagePlayer player, int x, int z) {
-		super(player, x, z, true);
-		this.pattern = new UniformColumn(player.getColor()); 
-	}
-	
-	public boolean isADAC() {
-		return getArena().getPool().isADACPattern(getX(), getZ());
-	}
-	
-	public ColumnPattern getColumnPattern() {
-		return pattern;
-	}
-	
-	public void setColumnPattern(ColumnPattern pattern) {
-		this.pattern = pattern;
-	}
+    private ColumnPattern pattern;
+
+    public GameJumpSuccess(StagePlayer player, int x, int z) {
+        super(player, x, z, true);
+        this.pattern = new UniformColumn(player.getColor()); 
+    }
+
+    public boolean isADAC() {
+        return getArena().getPool().isADACPattern(getX(), getZ());
+    }
+
+    public ColumnPattern getColumnPattern() {
+        return pattern;
+    }
+
+    public void setColumnPattern(ColumnPattern pattern) {
+        this.pattern = pattern;
+    }
 
 }

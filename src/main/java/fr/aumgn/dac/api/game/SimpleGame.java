@@ -36,13 +36,14 @@ public abstract class SimpleGame extends SimpleStage implements Game {
         return list;
     }
 
-    public SimpleGame(GameMode gameMode, Stage stage, GameOptions options) {
-        this(gameMode, stage, shuffle(stage.getPlayers()), options);
+    public SimpleGame(Stage stage, GameMode gameMode, GameHandler handler, GameOptions options) {
+        this(stage, gameMode, handler, shuffle(stage.getPlayers()), options);
     }
 
-    public SimpleGame(GameMode gameMode, Stage stage, List<? extends StagePlayer> playersList, GameOptions options) {
+    public SimpleGame(Stage stage, GameMode gameMode, GameHandler handler, List<? extends StagePlayer> playersList, GameOptions options) {
         super(stage.getArena());
         stage.stop();
+        gameHandler = handler;
         this.mode = gameMode;
         this.options = options;
         options.parsePropulsion();
@@ -52,8 +53,8 @@ public abstract class SimpleGame extends SimpleStage implements Game {
             players.add(gameMode.createPlayer(this, player, i + 1));
             i++;
         }
-        gameHandler = gameMode.createHandler();
         spectators = new HashSet<Player>();
+        DAC.getStageManager().register(this);
     }
 
     @Override

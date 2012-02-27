@@ -28,7 +28,7 @@ public class DACGameWinEvent extends DACGameEvent {
     protected GameWin getGameEvent() {
         return (GameWin) gameEvent;
     }
-    
+
     public StagePlayer getWinner() {
         Iterator<StagePlayer> ranking = getRanking().iterator(); 
         if (ranking.hasNext()) {
@@ -41,5 +41,5 @@ public class DACGameWinEvent extends DACGameEvent {
     public Iterable<StagePlayer> getRanking() {
         return getGameEvent().getRanking();
     }
-    
+
 }

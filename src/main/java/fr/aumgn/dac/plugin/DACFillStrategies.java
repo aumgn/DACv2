@@ -14,6 +14,7 @@ import fr.aumgn.dac.api.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 public class DACFillStrategies implements FillStrategies {
+
     private Map<String, FillStrategy> strategies = new HashMap<String, FillStrategy>();
 
     public DACFillStrategies() {
@@ -21,21 +22,31 @@ public class DACFillStrategies implements FillStrategies {
             if (bukkitPlugin instanceof DACFillStrategyProvider) {
                 DACFillStrategyProvider strategiesProvider = (DACFillStrategyProvider) bukkitPlugin;
                 for (Class<? extends FillStrategy> strategy : strategiesProvider.getFillStrategies()) {
-                    register(strategy);
+                    register(bukkitPlugin, strategy);
                 }
             }
         }
     }
 
-    private void register(Class<? extends FillStrategy> strategyCls) {
+    private void logRegisterError(Plugin plugin, Class<? extends FillStrategy> strategyCls, String specificError) {
+        String pluginName = plugin.getDescription().getName();
+        DAC.getLogger().warning("Cannot register fill strategy " + strategyCls.getSimpleName() + " from " + pluginName);
+        DAC.getLogger().warning(specificError);
+    }
+
+    private void register(Plugin plugin, Class<? extends FillStrategy> strategyCls) {
         DACFillStrategy annotation = strategyCls.getAnnotation(DACFillStrategy.class);
         if (annotation == null) {
-            DAC.getLogger().warning("Cannot register fill strategy for " + strategyCls.getSimpleName());
-            DAC.getLogger().warning("Annotation `DACFillStrategy` missing");
+            logRegisterError(plugin, strategyCls, "Annotation `DACFillStrategy` missing");
             return;
         }
 
         String strategyName = annotation.name();
+        if (strategies.containsKey(strategyName)) {
+            logRegisterError(plugin, strategyCls, "Conflict with already registered strategy.");
+            return;
+        }
+
         try {
             FillStrategy strategy = strategyCls.newInstance();
             strategies.put(strategyName, strategy);

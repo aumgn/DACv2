@@ -16,7 +16,7 @@ import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.game.mode.GameModes;
 
 public class DACGameModes implements GameModes {
-	
+
     private final Map<String, GameMode> modes = new HashMap<String, GameMode>();
     private final Map<String, GameMode> modesByAlias = new HashMap<String, GameMode>();
 
@@ -25,27 +25,35 @@ public class DACGameModes implements GameModes {
             if (bukkitPlugin instanceof DACGameModeProvider) {
                 DACGameModeProvider gameModeProvider = (DACGameModeProvider) bukkitPlugin;
                 for (Class<? extends GameMode> gameMode : gameModeProvider.getGameModes()) {
-                    register(gameMode);
+                    register(bukkitPlugin, gameMode);
                 }
             }
         }
     }
 
-    private void register(Class<? extends GameMode> modeCls) {
+    private void logRegisterError(Plugin plugin, Class<? extends GameMode> modeCls, String specificError) {
+        DAC.getLogger().warning("Cannot register game mode for " + modeCls.getSimpleName());
+        DAC.getLogger().warning("Annotation `DACGameMode` missing");
+    }
+
+    private void register(Plugin plugin, Class<? extends GameMode> modeCls) {
         DACGameMode annotation = modeCls.getAnnotation(DACGameMode.class);
         if (annotation == null) {
-            DAC.getLogger().warning("Cannot register game mode for " + modeCls.getSimpleName());
-            DAC.getLogger().warning("Annotation `DACGameMode` missing");
+            logRegisterError(plugin, modeCls, "Annotation `DACGameMode` missing");
             return;
         }
 
         String modeName = annotation.name();
+        if (modes.containsKey(modeName)) {
+            logRegisterError(plugin, modeCls, "Conflict with already registered mode");
+        }
+
         try {
             GameMode mode = modeCls.newInstance();
             modes.put(modeName, mode);
             modesByAlias.put(modeName, mode);
             for (String alias : annotation.aliases()) {
-            	modesByAlias.put(alias, mode);
+                modesByAlias.put(alias, mode);
             }
         } catch (InstantiationException exc) {
             DAC.getLogger().warning("Cannot register game mode " + modeName);

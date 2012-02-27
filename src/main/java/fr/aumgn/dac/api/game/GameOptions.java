@@ -18,6 +18,7 @@ public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entr
     private Map<String, String> options;
     private Vector propulsion;
     private int propulsionDelay;
+    private int lives;
 
     public static GameOptions parse(String[] options) {
         Map<String, String> map = new HashMap<String, String>();
@@ -86,6 +87,15 @@ public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entr
         options.remove(name);
     }
 
+    public void parseLives() {
+        String livesOption = get("lives", "0");
+        try {
+            lives = Integer.parseInt(livesOption);
+        } catch (NumberFormatException exc) {
+            lives = 0;
+        }
+    }
+
     public void parsePropulsion() {
         String prop = get("propulsion", "0");
         String[] splitted = prop.split(",");
@@ -108,6 +118,10 @@ public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entr
                     parseInteger(splitted[2]));
             propulsionDelay = parseInteger(splitted[3]);
         }
+    }
+
+    public int getLives() {
+        return lives;
     }
 
     public Vector getPropulsion() {

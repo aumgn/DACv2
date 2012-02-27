@@ -4,12 +4,9 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
-import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
  * Represents a join stage.
- * 
- * @param <T> the subclass of {@link StagePlayer} used by this join stage
  */
 public interface JoinStage extends Stage {
 

@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.fillstrategy.defaults;
+package fr.aumgn.dac.plugin.fillstrategy;
 
 import java.util.Random;
 
@@ -12,7 +12,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.area.column.RandomUniformColor;
+import fr.aumgn.dac.api.area.column.RandomUniformColumn;
 import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
@@ -38,7 +38,7 @@ public class FillAllButOne implements FillStrategy {
             z = minZ + rand.nextInt(zRange);
         } while (!region.contains(new BlockVector(x, y, z)));
 
-        ColumnPattern pattern = new RandomUniformColor();
+        ColumnPattern pattern = new RandomUniformColumn();
         for (AreaColumn column : area.columns()) {
             if (column.getX() != x || column.getZ() != z) {
                 column.set(pattern);

@@ -13,7 +13,7 @@ public interface AreaColumn extends Iterable<AreaColumnBlock> {
      * @return the vertical area inside which this column is. 
      */
     VerticalArea getArea();
-    
+
     /**
      * Gets the x position of this column.
      * 

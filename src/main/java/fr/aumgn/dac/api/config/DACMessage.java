@@ -160,9 +160,9 @@ public enum DACMessage implements fr.aumgn.dac.api.DACMessage {
     public String getValue() {
         return value;
     }
-    
+
     public String getValue(Object... args)  {
-    	return format(args);
+        return format(args);
     }
 
     private void setValue(String value) {

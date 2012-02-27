@@ -5,15 +5,15 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class GameWin extends GameFinish {
 
-	Iterable<StagePlayer> ranking;
+    Iterable<StagePlayer> ranking;
 
-	public GameWin(Game game, Iterable<StagePlayer> ranking) {
-		super(game, FinishReason.Winner);
-		this.ranking = ranking;
-	}
+    public GameWin(Game game, Iterable<StagePlayer> ranking) {
+        super(game, FinishReason.Winner);
+        this.ranking = ranking;
+    }
 
-	public Iterable<StagePlayer> getRanking() {
-		return ranking;
-	}
+    public Iterable<StagePlayer> getRanking() {
+        return ranking;
+    }
 
 }

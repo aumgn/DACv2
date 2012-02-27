@@ -1,7 +1,6 @@
 package fr.aumgn.dac.plugin.mode.training;
 
 import fr.aumgn.dac.api.area.column.GlassyColumn;
-import fr.aumgn.dac.api.area.column.UniformColumn;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
@@ -26,7 +25,7 @@ public class TrainingGameHandler extends SimpleGameHandler {
 
     @Override
     public void onSuccess(GameJumpSuccess success) {
-    	TrainingGamePlayer player = success.getPlayer(TrainingGamePlayer.class);
+        TrainingGamePlayer player = success.getPlayer(TrainingGamePlayer.class);
         if (success.isADAC()) {
             player.incrementDACs();
             success.setColumnPattern(new GlassyColumn(player.getColor()));
@@ -34,7 +33,6 @@ public class TrainingGameHandler extends SimpleGameHandler {
             success.sendToOthers(DACMessage.GameDAC);
         } else {
             player.incrementSuccesses();
-            success.setColumnPattern(new UniformColumn(player.getColor()));
             success.sendToPlayer(DACMessage.GameJumpSuccess2);
             success.sendToOthers(DACMessage.GameJumpSuccess);
         }
@@ -42,12 +40,12 @@ public class TrainingGameHandler extends SimpleGameHandler {
 
     @Override
     public void onFail(GameJumpFail fail) {
-    	TrainingGamePlayer player = fail.getPlayer(TrainingGamePlayer.class);
+        TrainingGamePlayer player = fail.getPlayer(TrainingGamePlayer.class);
         player.incrementFails();
         fail.sendToPlayer(DACMessage.GameJumpFail2);
         fail.sendToOthers(DACMessage.GameJumpFail);
     }
-    
+
     private void sendStats(TrainingGamePlayer player) {
         player.send(DACMessage.StatsSuccess.format(player.getSuccesses()));
         player.send(DACMessage.StatsDAC.format(player.getDACs()));

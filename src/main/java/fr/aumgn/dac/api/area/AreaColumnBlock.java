@@ -27,7 +27,7 @@ public interface AreaColumnBlock {
      * @return the data associated to this block
      */
     byte getData();
-    
+
     /**
      * Sets the type (Material) and data of this block.
      * 

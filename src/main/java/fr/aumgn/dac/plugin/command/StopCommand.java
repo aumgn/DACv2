@@ -2,6 +2,7 @@ package fr.aumgn.dac.plugin.command;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
@@ -19,8 +20,10 @@ public class StopCommand extends PlayerCommandExecutor {
         if (stage == null) {
             error(DACMessage.CmdStopNoGameToStop);
         }
-        stage.send(DACMessage.GameStopped);
         stage.stop();
+        if (!(stage instanceof Game)) {
+            stage.send(DACMessage.JoinStopped);
+        }
     }
 
 }

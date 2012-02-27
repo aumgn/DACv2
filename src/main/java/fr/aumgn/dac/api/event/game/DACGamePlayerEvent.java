@@ -17,11 +17,11 @@ public abstract class DACGamePlayerEvent extends DACGameEvent {
     public StagePlayer getPlayer() {
         return getGameEvent().getPlayer();
     }
-    
+
     public void sendToPlayer(String message) {
         getGameEvent().sendToPlayer(message);
     }
-    
+
     public void sendToOthers(String message) {
         getGameEvent().sendToOthers(message);
     }
