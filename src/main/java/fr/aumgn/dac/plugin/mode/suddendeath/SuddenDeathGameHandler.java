@@ -39,7 +39,7 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
         } else {
             for (SuddenDeathGamePlayer player : players) {
                 if (player.isDeadThisTurn()) {
-                    game.onLoose(player);
+                    newTurn.addLoss(player);
                 }
             }
         }

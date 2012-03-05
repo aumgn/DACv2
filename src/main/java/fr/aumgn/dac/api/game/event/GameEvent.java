@@ -15,10 +15,12 @@ public abstract class GameEvent {
 
     private Game game;
     protected List<GameMessage> messages;
+    private List<StagePlayer> losses;
 
     public GameEvent(Game game) {
         this.game = game;
         this.messages = new ArrayList<GameMessage>();
+        this.losses = new ArrayList<StagePlayer>();
     }
 
     public Game getGame() {
@@ -36,7 +38,7 @@ public abstract class GameEvent {
         }
         return list;
     }
-
+    
     public Arena getArena() {
         return game.getArena();
     }
@@ -46,6 +48,12 @@ public abstract class GameEvent {
             message.send();
         }
     }
+    
+    public void handleLosses() {
+        for (StagePlayer player : losses) {
+            game.onLoose(player);
+        }
+    }
 
     public void send(String message) {
         messages.add(new GeneralMessage(game, message));
@@ -53,6 +61,10 @@ public abstract class GameEvent {
 
     public void send(GameMessageContent message, Object... args) {
         messages.add(new GeneralMessage(game, message, args));
+    }
+    
+    public void addLoss(StagePlayer player) {
+        losses.add(player);
     }
 
 }

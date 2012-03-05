@@ -69,7 +69,8 @@ public class TurnBasedGame extends SimpleGame {
         }
         DAC.callEvent(new DACStageStartEvent(this));
         start.sendMessages();
-        nextTurn();        
+        start.handleLosses();
+        nextTurn();
     }
 
     private void increaseTurn() {
@@ -80,6 +81,7 @@ public class TurnBasedGame extends SimpleGame {
             gameHandler.onNewTurn(newTurn);
             DAC.callEvent(new DACGameNewTurnEvent(newTurn));
             newTurn.sendMessages();
+            newTurn.handleLosses();
         }
     }
 
@@ -96,6 +98,7 @@ public class TurnBasedGame extends SimpleGame {
         gameHandler.onLoose(loose);
         DAC.callEvent(new DACGameLooseEvent(loose));
         loose.sendMessages();
+        loose.handleLosses();
         int min = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
         if (players.size() == min - 1) {
             if (players.size() == 1) {
@@ -149,6 +152,7 @@ public class TurnBasedGame extends SimpleGame {
             gameHandler.onTurn(gameTurn);
             DAC.callEvent(new DACGameTurnEvent(gameTurn));
             gameTurn.sendMessages();
+            gameTurn.handleLosses();
             if (gameTurn.getTeleport()) {
                 player.tpToDiving();
             }
@@ -183,12 +187,11 @@ public class TurnBasedGame extends SimpleGame {
                         stagePlayer.tpAfterFail();
                     }
                 }
-                if (jumpFail.getHasLost()) {
-                    onLoose(stagePlayer);
-                } else if (jumpFail.getSwitchToNextTurn()) {
+                if (jumpFail.getSwitchToNextTurn()) {
                     nextTurn();
                 }
                 jumpFail.sendMessages();
+                jumpFail.handleLosses();
             }
         }
     }
@@ -212,6 +215,7 @@ public class TurnBasedGame extends SimpleGame {
                     column.set(jumpSuccess.getColumnPattern());
                 }
                 jumpSuccess.sendMessages();
+                jumpSuccess.handleLosses();
                 if (jumpSuccess.getSwitchToNextTurn()) {
                     nextTurn();
                 }

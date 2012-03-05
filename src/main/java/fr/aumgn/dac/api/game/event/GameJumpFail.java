@@ -11,13 +11,11 @@ public class GameJumpFail extends GameJumpEvent {
 
     private Location deathLocation;
     private boolean cancelDeath;
-    private boolean hasLost;	
 
     public GameJumpFail(StagePlayer player, int x, int z) {
         super(player, x, z, DAC.getConfig().getTpAfterFail());
         deathLocation = player.getPlayer().getLocation();
         cancelDeath = true;
-        hasLost = false;
     }
 
     public BlockVector getRealDeathPos() {
@@ -30,14 +28,6 @@ public class GameJumpFail extends GameJumpEvent {
 
     public void setCancelDeath(boolean cancelDeath) {
         this.cancelDeath = cancelDeath;
-    }
-
-    public boolean getHasLost() {
-        return hasLost;
-    }
-
-    public void setHasLost(boolean hasLost) {
-        this.hasLost = hasLost;
     }
 
 }

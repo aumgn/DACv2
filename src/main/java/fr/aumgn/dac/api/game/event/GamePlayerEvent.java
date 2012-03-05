@@ -43,4 +43,9 @@ public abstract class GamePlayerEvent extends GameEvent {
     public void sendToOthers(GameMessageContent message, Object... args) {
         messages.add(new OthersMessage(player, message, player.getDisplayName(), args));
     }
+    
+    public void setLoss() {
+        super.addLoss(player);
+    }
+    
 }

@@ -81,7 +81,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
             if (player.isDead()) {
                 RIPSign sign = new RIPSign(pool, player.getDeathPosition()); 
                 sign.rip(player.getDisplayName());
-                newTurn.getGame().onLoose(player);
+                newTurn.addLoss(player);
             }
         }
     }
