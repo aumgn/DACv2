@@ -13,6 +13,7 @@ public class DACPluginConfig implements DACConfig {
 
     private boolean resetOnStart = false;
     private boolean resetOnEnd = false;
+    private boolean cancelJumpDamage = true;
     private int safeRegionHeight;
     private int safeRegionMargin;
     private int turnTimeOut;
@@ -36,6 +37,7 @@ public class DACPluginConfig implements DACConfig {
             resetOnStart = true;
             resetOnEnd = true;
         }
+        cancelJumpDamage = config.getBoolean("cancel-jump-damage");
         safeRegionHeight = config.getInt("safe-region-height");
         safeRegionMargin = config.getInt("safe-region-margin");
         turnTimeOut = config.getInt("turn-timeout");
@@ -67,6 +69,11 @@ public class DACPluginConfig implements DACConfig {
     @Override
     public boolean getResetOnEnd() {
         return resetOnEnd;
+    }
+    
+    @Override
+    public boolean getCancelJumpDamage() {
+        return cancelJumpDamage;
     }
     
     @Override

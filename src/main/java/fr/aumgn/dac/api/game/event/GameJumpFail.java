@@ -15,7 +15,7 @@ public class GameJumpFail extends GameJumpEvent {
     public GameJumpFail(StagePlayer player, int x, int z) {
         super(player, x, z, DAC.getConfig().getTpAfterFail());
         deathLocation = player.getPlayer().getLocation();
-        cancelDeath = true;
+        cancelDeath = DAC.getConfig().getCancelJumpDamage();
     }
 
     public BlockVector getRealDeathPos() {

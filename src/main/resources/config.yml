@@ -1,6 +1,9 @@
 # Auto-Reset : start | end | both | none
 auto-reset: start
 
+# Cancel jump damage
+cancel-jump-damage: true
+
 # Safe region Height / Margin
 safe-region-height: 5
 safe-region-margin: 5

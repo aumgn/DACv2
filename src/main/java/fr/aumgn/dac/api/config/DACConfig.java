@@ -26,6 +26,13 @@ public interface DACConfig {
      * @return whether the pool must be reset at the end
      */
     boolean getResetOnEnd();
+    
+    /**
+     * Indicates if jump damage should be cancelled.
+     *  
+     * @return whether to cancel jump damage and death.
+     */
+    boolean getCancelJumpDamage();
 
     /**
      * Gets safe region height.
