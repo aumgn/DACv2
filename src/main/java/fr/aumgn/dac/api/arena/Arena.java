@@ -2,6 +2,7 @@ package fr.aumgn.dac.api.arena;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.World;
 
@@ -85,13 +86,13 @@ public interface Arena {
     void removeMode(String name);
     
     /** 
-     * Gets an iterator over the options associated with this arena.
+     * Gets the options for the an iterator over the options associated with this arena.
      * The options are represented as a Map.Entry with option name as
      * the key and option value as the ... value.
      *   
      * @return an iterator of the available options 
      */
-    Iterable<Map.Entry<String, String>> options();
+    Set<Map.Entry<String, String>> optionsEntries();
 
     /**
      * Gets a new {@link GameOptions} object by merging this arena

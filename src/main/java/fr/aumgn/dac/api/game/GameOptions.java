@@ -1,9 +1,8 @@
 package fr.aumgn.dac.api.game;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -13,7 +12,7 @@ import org.bukkit.util.Vector;
 import static fr.aumgn.dac.api.util.DACUtil.parseInteger;
 
 @SerializableAs("dac-game-options")
-public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entry<String, String>> {
+public class GameOptions implements ConfigurationSerializable {
 
     private Map<String, String> options;
     private Vector propulsion;
@@ -132,9 +131,8 @@ public class GameOptions implements ConfigurationSerializable, Iterable<Map.Entr
         return propulsionDelay;
     }
 
-    @Override
-    public Iterator<Entry<String, String>> iterator() {
-        return options.entrySet().iterator();
+    public Set<Map.Entry<String, String>> entries() {
+        return options.entrySet();
     }
 
 }

@@ -112,8 +112,8 @@ public class DACArena implements Arena, ConfigurationSerializable {
     }
 
     @Override
-    public Iterable<Entry<String, String>> options() {
-        return options;
+    public Set<Entry<String, String>> optionsEntries() {
+        return options.entries();
     }
 
     @Override
