@@ -37,6 +37,7 @@ import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StageQuitReason;
+import fr.aumgn.dac.api.util.DACUtil;
 
 public class TurnBasedGame extends SimpleGame {
 
@@ -183,6 +184,7 @@ public class TurnBasedGame extends SimpleGame {
             if (!jumpFail.isCancelled()) {
                 if (jumpFail.getCancelDeath()) {
                     event.setCancelled(true);
+                    DACUtil.fakeDamage(player);
                     if (jumpFail.getMustTeleport()) {
                         stagePlayer.tpAfterFail();
                     }

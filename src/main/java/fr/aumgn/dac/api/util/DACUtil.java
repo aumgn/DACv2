@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.util.BlockVector;
 
 import fr.aumgn.dac.api.DAC;
@@ -144,6 +145,17 @@ public final class DACUtil {
             return Integer.parseInt(str);
         } catch (NumberFormatException exc) {
             return 0;
+        }
+    }
+
+    public static void fakeDamage(Player player) {
+        int health = player.getHealth(); 
+        if (health == PLAYER_MAX_HEALTH) {
+            player.damage(1);
+            player.setHealth(health);
+        } else {
+            player.setHealth(health + 1);
+            player.damage(1);
         }
     }
 
