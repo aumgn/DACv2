@@ -54,6 +54,13 @@ public interface DACConfig {
      * @return the number of ticks before a player turn is aborted
      */
     int getTurnTimeOut();
+    
+    /**
+     * Indicates if a player must be teleported after a successful jump.
+     * 
+     * @return whether to teleport the player after his jump. 
+     */
+    boolean getTpAfterJump();
 
     /**
      * Indicates if the player must be teleported after a fail.

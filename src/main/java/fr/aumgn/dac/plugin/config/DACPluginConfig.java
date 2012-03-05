@@ -17,6 +17,7 @@ public class DACPluginConfig implements DACConfig {
     private int safeRegionHeight;
     private int safeRegionMargin;
     private int turnTimeOut;
+    private boolean tpAfterJump; 
     private boolean tpAfterFail;
     private int tpAfterFailDelay = 0;
     private String deathSignFirstLine;
@@ -41,6 +42,12 @@ public class DACPluginConfig implements DACConfig {
         safeRegionHeight = config.getInt("safe-region-height");
         safeRegionMargin = config.getInt("safe-region-margin");
         turnTimeOut = config.getInt("turn-timeout");
+        // Backward compatibility.
+        if (config.isInt("tp-after-jump")) {
+            tpAfterJump = config.getInt("tp-after-jump") > 0;
+        } else {
+            tpAfterJump = config.getBoolean("tp-after-jump");
+        }
         int tpAfterFailConfig = config.getInt("tp-after-fail");
         tpAfterFail = tpAfterFailConfig >= 0;
         if (tpAfterFail) {
@@ -89,6 +96,11 @@ public class DACPluginConfig implements DACConfig {
     @Override
     public int getTurnTimeOut() {
         return turnTimeOut;
+    }
+    
+    @Override
+    public boolean getTpAfterJump() {
+        return tpAfterJump;
     }
 
     @Override

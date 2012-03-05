@@ -11,8 +11,10 @@ safe-region-margin: 5
 # Turn Time Out (ticks)
 turn-timeout: 1200
 
-# Tp Delay (ticks). Negative values mean deactivated 
-tp-after-jump: 20    
+# Tp after jump flag
+tp-after-jump: true
+
+# Tp Delay after fail (ticks). Negative values mean deactivated 
 tp-after-fail: 60
 
 death-sign-first-line: "<blue>Ci-gît :"

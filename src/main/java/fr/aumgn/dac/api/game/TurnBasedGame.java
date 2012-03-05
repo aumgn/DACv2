@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -209,12 +210,21 @@ public class TurnBasedGame extends SimpleGame {
             gameHandler.onSuccess(jumpSuccess);
             DAC.callEvent(new DACGameSuccessEvent(jumpSuccess));
             if (!jumpSuccess.isCancelled()) {
+                AreaColumn column = arena.getPool().getColumn(jumpSuccess.getPos());
+                if (jumpSuccess.getColumnPattern() != null) {
+                    column.set(jumpSuccess.getColumnPattern());
+                }
                 if (jumpSuccess.getMustTeleport()) {
                     stagePlayer.tpAfterJump();
-                }
-                if (jumpSuccess.getColumnPattern() != null) {
-                    AreaColumn column = arena.getPool().getColumn(jumpSuccess.getPos());
-                    column.set(jumpSuccess.getColumnPattern());
+                } else {
+                    if (jumpSuccess.getColumnPattern() != null) {
+                        player.teleport(new Location(
+                                arena.getWorld(),
+                                column.getX(),
+                                column.getTop() + 1,
+                                column.getZ())
+                        );
+                    }
                 }
                 jumpSuccess.sendMessages();
                 jumpSuccess.handleLosses();
