@@ -45,6 +45,7 @@ public class TurnBasedGame extends SimpleGame {
 
     private Deque<StagePlayer> ranking;
     private int turn;
+    private int turnTimeOut;
     private int turnTimeOutTaskId;
     private boolean finished;
 
@@ -63,6 +64,7 @@ public class TurnBasedGame extends SimpleGame {
         super(stage, gameMode, handler, playersList, options);
         ranking = new ArrayDeque<StagePlayer>();
         turn = players.size() - 1;
+        turnTimeOut = DAC.getConfig().getTurnTimeOut();
         turnTimeOutTaskId = -1;
         finished = false;
         GameStart start = new GameStart(this);
@@ -113,9 +115,12 @@ public class TurnBasedGame extends SimpleGame {
         increaseTurn();
         if (!finished) {
             StagePlayer player = players.get(turn);
-            turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(
-                    DAC.getPlugin(), turnTimeOutRunnable, 
-                    DAC.getConfig().getTurnTimeOut());
+            if (turnTimeOut > 0) {
+                turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(
+                        DAC.getPlugin(),
+                        turnTimeOutRunnable, 
+                        turnTimeOut);
+            }
             GameTurn gameTurn = new GameTurn(player);
             gameHandler.onTurn(gameTurn);
             DAC.callEvent(new DACGameTurnEvent(gameTurn));
