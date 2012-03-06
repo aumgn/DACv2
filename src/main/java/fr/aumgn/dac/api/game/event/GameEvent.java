@@ -16,7 +16,7 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 
 public abstract class GameEvent {
 
-    private Game game;
+    protected Game game;
     protected List<GameMessage> messages;
     private Set<StagePlayer> losses;
     private StagePlayer winner;

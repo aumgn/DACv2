@@ -53,6 +53,11 @@ public interface Game extends Stage {
      * @return true if player was not watching game, false otherwise  
      */
     boolean removeSpectator(Player player);
+    
+    /**
+     * Sends the given message to all spectators prefixed with the arena's name.
+     */
+    void sendToSpectators(String message);
 
     /**
      * Handles fall damage event.

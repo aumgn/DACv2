@@ -58,13 +58,19 @@ public abstract class SimpleGame extends SimpleStage implements Game {
     }
 
     @Override
-    public void send(Object msg) {
-        super.send(msg);
+    public void sendToSpectators(String message) {
+        String spectMessage = ChatColor.BLUE + "[" + arena.getName() + "] " + message;
         for (Player spectator : spectators) {
-            spectator.sendMessage(ChatColor.BLUE + "[" + arena.getName() + "] " + msg.toString());
+            spectator.sendMessage(spectMessage);
         }
     }
 
+    @Override
+    public void send(Object msg) {
+        super.send(msg);
+        sendToSpectators(msg.toString());
+    }
+    
     @Override
     public GameMode getMode() {
         return mode;
@@ -96,5 +102,5 @@ public abstract class SimpleGame extends SimpleStage implements Game {
     public boolean removeSpectator(Player player) {
         return spectators.remove(player);
     }
-
+    
 }

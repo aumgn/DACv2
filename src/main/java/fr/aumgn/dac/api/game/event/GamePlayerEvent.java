@@ -37,14 +37,14 @@ public abstract class GamePlayerEvent extends GameEvent {
     }
 
     public void sendToOthers(String message) {
-        messages.add(new OthersMessage(player, message));
+        messages.add(new OthersMessage(game, player, message));
     }
 
     public void sendToOthers(GameMessageContent message, Object... args) {
         Object[] argsWithPlayer = new Object[args.length + 1];
         argsWithPlayer[0] = player.getDisplayName();
         System.arraycopy(args, 0, argsWithPlayer, 1, args.length);
-        messages.add(new OthersMessage(player, message, argsWithPlayer));
+        messages.add(new OthersMessage(game, player, message, argsWithPlayer));
     }
     
     public void setLoss() {
