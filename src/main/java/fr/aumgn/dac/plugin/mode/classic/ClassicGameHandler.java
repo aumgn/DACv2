@@ -111,8 +111,8 @@ public class ClassicGameHandler extends SimpleGameHandler {
                 player.winLive();
                 success.sendToPlayer(DACMessage.GameDAC2);
                 success.sendToOthers(DACMessage.GameDAC);
-                success.sendToPlayer(DACMessage.GameLivesAfterDAC2);
-                success.sendToOthers(DACMessage.GameLivesAfterDAC);
+                success.sendToPlayer(DACMessage.GameLivesAfterDAC2, player.getLives());
+                success.sendToOthers(DACMessage.GameLivesAfterDAC, player.getLives());
             }
         } else { 
             success.setColumnPattern(new UniformColumn(player.getColor()));
