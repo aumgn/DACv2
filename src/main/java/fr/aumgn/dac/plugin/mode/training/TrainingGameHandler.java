@@ -6,6 +6,7 @@ import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 import fr.aumgn.dac.api.game.event.GameLoose;
+import fr.aumgn.dac.api.game.event.GamePoolFilled;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
@@ -55,6 +56,11 @@ public class TrainingGameHandler extends SimpleGameHandler {
     @Override
     public void onLoose(GameLoose loose) {
         sendStats(loose.getPlayer(TrainingGamePlayer.class));
+    }
+
+    @Override
+    public void onPoolFilled(GamePoolFilled filled) {
+        filled.getArena().getPool().reset();
     }
 
     @Override

@@ -14,6 +14,7 @@ import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
+import fr.aumgn.dac.api.game.event.GamePoolFilled;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.event.GameWin;
@@ -25,42 +26,6 @@ import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameHandler;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 
 public class ClassicGameHandler extends SimpleGameHandler {
-
-    private List<ClassicGamePlayer> getPlayersLeftForSuddenDeath(Game game, ClassicGamePlayer player) {
-        int max = 0;
-        List<ClassicGamePlayer> playersLeft = new ArrayList<ClassicGamePlayer>();
-        int i = player.getIndex();
-        List<StagePlayer> players = game.getPlayers();
-        for (int j = 0; j < players.size(); j++) {
-            ClassicGamePlayer playerLeft = (ClassicGamePlayer) players.get((i + j) % players.size());
-            int lives = playerLeft.getLives();
-            if (lives > max) {
-                max = lives;
-                playersLeft = new ArrayList<ClassicGamePlayer>();
-                playersLeft.add(playerLeft);
-            } else if (lives == max) {
-                playersLeft.add(playerLeft);
-            }
-        }
-        return playersLeft;
-    }
-
-    private void switchToSuddenDeath(Game game, List<ClassicGamePlayer> players) {
-        GameMode mode = new SuddenDeathGameMode();
-        new TurnBasedGame(game, mode, new SuddenDeathGameHandler(), game.getOptions());
-    }
-
-    private ClassicGamePlayer lookForLastPlayer(GameEvent event) {
-        int count = 0;
-        ClassicGamePlayer lastPlayer = null;
-        for (ClassicGamePlayer gamePlayer : event.getPlayers(ClassicGamePlayer.class)) {
-            if (!gamePlayer.isDead()) {
-                count++;
-                lastPlayer = gamePlayer;
-            }
-        }
-        return (count == 1) ? lastPlayer : null;
-    }
 
     @Override
     public void onStart(GameStart start) {
@@ -126,30 +91,6 @@ public class ClassicGameHandler extends SimpleGameHandler {
         }
 
         if (success.getArena().getPool().isFull()) {
-            success.setSwitchToNextTurn(false);
-            List<ClassicGamePlayer> playersLeft = getPlayersLeftForSuddenDeath(success.getGame(), player);
-            if (playersLeft.size() > 1) {
-                switchToSuddenDeath(success.getGame(), playersLeft);
-            } else {
-                success.setWinner(playersLeft.get(0));
-            }
-        }
-    }
-
-    public void onFinish(GameFinish finish) {
-        finish.send(DACMessage.GameFinished);
-        if (finish instanceof GameWin) {
-            int i = 1;
-            for (StagePlayer player : ((GameWin) finish).getRanking()) {
-                if (i==1) {
-                    finish.send(DACMessage.GameWinner, player.getDisplayName());
-                } else {
-                    finish.send(DACMessage.GameRank, i, player.getDisplayName());
-                }
-                i++;
-            }
-        } else {
-            finish.send(DACMessage.GameStopped);
         }
     }
 
@@ -180,6 +121,71 @@ public class ClassicGameHandler extends SimpleGameHandler {
                 fail.sendToPlayer(DACMessage.GameLivesAfterFail2, player.getLives());
                 fail.sendToOthers(DACMessage.GameLivesAfterFail, player.getLives());
             }
+        }
+    }
+
+    private ClassicGamePlayer lookForLastPlayer(GameEvent event) {
+        int count = 0;
+        ClassicGamePlayer lastPlayer = null;
+        for (ClassicGamePlayer gamePlayer : event.getPlayers(ClassicGamePlayer.class)) {
+            if (!gamePlayer.isDead()) {
+                count++;
+                lastPlayer = gamePlayer;
+            }
+        }
+        return (count == 1) ? lastPlayer : null;
+    }
+
+    @Override
+    public void onPoolFilled(GamePoolFilled filled) {
+        ClassicGamePlayer player = filled.getPlayer(ClassicGamePlayer.class);
+        List<ClassicGamePlayer> playersLeft = getPlayersLeftForSuddenDeath(filled.getGame(), player);
+        if (playersLeft.size() > 1) {
+            switchToSuddenDeath(filled.getGame(), playersLeft);
+        } else {
+            filled.setWinner(playersLeft.get(0));
+        }
+    }
+
+    private List<ClassicGamePlayer> getPlayersLeftForSuddenDeath(Game game, ClassicGamePlayer player) {
+        int max = 0;
+        List<ClassicGamePlayer> playersLeft = new ArrayList<ClassicGamePlayer>();
+        int i = player.getIndex();
+        List<StagePlayer> players = game.getPlayers();
+        for (int j = 0; j < players.size(); j++) {
+            ClassicGamePlayer playerLeft = (ClassicGamePlayer) players.get((i + j) % players.size());
+            int lives = playerLeft.getLives();
+            if (lives > max) {
+                max = lives;
+                playersLeft = new ArrayList<ClassicGamePlayer>();
+                playersLeft.add(playerLeft);
+            } else if (lives == max) {
+                playersLeft.add(playerLeft);
+            }
+        }
+        return playersLeft;
+    }
+
+    private void switchToSuddenDeath(Game game, List<ClassicGamePlayer> players) {
+        GameMode mode = new SuddenDeathGameMode();
+        new TurnBasedGame(game, mode, new SuddenDeathGameHandler(), game.getOptions());
+    }
+
+    @Override
+    public void onFinish(GameFinish finish) {
+        finish.send(DACMessage.GameFinished);
+        if (finish instanceof GameWin) {
+            int i = 1;
+            for (StagePlayer player : ((GameWin) finish).getRanking()) {
+                if (i==1) {
+                    finish.send(DACMessage.GameWinner, player.getDisplayName());
+                } else {
+                    finish.send(DACMessage.GameRank, i, player.getDisplayName());
+                }
+                i++;
+            }
+        } else {
+            finish.send(DACMessage.GameStopped);
         }
     }
 

@@ -27,6 +27,7 @@ import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 import fr.aumgn.dac.api.game.event.GameLoose;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
+import fr.aumgn.dac.api.game.event.GamePoolFilled;
 import fr.aumgn.dac.api.game.event.GameQuit;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
@@ -227,17 +228,23 @@ public class TurnBasedGame extends SimpleGame {
             DAC.callEvent(new DACGameSuccessEvent(jumpSuccess));
             if (!jumpSuccess.isCancelled()) {
                 AreaColumn column = arena.getPool().getColumn(jumpSuccess.getPos());
-                if (jumpSuccess.getColumnPattern() != null) {
+                boolean putColumn = jumpSuccess.getColumnPattern() != null; 
+                if (putColumn) {
                     column.set(jumpSuccess.getColumnPattern());
                 }
                 if (jumpSuccess.getMustTeleport()) {
                     stagePlayer.teleporter().afterJump();
                 } else {
-                    if (jumpSuccess.getColumnPattern() != null) {
+                    if (putColumn) {
                         stagePlayer.teleporter().onTopOf(column);
                     }
                 }
                 postProcessGameEvent(jumpSuccess);
+                if (putColumn) {
+                    if (arena.getPool().isFull()) {
+                        gameHandler.onPoolFilled(new GamePoolFilled(stagePlayer));
+                    }
+                }
                 if (!finished && jumpSuccess.getSwitchToNextTurn()) {
                     nextTurn();
                 }

@@ -5,6 +5,7 @@ import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 import fr.aumgn.dac.api.game.event.GameLoose;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
+import fr.aumgn.dac.api.game.event.GamePoolFilled;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 
@@ -70,5 +71,13 @@ public interface GameHandler {
      * @param finish the finish event
      */
     void onFinish(GameFinish finish);
+
+    /**
+     * Called when a pool is full.
+     * (ie. does not contain any column water)
+     * 
+     * @param filled the filled event.
+     */
+    void onPoolFilled(GamePoolFilled filled);
 
 }
