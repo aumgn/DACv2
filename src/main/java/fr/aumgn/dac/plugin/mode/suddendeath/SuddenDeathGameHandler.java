@@ -15,15 +15,12 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
 
     @Override
     public void onNewTurn(GameNewTurn newTurn) {
-        SuddenDeathGamePlayer lastPlayer = null;
         Game game = newTurn.getGame();
         Iterable<SuddenDeathGamePlayer> players = newTurn.getPlayers(SuddenDeathGamePlayer.class);
         int playersLeftCount = game.getPlayers().size();
         for (SuddenDeathGamePlayer player : players) {
             if (player.isDeadThisTurn()) {
                 playersLeftCount--;
-            } else {
-                lastPlayer = player;
             }
         }
         if (playersLeftCount == 0) {
@@ -32,10 +29,6 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
                     player.cancelDeadThisTurn();
                 }
             }
-        } else if (playersLeftCount == 1) {
-            newTurn.send(DACMessage.GameWinner, lastPlayer.getDisplayName());
-            game.onWin(lastPlayer);
-            return;
         } else {
             for (SuddenDeathGamePlayer player : players) {
                 if (player.isDeadThisTurn()) {

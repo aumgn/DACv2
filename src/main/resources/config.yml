@@ -5,6 +5,7 @@ auto-reset: start
 cancel-jump-damage: true
 
 # Safe region Height / Margin
+# This is the region above the pool where the player can jump without dying. 
 safe-region-height: 5
 safe-region-margin: 5
 

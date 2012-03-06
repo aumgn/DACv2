@@ -48,4 +48,8 @@ public abstract class GamePlayerEvent extends GameEvent {
         super.addLoss(player);
     }
     
+    public void setWin() {
+        super.setWinner(player);
+    }
+    
 }

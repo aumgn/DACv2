@@ -6,7 +6,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
-import fr.aumgn.dac.api.stage.StagePlayer;
 
 /**
  * Represents a running dé a coudre game. 
@@ -56,19 +55,6 @@ public interface Game extends Stage {
     boolean removeSpectator(Player player);
 
     /**
-     * Changes turn to the next player.
-     */
-    void nextTurn();
-
-    /**
-     * Checks if it's player turn.
-     * 
-     * @param player the player to checks.
-     * @return whether or not it's the player turn.
-     */
-    boolean isPlayerTurn(StagePlayer player);
-
-    /**
      * Handles fall damage event.
      * 
      * @param event the EntityDamageEvent
@@ -81,19 +67,5 @@ public interface Game extends Stage {
      * @param event the PlayerMoveEvent
      */
     void onMove(PlayerMoveEvent event);
-
-    /**
-     * Handles player loose.
-     * 
-     * @param player the player who lost 
-     */
-    void onLoose(StagePlayer player);
-
-    /**
-     * Handles player win.
-     * 
-     * @param player the player who won
-     */
-    void onWin(StagePlayer player);
 
 }

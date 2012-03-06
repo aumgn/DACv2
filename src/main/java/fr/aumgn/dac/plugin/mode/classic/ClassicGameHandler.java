@@ -3,7 +3,6 @@ package fr.aumgn.dac.plugin.mode.classic;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.column.GlassyColumn;
 import fr.aumgn.dac.api.area.column.UniformColumn;
 import fr.aumgn.dac.api.arena.Pool;
@@ -23,6 +22,7 @@ import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.util.RIPSign;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameHandler;
+import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 
 public class ClassicGameHandler extends SimpleGameHandler {
 
@@ -46,7 +46,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
     }
 
     private void switchToSuddenDeath(Game game, List<ClassicGamePlayer> players) {
-        GameMode mode = DAC.getModes().get("sudden-death");
+        GameMode mode = new SuddenDeathGameMode();
         new TurnBasedGame(game, mode, new SuddenDeathGameHandler(), game.getOptions());
     }
 
@@ -132,7 +132,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
             if (playersLeft.size() > 1) {
                 switchToSuddenDeath(success.getGame(), playersLeft);
             } else {
-                success.getGame().onWin(playersLeft.get(0));
+                success.setWinner(playersLeft.get(0));
             }
         }
     }

@@ -22,6 +22,7 @@ import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
 import fr.aumgn.dac.api.event.game.DACGameTurnEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
+import fr.aumgn.dac.api.game.event.GameEvent;
 import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
@@ -32,6 +33,7 @@ import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.event.GameWin;
 import fr.aumgn.dac.api.game.event.GameFinish.FinishReason;
+import fr.aumgn.dac.api.game.messages.GameMessage;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.game.mode.GameMode;
@@ -70,9 +72,21 @@ public class TurnBasedGame extends SimpleGame {
             arena.getPool().reset();
         }
         DAC.callEvent(new DACStageStartEvent(this));
-        start.sendMessages();
-        start.handleLosses();
+        postProcessGameEvent(start);
         nextTurn();
+    }
+
+    protected void postProcessGameEvent(GameEvent event) {
+        for (GameMessage message : event.messages()) {
+            send(message);
+        }
+        if (event.getWinner() != null) {
+            onWin(event.getWinner());
+        } else {
+            for (StagePlayer player : event.losses()) {
+                onLoose(player);
+            }
+        }
     }
 
     private void increaseTurn() {
@@ -82,8 +96,7 @@ public class TurnBasedGame extends SimpleGame {
             GameNewTurn newTurn = new GameNewTurn(this);
             gameHandler.onNewTurn(newTurn);
             DAC.callEvent(new DACGameNewTurnEvent(newTurn));
-            newTurn.sendMessages();
-            newTurn.handleLosses();
+            postProcessGameEvent(newTurn);
         }
     }
 
@@ -93,14 +106,43 @@ public class TurnBasedGame extends SimpleGame {
         removePlayer(player, StageQuitReason.TurnTimeOut);
     }
 
+    private void nextTurn() {
+        BukkitScheduler scheduler = Bukkit.getScheduler();
+        if (turnTimeOutTaskId != -1) {
+            scheduler.cancelTask(turnTimeOutTaskId);
+        }
+        increaseTurn();
+        if (!finished) {
+            StagePlayer player = players.get(turn);
+            turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(
+                    DAC.getPlugin(), turnTimeOutRunnable, 
+                    DAC.getConfig().getTurnTimeOut());
+            GameTurn gameTurn = new GameTurn(player);
+            gameHandler.onTurn(gameTurn);
+            DAC.callEvent(new DACGameTurnEvent(gameTurn));
+            postProcessGameEvent(gameTurn);
+            if (gameTurn.getTeleport()) {
+                player.tpToDiving();
+            }
+        }
+    }
+
+    private boolean isPlayerTurn(StagePlayer player) {
+        return !finished && players.get(turn).equals(player);
+    }
+
+    private void onLoose(StagePlayer player) {
+        addSpectator(player.getPlayer());      
+        onLoose(player, new GameLoose(player));
+    }
+
     private void onLoose(StagePlayer player, GameLoose loose) {
         ranking.addFirst(player);
         DAC.getPlayerManager().unregister(player);
         players.remove(player);
         gameHandler.onLoose(loose);
         DAC.callEvent(new DACGameLooseEvent(loose));
-        loose.sendMessages();
-        loose.handleLosses();
+        postProcessGameEvent(loose);
         int min = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
         if (players.size() == min - 1) {
             if (players.size() == 1) {
@@ -111,10 +153,15 @@ public class TurnBasedGame extends SimpleGame {
         }
     }
 
+    private void onWin(StagePlayer player) {
+        ranking.addFirst(player);
+        stop(new GameWin(this, ranking));
+    }
+
     private void stop(GameFinish finish) {
         gameHandler.onFinish(finish);
         DAC.callEvent(new DACStageStopEvent(this));
-        finish.sendMessages();
+        postProcessGameEvent(finish);
         finished = true;
         Bukkit.getScheduler().cancelTask(turnTimeOutTaskId);
         DAC.getStageManager().unregister(this);
@@ -139,40 +186,6 @@ public class TurnBasedGame extends SimpleGame {
     }
 
     @Override
-    public void nextTurn() {
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        if (turnTimeOutTaskId != -1) {
-            scheduler.cancelTask(turnTimeOutTaskId);
-        }
-        increaseTurn();
-        if (!finished) {
-            StagePlayer player = players.get(turn);
-            turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(
-                    DAC.getPlugin(), turnTimeOutRunnable, 
-                    DAC.getConfig().getTurnTimeOut());
-            GameTurn gameTurn = new GameTurn(player);
-            gameHandler.onTurn(gameTurn);
-            DAC.callEvent(new DACGameTurnEvent(gameTurn));
-            gameTurn.sendMessages();
-            gameTurn.handleLosses();
-            if (gameTurn.getTeleport()) {
-                player.tpToDiving();
-            }
-        }
-    }
-
-    @Override
-    public boolean isPlayerTurn(StagePlayer player) {
-        return !finished && players.get(turn).equals(player);
-    }
-
-    @Override
-    public void onLoose(StagePlayer player) {
-        addSpectator(player.getPlayer());      
-        onLoose(player, new GameLoose(player));
-    }
-
-    @Override
     public void onFallDamage(EntityDamageEvent event) {
         Player player = (Player) event.getEntity();
         StagePlayer stagePlayer = DAC.getPlayerManager().get(player);
@@ -190,11 +203,10 @@ public class TurnBasedGame extends SimpleGame {
                         stagePlayer.tpAfterFail();
                     }
                 }
+                postProcessGameEvent(jumpFail);
                 if (jumpFail.getSwitchToNextTurn()) {
                     nextTurn();
                 }
-                jumpFail.sendMessages();
-                jumpFail.handleLosses();
             }
         }
     }
@@ -223,22 +235,15 @@ public class TurnBasedGame extends SimpleGame {
                                 column.getX(),
                                 column.getTop() + 1,
                                 column.getZ())
-                        );
+                                );
                     }
                 }
-                jumpSuccess.sendMessages();
-                jumpSuccess.handleLosses();
+                postProcessGameEvent(jumpSuccess);
                 if (jumpSuccess.getSwitchToNextTurn()) {
                     nextTurn();
                 }
             }
         }
-    }
-
-    @Override
-    public void onWin(StagePlayer player) {
-        ranking.addFirst(player);
-        stop(new GameWin(this, ranking));
     }
 
 }

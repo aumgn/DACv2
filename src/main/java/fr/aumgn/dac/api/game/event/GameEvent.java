@@ -1,7 +1,10 @@
 package fr.aumgn.dac.api.game.event;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.exception.PlayerCastException;
@@ -15,12 +18,14 @@ public abstract class GameEvent {
 
     private Game game;
     protected List<GameMessage> messages;
-    private List<StagePlayer> losses;
+    private Set<StagePlayer> losses;
+    private StagePlayer winner;
 
     public GameEvent(Game game) {
         this.game = game;
         this.messages = new ArrayList<GameMessage>();
-        this.losses = new ArrayList<StagePlayer>();
+        this.losses = new LinkedHashSet<StagePlayer>();
+        this.winner = null;
     }
 
     public Game getGame() {
@@ -38,21 +43,21 @@ public abstract class GameEvent {
         }
         return list;
     }
-    
+
     public Arena getArena() {
         return game.getArena();
     }
 
-    public void sendMessages() {
-        for (GameMessage message : messages) {
-            message.send();
-        }
+    public Iterable<GameMessage> messages() {
+        return Collections.unmodifiableCollection(messages);
     }
-    
-    public void handleLosses() {
-        for (StagePlayer player : losses) {
-            game.onLoose(player);
-        }
+
+    public Iterable<StagePlayer> losses() {
+        return Collections.unmodifiableCollection(losses);
+    }
+
+    public StagePlayer getWinner() {
+        return winner;
     }
 
     public void send(String message) {
@@ -62,9 +67,13 @@ public abstract class GameEvent {
     public void send(GameMessageContent message, Object... args) {
         messages.add(new GeneralMessage(game, message, args));
     }
-    
+
     public void addLoss(StagePlayer player) {
         losses.add(player);
+    }
+
+    public void setWinner(StagePlayer winner) {
+        this.winner = winner;
     }
 
 }
