@@ -36,11 +36,6 @@ public class GamePlayerTeleporter extends PlayerTeleporter {
         player.getPlayer().setVelocity(game.getOptions().getPropulsion());
     }
     
-    private void delayedToStart() {
-        player.getPlayer().setFallDistance(0.0f);
-        player.getPlayer().teleport(player.getStartLocation());
-    }
-    
     public void afterFail() {
         DACConfig config = DAC.getConfig();
         if (game.getPlayers().size() > 1 && config.getTpAfterFail()) {
@@ -51,7 +46,7 @@ public class GamePlayerTeleporter extends PlayerTeleporter {
                 Bukkit.getScheduler().scheduleAsyncDelayedTask(DAC.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
-                        delayedToStart();
+                        toStart();
                     }
                 }, delay);
             }
