@@ -6,7 +6,6 @@ import java.util.Deque;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -122,7 +121,7 @@ public class TurnBasedGame extends SimpleGame {
             DAC.callEvent(new DACGameTurnEvent(gameTurn));
             postProcessGameEvent(gameTurn);
             if (gameTurn.getTeleport()) {
-                player.tpToDiving();
+                player.teleporter().toDiving();
             }
         }
     }
@@ -200,7 +199,7 @@ public class TurnBasedGame extends SimpleGame {
                     event.setCancelled(true);
                     DACUtil.fakeDamage(player);
                     if (jumpFail.getMustTeleport()) {
-                        stagePlayer.tpAfterFail();
+                        stagePlayer.teleporter().afterFail();
                     }
                 }
                 postProcessGameEvent(jumpFail);
@@ -227,17 +226,10 @@ public class TurnBasedGame extends SimpleGame {
                     column.set(jumpSuccess.getColumnPattern());
                 }
                 if (jumpSuccess.getMustTeleport()) {
-                    stagePlayer.tpAfterJump();
+                    stagePlayer.teleporter().afterJump();
                 } else {
                     if (jumpSuccess.getColumnPattern() != null) {
-                        player.teleport(new Location(
-                                arena.getWorld(),
-                                column.getX(),
-                                column.getTop() + 1,
-                                column.getZ(),
-                                player.getLocation().getYaw(),
-                                player.getLocation().getPitch()
-                                ));
+                        stagePlayer.teleporter().onTopOf(column);
                     }
                 }
                 postProcessGameEvent(jumpSuccess);

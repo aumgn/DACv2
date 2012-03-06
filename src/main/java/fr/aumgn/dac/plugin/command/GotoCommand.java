@@ -6,6 +6,7 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.util.PlayerTeleporter;
 import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 
@@ -25,9 +26,9 @@ public class GotoCommand extends PlayerCommandExecutor {
         }
 
         if (args[0].equalsIgnoreCase("diving")) {
-            dacPlayer.tpToDiving();
+            new PlayerTeleporter(dacPlayer).toDiving();
         } else if (args[0].equalsIgnoreCase("start")) {
-            dacPlayer.tpToStart();
+            new PlayerTeleporter(dacPlayer).toStart();
         }
         context.success(DACMessage.CmdGotoSuccess);
     }

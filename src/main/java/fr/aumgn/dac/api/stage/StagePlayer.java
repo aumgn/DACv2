@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.config.DACColor;
+import fr.aumgn.dac.api.util.PlayerTeleporter;
 
 /**
  * Player wrapper for a bukkit player which is in a stage.
@@ -60,24 +61,10 @@ public interface StagePlayer {
     String formatForList();
 
     /**
-     * Teleports player to his start location. 
+     * Gets the associated teleporter. 
+     * @return the associated teleporter.
      */
-    void tpToStart();
-
-    /**
-     * Teleports player after jump.
-     */
-    void tpAfterJump();
-
-    /**
-     * Teleports player after fail.
-     */
-    void tpAfterFail();
-
-    /**
-     * Teleports the player to the diving of his stage
-     */
-    void tpToDiving();
+    PlayerTeleporter teleporter();
 
 }
 

@@ -1,23 +1,13 @@
 package fr.aumgn.dac.api.stage;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACColor;
-import fr.aumgn.dac.api.config.DACConfig;
+import fr.aumgn.dac.api.util.PlayerTeleporter;
 
 public class SimpleStagePlayer implements StagePlayer {
-
-    private Runnable tpToStart = new Runnable() {
-        @Override
-        public void run() {
-            player.setFallDistance(0.0f);
-            player.teleport(startLocation);
-        }
-    };
 
     private Player player;
     private Stage stage;
@@ -72,34 +62,10 @@ public class SimpleStagePlayer implements StagePlayer {
     public String formatForList() {
         return " " + displayName;
     }
-
+    
     @Override
-    public void tpToStart() {
-        tpToStart.run();
-    }
-
-    @Override
-    public void tpAfterFail() {
-        DACConfig config = DAC.getConfig();
-        if (stage.getPlayers().size() > 1 && config.getTpAfterFail()) {
-            int delay = config.getTpAfterFailDelay();
-            if (delay == 0) {
-                tpToStart.run();
-            } else {
-                Bukkit.getScheduler().scheduleAsyncDelayedTask(DAC.getPlugin(), tpToStart, delay);
-            }
-        }
-    }
-
-    @Override
-    public void tpAfterJump() {
-        tpToStart();
-    }
-
-    @Override
-    public void tpToDiving() {
-        player.setFallDistance(0.0f);
-        player.teleport(stage.getArena().getDivingBoard().getLocation());
+    public PlayerTeleporter teleporter() {
+        return new PlayerTeleporter(this);
     }
 
 }
