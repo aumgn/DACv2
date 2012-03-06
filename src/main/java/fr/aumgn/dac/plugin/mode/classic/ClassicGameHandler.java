@@ -114,7 +114,6 @@ public class ClassicGameHandler extends SimpleGameHandler {
                 success.sendToPlayer(DACMessage.GameLivesAfterDAC2);
                 success.sendToOthers(DACMessage.GameLivesAfterDAC);
             }
-            success.setMustTeleport(true);
         } else { 
             success.setColumnPattern(new UniformColumn(player.getColor()));
             if (player.mustConfirmate()) {

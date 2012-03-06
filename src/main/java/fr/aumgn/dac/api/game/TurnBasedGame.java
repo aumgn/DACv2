@@ -78,7 +78,7 @@ public class TurnBasedGame extends SimpleGame {
 
     protected void postProcessGameEvent(GameEvent event) {
         for (GameMessage message : event.messages()) {
-            send(message);
+            message.send();
         }
         if (event.getWinner() != null) {
             onWin(event.getWinner());
