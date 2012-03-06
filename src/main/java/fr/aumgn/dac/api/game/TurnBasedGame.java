@@ -234,8 +234,10 @@ public class TurnBasedGame extends SimpleGame {
                                 arena.getWorld(),
                                 column.getX(),
                                 column.getTop() + 1,
-                                column.getZ())
-                                );
+                                column.getZ(),
+                                player.getLocation().getYaw(),
+                                player.getLocation().getPitch()
+                                ));
                     }
                 }
                 postProcessGameEvent(jumpSuccess);
