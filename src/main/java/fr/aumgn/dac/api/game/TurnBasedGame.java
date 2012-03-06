@@ -204,7 +204,7 @@ public class TurnBasedGame extends SimpleGame {
                     }
                 }
                 postProcessGameEvent(jumpFail);
-                if (jumpFail.getSwitchToNextTurn()) {
+                if (!finished && jumpFail.getSwitchToNextTurn()) {
                     nextTurn();
                 }
             }
@@ -239,7 +239,7 @@ public class TurnBasedGame extends SimpleGame {
                     }
                 }
                 postProcessGameEvent(jumpSuccess);
-                if (jumpSuccess.getSwitchToNextTurn()) {
+                if (!finished && jumpSuccess.getSwitchToNextTurn()) {
                     nextTurn();
                 }
             }
