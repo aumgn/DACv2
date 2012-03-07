@@ -80,7 +80,7 @@ join:
     player-list: "  %1$s"
     player-join: "%1$s <blue>a rejoint la partie."
     player-quit: "%1$s <blue>a quitté la partie."
-    stopped: "<blue>La partie a été arretée."
+    stopped: "<blue>La partie a été avortée."
     
 game:
     start: "<blue>La partie commence !"

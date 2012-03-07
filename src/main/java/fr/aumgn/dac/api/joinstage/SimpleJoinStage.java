@@ -34,10 +34,8 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
         colors = DAC.getConfig().getColors();
         colorsMap = new HashSet<DACColor>();
         players = new ArrayList<SimpleJoinStagePlayer>();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.sendMessage(DACMessage.JoinNewGame.getContent(arena.getName()));
-            player.sendMessage(DACMessage.JoinNewGame2.getContent());
-        }
+        Bukkit.broadcastMessage(DACMessage.JoinNewGame.getContent(arena.getName()));
+        Bukkit.broadcastMessage(DACMessage.JoinNewGame2.getContent());
         DAC.callEvent(new DACStageStartEvent(this));
     }
 
@@ -119,6 +117,7 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
     public void stop() {
         DAC.callEvent(new DACStageStopEvent(this));
         DAC.getStageManager().unregister(this);
+        Bukkit.broadcastMessage(DACMessage.JoinStopped.getContent());
     }
 
     @Override
