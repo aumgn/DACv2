@@ -27,6 +27,8 @@ import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 
 public class ClassicGameHandler extends SimpleGameHandler {
 
+    private boolean suddenDeath = false;
+
     @Override
     public void onStart(GameStart start) {
         start.send(DACMessage.GameStart);
@@ -148,18 +150,19 @@ public class ClassicGameHandler extends SimpleGameHandler {
     }
 
     private List<ClassicGamePlayer> getPlayersLeftForSuddenDeath(Game game, ClassicGamePlayer player) {
-        int max = 0;
+        int maxLives = 0;
         List<ClassicGamePlayer> playersLeft = new ArrayList<ClassicGamePlayer>();
-        int i = player.getIndex();
         List<StagePlayer> players = game.getPlayers();
-        for (int j = 0; j < players.size(); j++) {
-            ClassicGamePlayer playerLeft = (ClassicGamePlayer) players.get((i + j) % players.size());
+        int firstIndex = player.getIndex() + 1;
+        int size = players.size();
+        for (int i = 0; i < size; i++) {
+            ClassicGamePlayer playerLeft = (ClassicGamePlayer) players.get((firstIndex + i) % size);
             int lives = playerLeft.getLives();
-            if (lives > max) {
-                max = lives;
+            if (lives > maxLives) {
+                maxLives = lives;
                 playersLeft = new ArrayList<ClassicGamePlayer>();
                 playersLeft.add(playerLeft);
-            } else if (lives == max) {
+            } else if (lives == maxLives) {
                 playersLeft.add(playerLeft);
             }
         }
@@ -167,14 +170,15 @@ public class ClassicGameHandler extends SimpleGameHandler {
     }
 
     private void switchToSuddenDeath(Game game, List<ClassicGamePlayer> players) {
+        suddenDeath = true;
         GameMode mode = new SuddenDeathGameMode();
         new TurnBasedGame(game, mode, new SuddenDeathGameHandler(), game.getOptions());
     }
 
     @Override
     public void onFinish(GameFinish finish) {
-        finish.send(DACMessage.GameFinished);
         if (finish instanceof GameWin) {
+            finish.send(DACMessage.GameFinished);
             int i = 1;
             for (StagePlayer player : ((GameWin) finish).getRanking()) {
                 if (i==1) {
@@ -184,6 +188,8 @@ public class ClassicGameHandler extends SimpleGameHandler {
                 }
                 i++;
             }
+        } else if (suddenDeath) {
+            finish.send(DACMessage.GameSuddenDeath);
         } else {
             finish.send(DACMessage.GameStopped);
         }

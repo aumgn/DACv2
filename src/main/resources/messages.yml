@@ -115,6 +115,9 @@ game:
     rank: "<gray>%1$s<blue>. %2$s"
     stopped: "<blue>La partie a été arretée."
     display-lives: "%1$s : <gray>%2$s"
+    sudden-death: "<gold>C'est maintenant la mort subite."
+    player-eliminated: "%1$s <red>est éliminé(e)."
+    player-eliminated2: "<red>Vous êtes éliminé(e)."
     
 stats:
     success: "<green>Reussi : %1$s"

@@ -6,6 +6,7 @@ import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
 import fr.aumgn.dac.api.game.event.GameLoose;
 import fr.aumgn.dac.api.game.event.GameNewTurn;
+import fr.aumgn.dac.api.game.event.GameQuit;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
 import fr.aumgn.dac.plugin.fillstrategy.FillAllButOne;
@@ -62,7 +63,10 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
 
     @Override
     public void onLoose(GameLoose loose) {
-        loose.send(DACMessage.GamePlayerQuit, loose.getPlayer().getDisplayName());
+        if (loose instanceof GameQuit) {
+            loose.send(DACMessage.GamePlayerQuit, loose.getPlayer().getDisplayName());
+        }
+        loose.send(DACMessage.GamePlayerEliminated, loose.getPlayer().getDisplayName());
     }
 
 }

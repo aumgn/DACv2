@@ -110,6 +110,9 @@ public enum DACMessage implements GameMessageContent {
     GameRank                ("game.rank"),
     GameStopped             ("game.stopped"),
     GameDisplayLives        ("game.display-lives"),
+    GameSuddenDeath         ("game.sudden-death"),
+    GamePlayerEliminated    ("game.player-eliminated"),
+    GamePlayerEliminated2   ("game.player-eliminated2"),
 
     StatsSuccess            ("stats.success"),
     StatsDAC                ("stats.dac"),
