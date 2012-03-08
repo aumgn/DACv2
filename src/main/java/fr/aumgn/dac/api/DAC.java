@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -25,6 +27,7 @@ public final class DAC {
 
     private static Plugin plugin = null;
     private static WorldEditPlugin worldEdit = null;
+    private static Listener listener = null;
     private static GameModes gameModes;
     private static Arenas arenas;
     private static FillStrategies fillStrategies;
@@ -43,12 +46,14 @@ public final class DAC {
      * 
      * @throws UnsupportedOperationException if already initialized
      */
-    public static void init(Plugin plugin, WorldEditPlugin worldEdit, DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
+    public static void init(Plugin plugin, WorldEditPlugin worldEdit, Listener listener,
+            DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
         if (DAC.plugin != null) {
             throw new UnsupportedOperationException("Cannot init DAC twice.");
         }
         DAC.plugin = plugin;
         DAC.worldEdit = worldEdit;
+        DAC.listener = listener;
         DAC.gameModes = gameModes;
         DAC.arenas = arenas;
         DAC.fillStrategies = fillStrategies;
@@ -155,6 +160,14 @@ public final class DAC {
      */
     public static void callEvent(Event event) {
         Bukkit.getPluginManager().callEvent(event);
+    }
+    
+    public static void registerListener() {
+        Bukkit.getPluginManager().registerEvents(listener, plugin);
+    }
+    
+    public static void unregisterListener() {
+        HandlerList.unregisterAll(plugin);
     }
 
 }

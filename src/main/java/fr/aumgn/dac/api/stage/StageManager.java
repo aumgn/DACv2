@@ -18,6 +18,7 @@ import fr.aumgn.dac.api.game.Game;
 public class StageManager implements Iterable<Stage> {
 
     private Map<Arena, Stage> stages;
+    private int gameCount = 0;
 
     public StageManager() {
         stages = new HashMap<Arena, Stage>();
@@ -97,8 +98,18 @@ public class StageManager implements Iterable<Stage> {
         if (stages.containsKey(stage.getArena())) {
             throw new StageAlreadyRegistered();
         }
+        if (stage instanceof Game) {
+            incrementGameCount();
+        }
         stages.put(stage.getArena(), stage);
         stage.registerAll();
+    }
+    
+    private void incrementGameCount() {
+        gameCount++;
+        if (gameCount == 1) {
+            DAC.registerListener();
+        }
     }
     
     /**
@@ -111,8 +122,18 @@ public class StageManager implements Iterable<Stage> {
         if (!stages.containsKey(stage.getArena())) {
             throw new StageNotRegistered();
         }
+        if (stage instanceof Game) {
+            decrementGameCount();
+        }
         stages.remove(stage.getArena());
         stage.unregisterAll();
+    }
+    
+    private void decrementGameCount() {
+        gameCount--;
+        if (gameCount == 0) {
+            DAC.unregisterListener();
+        }
     }
 
     /**

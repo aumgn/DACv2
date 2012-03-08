@@ -68,13 +68,12 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFil
         DACPluginCommand dacCommand = new DACPluginCommand();
         Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
 
-        DACListener dacPlayerListener = new DACListener();
-        pm.registerEvents(dacPlayerListener, this);
+        DACListener listener = new DACListener();
 
         DACGameModes gameModes = new DACGameModes();
         DACArenas arenas = new DACArenas();
         DACFillStrategies fillStrategies = new DACFillStrategies();
-        DAC.init(this, (WorldEditPlugin) worldEdit, new DACPluginConfig(), gameModes, arenas, fillStrategies);
+        DAC.init(this, (WorldEditPlugin) worldEdit, listener, new DACPluginConfig(), gameModes, arenas, fillStrategies);
 
         getLogger().info(getDescription().getName() + " loaded.");
     }
