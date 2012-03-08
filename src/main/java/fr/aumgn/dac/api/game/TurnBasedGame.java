@@ -182,7 +182,11 @@ public class TurnBasedGame extends SimpleGame {
 
     @Override
     public void removePlayer(StagePlayer player, StageQuitReason reason) {
+        boolean wasPlayerTurn = isPlayerTurn(player);
         onLoose(player, new GameQuit(player, reason));
+        if (!finished && wasPlayerTurn) {
+            nextTurn();
+        }
     }
 
     @Override
