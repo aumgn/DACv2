@@ -117,7 +117,7 @@ public class TurnBasedGame extends SimpleGame {
         if (!finished) {
             StagePlayer player = players.get(turn);
             if (turnTimeOut > 0) {
-                turnTimeOutTaskId = scheduler.scheduleAsyncDelayedTask(
+                turnTimeOutTaskId = scheduler.scheduleSyncDelayedTask(
                         DAC.getPlugin(),
                         turnTimeOutRunnable, 
                         turnTimeOut);
