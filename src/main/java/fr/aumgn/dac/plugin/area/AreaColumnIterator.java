@@ -6,7 +6,6 @@ package fr.aumgn.dac.plugin.area;
 
 import java.util.Iterator;
 
-import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
 
@@ -45,7 +44,7 @@ public class AreaColumnIterator implements Iterator<AreaColumn> {
     }
 
     private void forward() {
-        while (hasNext() && !region.contains(new BlockVector(x, y, z))) {
+        while (hasNext() && !region.contains(new Vector(x, y, z))) {
             forwardOne();
         }
     }

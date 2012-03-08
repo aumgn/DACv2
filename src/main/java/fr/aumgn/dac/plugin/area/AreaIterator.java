@@ -5,14 +5,14 @@ import java.util.Iterator;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.Vector;
 
 public class AreaIterator implements Iterator<Block> {
 
     private World world;
-    private Iterator<BlockVector> weIterator;
+    private Iterator<? extends Vector> weIterator;
 
-    public AreaIterator(DACArea area, Iterator<BlockVector> weIterator) {
+    public AreaIterator(DACArea area, Iterator<? extends Vector> weIterator) {
         this.world = area.getArena().getWorld();
         this.weIterator = weIterator;
     }
@@ -24,7 +24,7 @@ public class AreaIterator implements Iterator<Block> {
 
     @Override
     public Block next() {
-        BlockVector next = weIterator.next();
+        Vector next = weIterator.next();
         return world.getBlockAt(next.getBlockX(), next.getBlockY(), next.getBlockZ());
     }
 

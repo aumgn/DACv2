@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.CylinderRegion;
@@ -82,7 +82,7 @@ public class DACArea implements Area {
         int x = location.getBlockX();
         int y = location.getBlockY();
         int z = location.getBlockZ();
-        return region.getRegion(arena.getWEWorld()).contains(new BlockVector(x, y, z));
+        return region.getRegion(arena.getWEWorld()).contains(new Vector(x, y, z));
     }
 
     @Override

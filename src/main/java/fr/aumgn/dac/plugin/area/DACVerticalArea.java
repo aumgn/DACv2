@@ -2,7 +2,7 @@ package fr.aumgn.dac.plugin.area;
 
 import java.util.Iterator;
 
-import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.Vector2D;
 
 import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.VerticalArea;
@@ -26,7 +26,7 @@ public class DACVerticalArea extends DACArea implements VerticalArea {
     }
 
     @Override
-    public AreaColumn getColumn(BlockVector2D vec) {
+    public AreaColumn getColumn(Vector2D vec) {
         return new DACAreaColumn(this, vec.getBlockX(), vec.getBlockZ());
     }
 

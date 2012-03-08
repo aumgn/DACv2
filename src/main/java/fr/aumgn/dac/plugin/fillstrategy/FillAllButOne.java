@@ -4,7 +4,6 @@ import java.util.Random;
 
 import org.bukkit.Material;
 
-import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
 
@@ -36,7 +35,7 @@ public class FillAllButOne implements FillStrategy {
         do {
             x = minX + rand.nextInt(xRange);
             z = minZ + rand.nextInt(zRange);
-        } while (!region.contains(new BlockVector(x, y, z)));
+        } while (!region.contains(new Vector(x, y, z)));
 
         ColumnPattern pattern = new RandomUniformColumn();
         for (AreaColumn column : area.columns()) {

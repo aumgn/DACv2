@@ -10,6 +10,7 @@ import org.bukkit.configuration.serialization.SerializableAs;
 
 import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.LocalWorld;
+import com.sk89q.worldedit.Vector2D;
 import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
@@ -38,7 +39,7 @@ public class DACPolygonal extends DACSimpleRegion {
         this.minY = region.getMininumY();
         this.maxY = region.getMaximumY();
         this.points = new ArrayList<DACBlockVector2D>(region.getPoints().size());
-        for (BlockVector2D pt : region.getPoints()) {
+        for (Vector2D pt : region.getPoints()) {
             points.add(new DACBlockVector2D(pt));
         }
 
@@ -72,7 +73,7 @@ public class DACPolygonal extends DACSimpleRegion {
     private List<BlockVector2D> getWEPoints() {
         List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
         for (DACBlockVector2D point : points) {
-            wePoints.add(point.getVector());
+            wePoints.add(point.getVector().toBlockVector2D());
         }
         return wePoints;
     }

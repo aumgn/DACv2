@@ -6,7 +6,6 @@ import java.util.Map;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.Vector2D;
 
 @SerializableAs("dac-blockvector2d")
@@ -15,7 +14,7 @@ public class DACBlockVector2D implements ConfigurationSerializable {
     private int x;
     private int z;
 
-    public DACBlockVector2D(int x, int z) {
+    private DACBlockVector2D(int x, int z) {
         this.x = x;
         this.z = z;
     }
@@ -43,8 +42,8 @@ public class DACBlockVector2D implements ConfigurationSerializable {
         return map;
     }
 
-    public BlockVector2D getVector() {
-        return new BlockVector2D(x, z);
+    public Vector2D getVector() {
+        return new Vector2D(x, z);
     }
 
 }

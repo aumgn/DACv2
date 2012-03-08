@@ -6,9 +6,9 @@ import java.util.Map;
 import org.bukkit.World;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.LocalWorld;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.Vector2D;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.selections.RegionSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
@@ -24,7 +24,7 @@ public class DACCylinder extends DACSimpleRegion {
 
     public static class DACCylinderSelection extends RegionSelection {
 
-        public DACCylinderSelection(World world, BlockVector center, BlockVector2D radius, int minY, int maxY) {
+        public DACCylinderSelection(World world, Vector center, Vector2D radius, int minY, int maxY) {
             super(world);
 
             CylinderRegionSelector sel = new CylinderRegionSelector(new BukkitWorld(world));

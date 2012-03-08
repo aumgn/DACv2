@@ -5,7 +5,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.blocks.BaseBlock;
 import com.sk89q.worldedit.regions.CuboidRegion;
@@ -42,7 +41,7 @@ public class DACPool extends DACVerticalArea implements Pool {
 
     private void removeSigns() {
         World world = getArena().getWorld();
-        for (BlockVector vec : getSafeRegion()) {
+        for (Vector vec : getSafeRegion()) {
             Block block = world.getBlockAt(vec.getBlockX(), vec.getBlockY(), vec.getBlockZ());
             if (block.getType() == SIGN_MATERIAL) {
                 block.setType(AIR);
@@ -82,7 +81,7 @@ public class DACPool extends DACVerticalArea implements Pool {
 
     @Override
     public boolean isSafe(Player player) {
-        Vector vec = new BlockVector(
+        Vector vec = new Vector(
                 player.getLocation().getBlockX(),
                 player.getLocation().getBlockY(),
                 player.getLocation().getBlockZ());

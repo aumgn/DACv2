@@ -1,25 +1,25 @@
 package fr.aumgn.dac.api.game.event;
 
-import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.Vector2D;
 
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class GameJumpEvent extends GamePlayerEvent {
 
-    private BlockVector2D pos;
+    private Vector2D pos;
     private boolean teleport;
     private boolean switchToNextTurn;
     private boolean cancelled;
 
     public GameJumpEvent(StagePlayer player, int x, int z, boolean teleport) {
         super(player);
-        this.pos = new BlockVector2D(x, z);   
+        this.pos = new Vector2D(x, z);   
         this.teleport = teleport;
         this.switchToNextTurn = true;
         this.cancelled = false;
     }
 
-    public BlockVector2D getPos() {
+    public Vector2D getPos() {
         return pos;
     }
 

@@ -1,6 +1,6 @@
 package fr.aumgn.dac.api.area;
 
-import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.Vector2D;
 
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
@@ -32,7 +32,7 @@ public interface VerticalArea extends Area {
      * @param vec the vector 
      * @return the column for the given x and y position.
      */
-    AreaColumn getColumn(BlockVector2D vec);
+    AreaColumn getColumn(Vector2D vec);
 
     /**
      * Gets the column at the given x and y position.
