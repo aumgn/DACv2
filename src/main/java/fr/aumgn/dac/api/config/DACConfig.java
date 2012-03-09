@@ -15,17 +15,19 @@ public interface DACConfig {
 
     boolean getCancelJumpDamage();
 
-    int getSafeRegionHeight();
-
-    int getSafeRegionMargin();
-
-    int getTurnTimeOut();
-
+    boolean getPutColumn(); 
+    
     boolean getTpAfterJump();
 
     boolean getTpAfterFail();
 
     int getTpAfterFailDelay();
+
+    int getSafeRegionHeight();
+
+    int getSafeRegionMargin();
+
+    int getTurnTimeOut();
 
     /**
      * Gets the maximum number of player allowed in a game. 

@@ -11,7 +11,11 @@ public class GameJumpSuccess extends GameJumpEvent {
 
     public GameJumpSuccess(StagePlayer player, int x, int z) {
         super(player, x, z, DAC.getConfig().getTpAfterJump());
-        this.pattern = new UniformColumn(player.getColor()); 
+        if (DAC.getConfig().getPutColumn()) {
+            this.pattern = new UniformColumn(player.getColor()); 
+        } else {
+            this.pattern = null;
+        }
     }
 
     public boolean isADAC() {

@@ -11,15 +11,16 @@ import fr.aumgn.dac.api.util.DACUtil;
 
 public class DACPluginConfig implements DACConfig {
 
-    private boolean resetOnStart = false;
-    private boolean resetOnEnd = false;
-    private boolean cancelJumpDamage = true;
+    private boolean resetOnStart;
+    private boolean resetOnEnd;
+    private boolean cancelJumpDamage;
+    private boolean putColumn;
+    private boolean tpAfterJump; 
+    private boolean tpAfterFail;
+    private int tpAfterFailDelay;
     private int safeRegionHeight;
     private int safeRegionMargin;
     private int turnTimeOut;
-    private boolean tpAfterJump; 
-    private boolean tpAfterFail;
-    private int tpAfterFailDelay = 0;
     private String deathSignFirstLine;
     private DACColors colors;
 
@@ -37,22 +38,26 @@ public class DACPluginConfig implements DACConfig {
         } else if (autoReset.equals("both")) {
             resetOnStart = true;
             resetOnEnd = true;
+        } else {
+            resetOnStart = false; 
+            resetOnEnd = false;
         }
-        cancelJumpDamage = config.getBoolean("cancel-jump-damage");
-        safeRegionHeight = config.getInt("safe-region-height");
-        safeRegionMargin = config.getInt("safe-region-margin");
-        turnTimeOut = config.getInt("turn-timeout");
+        cancelJumpDamage = config.getBoolean("cancel-jump-damage", true);
+        putColumn = config.getBoolean("put-column", true);
+        turnTimeOut = config.getInt("turn-timeout", 0);
         // Backward compatibility.
         if (config.isInt("tp-after-jump")) {
             tpAfterJump = config.getInt("tp-after-jump") > 0;
         } else {
-            tpAfterJump = config.getBoolean("tp-after-jump");
+            tpAfterJump = config.getBoolean("tp-after-jump", true);
         }
-        int tpAfterFailConfig = config.getInt("tp-after-fail");
+        int tpAfterFailConfig = config.getInt("tp-after-fail", 60);
         tpAfterFail = tpAfterFailConfig >= 0;
         if (tpAfterFail) {
             tpAfterFailDelay = tpAfterFailConfig;
         }
+        safeRegionHeight = config.getInt("safe-region-height");
+        safeRegionMargin = config.getInt("safe-region-margin");
         deathSignFirstLine = DACUtil.parseColorsMarkup(config.getString("death-sign-first-line"));
         if (deathSignFirstLine.length() > DACUtil.SIGN_MAX_CHAR) {
             deathSignFirstLine = DACUtil.parseColorsMarkup(config.getDefaults().getString("death-sign-first-line"));
@@ -82,20 +87,10 @@ public class DACPluginConfig implements DACConfig {
     public boolean getCancelJumpDamage() {
         return cancelJumpDamage;
     }
-
+    
     @Override
-    public int getSafeRegionHeight() {
-        return safeRegionHeight;
-    }
-
-    @Override
-    public int getSafeRegionMargin() {
-        return safeRegionMargin;
-    }
-
-    @Override
-    public int getTurnTimeOut() {
-        return turnTimeOut;
+    public boolean getPutColumn() {
+        return putColumn;
     }
 
     @Override
@@ -111,6 +106,21 @@ public class DACPluginConfig implements DACConfig {
     @Override
     public int getTpAfterFailDelay() {
         return tpAfterFailDelay;
+    }
+
+    @Override
+    public int getSafeRegionHeight() {
+        return safeRegionHeight;
+    }
+
+    @Override
+    public int getSafeRegionMargin() {
+        return safeRegionMargin;
+    }
+
+    @Override
+    public int getTurnTimeOut() {
+        return turnTimeOut;
     }
 
     @Override

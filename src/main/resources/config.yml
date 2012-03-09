@@ -4,10 +4,8 @@ auto-reset: start
 # Cancel jump damage
 cancel-jump-damage: true
 
-# Safe region Height / Margin
-# This is the region above the pool where the player can jump without dying. 
-safe-region-height: 5
-safe-region-margin: 5
+# Automatically put column where player fell.
+put-column: true
 
 # Turn Time Out (ticks)
 turn-timeout: 1200
@@ -17,6 +15,11 @@ tp-after-jump: true
 
 # Tp Delay after fail (ticks). Negative values mean deactivated 
 tp-after-fail: 60
+
+# Safe region Height / Margin
+# This is the region above the pool where the player can jump without dying. 
+safe-region-height: 5
+safe-region-margin: 5
 
 death-sign-first-line: "<blue>Ci-gît :"
 
