@@ -21,6 +21,6 @@ public interface Stage {
 
     void send(Object message);
 
-    void stop();
+    void stop(StageStopReason reason);
 
 }

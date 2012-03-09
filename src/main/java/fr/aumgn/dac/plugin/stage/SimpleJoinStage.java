@@ -24,6 +24,7 @@ import fr.aumgn.dac.api.joinstage.SimpleJoinStagePlayer;
 import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StageQuitReason;
+import fr.aumgn.dac.api.stage.StageStopReason;
 
 public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
@@ -100,13 +101,13 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
     @Override
     public void removePlayer(StagePlayer player, StageQuitReason reason) {
-        DAC.callEvent(new DACStagePlayerQuitEvent(this, player));
+        DAC.callEvent(new DACStagePlayerQuitEvent(this, player, reason));
         send(DACMessage.JoinPlayerQuit.getContent(player.getDisplayName()));
         players.remove(player);
         DAC.getPlayerManager().unregister(player);
         colorsMap.remove(player.getColor());
         if (players.size() == 0) {
-            stop();
+            stop(StageStopReason.NotEnoughPlayer);
         }
     }
 
@@ -116,10 +117,12 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
     }
 
     @Override
-    public void stop() {
-        DAC.callEvent(new DACStageStopEvent(this));
+    public void stop(StageStopReason reason) {
+        DAC.callEvent(new DACStageStopEvent(this, reason));
         DAC.getStageManager().unregister(this);
-        Bukkit.broadcast(DACMessage.JoinStopped.getContent(), "dac.game.watch");
+        if (reason != StageStopReason.ChangeStage) {
+            Bukkit.broadcast(DACMessage.JoinStopped.getContent(), "dac.game.watch");
+        }
     }
 
     @Override

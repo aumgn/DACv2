@@ -14,6 +14,7 @@ import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
+import fr.aumgn.dac.api.stage.StageStopReason;
 
 public abstract class SimpleGame extends SimpleStage implements Game {
 
@@ -40,7 +41,7 @@ public abstract class SimpleGame extends SimpleStage implements Game {
 
     public SimpleGame(Stage stage, GameMode gameMode, List<? extends StagePlayer> playersList, GameOptions options) {
         super(stage.getArena());
-        stage.stop();
+        stage.stop(StageStopReason.ChangeStage);
         this.mode = gameMode;
         this.options = options;
         options.parsePropulsion();

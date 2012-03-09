@@ -34,13 +34,13 @@ import fr.aumgn.dac.api.game.event.GameQuit;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.event.GameWin;
-import fr.aumgn.dac.api.game.event.GameFinish.FinishReason;
 import fr.aumgn.dac.api.game.messages.GameMessage;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StageQuitReason;
+import fr.aumgn.dac.api.stage.StageStopReason;
 import fr.aumgn.dac.api.util.DACUtil;
 
 public class TurnBasedGame extends SimpleGame {
@@ -152,7 +152,7 @@ public class TurnBasedGame extends SimpleGame {
             if (players.size() == 1) {
                 onWin(players.get(0));
             } else {
-                stop(new GameFinish(this, FinishReason.NotEnoughPlayer));
+                stop(new GameFinish(this, StageStopReason.NotEnoughPlayer));
             }
         } else {
             if (wasPlayerTurn) {
@@ -171,7 +171,7 @@ public class TurnBasedGame extends SimpleGame {
 
     private void stop(GameFinish finish) {
         mode.onFinish(finish);
-        DAC.callEvent(new DACStageStopEvent(this));
+        DAC.callEvent(new DACStageStopEvent(this, finish.getReason()));
         postProcessGameEvent(finish);
         finished = true;
         Bukkit.getScheduler().cancelTask(turnTimeOutTaskId);
@@ -192,8 +192,8 @@ public class TurnBasedGame extends SimpleGame {
     }
 
     @Override
-    public void stop() {
-        stop(new GameFinish(this, FinishReason.Forced));
+    public void stop(StageStopReason reason) {
+        stop(new GameFinish(this, reason));
     }
 
     @Override
