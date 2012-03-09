@@ -97,19 +97,19 @@ public class DACPluginColors implements DACColors {
     }
 
     @Override
-    public int size() {
+    public int amount() {
         return colors.size();
     }
-    
+
     @Override
     public DACColor random() {
-    	int i = DAC.getRand().nextInt(size());
-    	Iterator<DACColor> it = colors.values().iterator();
-    	while (i > 0) {
-    		it.next();
-    		i--;
-    	}
-    	return it.next();
+        int i = DAC.getRand().nextInt(amount());
+        Iterator<DACColor> it = colors.values().iterator();
+        while (i > 0) {
+            it.next();
+            i--;
+        }
+        return it.next();
     }
 
 }

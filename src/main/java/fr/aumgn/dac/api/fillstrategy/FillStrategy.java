@@ -7,12 +7,6 @@ import fr.aumgn.dac.api.area.VerticalArea;
  */
 public interface FillStrategy {
 
-    /**
-     * Fills the {@link VerticalArea}.
-     * 
-     * @param area the area to fill
-     * @param options optional fill options. 
-     */
     void fill(VerticalArea area, String[] options);
 
 }

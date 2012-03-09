@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -103,12 +102,8 @@ public class DACArenas implements Arenas {
 
     @Override
     public DACArena get(Player player) {
-        return get(player.getLocation());
-    }
-
-    public DACArena get(Location location) {
         for (DACArena arena : arenas.values()) {
-            if (arena.getStartArea().contains(location)) {
+            if (arena.getStartArea().contains(player)) {
                 return arena;
             }
         }

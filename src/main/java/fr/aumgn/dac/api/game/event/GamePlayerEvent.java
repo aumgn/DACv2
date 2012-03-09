@@ -46,13 +46,13 @@ public abstract class GamePlayerEvent extends GameEvent {
         System.arraycopy(args, 0, argsWithPlayer, 1, args.length);
         messages.add(new OthersMessage(game, player, message, argsWithPlayer));
     }
-    
+
     public void setLoss() {
         super.addLoss(player);
     }
-    
+
     public void setWin() {
         super.setWinner(player);
     }
-    
+
 }

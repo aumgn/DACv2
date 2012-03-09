@@ -86,7 +86,8 @@ public class TurnBasedGame extends SimpleGame {
             onWin(event.getWinner());
         } else {
             for (StagePlayer player : event.losses()) {
-                onLoose(player);
+                addSpectator(player.getPlayer());
+                onLoose(player, new GameLoose(player));
             }
         }
     }
@@ -134,11 +135,6 @@ public class TurnBasedGame extends SimpleGame {
 
     private boolean isPlayerTurn(StagePlayer player) {
         return !finished && players.get(turn).equals(player);
-    }
-
-    private void onLoose(StagePlayer player) {
-        addSpectator(player.getPlayer());      
-        onLoose(player, new GameLoose(player));
     }
 
     private void onLoose(StagePlayer player, GameLoose loose) {

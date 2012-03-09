@@ -13,7 +13,9 @@ import fr.aumgn.dac.api.exception.StageNotRegistered;
 import fr.aumgn.dac.api.game.Game;
 
 /**
- * Class responsible for managing all ongoing stages 
+ * Responsible for managing all ongoing stages.
+ * Also responsible for registering and 
+ * unregistering listener when needed.
  */
 public class StageManager implements Iterable<Stage> {
 
@@ -24,21 +26,12 @@ public class StageManager implements Iterable<Stage> {
         stages = new HashMap<Arena, Stage>();
     }
 
-    /**
-     * Checks if there's an ongoing stage inside the given arena.
-     *   
-     * @param arena the arena to check for an ongoing stage
-     * @return whether or not there's an ongoing stage for this arena
-     */
     public boolean hasStage(Arena arena) {
         return stages.containsKey(arena);
     }
 
     /**
      * Gets the stage for the given arena. Returns null if no stage is ongoing. 
-     *  
-     * @param arena the arena
-     * @return the stage for the given arena or null if none.
      */
     public Stage get(Arena arena) {
         return stages.get(arena);
@@ -47,9 +40,6 @@ public class StageManager implements Iterable<Stage> {
     /**
      * Gets the stage in which the player is. Return null if the player
      * is not in a stage.
-     * 
-     * @param player the player
-     * @return the stage for this player
      */
     public Stage get(Player player) {
         StagePlayer dacPlayer = DAC.getPlayerManager().get(player);
@@ -57,13 +47,6 @@ public class StageManager implements Iterable<Stage> {
             return null;
         }
         return dacPlayer.getStage();
-    }
-
-    private Game castGame(Stage stage) {
-        if (stage instanceof Game) {
-            return (Game) stage;
-        }
-        return null;
     }
 
     /**
@@ -88,11 +71,16 @@ public class StageManager implements Iterable<Stage> {
         return castGame(get(player));
     }
 
+    private Game castGame(Stage stage) {
+        if (stage instanceof Game) {
+            return (Game) stage;
+        }
+        return null;
+    }
+
     /**
      * Registers the given stage.
-     * It also registers all associated players.
-     * 
-     * @param stage the stage to register 
+     * Also registers all associated players.
      */
     public void register(Stage stage) {
         if (stages.containsKey(stage.getArena())) {
@@ -104,19 +92,17 @@ public class StageManager implements Iterable<Stage> {
         stages.put(stage.getArena(), stage);
         stage.registerAll();
     }
-    
+
     private void incrementGameCount() {
         gameCount++;
         if (gameCount == 1) {
             DAC.registerListener();
         }
     }
-    
+
     /**
      * Unregisters the given stage.
-     * It also unregisters all associated players.
-     * 
-     * @param stage the stage to unregister 
+     * Also unregisters all associated players.
      */
     public void unregister(Stage stage) {
         if (!stages.containsKey(stage.getArena())) {
@@ -128,7 +114,7 @@ public class StageManager implements Iterable<Stage> {
         stages.remove(stage.getArena());
         stage.unregisterAll();
     }
-    
+
     private void decrementGameCount() {
         gameCount--;
         if (gameCount == 0) {
@@ -136,9 +122,6 @@ public class StageManager implements Iterable<Stage> {
         }
     }
 
-    /**
-     * Gets an iterator over the current stages.  
-     */
     @Override
     public Iterator<Stage> iterator() {
         return stages.values().iterator();

@@ -70,7 +70,7 @@ public abstract class SimpleGame extends SimpleStage implements Game {
         super.send(msg);
         sendToSpectators(msg.toString());
     }
-    
+
     @Override
     public GameMode getMode() {
         return mode;
@@ -102,5 +102,5 @@ public abstract class SimpleGame extends SimpleStage implements Game {
     public boolean removeSpectator(Player player) {
         return spectators.remove(player);
     }
-    
+
 }

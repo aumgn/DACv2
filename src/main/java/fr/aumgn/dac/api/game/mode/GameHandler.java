@@ -21,63 +21,47 @@ public interface GameHandler {
      * <p/>
      * You should use this method to initialize your handler 
      * rather than the constructor.
-     * 
-     * @param start the start event
      */
-    void onStart(GameStart start);
+    void onStart(GameStart event);
 
     /**
      * Called when a new turn starts.
      * (ie. before the first player own turn) 
-     * 
-     * @param newTurn the new turn event
      */
-    void onNewTurn(GameNewTurn newTurn);
+    void onNewTurn(GameNewTurn event);
 
     /**
      * Called when a player turn starts.
-     * 
-     * @param turn the turn event
      */
-    void onTurn(GameTurn turn);
+    void onTurn(GameTurn event);
 
     /**
      * Called when a player succeeds.
-     * 
-     * @param success the success event
      */
-    void onSuccess(GameJumpSuccess success);
+    void onSuccess(GameJumpSuccess event);
 
     /**
      * Called when a player fails.
-     * 
-     * @param fail the fail event
      */
-    void onFail(GameJumpFail fail);
+    void onFail(GameJumpFail event);
 
     /**
      * Called when a player loose.
      * Can be because he simply loose or because he has 
      * for one reason or another quit the game.
-     *  
-     * @param loose the loose event
      */
-    void onLoose(GameLoose loose);    
-
-    /**
-     * Called when the game finishes.
-     * Can be because a player won or because has been stopped. 
-     * 
-     * @param finish the finish event
-     */
-    void onFinish(GameFinish finish);
+    void onLoose(GameLoose event);    
 
     /**
      * Called when a pool is full.
      * (ie. does not contain any column water)
-     * 
-     * @param filled the filled event.
      */
-    void onPoolFilled(GamePoolFilled filled);
+    void onPoolFilled(GamePoolFilled event);
+
+    /**
+     * Called when the game finishes.
+     * Can be because a player won or because has been stopped. 
+     */
+    void onFinish(GameFinish event);
 
 }

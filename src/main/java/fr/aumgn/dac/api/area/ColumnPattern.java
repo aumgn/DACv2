@@ -6,9 +6,7 @@ package fr.aumgn.dac.api.area;
 public interface ColumnPattern {
 
     /**
-     * Replaces blocks of the column.
-     * 
-     * @param column the column.
+     * Replaces blocks of the column with this pattern.
      */
     void set(AreaColumn column);
 

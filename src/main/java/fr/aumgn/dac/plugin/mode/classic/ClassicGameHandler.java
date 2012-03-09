@@ -30,83 +30,83 @@ public class ClassicGameHandler extends SimpleGameHandler {
     private boolean suddenDeath = false;
 
     @Override
-    public void onStart(GameStart start) {
-        start.send(DACMessage.GameStart);
-        start.send(DACMessage.GamePlayers);
-        for (ClassicGamePlayer player : start.getPlayers(ClassicGamePlayer.class)) {
+    public void onStart(GameStart event) {
+        event.send(DACMessage.GameStart);
+        event.send(DACMessage.GamePlayers);
+        for (ClassicGamePlayer player : event.getPlayers(ClassicGamePlayer.class)) {
             player.getDisplayName();
-            start.send(DACMessage.GamePlayerList, player.getIndex(), player.getDisplayName());
+            event.send(DACMessage.GamePlayerList, player.getIndex(), player.getDisplayName());
         }
-        start.send(DACMessage.GameEnjoy);
+        event.send(DACMessage.GameEnjoy);
     }
 
     @Override
-    public void onNewTurn(GameNewTurn newTurn) {
-        Pool pool = newTurn.getArena().getPool();
-        for (StagePlayer stagePlayer : newTurn.getGame().getPlayers()) {
+    public void onNewTurn(GameNewTurn event) {
+        Pool pool = event.getArena().getPool();
+        for (StagePlayer stagePlayer : event.getGame().getPlayers()) {
             ClassicGamePlayer player = (ClassicGamePlayer) stagePlayer;
             if (player.isDead()) {
                 RIPSign sign = new RIPSign(pool, player.getDeathPosition()); 
                 sign.rip(player.getDisplayName());
-                newTurn.addLoss(player);
+                event.addLoss(player);
             }
         }
     }
 
     @Override
-    public void onTurn(GameTurn turn) {
-        ClassicGamePlayer player = turn.getPlayer(ClassicGamePlayer.class);
-        turn.sendToPlayer(DACMessage.GamePlayerTurn2);
-        turn.sendToOthers(DACMessage.GamePlayerTurn);
+    public void onTurn(GameTurn event) {
+        ClassicGamePlayer player = event.getPlayer(ClassicGamePlayer.class);
+        event.sendToPlayer(DACMessage.GamePlayerTurn2);
+        event.sendToOthers(DACMessage.GamePlayerTurn);
         if (player.mustConfirmate()) {
-            turn.sendToPlayer(DACMessage.GameMustConfirmate2);
-            turn.sendToOthers(DACMessage.GameMustConfirmate);
+            event.sendToPlayer(DACMessage.GameMustConfirmate2);
+            event.sendToOthers(DACMessage.GameMustConfirmate);
         }
     }
 
     @Override
-    public void onSuccess(GameJumpSuccess success) {
-        ClassicGamePlayer player = success.getPlayer(ClassicGamePlayer.class);
+    public void onSuccess(GameJumpSuccess event) {
+        ClassicGamePlayer player = event.getPlayer(ClassicGamePlayer.class);
 
-        if (success.isADAC()) {
-            success.setColumnPattern(new GlassyColumn(player.getColor()));
+        if (event.isADAC()) {
+            event.setColumnPattern(new GlassyColumn(player.getColor()));
             if (player.mustConfirmate()) {
-                success.sendToPlayer(DACMessage.GameDACConfirmation3);
-                success.sendToOthers(DACMessage.GameDACConfirmation);
-                success.send(DACMessage.GameDACConfirmation2);
+                event.sendToPlayer(DACMessage.GameDACConfirmation3);
+                event.sendToOthers(DACMessage.GameDACConfirmation);
+                event.send(DACMessage.GameDACConfirmation2);
             } else {
                 player.winLive();
-                success.sendToPlayer(DACMessage.GameDAC2);
-                success.sendToOthers(DACMessage.GameDAC);
-                success.sendToPlayer(DACMessage.GameLivesAfterDAC2, player.getLives());
-                success.sendToOthers(DACMessage.GameLivesAfterDAC, player.getLives());
+                event.sendToPlayer(DACMessage.GameDAC2);
+                event.sendToOthers(DACMessage.GameDAC);
+                event.sendToPlayer(DACMessage.GameLivesAfterDAC2, player.getLives());
+                event.sendToOthers(DACMessage.GameLivesAfterDAC, player.getLives());
             }
         } else { 
-            success.setColumnPattern(new UniformColumn(player.getColor()));
+            event.setColumnPattern(new UniformColumn(player.getColor()));
             if (player.mustConfirmate()) {
-                success.sendToPlayer(DACMessage.GameConfirmation2);
-                success.sendToOthers(DACMessage.GameConfirmation);
+                event.sendToPlayer(DACMessage.GameConfirmation2);
+                event.sendToOthers(DACMessage.GameConfirmation);
             } else {
-                success.sendToPlayer(DACMessage.GameJumpSuccess2);
-                success.sendToOthers(DACMessage.GameJumpSuccess);
+                event.sendToPlayer(DACMessage.GameJumpSuccess2);
+                event.sendToOthers(DACMessage.GameJumpSuccess);
             }
         }
 
-        if (success.getArena().getPool().isFull()) {
+        if (event.getArena().getPool().isFull()) {
         }
     }
 
     @Override
-    public void onFail(GameJumpFail fail) {
-        fail.sendToPlayer(DACMessage.GameJumpFail2);
-        fail.sendToOthers(DACMessage.GameJumpFail);
-        fail.setMustTeleport(true);
-        ClassicGamePlayer player = fail.getPlayer(ClassicGamePlayer.class);
+    public void onFail(GameJumpFail event) {
+        event.sendToPlayer(DACMessage.GameJumpFail2);
+        event.sendToOthers(DACMessage.GameJumpFail);
+        event.setMustTeleport(true);
+        ClassicGamePlayer player = event.getPlayer(ClassicGamePlayer.class);
 
         if (player.mustConfirmate()) {
-            fail.sendToPlayer(DACMessage.GameConfirmationFail2);
-            fail.sendToOthers(DACMessage.GameConfirmationFail);
-            for (ClassicGamePlayer gamePlayer : fail.getPlayers(ClassicGamePlayer.class)) {
+            event.sendToPlayer(DACMessage.GameConfirmationFail2);
+            event.sendToOthers(DACMessage.GameConfirmationFail);
+            for (ClassicGamePlayer gamePlayer : event.getPlayers(ClassicGamePlayer.class)) {
                 if (gamePlayer.isDead()) {
                     gamePlayer.resetLives();
                 }
@@ -114,14 +114,14 @@ public class ClassicGameHandler extends SimpleGameHandler {
             player.setMustConfirmate(false);
         } else {
             if (player.looseLive()) {
-                player.setDeathPosition(fail.getRealDeathPos());
-                ClassicGamePlayer lastPlayer = lookForLastPlayer(fail);
+                player.setDeathPosition(event.getRealDeathPos());
+                ClassicGamePlayer lastPlayer = lookForLastPlayer(event);
                 if (lastPlayer != null) {
                     lastPlayer.setMustConfirmate(true);
                 }
             } else {
-                fail.sendToPlayer(DACMessage.GameLivesAfterFail2, player.getLives());
-                fail.sendToOthers(DACMessage.GameLivesAfterFail, player.getLives());
+                event.sendToPlayer(DACMessage.GameLivesAfterFail2, player.getLives());
+                event.sendToOthers(DACMessage.GameLivesAfterFail, player.getLives());
             }
         }
     }
@@ -139,13 +139,13 @@ public class ClassicGameHandler extends SimpleGameHandler {
     }
 
     @Override
-    public void onPoolFilled(GamePoolFilled filled) {
-        ClassicGamePlayer player = filled.getPlayer(ClassicGamePlayer.class);
-        List<ClassicGamePlayer> playersLeft = getPlayersLeftForSuddenDeath(filled.getGame(), player);
+    public void onPoolFilled(GamePoolFilled event) {
+        ClassicGamePlayer player = event.getPlayer(ClassicGamePlayer.class);
+        List<ClassicGamePlayer> playersLeft = getPlayersLeftForSuddenDeath(event.getGame(), player);
         if (playersLeft.size() > 1) {
-            switchToSuddenDeath(filled.getGame(), playersLeft);
+            switchToSuddenDeath(event.getGame(), playersLeft);
         } else {
-            filled.setWinner(playersLeft.get(0));
+            event.setWinner(playersLeft.get(0));
         }
     }
 
@@ -176,22 +176,22 @@ public class ClassicGameHandler extends SimpleGameHandler {
     }
 
     @Override
-    public void onFinish(GameFinish finish) {
-        if (finish instanceof GameWin) {
-            finish.send(DACMessage.GameFinished);
+    public void onFinish(GameFinish event) {
+        if (event instanceof GameWin) {
+            event.send(DACMessage.GameFinished);
             int i = 1;
-            for (StagePlayer player : ((GameWin) finish).getRanking()) {
+            for (StagePlayer player : ((GameWin) event).getRanking()) {
                 if (i==1) {
-                    finish.send(DACMessage.GameWinner, player.getDisplayName());
+                    event.send(DACMessage.GameWinner, player.getDisplayName());
                 } else {
-                    finish.send(DACMessage.GameRank, i, player.getDisplayName());
+                    event.send(DACMessage.GameRank, i, player.getDisplayName());
                 }
                 i++;
             }
         } else if (suddenDeath) {
-            finish.send(DACMessage.GameSuddenDeath);
+            event.send(DACMessage.GameSuddenDeath);
         } else {
-            finish.send(DACMessage.GameStopped);
+            event.send(DACMessage.GameStopped);
         }
     }
 

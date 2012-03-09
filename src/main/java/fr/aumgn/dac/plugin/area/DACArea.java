@@ -1,9 +1,6 @@
 package fr.aumgn.dac.plugin.area;
 
-import java.util.Iterator;
-
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import com.sk89q.worldedit.Vector;
@@ -74,20 +71,11 @@ public class DACArea implements Area {
 
     @Override
     public boolean contains(Player player) {
-        return contains(player.getLocation());
-    }
-
-    @Override
-    public boolean contains(Location location) {
+        Location location = player.getLocation();
         int x = location.getBlockX();
         int y = location.getBlockY();
         int z = location.getBlockZ();
         return region.getRegion(arena.getWEWorld()).contains(new Vector(x, y, z));
-    }
-
-    @Override
-    public Iterator<Block> iterator() {
-        return new AreaIterator(this, getWERegion().iterator());
     }
 
 }

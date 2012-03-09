@@ -7,7 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.util.BlockVector;
+
+import com.sk89q.worldedit.Vector;
 
 import fr.aumgn.dac.api.DAC;
 
@@ -16,35 +17,18 @@ import fr.aumgn.dac.api.DAC;
  */
 public final class DACUtil {
 
-    /**
-     * Theoric ticks per seconds.
-     */
     public static final int TICKS_PER_SECONDS = 20;
-    /**
-     * Maximum player health.
-     */
     public static final int PLAYER_MAX_HEALTH = 20;
-    /**
-     * Maximum number of character per sign line. 
-     */
+    /** Maximum number of character per sign line. */
     public static final int SIGN_MAX_CHAR = 16;
-    /**
-     * Number of lines per sign.
-     */
+    /** Number of lines per sign. */
     public static final int SIGN_LINES = 4;
 
-    /**
-     * Decimal Minecraft block bounding box left limit. 
-     */
+    /** Decimal Minecraft block bounding box left limit. */
     private static final double BLOCK_LIMIT_LEFT = 0.3;
-    /**
-     * Decimal Minecraft block bounding box right limit. 
-     */
+    /** Decimal Minecraft block bounding box right limit.*/
     private static final double BLOCK_LIMIT_RIGHT = 0.7;
 
-    /**
-     * Colors markups pattern.
-     */
     private static final Pattern COLORS_PATTERN = Pattern.compile("<([A-Za-z]+)>");
 
     private DACUtil() {}
@@ -55,9 +39,6 @@ public final class DACUtil {
      *   decimal(value) < 0.3 => -1
      *   decimal(value) > 0.7 => 1
      *   anything else => 0 
-     * 
-     * @param value the value to get the modifier for
-     * @return the relative modifier
      */
     private static int getRelativeModValue(double value) {
         double abs = Math.abs(value);
@@ -71,40 +52,31 @@ public final class DACUtil {
         return 0;
     }
 
-    /**
-     * Checks if relative blocks is solid
-     *  (ie. isn't empty or liquid)
-     * 
-     * @return whether the relative block is solid
-     */
     private static boolean isRelativeBlockSolid(Block from, int modX, int modZ) {
         Block block = from.getRelative(modX, 0, modZ);
         return !block.isEmpty() && !block.isLiquid();
     }
 
     /**
-     * Gets the BlockVector of the block which is responsible for player's damage.
-     * 
-     * @param loc the location where the player die
-     * @return the block vector responsible for player's damage
+     * Gets the Vector representing the block above the one which is responsible for player's damage.
      */
-    public static BlockVector getDamageBlockVector(Location loc) {
+    public static Vector getDamageBlockVector(Location loc) {
         Block block = loc.getBlock().getRelative(0, -1, 0);
         if (!block.isEmpty() && !block.isLiquid()) {
-            return new BlockVector(block.getX(), block.getY() + 1, block.getZ());
+            return new Vector(block.getX(), block.getY() + 1, block.getZ());
         }
 
         int modX = getRelativeModValue(loc.getX());
         int modZ = getRelativeModValue(loc.getZ());
 
         if (modX != 0 && isRelativeBlockSolid(block, modX, 0)) {
-            return new BlockVector(block.getX() + modX, block.getY() + 1, block.getZ());
+            return new Vector(block.getX() + modX, block.getY() + 1, block.getZ());
         }
         if (modZ != 0 && isRelativeBlockSolid(block, 0, modZ)) {
-            return new BlockVector(block.getX(), block.getY() + 1, block.getZ() + modZ);
+            return new Vector(block.getX(), block.getY() + 1, block.getZ() + modZ);
         }
         if (modX != 0 && modZ != 0 && isRelativeBlockSolid(block, modX, modZ)) {
-            return new BlockVector(block.getX() + modX, block.getY() + 1, block.getZ() + modZ);
+            return new Vector(block.getX() + modX, block.getY() + 1, block.getZ() + modZ);
         }
 
         return null;
@@ -113,9 +85,6 @@ public final class DACUtil {
     /**
      * Parses colors markups.
      * For example : ({@literal '<red>'} will be converted to ChatColor.RED.toString()
-     *    
-     * @param message the messages to parse
-     * @return the parsed message
      */
     public static String parseColorsMarkup(String message) {
         StringBuffer parsed = new StringBuffer();
@@ -134,12 +103,6 @@ public final class DACUtil {
         return parsed.toString();
     }
 
-    /**
-     * Safely parses an integer value.
-     * 
-     * @param str the string to parse
-     * @return the parsed integer or 0
-     */
     public static int parseInteger(String str) {
         try {
             return Integer.parseInt(str);

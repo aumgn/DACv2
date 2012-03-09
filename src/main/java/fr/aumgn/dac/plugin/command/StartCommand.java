@@ -37,7 +37,7 @@ public class StartCommand extends PlayerCommandExecutor {
                 error(DACMessage.CmdStartUnknownMode);
             }
             String modeName = mode.getClass().getAnnotation(DACGameMode.class).name();
-            if (!joinStage.getArena().hasMode(modeName)) {
+            if (!joinStage.getArena().allowMode(modeName)) {
                 error(DACMessage.CmdStartUnavailableMode);
             }
         } else {

@@ -14,37 +14,37 @@ import fr.aumgn.dac.api.game.mode.SimpleGameHandler;
 public class TrainingGameHandler extends SimpleGameHandler {
 
     @Override
-    public void onStart(GameStart start) {
-        start.send(DACMessage.GameStart);
+    public void onStart(GameStart event) {
+        event.send(DACMessage.GameStart);
     }
 
     @Override
-    public void onTurn(GameTurn turn) {
-        turn.sendToPlayer(DACMessage.GamePlayerTurn2);
-        turn.sendToOthers(DACMessage.GamePlayerTurn);
+    public void onTurn(GameTurn event) {
+        event.sendToPlayer(DACMessage.GamePlayerTurn2);
+        event.sendToOthers(DACMessage.GamePlayerTurn);
     }
 
     @Override
-    public void onSuccess(GameJumpSuccess success) {
-        TrainingGamePlayer player = success.getPlayer(TrainingGamePlayer.class);
-        if (success.isADAC()) {
+    public void onSuccess(GameJumpSuccess event) {
+        TrainingGamePlayer player = event.getPlayer(TrainingGamePlayer.class);
+        if (event.isADAC()) {
             player.incrementDACs();
-            success.setColumnPattern(new GlassyColumn(player.getColor()));
-            success.sendToPlayer(DACMessage.GameDAC2);
-            success.sendToOthers(DACMessage.GameDAC);
+            event.setColumnPattern(new GlassyColumn(player.getColor()));
+            event.sendToPlayer(DACMessage.GameDAC2);
+            event.sendToOthers(DACMessage.GameDAC);
         } else {
             player.incrementSuccesses();
-            success.sendToPlayer(DACMessage.GameJumpSuccess2);
-            success.sendToOthers(DACMessage.GameJumpSuccess);
+            event.sendToPlayer(DACMessage.GameJumpSuccess2);
+            event.sendToOthers(DACMessage.GameJumpSuccess);
         }
     }
 
     @Override
-    public void onFail(GameJumpFail fail) {
-        TrainingGamePlayer player = fail.getPlayer(TrainingGamePlayer.class);
+    public void onFail(GameJumpFail event) {
+        TrainingGamePlayer player = event.getPlayer(TrainingGamePlayer.class);
         player.incrementFails();
-        fail.sendToPlayer(DACMessage.GameJumpFail2);
-        fail.sendToOthers(DACMessage.GameJumpFail);
+        event.sendToPlayer(DACMessage.GameJumpFail2);
+        event.sendToOthers(DACMessage.GameJumpFail);
     }
 
     private void sendStats(TrainingGamePlayer player) {
@@ -54,18 +54,18 @@ public class TrainingGameHandler extends SimpleGameHandler {
     }
 
     @Override
-    public void onLoose(GameLoose loose) {
-        sendStats(loose.getPlayer(TrainingGamePlayer.class));
+    public void onLoose(GameLoose event) {
+        sendStats(event.getPlayer(TrainingGamePlayer.class));
     }
 
     @Override
-    public void onPoolFilled(GamePoolFilled filled) {
-        filled.getArena().getPool().reset();
+    public void onPoolFilled(GamePoolFilled event) {
+        event.getArena().getPool().reset();
     }
 
     @Override
-    public void onFinish(GameFinish finish) {
-        for (TrainingGamePlayer player : finish.getPlayers(TrainingGamePlayer.class)) {
+    public void onFinish(GameFinish event) {
+        for (TrainingGamePlayer player : event.getPlayers(TrainingGamePlayer.class)) {
             sendStats(player);
         }
     }

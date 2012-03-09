@@ -35,17 +35,17 @@ public class ModesCommand extends BasicCommandExecutor {
 
         if (args.length == 1) {
             context.send(DACMessage.CmdModesList);
-            for (String modeName : arena.getModes()) {
+            for (String modeName : arena.getAllowedModes()) {
                 context.send(DACMessage.CmdModesMode.getContent(modeName));
             }
             return;
         }
 
         if (args[1].equalsIgnoreCase("add")) {
-            arena.addMode(args[2]);
+            arena.addAllowedMode(args[2]);
             context.send(DACMessage.CmdModesAddSuccess);
         } else if (args[1].equalsIgnoreCase("rm")) {
-            arena.removeMode(args[2]);
+            arena.removeAllowedMode(args[2]);
             context.send(DACMessage.CmdModesRemoveSuccess);
         }
     }

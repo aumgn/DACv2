@@ -62,7 +62,7 @@ public class SimpleStagePlayer implements StagePlayer {
     public String formatForList() {
         return " " + displayName;
     }
-    
+
     @Override
     public PlayerTeleporter teleporter() {
         return new PlayerTeleporter(this);

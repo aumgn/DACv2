@@ -1,6 +1,5 @@
 package fr.aumgn.dac.plugin;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,11 +59,6 @@ public class DACFillStrategies implements FillStrategies {
         } catch (IllegalAccessException e) {
             DAC.getLogger().warning("Cannot register fill strategy " + strategyName);
         }
-    }
-
-    @Override
-    public Collection<String> getNames() {
-        return strategies.keySet();
     }
 
     @Override

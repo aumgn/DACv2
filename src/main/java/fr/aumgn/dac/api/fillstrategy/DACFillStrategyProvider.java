@@ -9,11 +9,6 @@ import java.util.List;
  */
 public interface DACFillStrategyProvider {
 
-    /**
-     * Gets the strategies provided.
-     * 
-     * @return a list of the strategies
-     */
     List<Class<? extends FillStrategy>> getFillStrategies();
 
 }

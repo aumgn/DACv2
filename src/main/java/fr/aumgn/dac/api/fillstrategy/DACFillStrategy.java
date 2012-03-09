@@ -9,18 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DACFillStrategy {
 
-    /**
-     * Name of the strategy.
-     *  
-     * @return the strategy name
-     */
     public String name();
 
-    /**
-     * Aliases of the strategy.
-     * 
-     * @return the aliases of the strategy
-     */
     public String[] aliases() default {};
 
 }

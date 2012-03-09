@@ -1,6 +1,6 @@
 package fr.aumgn.dac.plugin.mode.classic;
 
-import org.bukkit.util.Vector;
+import com.sk89q.worldedit.Vector;
 
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.SimpleGamePlayer;
@@ -61,8 +61,8 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
         lives = -2;
     }
 
-    public void setDeathPosition(Vector vec) {
-        deathPosition = vec;
+    public void setDeathPosition(Vector vector) {
+        deathPosition = vector;
     }
 
     public void setMustConfirmate(boolean bool) {

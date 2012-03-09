@@ -66,18 +66,10 @@ public final class DAC {
         arenas.load();
     }
 
-    /**
-     * Gets the main DAC plugin instance.
-     * 
-     * @return DAC plugin instance
-     */
     public static Plugin getPlugin() {
         return plugin;
     }
 
-    /**
-     * @see DACCommand
-     */
     public static DACCommand getCommand() {
         PluginCommand plCmd = Bukkit.getPluginCommand("dac");
         if (plCmd.getExecutor() instanceof DACCommand) {
@@ -94,59 +86,35 @@ public final class DAC {
         return rand;
     }
 
-    /**
-     * Reloads DAC configuration.
-     */
     public static void reloadConfig() {
         plugin.reloadConfig();
         config.load(plugin.getConfig());
     }
 
-    /**
-     * Reloads DAC messages.
-     */
     public static void reloadMessages() {
         DACMessage.reload(plugin);
     }
 
-    /**
-     * @see DACConfig
-     */
     public static DACConfig getConfig() {
         return config;
     }
 
-    /**
-     * @see GameModes
-     */    
     public static GameModes getModes() {
         return gameModes;
     }
 
-    /**
-     * @see Arenas
-     */
     public static Arenas getArenas() {
         return arenas;
     }
 
-    /**
-     * @see FillStrategies
-     */
     public static FillStrategies getFillStrategies() {
         return fillStrategies;
     }
 
-    /**
-     * @see StageManager
-     */
     public static StageManager getStageManager() {
         return stageManager;
     }
 
-    /**
-     * @see StagePlayerManager
-     */
     public static StagePlayerManager getPlayerManager() {
         return playerManager;
     }
@@ -155,17 +123,14 @@ public final class DAC {
         return worldEdit;
     }
 
-    /**
-     * Calls an {@link Event} event.
-     */
     public static void callEvent(Event event) {
         Bukkit.getPluginManager().callEvent(event);
     }
-    
+
     public static void registerListener() {
         Bukkit.getPluginManager().registerEvents(listener, plugin);
     }
-    
+
     public static void unregisterListener() {
         HandlerList.unregisterAll(plugin);
     }

@@ -6,8 +6,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.util.Vector;
 
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.Vector2D;
 
 import fr.aumgn.dac.api.DAC;
@@ -27,17 +27,15 @@ public class RIPSign {
     private Pool pool;
     private Vector vector;
 
-    public RIPSign(Pool pool, Vector vec) {
+    public RIPSign(Pool pool, Vector vector) {
         this.pool = pool;
-        this.vector = vec;
+        this.vector = vector;
     }
 
     /**
      * Add player name to this the sign this instance represents.
      * <p/>
      * If the sign do not exists it will be automatically created.  
-     * 
-     * @param name
      */
     public void rip(String name) {
         World world = pool.getArena().getWorld();

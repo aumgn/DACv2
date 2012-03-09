@@ -21,9 +21,6 @@ public class StagePlayerManager {
 
     /**
      * Gets the wrapped {@link StagePlayer} for the given player.
-     * 
-     * @param player the player to wrap
-     * @return the wrapped player 
      */
     public StagePlayer get(Player player) {
         return players.get(player);
@@ -33,8 +30,6 @@ public class StagePlayerManager {
      * Registers the given player.
      * 
      * @throws PlayerAlreadyRegistered if soft is false and player is already registered  
-     * 
-     * @param player the player to register
      * @param soft indicates that no exception should be raised 
      *          if player is already registered.  
      */
@@ -51,13 +46,11 @@ public class StagePlayerManager {
     public void register(StagePlayer player) {
         register(player, false);
     }
-            
+
     /**
      * Unregister the given player.
      * 
      * @throws PlayerNotRegistered if soft is false and player is not registered
-     * 
-     * @param player the player to unregister
      * @param soft indicates that no exception should be raised 
      *          if player is not registered.  
      */

@@ -11,27 +11,12 @@ import fr.aumgn.dac.api.stage.Stage;
 public interface JoinStage extends Stage {
 
     /**
-     * Adds a player to the join stage.
-     * 
-     * @param player the player to add
      * @param args arguments passed to the command
      */
     void addPlayer(Player player, String[] args);
 
-    /**
-     * Checks if the required amount of players has been reached.
-     * 
-     * @param mode the game mode to check with 
-     * @return whether the required amount has been reached
-     */
     boolean isMinReached(GameMode mode);
 
-    /**
-     * Checks if the maximum amount of players has been reached.
-     * This depends on the value specified in {@link fr.aumgn.dac.api.config#DACConfig}. 
-     * 
-     * @return whether the maximum amount has been reached
-     */
     boolean isMaxReached();
 
 }

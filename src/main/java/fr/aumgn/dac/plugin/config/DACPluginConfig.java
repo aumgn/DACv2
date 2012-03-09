@@ -32,7 +32,7 @@ public class DACPluginConfig implements DACConfig {
             resetOnStart = true;
             resetOnEnd = false;
         } else if (autoReset.equals("end")) {
-        	resetOnStart = false;
+            resetOnStart = false;
             resetOnEnd = true;
         } else if (autoReset.equals("both")) {
             resetOnStart = true;
@@ -63,9 +63,9 @@ public class DACPluginConfig implements DACConfig {
         colors = new DACPluginColors(colorsConfig, defColorsConfig);
 
         // Update cached safe regions. 
-       	for (Arena arena : DAC.getArenas()) {
-       		arena.getPool().updateSafeRegion();
-       	}
+        for (Arena arena : DAC.getArenas()) {
+            arena.getPool().updateSafeRegion();
+        }
     }
 
     @Override
@@ -77,27 +77,27 @@ public class DACPluginConfig implements DACConfig {
     public boolean getResetOnEnd() {
         return resetOnEnd;
     }
-    
+
     @Override
     public boolean getCancelJumpDamage() {
         return cancelJumpDamage;
     }
-    
+
     @Override
     public int getSafeRegionHeight() {
-    	return safeRegionHeight;
+        return safeRegionHeight;
     }
-    
+
     @Override
     public int getSafeRegionMargin() {
-    	return safeRegionMargin;
+        return safeRegionMargin;
     }
 
     @Override
     public int getTurnTimeOut() {
         return turnTimeOut;
     }
-    
+
     @Override
     public boolean getTpAfterJump() {
         return tpAfterJump;
@@ -115,7 +115,7 @@ public class DACPluginConfig implements DACConfig {
 
     @Override
     public int getMaxPlayers() {
-        return colors.size();
+        return colors.amount();
     }
 
     @Override

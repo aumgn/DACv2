@@ -1,7 +1,8 @@
 package fr.aumgn.dac.api.game.event;
 
 import org.bukkit.Location;
-import org.bukkit.util.BlockVector;
+
+import com.sk89q.worldedit.Vector;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -18,7 +19,7 @@ public class GameJumpFail extends GameJumpEvent {
         cancelDeath = DAC.getConfig().getCancelJumpDamage();
     }
 
-    public BlockVector getRealDeathPos() {
+    public Vector getRealDeathPos() {
         return DACUtil.getDamageBlockVector(deathLocation);
     }
 

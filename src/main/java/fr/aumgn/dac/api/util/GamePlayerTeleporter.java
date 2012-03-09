@@ -10,12 +10,12 @@ import fr.aumgn.dac.api.stage.StagePlayer;
 public class GamePlayerTeleporter extends PlayerTeleporter {
 
     private Game game;
-    
+
     public GamePlayerTeleporter(StagePlayer player) {
         super(player);
         game = (Game) player.getStage();
     }
-    
+
     @Override
     public void toDiving() {
         super.toDiving();
@@ -31,11 +31,11 @@ public class GamePlayerTeleporter extends PlayerTeleporter {
             }, propulsionDelay);
         }
     }
-    
+
     private void propulse() {
         player.getPlayer().setVelocity(game.getOptions().getPropulsion());
     }
-    
+
     public void afterFail() {
         DACConfig config = DAC.getConfig();
         if (game.getPlayers().size() > 1 && config.getTpAfterFail()) {

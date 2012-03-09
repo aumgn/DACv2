@@ -9,11 +9,6 @@ import java.util.List;
  */
 public interface DACGameModeProvider {
 
-    /**
-     * Gets the game modes provided.
-     * 
-     * @return a list of the game modes
-     */
     List<Class<? extends GameMode>> getGameModes();
 
 }

@@ -6,10 +6,10 @@ import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.config.DACColor;
 
 /**
- * Represents a column which has a glass block on top.
+ * Represents a column pattern which has a glass block on top.
  */
 public class GlassyColumn extends UniformColumn {
-    
+
     public GlassyColumn(DACColor color) {
         super(color); 
     }

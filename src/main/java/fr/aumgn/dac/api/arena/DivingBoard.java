@@ -8,17 +8,8 @@ import org.bukkit.Location;
  */
 public interface DivingBoard {
 
-    /**
-     * Gets the location of this diving board.
-     * 
-     * @return the location of this diving board.
-     */
     Location getLocation();
 
-    /**
-     * Updates the diving board with the given location.
-     * @param location the location to update this diving board with.
-     */
     void update(Location location);
 
 }

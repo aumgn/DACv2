@@ -17,7 +17,7 @@ public class JoinCommand extends PlayerCommandExecutor {
     public boolean checkUsage(String[] args) {
         return true;
     }
-    
+
     @Override
     public void onPlayerCommand(PlayerCommandContext context, String[] args) {
         Player player = context.getPlayer();

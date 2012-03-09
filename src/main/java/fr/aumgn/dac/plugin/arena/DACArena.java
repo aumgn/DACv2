@@ -70,24 +70,24 @@ public class DACArena implements Arena, ConfigurationSerializable {
     }
 
     @Override
-    public boolean hasMode(String name) {
+    public boolean allowMode(String name) {
         return modes.contains(name);
     }
 
     @Override
-    public void addMode(String mode) {
+    public void addAllowedMode(String mode) {
         modes.add(mode);
         updated();
     }
 
     @Override
-    public void removeMode(String mode) {
+    public void removeAllowedMode(String mode) {
         modes.remove(mode);
         updated();
     }
 
     @Override
-    public List<String> getModes() {
+    public List<String> getAllowedModes() {
         return new ArrayList<String>(modes);
     }
 

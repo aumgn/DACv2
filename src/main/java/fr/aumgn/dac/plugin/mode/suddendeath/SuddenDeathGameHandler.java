@@ -15,9 +15,9 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
 
 
     @Override
-    public void onNewTurn(GameNewTurn newTurn) {
-        Game game = newTurn.getGame();
-        Iterable<SuddenDeathGamePlayer> players = newTurn.getPlayers(SuddenDeathGamePlayer.class);
+    public void onNewTurn(GameNewTurn event) {
+        Game game = event.getGame();
+        Iterable<SuddenDeathGamePlayer> players = event.getPlayers(SuddenDeathGamePlayer.class);
         int playersLeftCount = game.getPlayers().size();
         for (SuddenDeathGamePlayer player : players) {
             if (player.isDeadThisTurn()) {
@@ -33,7 +33,7 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
         } else {
             for (SuddenDeathGamePlayer player : players) {
                 if (player.isDeadThisTurn()) {
-                    newTurn.addLoss(player);
+                    event.addLoss(player);
                 }
             }
         }
@@ -42,31 +42,31 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
     }
 
     @Override
-    public void onTurn(GameTurn turn) {
-        turn.sendToPlayer(DACMessage.GamePlayerTurn2);
-        turn.sendToOthers(DACMessage.GamePlayerTurn);
+    public void onTurn(GameTurn event) {
+        event.sendToPlayer(DACMessage.GamePlayerTurn2);
+        event.sendToOthers(DACMessage.GamePlayerTurn);
     }
 
     @Override
-    public void onSuccess(GameJumpSuccess success) {
-        success.setColumnPattern(null);
-        success.sendToPlayer(DACMessage.GameJumpSuccess2);
-        success.sendToOthers(DACMessage.GameJumpSuccess);
+    public void onSuccess(GameJumpSuccess event) {
+        event.setColumnPattern(null);
+        event.sendToPlayer(DACMessage.GameJumpSuccess2);
+        event.sendToOthers(DACMessage.GameJumpSuccess);
     }
 
     @Override
-    public void onFail(GameJumpFail fail) {
-        fail.getPlayer(SuddenDeathGamePlayer.class).setDeadThisTurn();
-        fail.sendToPlayer(DACMessage.GameJumpFail2);
-        fail.sendToOthers(DACMessage.GameJumpFail);
+    public void onFail(GameJumpFail event) {
+        event.getPlayer(SuddenDeathGamePlayer.class).setDeadThisTurn();
+        event.sendToPlayer(DACMessage.GameJumpFail2);
+        event.sendToOthers(DACMessage.GameJumpFail);
     }
 
     @Override
-    public void onLoose(GameLoose loose) {
-        if (loose instanceof GameQuit) {
-            loose.send(DACMessage.GamePlayerQuit, loose.getPlayer().getDisplayName());
+    public void onLoose(GameLoose event) {
+        if (event instanceof GameQuit) {
+            event.send(DACMessage.GamePlayerQuit, event.getPlayer().getDisplayName());
         }
-        loose.send(DACMessage.GamePlayerEliminated, loose.getPlayer().getDisplayName());
+        event.send(DACMessage.GamePlayerEliminated, event.getPlayer().getDisplayName());
     }
 
 }
