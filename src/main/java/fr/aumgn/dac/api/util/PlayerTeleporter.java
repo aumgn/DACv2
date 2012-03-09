@@ -38,9 +38,9 @@ public class PlayerTeleporter {
         Location loc = player.getPlayer().getLocation();
         teleport(new Location(
                 column.getArea().getArena().getWorld(),
-                column.getX(),
+                column.getX() + 0.5,
                 column.getTop() + 1,
-                column.getZ(),
+                column.getZ() + 0.5,
                 loc.getYaw(),
                 loc.getPitch()
                 ));
