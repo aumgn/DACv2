@@ -59,6 +59,7 @@ public class SuddenDeathGameHandler extends SimpleGameHandler {
         event.getPlayer(SuddenDeathGamePlayer.class).setDeadThisTurn();
         event.sendToPlayer(DACMessage.GameJumpFail2);
         event.sendToOthers(DACMessage.GameJumpFail);
+        event.setCancelDeath(true);
     }
 
     @Override

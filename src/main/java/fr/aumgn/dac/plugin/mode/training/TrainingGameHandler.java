@@ -45,6 +45,7 @@ public class TrainingGameHandler extends SimpleGameHandler {
         player.incrementFails();
         event.sendToPlayer(DACMessage.GameJumpFail2);
         event.sendToOthers(DACMessage.GameJumpFail);
+        event.setCancelDeath(true);
     }
 
     private void sendStats(TrainingGamePlayer player) {

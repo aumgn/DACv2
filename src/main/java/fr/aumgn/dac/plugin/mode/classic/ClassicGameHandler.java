@@ -119,6 +119,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
             } else {
                 event.sendToPlayer(DACMessage.GameLivesAfterFail2, player.getLives());
                 event.sendToOthers(DACMessage.GameLivesAfterFail, player.getLives());
+                event.setCancelDeath(true);
             }
         }
     }
