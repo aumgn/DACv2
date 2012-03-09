@@ -17,6 +17,8 @@ public interface DACConfig {
 
     boolean getPutColumn(); 
     
+    boolean getTpBeforeJump();
+    
     boolean getTpAfterJump();
 
     boolean getTpAfterFail();

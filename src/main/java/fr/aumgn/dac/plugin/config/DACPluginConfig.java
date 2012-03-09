@@ -15,6 +15,7 @@ public class DACPluginConfig implements DACConfig {
     private boolean resetOnEnd;
     private boolean cancelJumpDamage;
     private boolean putColumn;
+    private boolean tpBeforeJump;
     private boolean tpAfterJump; 
     private boolean tpAfterFail;
     private int tpAfterFailDelay;
@@ -45,6 +46,7 @@ public class DACPluginConfig implements DACConfig {
         cancelJumpDamage = config.getBoolean("cancel-jump-damage", true);
         putColumn = config.getBoolean("put-column", true);
         turnTimeOut = config.getInt("turn-timeout", 0);
+        tpBeforeJump = config.getBoolean("tp-before-jump", true);
         // Backward compatibility.
         if (config.isInt("tp-after-jump")) {
             tpAfterJump = config.getInt("tp-after-jump") > 0;
@@ -91,6 +93,11 @@ public class DACPluginConfig implements DACConfig {
     @Override
     public boolean getPutColumn() {
         return putColumn;
+    }
+    
+    @Override
+    public boolean getTpBeforeJump() {
+        return tpBeforeJump;
     }
 
     @Override

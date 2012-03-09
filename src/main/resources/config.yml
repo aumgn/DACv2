@@ -10,7 +10,10 @@ put-column: true
 # Turn Time Out (ticks)
 turn-timeout: 1200
 
-# Tp after jump flag
+# Tp before jump
+tp-before-jump: true
+
+# Tp after jump
 tp-after-jump: true
 
 # Tp Delay after fail (ticks). Negative values mean deactivated 

@@ -1,5 +1,6 @@
 package fr.aumgn.dac.api.game.event;
 
+import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 public class GameTurn extends GamePlayerEvent {
@@ -8,7 +9,7 @@ public class GameTurn extends GamePlayerEvent {
 
     public GameTurn(StagePlayer player) {
         super(player);
-        teleport = true;
+        teleport = DAC.getConfig().getTpBeforeJump();
     }
 
     public boolean getTeleport() {
