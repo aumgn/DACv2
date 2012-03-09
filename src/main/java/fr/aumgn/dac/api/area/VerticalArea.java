@@ -9,9 +9,9 @@ import fr.aumgn.dac.api.fillstrategy.FillStrategy;
  */
 public interface VerticalArea extends Area {
 
-    public int getBottom();
+    int getBottom();
 
-    public int getTop();
+    int getTop();
 
     /**
      * Gets the column at the given vector position.

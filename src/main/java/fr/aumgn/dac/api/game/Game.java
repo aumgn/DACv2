@@ -16,7 +16,7 @@ public interface Game extends Stage {
 
     GameOptions getOptions();
 
-    public boolean canWatch(Player player);
+    boolean canWatch(Player player);
 
     /**
      * Adds a spectator to this game.

@@ -33,7 +33,7 @@ public class DACGameModes implements GameModes {
 
     private void logRegisterError(Plugin plugin, Class<? extends GameMode> modeCls, String specificError) {
         DAC.getLogger().warning("Cannot register game mode for " + modeCls.getSimpleName());
-        DAC.getLogger().warning("Annotation `DACGameMode` missing");
+        DAC.getLogger().warning(specificError);
     }
 
     private void register(Plugin plugin, Class<? extends GameMode> modeCls) {

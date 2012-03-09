@@ -91,9 +91,6 @@ public class ClassicGameHandler extends SimpleGameHandler {
                 event.sendToOthers(DACMessage.GameJumpSuccess);
             }
         }
-
-        if (event.getArena().getPool().isFull()) {
-        }
     }
 
     @Override

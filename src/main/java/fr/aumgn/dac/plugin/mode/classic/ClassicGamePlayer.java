@@ -57,10 +57,6 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
         return isDead();
     }
 
-    public void looseAllLives() {
-        lives = -2;
-    }
-
     public void setDeathPosition(Vector vector) {
         deathPosition = vector;
     }

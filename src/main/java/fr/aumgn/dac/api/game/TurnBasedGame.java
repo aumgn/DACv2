@@ -240,10 +240,8 @@ public class TurnBasedGame extends SimpleGame {
                     }
                 }
                 postProcessGameEvent(jumpSuccess);
-                if (putColumn) {
-                    if (arena.getPool().isFull()) {
-                        gameHandler.onPoolFilled(new GamePoolFilled(stagePlayer));
-                    }
+                if (putColumn && arena.getPool().isFull()) {
+                    gameHandler.onPoolFilled(new GamePoolFilled(stagePlayer));
                 }
                 if (!finished && jumpSuccess.getSwitchToNextTurn()) {
                     nextTurn();

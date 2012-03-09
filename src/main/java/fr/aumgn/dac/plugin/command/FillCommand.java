@@ -29,12 +29,10 @@ public class FillCommand extends PlayerCommandExecutor {
         }
 
         Stage stage = DAC.getStageManager().get(arena);
-        if (stage instanceof Game) {
-            if (!context.hasPermission("dac.game.fill")) {
-                GameMode mode = ((Game) stage).getMode();
-                if (!mode.getClass().getAnnotation(DACGameMode.class).allowFill()) {
-                    error(DACMessage.CmdFillInGame);
-                }
+        if (stage instanceof Game && !context.hasPermission("dac.game.fill")) {
+            GameMode mode = ((Game) stage).getMode();
+            if (!mode.getClass().getAnnotation(DACGameMode.class).allowFill()) {
+                error(DACMessage.CmdFillInGame);
             }
         }
 
