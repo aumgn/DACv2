@@ -6,8 +6,8 @@ import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.joinstage.JoinStage;
-import fr.aumgn.dac.api.joinstage.SimpleJoinStage;
 import fr.aumgn.dac.api.stage.Stage;
+import fr.aumgn.dac.plugin.stage.SimpleJoinStage;
 import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 

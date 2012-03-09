@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.joinstage;
+package fr.aumgn.dac.plugin.stage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +19,8 @@ import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
+import fr.aumgn.dac.api.joinstage.JoinStage;
+import fr.aumgn.dac.api.joinstage.SimpleJoinStagePlayer;
 import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.api.stage.StageQuitReason;

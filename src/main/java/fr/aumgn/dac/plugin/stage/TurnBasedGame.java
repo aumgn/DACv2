@@ -1,4 +1,4 @@
-package fr.aumgn.dac.api.game;
+package fr.aumgn.dac.plugin.stage;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import fr.aumgn.dac.api.event.game.DACGameSuccessEvent;
 import fr.aumgn.dac.api.event.game.DACGameTurnEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStartEvent;
 import fr.aumgn.dac.api.event.stage.DACStageStopEvent;
+import fr.aumgn.dac.api.game.GameOptions;
+import fr.aumgn.dac.api.game.SimpleGame;
 import fr.aumgn.dac.api.game.event.GameEvent;
 import fr.aumgn.dac.api.game.event.GameFinish;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
