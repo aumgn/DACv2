@@ -17,8 +17,8 @@ public class TrainingGameMode implements GameMode {
     }
 
     @Override
-    public TrainingGamePlayer createPlayer(Game game, StagePlayer player, int index) {
-        return new TrainingGamePlayer(game, player, index);
+    public TrainingGamePlayer createPlayer(Game game, StagePlayer player) {
+        return new TrainingGamePlayer(game, player);
     }
 
 }

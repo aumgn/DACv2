@@ -15,6 +15,6 @@ public interface GameMode {
     /**
      * Creates the inherited instance of {@link StagePlayer} associated with this game mode.
      */
-    StagePlayer createPlayer(Game game, StagePlayer player, int index);
+    StagePlayer createPlayer(Game game, StagePlayer player);
 
 }

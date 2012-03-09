@@ -17,8 +17,8 @@ public class SuddenDeathGameMode implements GameMode {
     }
 
     @Override
-    public SuddenDeathGamePlayer createPlayer(Game game, StagePlayer player, int index) {
-        return new SuddenDeathGamePlayer(game, player, index);
+    public SuddenDeathGamePlayer createPlayer(Game game, StagePlayer player) {
+        return new SuddenDeathGamePlayer(game, player);
     }
 
 }

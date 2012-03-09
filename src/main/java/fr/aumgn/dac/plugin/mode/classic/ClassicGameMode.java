@@ -18,8 +18,8 @@ public class ClassicGameMode implements GameMode {
     }
 
     @Override
-    public ClassicGamePlayer createPlayer(Game game, StagePlayer player, int index) {
-        return new ClassicGamePlayer(game, player, index);
+    public ClassicGamePlayer createPlayer(Game game, StagePlayer player) {
+        return new ClassicGamePlayer(game, player);
     }
 
 }

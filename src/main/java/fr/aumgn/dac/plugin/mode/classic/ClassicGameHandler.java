@@ -33,9 +33,11 @@ public class ClassicGameHandler extends SimpleGameHandler {
     public void onStart(GameStart event) {
         event.send(DACMessage.GameStart);
         event.send(DACMessage.GamePlayers);
+        int index = 1;
         for (ClassicGamePlayer player : event.getPlayers(ClassicGamePlayer.class)) {
             player.getDisplayName();
-            event.send(DACMessage.GamePlayerList, player.getIndex(), player.getDisplayName());
+            event.send(DACMessage.GamePlayerList, index, player.getDisplayName());
+            index++;
         }
         event.send(DACMessage.GameEnjoy);
     }
@@ -151,7 +153,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
         int maxLives = 0;
         List<ClassicGamePlayer> playersLeft = new ArrayList<ClassicGamePlayer>();
         List<StagePlayer> players = game.getPlayers();
-        int firstIndex = player.getIndex() + 1;
+        int firstIndex = players.indexOf(player) + 1;
         int size = players.size();
         for (int i = 0; i < size; i++) {
             ClassicGamePlayer playerLeft = (ClassicGamePlayer) players.get((firstIndex + i) % size);

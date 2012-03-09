@@ -12,8 +12,8 @@ public class ClassicGamePlayer extends SimpleGamePlayer {
     private boolean mustConfirmate;
     private Vector deathPosition;
 
-    public ClassicGamePlayer(Game game, StagePlayer player, int index) {
-        super(game, player, index);
+    public ClassicGamePlayer(Game game, StagePlayer player) {
+        super(game, player);
         this.lives = game.getOptions().getLives();
         this.mustConfirmate = false;
     }

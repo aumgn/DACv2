@@ -10,8 +10,8 @@ public class TrainingGamePlayer extends SimpleGamePlayer {
     private int dacs = 0;
     private int fails = 0;
 
-    public TrainingGamePlayer(Game stage, StagePlayer player, int index) {
-        super(stage, player, index);
+    public TrainingGamePlayer(Game stage, StagePlayer player) {
+        super(stage, player);
     }
 
     public int getSuccesses() {

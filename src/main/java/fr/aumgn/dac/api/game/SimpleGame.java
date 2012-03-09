@@ -48,10 +48,8 @@ public abstract class SimpleGame extends SimpleStage implements Game {
         this.options = options;
         options.parsePropulsion();
         players = new ArrayList<StagePlayer>(playersList.size());
-        int i = 0;
         for (StagePlayer player : playersList) {
-            players.add(gameMode.createPlayer(this, player, i + 1));
-            i++;
+            players.add(gameMode.createPlayer(this, player));
         }
         spectators = new HashSet<Player>();
         DAC.getStageManager().register(this);

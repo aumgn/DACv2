@@ -140,6 +140,8 @@ public class TurnBasedGame extends SimpleGame {
     private void onLoose(StagePlayer player, GameLoose loose) {
         ranking.addFirst(player);
         DAC.getPlayerManager().unregister(player);
+        boolean wasPlayerTurn = isPlayerTurn(player);
+        StagePlayer currentPlayer = players.get(turn);
         players.remove(player);
         gameHandler.onLoose(loose);
         DAC.callEvent(new DACGameLooseEvent(loose));
@@ -150,6 +152,13 @@ public class TurnBasedGame extends SimpleGame {
                 onWin(players.get(0));
             } else {
                 stop(new GameFinish(this, FinishReason.NotEnoughPlayer));
+            }
+        } else {
+            if (wasPlayerTurn) {
+                turn--;
+                nextTurn();
+            } else {
+                turn = players.indexOf(currentPlayer);
             }
         }
     }
@@ -178,11 +187,7 @@ public class TurnBasedGame extends SimpleGame {
 
     @Override
     public void removePlayer(StagePlayer player, StageQuitReason reason) {
-        boolean wasPlayerTurn = isPlayerTurn(player);
         onLoose(player, new GameQuit(player, reason));
-        if (!finished && wasPlayerTurn) {
-            nextTurn();
-        }
     }
 
     @Override
