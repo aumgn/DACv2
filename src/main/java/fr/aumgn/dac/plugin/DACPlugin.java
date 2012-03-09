@@ -13,8 +13,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.exception.WorldEditNotLoaded;
-import fr.aumgn.dac.api.fillstrategy.DACFillStrategyProvider;
-import fr.aumgn.dac.api.fillstrategy.FillStrategy;
+import fr.aumgn.dac.api.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.plugin.arena.DACArenas;
@@ -23,12 +22,11 @@ import fr.aumgn.dac.plugin.config.DACPluginConfig;
 import fr.aumgn.dac.plugin.fillstrategy.FillAllButOne;
 import fr.aumgn.dac.plugin.fillstrategy.FillDAC;
 import fr.aumgn.dac.plugin.fillstrategy.FillFully;
-import fr.aumgn.dac.plugin.fillstrategy.FillRandomly;
 import fr.aumgn.dac.plugin.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.mode.training.TrainingGameMode;
 
-public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFillStrategyProvider {
+public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 
     @Override
     public List<Class<? extends GameMode>> getGameModes() {
@@ -36,16 +34,6 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFil
         list.add(ClassicGameMode.class);
         list.add(TrainingGameMode.class);
         list.add(SuddenDeathGameMode.class);
-        return list;
-    }
-
-    @Override
-    public List<Class<? extends FillStrategy>> getFillStrategies() {
-        List<Class<? extends FillStrategy>> list = new ArrayList<Class<? extends FillStrategy>>(4);
-        list.add(FillFully.class);
-        list.add(FillRandomly.class);
-        list.add(FillDAC.class);
-        list.add(FillAllButOne.class);
         return list;
     }
 
@@ -72,8 +60,12 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider, DACFil
 
         DACGameModes gameModes = new DACGameModes();
         DACArenas arenas = new DACArenas();
-        DACFillStrategies fillStrategies = new DACFillStrategies();
-        DAC.init(this, (WorldEditPlugin) worldEdit, listener, new DACPluginConfig(), gameModes, arenas, fillStrategies);
+        DAC.init(this, (WorldEditPlugin) worldEdit, listener, new DACPluginConfig(), gameModes, arenas);
+
+        FillStrategies fillStrategies = DAC.getFillStrategies();
+        fillStrategies.register(new FillFully(), "fully");
+        fillStrategies.register(new FillAllButOne(), "all-but-one", "abo");
+        fillStrategies.register(new FillDAC(), "dac");
 
         getLogger().info(getDescription().getName() + " loaded.");
     }

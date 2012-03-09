@@ -7,13 +7,11 @@ import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.area.column.RandomUniformColumn;
-import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
  * Replaces one column over two of a {@link VerticalArea} with wool. 
  */
-@DACFillStrategy(name = "dac")
 public class FillDAC implements FillStrategy {
 
     private boolean sameParity;

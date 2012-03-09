@@ -8,13 +8,11 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
  * Replaces all column of a {@link VerticalArea} with the given block. 
  */
-@DACFillStrategy(name = "fully", aliases = { "fl" })
 public class FillFully implements FillStrategy {
 
     protected BaseBlock getBlock(String[] args) {

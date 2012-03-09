@@ -47,7 +47,7 @@ public final class DAC {
      * @throws UnsupportedOperationException if already initialized
      */
     public static void init(Plugin plugin, WorldEditPlugin worldEdit, Listener listener,
-            DACConfig config, GameModes gameModes, Arenas arenas, FillStrategies fillStrategies) {
+            DACConfig config, GameModes gameModes, Arenas arenas) {
         if (DAC.plugin != null) {
             throw new UnsupportedOperationException("Cannot init DAC twice.");
         }
@@ -56,7 +56,7 @@ public final class DAC {
         DAC.listener = listener;
         DAC.gameModes = gameModes;
         DAC.arenas = arenas;
-        DAC.fillStrategies = fillStrategies;
+        DAC.fillStrategies = new FillStrategies();
         rand = new Random();
         stageManager = new StageManager();
         playerManager = new StagePlayerManager();

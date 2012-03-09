@@ -9,14 +9,12 @@ import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.area.column.RandomUniformColumn;
-import fr.aumgn.dac.api.fillstrategy.DACFillStrategy;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
  * Replaces random column of a {@link VerticalArea} with wool.
  * Uses a weight percentage options.  
  */
-@DACFillStrategy(name = "randomly", aliases = { "rand", "rd" })
 public class FillRandomly implements FillStrategy {
 
     public FillRandomly() {}
