@@ -40,7 +40,7 @@ public class DACArena implements Arena, ConfigurationSerializable {
         this.name = name;
         updated = false;
         this.world = world;
-        modes = DAC.getModes().getDefaults();
+        modes = new HashSet<String>(DAC.getModes().getDefaults());
         divingBoard = new DACDivingBoard(this);
         pool = new DACPool(this);
         startArea = new DACStartArea(this);

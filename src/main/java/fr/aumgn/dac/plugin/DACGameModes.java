@@ -1,8 +1,10 @@
 package fr.aumgn.dac.plugin;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,11 +19,11 @@ import fr.aumgn.dac.api.game.mode.GameModes;
 
 public class DACGameModes implements GameModes {
 
-    private final Map<String, Class<? extends GameMode>> modes;
+    private final Set<String> modes;
     private final Map<String, Class<? extends GameMode>> modesByAlias;
 
     public DACGameModes() {
-        modes = new HashMap<String, Class<? extends GameMode>>();
+        modes = new HashSet<String>();
         modesByAlias = new HashMap<String, Class<? extends GameMode>>();
         for (Plugin bukkitPlugin : Bukkit.getPluginManager().getPlugins()) {
             if (bukkitPlugin instanceof DACGameModeProvider) {
@@ -46,7 +48,7 @@ public class DACGameModes implements GameModes {
         }
 
         String modeName = annotation.name();
-        if (modes.containsKey(modeName)) {
+        if (modes.contains(modeName)) {
             logRegisterError(plugin, mode, "Conflict with already registered mode");
         }
         
@@ -61,7 +63,7 @@ public class DACGameModes implements GameModes {
             return;
         }
 
-        modes.put(modeName, mode);
+        modes.add(modeName);
         modesByAlias.put(modeName, mode);
         for (String alias : annotation.aliases()) {
             modesByAlias.put(alias, mode);
@@ -69,19 +71,20 @@ public class DACGameModes implements GameModes {
     }
 
     @Override
-    public Set<String> getDefaults() {
-        HashSet<String> set = new HashSet<String>();
-        for (Map.Entry<String, Class<? extends GameMode>> modeEntry : modes.entrySet()) {
-            if (modeEntry.getValue().getAnnotation(DACGameMode.class).isDefault()) {
-                set.add(modeEntry.getKey());
+    public Collection<String> getDefaults() {
+        List<String> list = new ArrayList<String>();
+        for (String modeName : modes) {
+            Class<? extends GameMode> mode = modesByAlias.get(modeName);
+            if (mode.getAnnotation(DACGameMode.class).isDefault()) {
+                list.add(modeName);
             }
         }
-        return set;
+        return list;
     }
 
     @Override
     public Collection<String> getNames() {
-        return modes.keySet();
+        return modes;
     }
 
     @Override
