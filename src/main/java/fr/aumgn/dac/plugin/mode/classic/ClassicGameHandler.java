@@ -113,7 +113,7 @@ public class ClassicGameHandler extends SimpleGameHandler {
             if (player.looseLive()) {
                 player.setDeathPosition(event.getRealDeathPos());
                 ClassicGamePlayer lastPlayer = lookForLastPlayer(event);
-                if (lastPlayer != null) {
+                if (lastPlayer != null && lastPlayer.getLives() == 0) {
                     lastPlayer.setMustConfirmate(true);
                 }
             } else {
