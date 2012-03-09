@@ -9,7 +9,7 @@ import fr.aumgn.dac.api.game.event.GamePoolFilled;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 
-public class SimpleGameHandler implements GameHandler {
+public abstract class SimpleGameMode implements GameMode {
 
     @Override
     public void onStart(GameStart event) {

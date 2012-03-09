@@ -17,10 +17,12 @@ import fr.aumgn.dac.api.game.mode.GameModes;
 
 public class DACGameModes implements GameModes {
 
-    private final Map<String, GameMode> modes = new HashMap<String, GameMode>();
-    private final Map<String, GameMode> modesByAlias = new HashMap<String, GameMode>();
+    private final Map<String, Class<? extends GameMode>> modes;
+    private final Map<String, Class<? extends GameMode>> modesByAlias;
 
     public DACGameModes() {
+        modes = new HashMap<String, Class<? extends GameMode>>();
+        modesByAlias = new HashMap<String, Class<? extends GameMode>>();
         for (Plugin bukkitPlugin : Bukkit.getPluginManager().getPlugins()) {
             if (bukkitPlugin instanceof DACGameModeProvider) {
                 DACGameModeProvider gameModeProvider = (DACGameModeProvider) bukkitPlugin;
@@ -36,37 +38,41 @@ public class DACGameModes implements GameModes {
         DAC.getLogger().warning(specificError);
     }
 
-    private void register(Plugin plugin, Class<? extends GameMode> modeCls) {
-        DACGameMode annotation = modeCls.getAnnotation(DACGameMode.class);
+    private void register(Plugin plugin, Class<? extends GameMode> mode) {
+        DACGameMode annotation = mode.getAnnotation(DACGameMode.class);
         if (annotation == null) {
-            logRegisterError(plugin, modeCls, "Annotation `DACGameMode` missing");
+            logRegisterError(plugin, mode, "Annotation `DACGameMode` missing");
             return;
         }
 
         String modeName = annotation.name();
         if (modes.containsKey(modeName)) {
-            logRegisterError(plugin, modeCls, "Conflict with already registered mode");
+            logRegisterError(plugin, mode, "Conflict with already registered mode");
+        }
+        
+        try {
+            Class<?>[] params = null;
+            mode.getConstructor(params);
+        } catch (SecurityException exc) {
+            logRegisterError(plugin, mode, "Empty constructor is not public");
+            return;
+        } catch (NoSuchMethodException exc) {
+            logRegisterError(plugin, mode, "Do not include an empty constructor");
+            return;
         }
 
-        try {
-            GameMode mode = modeCls.newInstance();
-            modes.put(modeName, mode);
-            modesByAlias.put(modeName, mode);
-            for (String alias : annotation.aliases()) {
-                modesByAlias.put(alias, mode);
-            }
-        } catch (InstantiationException exc) {
-            DAC.getLogger().warning("Cannot register game mode " + modeName);
-        } catch (IllegalAccessException e) {
-            DAC.getLogger().warning("Cannot register game mode " + modeName);
+        modes.put(modeName, mode);
+        modesByAlias.put(modeName, mode);
+        for (String alias : annotation.aliases()) {
+            modesByAlias.put(alias, mode);
         }
     }
 
     @Override
     public Set<String> getDefaults() {
         HashSet<String> set = new HashSet<String>();
-        for (Map.Entry<String, GameMode> modeEntry : modes.entrySet()) {
-            if (modeEntry.getValue().getClass().getAnnotation(DACGameMode.class).isDefault()) {
+        for (Map.Entry<String, Class<? extends GameMode>> modeEntry : modes.entrySet()) {
+            if (modeEntry.getValue().getAnnotation(DACGameMode.class).isDefault()) {
                 set.add(modeEntry.getKey());
             }
         }
@@ -79,8 +85,19 @@ public class DACGameModes implements GameModes {
     }
 
     @Override
-    public GameMode get(String name) {
-        return modesByAlias.get(name);
+    public GameMode getNewInstance(String name) {
+        Class<? extends GameMode> mode = modesByAlias.get(name);
+        if (mode == null) {
+            return null;
+        }
+        /* Should never really fail. */
+        try {
+            return mode.newInstance();
+        } catch (InstantiationException exc) {            
+            return null;
+        } catch (IllegalAccessException exc) {
+            return null;
+        }
     }
 
 }

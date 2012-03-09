@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.GameOptions;
+import fr.aumgn.dac.api.game.TurnBasedGame;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.joinstage.JoinStage;
@@ -32,7 +33,7 @@ public class StartCommand extends PlayerCommandExecutor {
 
         GameMode mode;
         if (args.length > 0) {
-            mode = DAC.getModes().get(args[0]);
+            mode = DAC.getModes().getNewInstance(args[0]);
             if (mode == null) {
                 error(DACMessage.CmdStartUnknownMode);
             }
@@ -41,7 +42,7 @@ public class StartCommand extends PlayerCommandExecutor {
                 error(DACMessage.CmdStartUnavailableMode);
             }
         } else {
-            mode = DAC.getModes().get("classic");
+            mode = DAC.getModes().getNewInstance("classic");
         }
 
         GameOptions options;
@@ -57,7 +58,8 @@ public class StartCommand extends PlayerCommandExecutor {
             error(DACMessage.CmdStartMinNotReached);
         }
 
-        mode.createGame(joinStage, options);
+        //mode.createGame(joinStage, options);
+        new TurnBasedGame(joinStage, mode, options);
     }
 
 }

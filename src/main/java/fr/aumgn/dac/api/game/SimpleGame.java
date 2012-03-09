@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.game.mode.GameMode;
-import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.stage.SimpleStage;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -20,7 +19,6 @@ public abstract class SimpleGame extends SimpleStage implements Game {
 
     protected GameMode mode;
     protected GameOptions options;
-    protected GameHandler gameHandler;
     protected List<StagePlayer> players;
     protected Set<Player> spectators;
 
@@ -36,14 +34,13 @@ public abstract class SimpleGame extends SimpleStage implements Game {
         return list;
     }
 
-    public SimpleGame(Stage stage, GameMode gameMode, GameHandler handler, GameOptions options) {
-        this(stage, gameMode, handler, shuffle(stage.getPlayers()), options);
+    public SimpleGame(Stage stage, GameMode gameMode, GameOptions options) {
+        this(stage, gameMode, shuffle(stage.getPlayers()), options);
     }
 
-    public SimpleGame(Stage stage, GameMode gameMode, GameHandler handler, List<? extends StagePlayer> playersList, GameOptions options) {
+    public SimpleGame(Stage stage, GameMode gameMode, List<? extends StagePlayer> playersList, GameOptions options) {
         super(stage.getArena());
         stage.stop();
-        gameHandler = handler;
         this.mode = gameMode;
         this.options = options;
         options.parsePropulsion();

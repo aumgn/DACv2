@@ -35,7 +35,6 @@ import fr.aumgn.dac.api.game.event.GameWin;
 import fr.aumgn.dac.api.game.event.GameFinish.FinishReason;
 import fr.aumgn.dac.api.game.messages.GameMessage;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
-import fr.aumgn.dac.api.game.mode.GameHandler;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.Stage;
 import fr.aumgn.dac.api.stage.StagePlayer;
@@ -57,19 +56,19 @@ public class TurnBasedGame extends SimpleGame {
         }
     };
 
-    public TurnBasedGame(Stage stage, GameMode gameMode, GameHandler handler, GameOptions options) {
-        this(stage, gameMode, handler, shuffle(stage.getPlayers()), options);
+    public TurnBasedGame(Stage stage, GameMode gameMode, GameOptions options) {
+        this(stage, gameMode, shuffle(stage.getPlayers()), options);
     }
 
-    public TurnBasedGame(Stage stage, GameMode gameMode, GameHandler handler, List<? extends StagePlayer> playersList, GameOptions options) {
-        super(stage, gameMode, handler, playersList, options);
+    public TurnBasedGame(Stage stage, GameMode gameMode, List<? extends StagePlayer> playersList, GameOptions options) {
+        super(stage, gameMode, playersList, options);
         ranking = new ArrayDeque<StagePlayer>();
         turn = players.size() - 1;
         turnTimeOut = DAC.getConfig().getTurnTimeOut();
         turnTimeOutTaskId = -1;
         finished = false;
         GameStart start = new GameStart(this);
-        gameHandler.onStart(start);
+        mode.onStart(start);
         if (start.getPoolReset()) {
             arena.getPool().reset();
         }
@@ -97,7 +96,7 @@ public class TurnBasedGame extends SimpleGame {
         if (turn == players.size()) {
             turn = 0;
             GameNewTurn newTurn = new GameNewTurn(this);
-            gameHandler.onNewTurn(newTurn);
+            mode.onNewTurn(newTurn);
             DAC.callEvent(new DACGameNewTurnEvent(newTurn));
             postProcessGameEvent(newTurn);
         }
@@ -124,7 +123,7 @@ public class TurnBasedGame extends SimpleGame {
                         turnTimeOut);
             }
             GameTurn gameTurn = new GameTurn(player);
-            gameHandler.onTurn(gameTurn);
+            mode.onTurn(gameTurn);
             DAC.callEvent(new DACGameTurnEvent(gameTurn));
             postProcessGameEvent(gameTurn);
             if (gameTurn.getTeleport()) {
@@ -143,7 +142,7 @@ public class TurnBasedGame extends SimpleGame {
         boolean wasPlayerTurn = isPlayerTurn(player);
         StagePlayer currentPlayer = players.get(turn);
         players.remove(player);
-        gameHandler.onLoose(loose);
+        mode.onLoose(loose);
         DAC.callEvent(new DACGameLooseEvent(loose));
         postProcessGameEvent(loose);
         int min = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
@@ -169,7 +168,7 @@ public class TurnBasedGame extends SimpleGame {
     }
 
     private void stop(GameFinish finish) {
-        gameHandler.onFinish(finish);
+        mode.onFinish(finish);
         DAC.callEvent(new DACStageStopEvent(this));
         postProcessGameEvent(finish);
         finished = true;
@@ -203,7 +202,7 @@ public class TurnBasedGame extends SimpleGame {
             int x = player.getLocation().getBlockX();
             int z = player.getLocation().getBlockZ();
             GameJumpFail jumpFail = new GameJumpFail(stagePlayer, x, z);
-            gameHandler.onFail(jumpFail);
+            mode.onFail(jumpFail);
             DAC.callEvent(new DACGameFailEvent(jumpFail));
             if (!jumpFail.isCancelled()) {
                 if (jumpFail.getCancelDeath()) {
@@ -229,7 +228,7 @@ public class TurnBasedGame extends SimpleGame {
             int x = player.getLocation().getBlockX();
             int z = player.getLocation().getBlockZ();
             GameJumpSuccess jumpSuccess = new GameJumpSuccess(stagePlayer, x, z);
-            gameHandler.onSuccess(jumpSuccess);
+            mode.onSuccess(jumpSuccess);
             DAC.callEvent(new DACGameSuccessEvent(jumpSuccess));
             if (!jumpSuccess.isCancelled()) {
                 AreaColumn column = arena.getPool().getColumn(jumpSuccess.getPos());
@@ -246,7 +245,7 @@ public class TurnBasedGame extends SimpleGame {
                 }
                 postProcessGameEvent(jumpSuccess);
                 if (putColumn && arena.getPool().isFull()) {
-                    gameHandler.onPoolFilled(new GamePoolFilled(stagePlayer));
+                    mode.onPoolFilled(new GamePoolFilled(stagePlayer));
                 }
                 if (!finished && jumpSuccess.getSwitchToNextTurn()) {
                     nextTurn();

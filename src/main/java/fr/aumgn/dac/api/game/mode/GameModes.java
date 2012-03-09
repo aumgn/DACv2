@@ -23,6 +23,6 @@ public interface GameModes {
     /**
      * Gets the {@link GameMode} for the given name or alias.  
      */
-    GameMode get(String name);
+    GameMode getNewInstance(String name);
 
 }
