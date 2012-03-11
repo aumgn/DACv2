@@ -29,5 +29,11 @@ public @interface DACGameMode {
      * even while in game.
      */
     boolean allowFill() default false;
+    
+    /**
+     * Indicates if the plugin should check if pool is filled 
+     * after each blokc placed.  
+     */
+    boolean checkPoolFilled() default false;
 
 }

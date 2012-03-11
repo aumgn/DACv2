@@ -25,7 +25,11 @@ import fr.aumgn.dac.api.util.RIPSign;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.stage.TurnBasedGame;
 
-@DACGameMode(name = "classic", aliases = {"default", "def"})
+@DACGameMode(
+        name = "classic",
+        aliases = {"default", "def"},
+        checkPoolFilled = true
+)
 public class ClassicGameMode extends SimpleGameMode {
 
     private boolean suddenDeath = false;

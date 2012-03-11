@@ -14,7 +14,13 @@ import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.SimpleGameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
-@DACGameMode(name = "training", minPlayers = 1, allowFill = true, aliases = {"tr", "t"})
+@DACGameMode(
+        name = "training",
+        aliases = {"tr", "t"},
+        minPlayers = 1,
+        allowFill = true,
+        checkPoolFilled = true
+)
 public class TrainingGameMode extends SimpleGameMode {
 
     @Override

@@ -45,6 +45,7 @@ import fr.aumgn.dac.api.util.DACUtil;
 
 public class TurnBasedGame extends SimpleGame {
 
+    private boolean checkPoolFilled;
     private Deque<StagePlayer> ranking;
     private int turn;
     private int turnTimeOut;
@@ -64,6 +65,7 @@ public class TurnBasedGame extends SimpleGame {
 
     public TurnBasedGame(Stage stage, GameMode gameMode, List<? extends StagePlayer> playersList, GameOptions options) {
         super(stage, gameMode, playersList, options);
+        checkPoolFilled = gameMode.getClass().getAnnotation(DACGameMode.class).checkPoolFilled();
         ranking = new ArrayDeque<StagePlayer>();
         turn = players.size() - 1;
         turnTimeOut = DAC.getConfig().getTurnTimeOut();
@@ -234,19 +236,18 @@ public class TurnBasedGame extends SimpleGame {
             DAC.callEvent(new DACGameSuccessEvent(jumpSuccess));
             if (!jumpSuccess.isCancelled()) {
                 AreaColumn column = arena.getPool().getColumn(jumpSuccess.getPos());
-                boolean putColumn = jumpSuccess.getColumnPattern() != null; 
-                if (putColumn) {
+                if (jumpSuccess.getPutColumn()) {
                     column.set(jumpSuccess.getColumnPattern());
                 }
                 if (jumpSuccess.getMustTeleport()) {
                     stagePlayer.teleporter().afterJump();
                 } else {
-                    if (putColumn) {
+                    if (jumpSuccess.getPutColumn()) {
                         stagePlayer.teleporter().onTopOf(column);
                     }
                 }
                 postProcessGameEvent(jumpSuccess);
-                if (putColumn && arena.getPool().isFull()) {
+                if (checkPoolFilled && jumpSuccess.getPutColumn() && arena.getPool().isFull()) {
                     mode.onPoolFilled(new GamePoolFilled(stagePlayer));
                 }
                 if (!finished && jumpSuccess.getSwitchToNextTurn()) {

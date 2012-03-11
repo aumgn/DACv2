@@ -13,7 +13,11 @@ import fr.aumgn.dac.api.game.mode.SimpleGameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
 import fr.aumgn.dac.plugin.fillstrategy.FillAllButOne;
 
-@DACGameMode(name = "sudden-death", isDefault = false, aliases = {"sd"})
+@DACGameMode(
+        name = "sudden-death",
+        aliases = {"sd"},
+        isDefault = false
+)
 public class SuddenDeathGameMode extends SimpleGameMode {
 
     @Override
@@ -56,7 +60,7 @@ public class SuddenDeathGameMode extends SimpleGameMode {
 
     @Override
     public void onSuccess(GameJumpSuccess event) {
-        event.setColumnPattern(null);
+        event.setPutColumn(false);
         event.sendToPlayer(DACMessage.GameJumpSuccess2);
         event.sendToOthers(DACMessage.GameJumpSuccess);
     }
