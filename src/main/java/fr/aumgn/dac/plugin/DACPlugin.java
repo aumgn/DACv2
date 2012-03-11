@@ -22,6 +22,7 @@ import fr.aumgn.dac.plugin.config.DACPluginConfig;
 import fr.aumgn.dac.plugin.fillstrategy.FillAllButOne;
 import fr.aumgn.dac.plugin.fillstrategy.FillDAC;
 import fr.aumgn.dac.plugin.fillstrategy.FillFully;
+import fr.aumgn.dac.plugin.fillstrategy.FillRandomly;
 import fr.aumgn.dac.plugin.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.mode.training.TrainingGameMode;
@@ -64,6 +65,7 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 
         FillStrategies fillStrategies = DAC.getFillStrategies();
         fillStrategies.register(new FillFully(), "fully");
+        fillStrategies.register(new FillRandomly(), "randomly", "rd");
         fillStrategies.register(new FillAllButOne(), "all-but-one", "abo");
         fillStrategies.register(new FillDAC(), "dac");
 
