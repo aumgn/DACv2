@@ -117,6 +117,7 @@ public class GameOptions implements ConfigurationSerializable {
                     parseInteger(splitted[2]));
             propulsionDelay = parseInteger(splitted[3]);
         }
+        propulsion.divide(new Vector(7.0, 7.0, 7.0));
     }
 
     public int getLives() {
