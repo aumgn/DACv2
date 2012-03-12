@@ -3,8 +3,10 @@ package fr.aumgn.dac.api.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -80,6 +82,25 @@ public final class DACUtil {
         }
 
         return null;
+    }
+    
+    /**
+     * Broadcasts a message to all players which have the given the permission.
+     * But do not include console like Bukkit does.  
+     */
+    public static void broadcast(String message, String permission) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player.hasPermission(permission)) {
+                player.sendMessage(message);
+            }
+        }
+    }
+    
+    /**
+     * Broadcasts a messae to all players.
+     */
+    public static void broadcast(String message) {
+        broadcast(message, Server.BROADCAST_CHANNEL_USERS);
     }
 
     /**
