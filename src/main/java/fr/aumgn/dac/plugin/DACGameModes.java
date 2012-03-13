@@ -1,5 +1,7 @@
 package fr.aumgn.dac.plugin;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -35,8 +37,8 @@ public class DACGameModes implements GameModes {
         }
     }
 
-    private void logRegisterError(Plugin plugin, Class<? extends GameMode> modeCls, String specificError) {
-        DAC.getLogger().warning("Cannot register game mode for " + modeCls.getSimpleName());
+    private void logRegisterError(Plugin plugin, Class<? extends GameMode> mode, String specificError) {
+        DAC.getLogger().warning("Cannot register game mode for " + mode.getSimpleName());
         DAC.getLogger().warning(specificError);
     }
 
@@ -54,9 +56,13 @@ public class DACGameModes implements GameModes {
         
         try {
             Class<?>[] params = null;
-            mode.getConstructor(params);
+            Constructor<? extends GameMode> ctor = mode.getConstructor(params);
+            if (!Modifier.isPublic(ctor.getModifiers())) {
+                logRegisterError(plugin, mode, "Empty constructor is not public");
+                return;
+            }
         } catch (SecurityException exc) {
-            logRegisterError(plugin, mode, "Empty constructor is not public");
+            logRegisterError(plugin, mode, "Cannot access empty constructor");
             return;
         } catch (NoSuchMethodException exc) {
             logRegisterError(plugin, mode, "Do not include an empty constructor");
@@ -96,7 +102,7 @@ public class DACGameModes implements GameModes {
         /* Should never really fail. */
         try {
             return mode.newInstance();
-        } catch (InstantiationException exc) {            
+        } catch (InstantiationException exc) {
             return null;
         } catch (IllegalAccessException exc) {
             return null;
