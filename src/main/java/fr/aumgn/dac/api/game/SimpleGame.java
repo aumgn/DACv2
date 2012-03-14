@@ -56,7 +56,10 @@ public abstract class SimpleGame extends SimpleStage implements Game {
 
     @Override
     public void sendToSpectators(String message) {
-        String spectMessage = ChatColor.BLUE + "[" + arena.getName() + "] " + message;
+        String spectMessage = message;
+        if (DAC.getConfig().getPrefixSpectatorsMessages()) { 
+            spectMessage = ChatColor.BLUE + "[" + arena.getName() + "] " + spectMessage;
+        }
         for (Player spectator : spectators) {
             spectator.sendMessage(spectMessage);
         }

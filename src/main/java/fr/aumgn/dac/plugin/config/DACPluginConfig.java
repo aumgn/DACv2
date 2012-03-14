@@ -22,6 +22,7 @@ public class DACPluginConfig implements DACConfig {
     private int safeRegionHeight;
     private int safeRegionMargin;
     private int turnTimeOut;
+    private boolean prefixSpectatorsMessages;
     private String deathSignFirstLine;
     private DACColors colors;
 
@@ -60,6 +61,7 @@ public class DACPluginConfig implements DACConfig {
         }
         safeRegionHeight = config.getInt("safe-region-height");
         safeRegionMargin = config.getInt("safe-region-margin");
+        prefixSpectatorsMessages = config.getBoolean("prefix-spectators-messages");
         deathSignFirstLine = DACUtil.parseColorsMarkup(config.getString("death-sign-first-line"));
         if (deathSignFirstLine.length() > DACUtil.SIGN_MAX_CHAR) {
             deathSignFirstLine = DACUtil.parseColorsMarkup(config.getDefaults().getString("death-sign-first-line"));
@@ -128,6 +130,11 @@ public class DACPluginConfig implements DACConfig {
     @Override
     public int getTurnTimeOut() {
         return turnTimeOut;
+    }
+
+    @Override
+    public boolean getPrefixSpectatorsMessages() {
+        return prefixSpectatorsMessages;
     }
 
     @Override

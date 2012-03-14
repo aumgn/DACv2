@@ -24,6 +24,10 @@ tp-after-fail: 60
 safe-region-height: 5
 safe-region-margin: 5
 
+# Indicates if the messages should be prefixed with the arena's name
+# for spectator's messages.
+prefix-spectators-messages: true
+
 death-sign-first-line: "<blue>Ci-gît :"
 
 # Colors available

@@ -30,6 +30,8 @@ public interface DACConfig {
     int getSafeRegionMargin();
 
     int getTurnTimeOut();
+    
+    boolean getPrefixSpectatorsMessages();
 
     /**
      * Gets the maximum number of player allowed in a game. 
