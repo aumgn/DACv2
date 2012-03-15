@@ -13,6 +13,14 @@ public class SuddenDeathGamePlayer extends SimpleGamePlayer {
         this.deadThisTurn = false;
     }
 
+    @Override
+    public String formatForList() {
+        if (deadThisTurn) {
+            return super.formatForList() + " : En sursis"; 
+        }
+        return super.formatForList();
+    }
+
     public boolean isDeadThisTurn() {
         return deadThisTurn;
     }

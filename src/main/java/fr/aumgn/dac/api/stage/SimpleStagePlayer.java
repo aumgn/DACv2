@@ -60,7 +60,7 @@ public class SimpleStagePlayer implements StagePlayer {
 
     @Override
     public String formatForList() {
-        return " " + displayName;
+        return displayName;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ListCommand extends PlayerCommandExecutor {
         }
 
         for (StagePlayer playerInStage : stage.getPlayers()) {
-            context.send(playerInStage.formatForList());
+            context.send("  " + playerInStage.formatForList());
         }
     }
 
