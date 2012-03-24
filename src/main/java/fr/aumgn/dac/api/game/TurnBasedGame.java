@@ -148,6 +148,12 @@ public class TurnBasedGame extends SimpleGame {
         DAC.callEvent(new DACGameLooseEvent(loose));
         postProcessGameEvent(loose);
         int min = mode.getClass().getAnnotation(DACGameMode.class).minPlayers();
+        if (loose instanceof GameQuit) {
+            StageQuitReason reason = ((GameQuit) loose).getReason();
+            if (reason == StageQuitReason.Command || reason == StageQuitReason.Forced) {
+                player.teleporter().toStart();
+            }
+        }
         if (players.size() == min - 1) {
             if (players.size() == 1) {
                 onWin(players.get(0));
@@ -178,6 +184,12 @@ public class TurnBasedGame extends SimpleGame {
         DAC.getStageManager().unregister(this);
         if (finish.getPoolReset()) {
             arena.getPool().reset();
+        }
+        if (finish.getReason() == StageStopReason.NotEnoughPlayer
+                || finish.getReason() == StageStopReason.Forced) {
+            for (StagePlayer player : players) {
+                player.teleporter().toStart();
+            }
         }
     }
 
