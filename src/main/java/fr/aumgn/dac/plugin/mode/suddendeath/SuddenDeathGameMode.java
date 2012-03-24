@@ -1,6 +1,7 @@
 package fr.aumgn.dac.plugin.mode.suddendeath;
 
 import fr.aumgn.dac.api.config.DACMessage;
+import fr.aumgn.dac.api.fillstrategy.FillAllButOne;
 import fr.aumgn.dac.api.game.Game;
 import fr.aumgn.dac.api.game.event.GameJumpFail;
 import fr.aumgn.dac.api.game.event.GameJumpSuccess;
@@ -9,16 +10,15 @@ import fr.aumgn.dac.api.game.event.GameNewTurn;
 import fr.aumgn.dac.api.game.event.GameQuit;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
-import fr.aumgn.dac.api.game.mode.SimpleGameMode;
+import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
-import fr.aumgn.dac.plugin.fillstrategy.FillAllButOne;
 
 @DACGameMode(
-        name = "sudden-death",
-        aliases = {"sd"},
-        isDefault = false
+    name = "sudden-death",
+    aliases = {"sd"},
+    isDefault = false
 )
-public class SuddenDeathGameMode extends SimpleGameMode {
+public class SuddenDeathGameMode extends GameMode {
 
     @Override
     public SuddenDeathGamePlayer createPlayer(Game game, StagePlayer player) {

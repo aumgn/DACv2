@@ -8,6 +8,7 @@ import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.config.DACColors;
 import fr.aumgn.dac.api.config.DACConfig;
 import fr.aumgn.dac.api.util.DACUtil;
+import fr.aumgn.dac.api.util.RIPSign;
 
 public class DACPluginConfig implements DACConfig {
 
@@ -63,7 +64,7 @@ public class DACPluginConfig implements DACConfig {
         safeRegionMargin = config.getInt("safe-region-margin");
         prefixSpectatorsMessages = config.getBoolean("prefix-spectators-messages");
         deathSignFirstLine = DACUtil.parseColorsMarkup(config.getString("death-sign-first-line"));
-        if (deathSignFirstLine.length() > DACUtil.SIGN_MAX_CHAR) {
+        if (deathSignFirstLine.length() > RIPSign.SIGN_MAX_CHAR) {
             deathSignFirstLine = DACUtil.parseColorsMarkup(config.getDefaults().getString("death-sign-first-line"));
             DAC.getLogger().warning("Config parameter 'death-sign-first-line' is longer than 16. Falling back to defaut value.");
         }

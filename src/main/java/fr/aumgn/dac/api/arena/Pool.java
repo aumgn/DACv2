@@ -11,7 +11,7 @@ public interface Pool extends VerticalArea {
 
     /**
      * Checks if the given player is above a pool.
-     * This is where he can jump without getting
+     * This is where he can jump without damages.
      */
     boolean isSafe(Player player);
 

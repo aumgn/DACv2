@@ -7,11 +7,11 @@ import org.bukkit.entity.Player;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.game.GameOptions;
+import fr.aumgn.dac.api.game.TurnBasedGame;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.joinstage.JoinStage;
 import fr.aumgn.dac.api.stage.Stage;
-import fr.aumgn.dac.plugin.stage.TurnBasedGame;
 import fr.aumgn.utils.command.PlayerCommandContext;
 import fr.aumgn.utils.command.PlayerCommandExecutor;
 

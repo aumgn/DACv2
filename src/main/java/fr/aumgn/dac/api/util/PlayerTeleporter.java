@@ -42,8 +42,7 @@ public class PlayerTeleporter {
                 column.getTop() + 1,
                 column.getZ() + 0.5,
                 loc.getYaw(),
-                loc.getPitch()
-                ));
+                loc.getPitch()));
     }
 
 }

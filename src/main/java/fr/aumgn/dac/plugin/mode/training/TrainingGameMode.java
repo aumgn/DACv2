@@ -11,17 +11,17 @@ import fr.aumgn.dac.api.game.event.GamePoolFilled;
 import fr.aumgn.dac.api.game.event.GameStart;
 import fr.aumgn.dac.api.game.event.GameTurn;
 import fr.aumgn.dac.api.game.mode.DACGameMode;
-import fr.aumgn.dac.api.game.mode.SimpleGameMode;
+import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.api.stage.StagePlayer;
 
 @DACGameMode(
-        name = "training",
-        aliases = {"tr", "t"},
-        minPlayers = 1,
-        allowFill = true,
-        checkPoolFilled = true
+    name = "training",
+    aliases = {"tr", "t"},
+    minPlayers = 1,
+    allowFill = true,
+    checkPoolFilled = true
 )
-public class TrainingGameMode extends SimpleGameMode {
+public class TrainingGameMode extends GameMode {
 
     @Override
     public TrainingGamePlayer createPlayer(Game game, StagePlayer player) {
@@ -63,15 +63,9 @@ public class TrainingGameMode extends SimpleGameMode {
         event.setCancelDeath(true);
     }
 
-    private void sendStats(TrainingGamePlayer player) {
-        player.send(DACMessage.StatsSuccess.getContent(player.getSuccesses()));
-        player.send(DACMessage.StatsDAC.getContent(player.getDACs()));
-        player.send(DACMessage.StatsFail.getContent(player.getFails()));
-    }
-
     @Override
     public void onLoose(GameLoose event) {
-        sendStats(event.getPlayer(TrainingGamePlayer.class));
+        event.getPlayer(TrainingGamePlayer.class).sendStats();
     }
 
     @Override
@@ -82,7 +76,7 @@ public class TrainingGameMode extends SimpleGameMode {
     @Override
     public void onFinish(GameFinish event) {
         for (TrainingGamePlayer player : event.getPlayers(TrainingGamePlayer.class)) {
-            sendStats(player);
+            player.sendStats();
         }
     }
 

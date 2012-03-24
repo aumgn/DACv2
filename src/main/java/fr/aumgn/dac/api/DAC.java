@@ -21,7 +21,7 @@ import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
 
 /**
- * Core static class which offers access to all main component
+ * Core static class which offers access to all main components
  */
 public final class DAC {
 

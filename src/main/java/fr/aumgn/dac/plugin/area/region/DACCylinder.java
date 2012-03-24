@@ -20,7 +20,7 @@ import fr.aumgn.dac.plugin.area.vector.DACBlockVector;
 import fr.aumgn.dac.plugin.area.vector.DACBlockVector2D;
 
 @SerializableAs("dac-cylinder")
-public class DACCylinder extends DACSimpleRegion {
+public class DACCylinder extends DACCachedRegion {
 
     public static class DACCylinderSelection extends RegionSelection {
 
@@ -56,7 +56,10 @@ public class DACCylinder extends DACSimpleRegion {
     }
 
     public DACCylinder(CylinderRegion region) {
-        this(region.getMinimumY(), region.getMaximumY(), new DACBlockVector(region.getCenter()), new DACBlockVector2D(region.getRadius()));
+        this(region.getMinimumY(), 
+                region.getMaximumY(),
+                new DACBlockVector(region.getCenter()), 
+                new DACBlockVector2D(region.getRadius()));
     }
 
     public static DACCylinder deserialize(Map<String, Object> map) {
@@ -80,7 +83,10 @@ public class DACCylinder extends DACSimpleRegion {
 
     @Override
     public Region createWERegion(LocalWorld world) {
-        CylinderRegion cyl = new CylinderRegion(world, center.getVector(), radius.getVector(), minY, maxY);
+        CylinderRegion cyl = new CylinderRegion(world,
+                center.getVector(),
+                radius.getVector(),
+                minY, maxY);
         // Workaround
         cyl.setCenter(cyl.getCenter());
         return cyl;

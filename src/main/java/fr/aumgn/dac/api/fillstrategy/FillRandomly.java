@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy;
 
 import java.util.Random;
 
@@ -9,7 +9,6 @@ import fr.aumgn.dac.api.area.AreaColumn;
 import fr.aumgn.dac.api.area.ColumnPattern;
 import fr.aumgn.dac.api.area.VerticalArea;
 import fr.aumgn.dac.api.area.column.RandomUniformColumn;
-import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
  * Replaces random column of a {@link VerticalArea} with wool.

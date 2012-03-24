@@ -18,14 +18,23 @@ import fr.aumgn.dac.api.arena.Pool;
  */
 public class RIPSign {
 
-    private static final int SIGN_HORIZONTAL_FACES = 16;
-    private static final double SIGN_FACES_ANGLE = Math.PI / SIGN_HORIZONTAL_FACES;
-    private static final double MOD_0_TO_1 = Math.cos(7 * SIGN_FACES_ANGLE);
-    private static final double MOD_1_TO_2 = Math.cos(3 * SIGN_FACES_ANGLE);
-    private static final double MOD_2_TO_1 = Math.cos(SIGN_FACES_ANGLE);
+    private static final double ANGLE_7_PI_16;
+    private static final double ANGLE_3_PI_16;
+    private static final double ANGLE_PI_16;
+
+    static {
+        double sign_faces_angle_unit = Math.PI / 16;
+        ANGLE_7_PI_16 = Math.cos(7 * sign_faces_angle_unit);
+        ANGLE_3_PI_16 = Math.cos(3 * sign_faces_angle_unit);
+        ANGLE_PI_16 = Math.cos(sign_faces_angle_unit);
+    }
 
     private Pool pool;
     private Vector vector;
+    /** Maximum number of character per sign line. */
+    public static final int SIGN_MAX_CHAR = 16;
+    /** Number of lines per sign. */
+    public static final int SIGN_LINES = 4;
 
     public RIPSign(Pool pool, Vector vector) {
         this.pool = pool;
@@ -33,9 +42,8 @@ public class RIPSign {
     }
 
     /**
-     * Add player name to this the sign this instance represents.
-     * <p/>
-     * If the sign do not exists it will be automatically created.  
+     * Add player name to the sign this instance represents.
+     * If the sign do not exists it will be automatically created.
      */
     public void rip(String name) {
         World world = pool.getArena().getWorld();
@@ -48,7 +56,7 @@ public class RIPSign {
             createRIPSign(block);
         }
 
-        for (int i = 1; i < DACUtil.SIGN_LINES; i++) {
+        for (int i = 1; i < SIGN_LINES; i++) {
             Sign sign = (Sign) block.getState();
             if (sign.getLine(i).isEmpty()) {
                 sign.setLine(i, name);
@@ -61,17 +69,17 @@ public class RIPSign {
     private int getBlockFaceModValue(double i) {
         if (i < -1 || i > 1) {
             throw new IllegalArgumentException("Value must be between -1 and 1");
-        } else if (i < -MOD_2_TO_1) {
+        } else if (i < -ANGLE_PI_16) {
             return -1;
-        } else if (i < -MOD_1_TO_2) {
+        } else if (i < -ANGLE_3_PI_16) {
             return -2;
-        } else if (i < -MOD_0_TO_1) {
+        } else if (i < -ANGLE_7_PI_16) {
             return -1;
-        } else if (i > MOD_2_TO_1) {
+        } else if (i > ANGLE_PI_16) {
             return 1;
-        } else if (i > MOD_1_TO_2) {
+        } else if (i > ANGLE_3_PI_16) {
             return 2;
-        } else if (i > MOD_0_TO_1) {
+        } else if (i > ANGLE_7_PI_16) {
             return 1;
         } else {
             return 0;
@@ -79,19 +87,15 @@ public class RIPSign {
     }
 
     private BlockFace getHorizontalFaceFor(Vector2D vec) {
-        try {
-            Vector2D dir = vec.normalize();
-            int modX = getBlockFaceModValue(dir.getX());
-            int modZ = getBlockFaceModValue(dir.getZ());
-            for (BlockFace face : BlockFace.values()) {
-                if (face.getModY() == 0 && face.getModX() == modX && face.getModZ() == modZ) {
-                    return face;
-                }
+        Vector2D dir = vec.normalize();
+        int modX = getBlockFaceModValue(dir.getX());
+        int modZ = getBlockFaceModValue(dir.getZ());
+        for (BlockFace face : BlockFace.values()) {
+            if (face.getModY() == 0 && face.getModX() == modX && face.getModZ() == modZ) {
+                return face;
             }
-            return BlockFace.SELF;
-        } catch (IllegalArgumentException exc) {
-            return BlockFace.SELF;
         }
+        return BlockFace.SELF;
     }
 
     private void createRIPSign(Block block) {

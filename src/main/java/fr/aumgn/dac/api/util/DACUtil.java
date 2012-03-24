@@ -21,11 +21,6 @@ public final class DACUtil {
 
     public static final int TICKS_PER_SECONDS = 20;
     public static final int PLAYER_MAX_HEALTH = 20;
-    /** Maximum number of character per sign line. */
-    public static final int SIGN_MAX_CHAR = 16;
-    /** Number of lines per sign. */
-    public static final int SIGN_LINES = 4;
-
     /** Decimal Minecraft block bounding box left limit. */
     private static final double BLOCK_LIMIT_LEFT = 0.3;
     /** Decimal Minecraft block bounding box right limit.*/
@@ -60,7 +55,7 @@ public final class DACUtil {
     }
 
     /**
-     * Gets the Vector representing the block above the one which is responsible for player's damage.
+     * Gets the Vector representing the block above the one responsible for player's damage.
      */
     public static Vector getDamageBlockVector(Location loc) {
         Block block = loc.getBlock().getRelative(0, -1, 0);
@@ -97,7 +92,7 @@ public final class DACUtil {
     }
     
     /**
-     * Broadcasts a messae to all players.
+     * Broadcasts a message to all players.
      */
     public static void broadcast(String message) {
         broadcast(message, Server.BROADCAST_CHANNEL_USERS);

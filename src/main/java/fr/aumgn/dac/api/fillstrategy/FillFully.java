@@ -1,4 +1,4 @@
-package fr.aumgn.dac.plugin.fillstrategy;
+package fr.aumgn.dac.api.fillstrategy;
 
 import org.bukkit.Material;
 
@@ -8,7 +8,6 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.area.VerticalArea;
-import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 
 /**
  * Replaces all column of a {@link VerticalArea} with the given block. 

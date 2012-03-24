@@ -12,10 +12,10 @@ import com.sk89q.worldedit.regions.Region;
 
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.arena.Pool;
+import fr.aumgn.dac.api.fillstrategy.FillFully;
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
 import fr.aumgn.dac.plugin.area.DACVerticalArea;
 import fr.aumgn.dac.plugin.area.region.DACRegion;
-import fr.aumgn.dac.plugin.fillstrategy.FillFully;
 
 public class DACPool extends DACVerticalArea implements Pool {
 

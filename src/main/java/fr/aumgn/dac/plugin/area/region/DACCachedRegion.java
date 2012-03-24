@@ -6,7 +6,7 @@ import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Region;
 
-public abstract class DACSimpleRegion implements DACRegion {
+public abstract class DACCachedRegion implements DACRegion {
 
     private Region region;
 

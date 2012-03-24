@@ -8,7 +8,7 @@ depend: [WorldEdit]
 
 commands:
     dac:
-        usage: "Utilisation: /<command> join | start | stop | reset | quit | lives | goto"
+        usage: "Utilisation: /<command> join | start | quit | watch | unwatch | fill | reset | lives | goto | colors"
     dac-reload:
         description: 'Recharge la configuration du plugin.'
         usage: "Utilisation: /<command>"
@@ -98,7 +98,7 @@ commands:
         description: "Permets de se retirer des spectateurs d'une ou plusieurs partie(s)"
         usage: 'Utilisation: /<command> [arene1[ arene2[ ...]]]'
         permission: 'dac.cmd.unwatch'
-        
+
 permissions:
     dac.game.watch:
         description: "Permets de s'enregistrer en tant que spectateur d'une partie."
