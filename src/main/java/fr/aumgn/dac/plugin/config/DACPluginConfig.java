@@ -51,7 +51,7 @@ public class DACPluginConfig implements DACConfig {
         tpBeforeJump = config.getBoolean("tp-before-jump", true);
         // Backward compatibility.
         if (config.isInt("tp-after-jump")) {
-            tpAfterJump = config.getInt("tp-after-jump") > 0;
+            tpAfterJump = config.getInt("tp-after-jump") >= 0;
         } else {
             tpAfterJump = config.getBoolean("tp-after-jump", true);
         }

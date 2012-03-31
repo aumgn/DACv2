@@ -1,9 +1,6 @@
 package fr.aumgn.dac.plugin.area.region;
 
-import org.bukkit.World;
-
 import com.sk89q.worldedit.LocalWorld;
-import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.regions.Region;
 
 public abstract class DACCachedRegion implements DACRegion {
@@ -11,9 +8,6 @@ public abstract class DACCachedRegion implements DACRegion {
     private Region region;
 
     public abstract Region createWERegion(LocalWorld world);
-
-    @Override
-    public abstract Selection getSelection(World world);
 
     @Override
     public Region getRegion(LocalWorld world) {

@@ -71,14 +71,14 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
         fillStrategies.register(new FillAllButOne(), "all-but-one", "abo");
         fillStrategies.register(new FillDAC(), "dac");
 
-        getLogger().info(getDescription().getName() + " loaded.");
+        getLogger().info(getDescription().getName() + " Enabled.");
     }
 
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
         DAC.getArenas().dump();
-        getLogger().info(getDescription().getName() + " unloaded.");
+        getLogger().info(getDescription().getName() + " Disabled.");
     }
 
     @Override
