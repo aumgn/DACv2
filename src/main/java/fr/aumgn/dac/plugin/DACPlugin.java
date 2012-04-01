@@ -7,6 +7,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,6 +23,7 @@ import fr.aumgn.dac.api.fillstrategy.FillRandomly;
 import fr.aumgn.dac.api.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
+import fr.aumgn.dac.plugin.DACConfigLoader.Error;
 import fr.aumgn.dac.plugin.arena.DACArenas;
 import fr.aumgn.dac.plugin.command.DACPluginCommand;
 import fr.aumgn.dac.plugin.config.DACPluginConfig;
@@ -30,6 +32,8 @@ import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
 import fr.aumgn.dac.plugin.mode.training.TrainingGameMode;
 
 public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
+
+    private FileConfiguration dacConfig;
 
     @Override
     public List<Class<? extends GameMode>> getGameModes() {
@@ -85,5 +89,24 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
     public boolean onCommand(CommandSender sender, Command command, String lbl, String[] args) {
         sender.sendMessage("DAC ne semble pas s'etre chargé correctement. Impossible d'executer la commande.");
         return true;
+    }
+
+    @Override
+    public FileConfiguration getConfig() {
+        if (dacConfig == null) {
+            reloadConfig();
+        }
+
+        return dacConfig;
+    }
+
+    @Override
+    public void reloadConfig() {
+        try {
+            dacConfig = new DACConfigLoader().loadWithDefaults(this, "config.yml");
+        } catch (Error exc) {
+            getLogger().warning("An error occured while loading config.yml.");
+            exc.printStackTrace();
+        }
     }
 }

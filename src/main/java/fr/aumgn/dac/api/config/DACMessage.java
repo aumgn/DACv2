@@ -1,16 +1,13 @@
 package fr.aumgn.dac.api.config;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.game.messages.GameMessageContent;
 import fr.aumgn.dac.api.util.DACUtil;
+import fr.aumgn.dac.plugin.DACConfigLoader;
+import fr.aumgn.dac.plugin.DACConfigLoader.Error;
 
 public enum DACMessage implements GameMessageContent {
 
@@ -118,7 +115,7 @@ public enum DACMessage implements GameMessageContent {
     StatsDAC                ("stats.dac"),
     StatsFail               ("stats.fail");
 
-    private static final String MESSAGES_FILENAME = "messages.yml";
+    private static final String FILENAME = "messages.yml";
 
     private static void load(Configuration config, Configuration defaults) {
         for (DACMessage message : DACMessage.values()) {
@@ -134,18 +131,15 @@ public enum DACMessage implements GameMessageContent {
     }
 
     public static void reload(Plugin plugin) {
-        YamlConfiguration newMessages = new YamlConfiguration();
-        YamlConfiguration defaultMessages = new YamlConfiguration();
         try {
-            newMessages.load(new File(plugin.getDataFolder(), MESSAGES_FILENAME));
-            defaultMessages.load(plugin.getResource(MESSAGES_FILENAME));
-            load(newMessages, defaultMessages);
-        } catch (IOException exc) {
-            DAC.getLogger().severe("Unable to read " + MESSAGES_FILENAME + " file.");
-            DAC.getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
-        } catch (InvalidConfigurationException exc) {
-            DAC.getLogger().severe("Unable to load " + MESSAGES_FILENAME + " file.");
-            DAC.getLogger().severe(exc.getClass().getSimpleName() + " exception raised");
+            DACConfigLoader loader = new DACConfigLoader();
+            FileConfiguration config = loader.load(plugin, FILENAME);
+            FileConfiguration defaults = loader.loadDefaults(plugin, FILENAME);
+            load(config, defaults);
+        } catch (Error exc) {
+            plugin.getLogger().warning(
+                    "An error occured while loading + " + FILENAME);
+            exc.printStackTrace();
         }
     }
 
