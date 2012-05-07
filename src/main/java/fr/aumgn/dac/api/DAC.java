@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -68,14 +67,6 @@ public final class DAC {
 
     public static Plugin getPlugin() {
         return plugin;
-    }
-
-    public static DACCommand getCommand() {
-        PluginCommand plCmd = Bukkit.getPluginCommand("dac");
-        if (plCmd.getExecutor() instanceof DACCommand) {
-            return (DACCommand) plCmd.getExecutor();
-        }
-        return null;
     }
 
     public static Logger getLogger() {

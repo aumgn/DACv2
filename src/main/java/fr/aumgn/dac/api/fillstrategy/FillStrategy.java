@@ -1,5 +1,7 @@
 package fr.aumgn.dac.api.fillstrategy;
 
+import java.util.List;
+
 import fr.aumgn.dac.api.area.VerticalArea;
 
 /**
@@ -7,6 +9,6 @@ import fr.aumgn.dac.api.area.VerticalArea;
  */
 public interface FillStrategy {
 
-    void fill(VerticalArea area, String[] options);
+    void fill(VerticalArea area, List<String> args);
 
 }

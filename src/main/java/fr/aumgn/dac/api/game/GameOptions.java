@@ -1,6 +1,7 @@
 package fr.aumgn.dac.api.game;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class GameOptions implements ConfigurationSerializable {
     private int propulsionDelay;
     private int lives;
 
-    public static GameOptions parse(String[] options) {
+    public static GameOptions parse(List<String> options) {
         Map<String, String> map = new HashMap<String, String>();
         for (String option : options) {
             String[] parsed = option.split(":");

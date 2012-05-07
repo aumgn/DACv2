@@ -1,5 +1,6 @@
 package fr.aumgn.dac.api.fillstrategy;
 
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Material;
@@ -19,7 +20,7 @@ import fr.aumgn.dac.api.area.column.RandomUniformColumn;
 public class FillAllButOne implements FillStrategy {
 
     @Override
-    public void fill(VerticalArea area, String[] args) {
+    public void fill(VerticalArea area, List<String> args) {
         Random rand = DAC.getRand();
         Region region = area.getWERegion();
         Vector minPoint = region.getMinimumPoint();

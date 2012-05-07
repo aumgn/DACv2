@@ -83,16 +83,17 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
     }
 
     @Override
-    public void addPlayer(Player player, String[] colorsName) {
+    public void addPlayer(Player player, List<String> colorsName) {
         int i = 0;
         DACColor color;
-        while (i < colorsName.length && !isColorAvailable(colorsName[i])) {
+        while (i < colorsName.size() && !isColorAvailable(colorsName.get(i))) {
             i++;
         }
-        if (i == colorsName.length) {
+
+        if (i == colorsName.size()) {
             color = getFirstColorAvailable();
         } else {
-            color = colors.get(colorsName[i]);
+            color = colors.get(colorsName.get(i));
         }
         addPlayer(player, color);
     }

@@ -1,5 +1,7 @@
 package fr.aumgn.dac.api.fillstrategy;
 
+import java.util.List;
+
 import org.bukkit.Material;
 
 import com.sk89q.worldedit.EditSession;
@@ -14,23 +16,23 @@ import fr.aumgn.dac.api.area.VerticalArea;
  */
 public class FillFully implements FillStrategy {
 
-    protected BaseBlock getBlock(String[] args) {
-        if (args.length == 0) {
+    protected BaseBlock getBlock(List<String> args) {
+        if (args.size() == 0) {
             return new BaseBlock(Material.STATIONARY_WATER.getId());
         }
-        Material material = Material.matchMaterial(args[0]);
+        Material material = Material.matchMaterial(args.get(0));
         if (material == null) {
             material = Material.STATIONARY_WATER;
         }
-        if (args.length == 2) {
-            return new BaseBlock(material.getId(), Byte.parseByte(args[1]));
+        if (args.size() == 2) {
+            return new BaseBlock(material.getId(), Byte.parseByte(args.get(1)));
         } else {
             return new BaseBlock(material.getId());
         }
     }
 
     @Override
-    public void fill(VerticalArea area, String[] args) {
+    public void fill(VerticalArea area, List<String> args) {
         BaseBlock baseBlock = getBlock(args);
         EditSession editSession = new EditSession(area.getArena().getWEWorld(), -1);
         try {

@@ -1,5 +1,8 @@
 package fr.aumgn.dac.plugin.arena;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -22,8 +25,7 @@ public class DACPool extends DACVerticalArea implements Pool {
     private static final Material SIGN_MATERIAL = Material.SIGN_POST;
     private static final Material AIR = Material.AIR;
     private static final FillFully WATER_FILLER = new FillFully() {
-        @Override
-        protected BaseBlock getBlock(String[] args) {
+        protected BaseBlock getBlock(List<String> args) {
             return new BaseBlock(Material.STATIONARY_WATER.getId());
         }
     };
@@ -50,14 +52,14 @@ public class DACPool extends DACVerticalArea implements Pool {
     }
 
     @Override
-    public void fillWith(FillStrategy strategy, String[] args) {
+    public void fillWith(FillStrategy strategy, List<String> args) {
         removeSigns();
         super.fillWith(strategy, args);
     }
 
     @Override
     public void reset() {
-        fillWith(WATER_FILLER, new String[0]);
+        fillWith(WATER_FILLER, Collections.<String>emptyList());
     }
 
     @Override

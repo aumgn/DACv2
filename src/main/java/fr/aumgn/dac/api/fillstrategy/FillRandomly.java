@@ -1,5 +1,6 @@
 package fr.aumgn.dac.api.fillstrategy;
 
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Material;
@@ -19,13 +20,13 @@ public class FillRandomly implements FillStrategy {
     public FillRandomly() {}
 
     @Override
-    public void fill(VerticalArea area, String[] args) {
+    public void fill(VerticalArea area, List<String> args) {
         int percentage;
-        if (args.length == 0) {
+        if (args.size() == 0) {
             percentage = 50;
         } else {
             try {
-                percentage = Integer.parseInt(args[0]);
+                percentage = Integer.parseInt(args.get(0));
                 percentage = Math.min(Math.max(0, percentage), 100);
             } catch (NumberFormatException exc) {
                 percentage = 50;

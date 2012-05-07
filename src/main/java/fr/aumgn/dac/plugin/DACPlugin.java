@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -14,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
+import fr.aumgn.bukkitutils.command.CommandsRegistration;
+import fr.aumgn.bukkitutils.command.messages.FrenchMessages;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.exception.WorldEditNotLoaded;
 import fr.aumgn.dac.api.fillstrategy.FillAllButOne;
@@ -25,7 +25,15 @@ import fr.aumgn.dac.api.game.mode.DACGameModeProvider;
 import fr.aumgn.dac.api.game.mode.GameMode;
 import fr.aumgn.dac.plugin.DACConfigLoader.Error;
 import fr.aumgn.dac.plugin.arena.DACArenas;
-import fr.aumgn.dac.plugin.command.DACPluginCommand;
+import fr.aumgn.dac.plugin.command.AdminCommands;
+import fr.aumgn.dac.plugin.command.ArenasCommands;
+import fr.aumgn.dac.plugin.command.GameCommands;
+import fr.aumgn.dac.plugin.command.ModesCommands;
+import fr.aumgn.dac.plugin.command.OptionsCommands;
+import fr.aumgn.dac.plugin.command.PlayerCommands;
+import fr.aumgn.dac.plugin.command.PoolCommands;
+import fr.aumgn.dac.plugin.command.SetupCommands;
+import fr.aumgn.dac.plugin.command.SpectatorCommands;
 import fr.aumgn.dac.plugin.config.DACPluginConfig;
 import fr.aumgn.dac.plugin.mode.classic.ClassicGameMode;
 import fr.aumgn.dac.plugin.mode.suddendeath.SuddenDeathGameMode;
@@ -60,8 +68,7 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
             throw new WorldEditNotLoaded();
         }
 
-        DACPluginCommand dacCommand = new DACPluginCommand();
-        Bukkit.getPluginCommand("dac").setExecutor(dacCommand);
+        registerCommands();
 
         DACListener listener = new DACListener();
 
@@ -78,17 +85,25 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
         getLogger().info(getDescription().getName() + " Enabled.");
     }
 
+    private void registerCommands() {
+        CommandsRegistration registration = new CommandsRegistration(
+                this, new FrenchMessages());
+        registration.register(new AdminCommands());
+        registration.register(new ArenasCommands());
+        registration.register(new GameCommands());
+        registration.register(new ModesCommands());
+        registration.register(new OptionsCommands());
+        registration.register(new PlayerCommands());
+        registration.register(new PoolCommands());
+        registration.register(new SetupCommands());
+        registration.register(new SpectatorCommands());
+    }
+
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
         DAC.getArenas().dump();
         getLogger().info(getDescription().getName() + " Disabled.");
-    }
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String lbl, String[] args) {
-        sender.sendMessage("DAC ne semble pas s'etre chargé correctement. Impossible d'executer la commande.");
-        return true;
     }
 
     @Override

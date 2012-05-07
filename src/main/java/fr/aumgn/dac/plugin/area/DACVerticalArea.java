@@ -1,6 +1,7 @@
 package fr.aumgn.dac.plugin.area;
 
 import java.util.Iterator;
+import java.util.List;
 
 import com.sk89q.worldedit.Vector2D;
 
@@ -46,7 +47,7 @@ public class DACVerticalArea extends DACArea implements VerticalArea {
     }
 
     @Override
-    public void fillWith(FillStrategy filler, String[] args) {
+    public void fillWith(FillStrategy filler, List<String> args) {
         filler.fill(this, args);
     }
 

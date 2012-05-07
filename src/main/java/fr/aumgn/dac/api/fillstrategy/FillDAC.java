@@ -1,5 +1,7 @@
 package fr.aumgn.dac.api.fillstrategy;
 
+import java.util.List;
+
 import org.bukkit.Material;
 
 import fr.aumgn.dac.api.DAC;
@@ -20,7 +22,7 @@ public class FillDAC implements FillStrategy {
     }
 
     @Override
-    public void fill(VerticalArea area, String[] args) {
+    public void fill(VerticalArea area, List<String> args) {
         sameParity = DAC.getRand().nextBoolean();
         ColumnPattern pattern = new RandomUniformColumn();
         for (AreaColumn column : area.columns()) {

@@ -1,5 +1,7 @@
 package fr.aumgn.dac.plugin.mode.suddendeath;
 
+import java.util.Collections;
+
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.fillstrategy.FillAllButOne;
 import fr.aumgn.dac.api.game.Game;
@@ -49,7 +51,7 @@ public class SuddenDeathGameMode extends GameMode {
             }
         }
 
-        game.getArena().getPool().fillWith(new FillAllButOne(), new String[0]);
+        game.getArena().getPool().fillWith(new FillAllButOne(), Collections.<String>emptyList());
     }
 
     @Override

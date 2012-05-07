@@ -1,5 +1,7 @@
 package fr.aumgn.dac.api.area;
 
+import java.util.List;
+
 import com.sk89q.worldedit.Vector2D;
 
 import fr.aumgn.dac.api.fillstrategy.FillStrategy;
@@ -34,7 +36,7 @@ public interface VerticalArea extends Area {
      */
     boolean isFull();
 
-    void fillWith(FillStrategy strategy, String[] fillArgs);
+    void fillWith(FillStrategy strategy, List<String> args);
 
     Iterable<AreaColumn> columns();
 
