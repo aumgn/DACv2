@@ -1,3 +1,3 @@
-[submodule "src/main/java/fr/aumgn/utils/command"]
-	path = src/main/java/fr/aumgn/utils/command
-	url = git://github.com/aumgn/BukkitCommandDispatcher.git
+[submodule "src/main/java/fr/aumgn/bukkitutils"]
+	path = src/main/java/fr/aumgn/bukkitutils
+	url = git://github.com/aumgn/BukkitUtils
