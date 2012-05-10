@@ -1,3 +1,0 @@
-[submodule "src/main/java/fr/aumgn/bukkitutils"]
-	path = src/main/java/fr/aumgn/bukkitutils
-	url = git://github.com/aumgn/BukkitUtils
