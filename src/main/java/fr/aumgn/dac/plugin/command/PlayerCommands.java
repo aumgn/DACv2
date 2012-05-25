@@ -46,7 +46,7 @@ public class PlayerCommands extends DACCommands {
         }
 
         if (joinStage.isMaxReached()) {
-            throw new DACException(DACMessage.CmdJoinMaxReached.getContent(DAC.getConfig().getMaxPlayers()));
+            throw new DACException(DACMessage.CmdJoinMaxReached.getContent(DAC.getColors().size()));
         }
 
         joinStage.addPlayer(player, args.asList());

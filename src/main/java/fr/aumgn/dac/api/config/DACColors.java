@@ -1,9 +1,12 @@
 package fr.aumgn.dac.api.config;
 
+import java.util.Map.Entry;
+import java.util.Set;
+
 /**
  * Class which manages available {@link DACColor}.
  */
-public interface DACColors extends Iterable<DACColor> {
+public interface DACColors {
 
     DACColor get(String name);
 
@@ -12,11 +15,12 @@ public interface DACColors extends Iterable<DACColor> {
      */
     DACColor first();
 
-    int amount();
+    int size();
 
     /**
      * Gets a random color
      */
     DACColor random();
 
+    Set<Entry<String, DACColor>> colors();
 }

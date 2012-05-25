@@ -11,13 +11,16 @@ import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
+import fr.aumgn.dac.api.arena.Arena;
 import fr.aumgn.dac.api.arena.Arenas;
+import fr.aumgn.dac.api.config.DACColors;
 import fr.aumgn.dac.api.config.DACConfig;
 import fr.aumgn.dac.api.config.DACMessage;
 import fr.aumgn.dac.api.fillstrategy.FillStrategies;
 import fr.aumgn.dac.api.game.mode.GameModes;
 import fr.aumgn.dac.api.stage.StageManager;
 import fr.aumgn.dac.api.stage.StagePlayerManager;
+import fr.aumgn.dac.plugin.DACPlugin;
 
 /**
  * Core static class which offers access to all main components
@@ -34,6 +37,7 @@ public final class DAC {
     private static StageManager stageManager;
     private static StagePlayerManager playerManager;
     private static DACConfig config;
+    private static DACColors colors;
 
     private DAC() {}
 
@@ -46,7 +50,7 @@ public final class DAC {
      * @throws UnsupportedOperationException if already initialized
      */
     public static void init(Plugin plugin, WorldEditPlugin worldEdit, Listener listener,
-            DACConfig config, GameModes gameModes, Arenas arenas) {
+            GameModes gameModes, Arenas arenas) {
         if (DAC.plugin != null) {
             throw new UnsupportedOperationException("Cannot init DAC twice.");
         }
@@ -59,8 +63,8 @@ public final class DAC {
         rand = new Random();
         stageManager = new StageManager();
         playerManager = new StagePlayerManager();
-        DAC.config = config;
         reloadConfig();
+        reloadColors();
         reloadMessages();
         arenas.load();
     }
@@ -78,8 +82,15 @@ public final class DAC {
     }
 
     public static void reloadConfig() {
-        plugin.reloadConfig();
-        config.load(plugin.getConfig());
+        config = ((DACPlugin) plugin).reloadDACConfig();
+        // Update cached safe regions.
+        for (Arena arena : getArenas()) {
+            arena.getPool().updateSafeRegion();
+        }
+    }
+
+    public static void reloadColors() {
+        colors = ((DACPlugin) plugin).reloadDACColors();
     }
 
     public static void reloadMessages() {
@@ -88,6 +99,10 @@ public final class DAC {
 
     public static DACConfig getConfig() {
         return config;
+    }
+
+    public static DACColors getColors() {
+        return colors;
     }
 
     public static GameModes getModes() {

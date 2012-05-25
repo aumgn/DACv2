@@ -1,0 +1,74 @@
+# ===================================
+#
+# ** Colors list.
+#
+# Example:
+#    "red": {
+#        "chat": "DARK_RED",
+#        "material": "WOOL"
+#    }
+#
+# ===================================
+
+{
+  "rouge": {
+    "chat-color": "DARK_RED",
+    "material": "WOOL",
+    "data": 14
+  },
+  "vert": {
+    "chat-color": "DARK_GREEN",
+    "material": "WOOL",
+    "data": 13
+  },
+  "argent": {
+    "chat-color": "GRAY",
+    "material": "WOOL",
+    "data": 8
+  },
+  "violet": {
+    "chat-color": "DARK_PURPLE",
+    "material": "WOOL",
+    "data": 10
+  },
+  "orange": {
+    "chat-color": "GOLD",
+    "material": "WOOL",
+    "data": 1
+  },
+  "blanc": {
+    "chat-color": "WHITE",
+    "material": "WOOL",
+    "data": 0
+  },
+  "jaune": {
+    "chat-color": "YELLOW",
+    "material": "WOOL",
+    "data": 4
+  },
+  "magenta": {
+    "chat-color": "RED",
+    "material": "WOOL",
+    "data": 2
+  },
+  "gris": {
+    "chat-color": "DARK_GRAY",
+    "material": "WOOL",
+    "data": 7
+  },
+  "citron": {
+    "chat-color": "GREEN",
+    "material": "WOOL",
+    "data": 5
+  },
+  "rose": {
+    "chat-color": "LIGHT_PURPLE",
+    "material": "WOOL",
+    "data": 6
+  },
+  "noir": {
+    "chat-color": "BLACK",
+    "material": "WOOL",
+    "data": 15
+  }
+}

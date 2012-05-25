@@ -3,6 +3,7 @@ package fr.aumgn.dac.api.joinstage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
     public SimpleJoinStage(Arena arena) {
         super(arena);
-        colors = DAC.getConfig().getColors();
+        colors = DAC.getColors();
         colorsMap = new HashSet<DACColor>();
         players = new ArrayList<SimpleJoinStagePlayer>();
         DACUtil.broadcast(DACMessage.JoinNewGame.getContent(arena.getName()), "dac.game.watch");
@@ -54,9 +55,9 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
     }
 
     private DACColor getFirstColorAvailable() {
-        for (DACColor color : colors) {
-            if (!colorsMap.contains(color)) {
-                return color;
+        for (Entry<String, DACColor> color : colors.colors()) {
+            if (!colorsMap.contains(color.getValue())) {
+                return color.getValue();
             }
         }
         // Should never be reached
@@ -132,7 +133,7 @@ public class SimpleJoinStage extends SimpleStage implements JoinStage {
 
     @Override
     public boolean isMaxReached() {
-        return (players.size() >= DAC.getConfig().getMaxPlayers());
+        return (players.size() >= DAC.getColors().size());
     }
 
 }

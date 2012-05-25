@@ -3,17 +3,30 @@ package fr.aumgn.dac.api.config;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-/**
- * Represents a color used by a player.
- */
-public interface DACColor {
+public class DACColor {
 
-    String getName();
+    private ChatColor chatColor;
+    private Material material;
+    private byte data;
 
-    ChatColor getChatColor();
+    public DACColor() {
+    }
 
-    Material getMaterial();
+    public DACColor(ChatColor chatColor, Material material, byte data) {
+        this.chatColor = chatColor;
+        this.material = material;
+        this.data = data;
+    }
 
-    byte getData();
+    public ChatColor getChatColor() {
+        return chatColor;
+    }
 
+    public Material getMaterial() {
+        return material;
+    }
+
+    public byte getData() {
+        return data;
+    }
 }

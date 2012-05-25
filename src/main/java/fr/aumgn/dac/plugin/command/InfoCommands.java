@@ -1,5 +1,7 @@
 package fr.aumgn.dac.plugin.command;
 
+import java.util.Map.Entry;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,8 +22,8 @@ public class InfoCommands extends DACCommands {
     public void colors(CommandSender sender, CommandArgs args) {
         int i = 0;
         StringBuilder msg = new StringBuilder(32);
-        for (DACColor color : DAC.getConfig().getColors()) {
-            msg.append(getColorMessage(color));
+        for (Entry<String, DACColor> colorEntry : DAC.getColors().colors()) {
+            msg.append(getColorMessage(colorEntry));
             msg.append(" ");
             if (i == 2) {
                 sender.sendMessage(msg.toString());
@@ -37,8 +39,8 @@ public class InfoCommands extends DACCommands {
         }
     }
 
-    private String getColorMessage(DACColor color) {
-        return color.getChatColor() + color.getName();
+    private String getColorMessage(Entry<String, DACColor> colorEntry) {
+        return colorEntry.getValue().getChatColor() + colorEntry.getKey();
     }
 
     @Command(name = "list")

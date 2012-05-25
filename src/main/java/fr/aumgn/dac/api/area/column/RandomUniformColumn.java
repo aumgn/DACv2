@@ -9,13 +9,13 @@ import fr.aumgn.dac.api.area.AreaColumn;
 public class RandomUniformColumn extends UniformColumn {
 
     public RandomUniformColumn() {
-        super(DAC.getConfig().getColors().random());
+        super(DAC.getColors().random());
     }
 
     @Override
     public void set(AreaColumn column) {
         super.set(column);
-        color = DAC.getConfig().getColors().random();
+        color = DAC.getColors().random();
     }
 
 }
