@@ -87,8 +87,6 @@ public class DACCylinder extends DACCachedRegion {
                 center.getVector(),
                 radius.getVector(),
                 minY, maxY);
-        // Workaround
-        cyl.setCenter(cyl.getCenter());
         return cyl;
     }
 

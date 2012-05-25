@@ -8,19 +8,18 @@
 	<url>http://aumgn.fr</url>
 
 	<properties>
-		<project.build.sourceEncoding>
-			UTF-8
-		</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.bukkitutils>1.0.0-SNAPSHOT</version.bukkitutils>
 	</properties>
 
 	<repositories>
 		<repository>
-			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public</url>
-		</repository>
-		<repository>
 			<id>sk89q-mvn2</id>
 			<url>http://mvn2.sk89q.com/repo</url>
+		</repository>
+		<repository>
+			<id>aumgn-repo</id>
+			<url>https://repository-aumgn.forge.cloudbees.com/snapshot/</url>
 		</repository>
 	</repositories>
 
@@ -28,7 +27,7 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldedit</artifactId>
-			<version>5.3</version>
+			<version>5.4-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.spout</groupId>
@@ -37,9 +36,19 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>fr.aumgn</groupId>
-			<artifactId>bukkitutils</artifactId>
-			<version>0.1.0</version>
+			<groupId>fr.aumgn.bukkitutils</groupId>
+			<artifactId>command</artifactId>
+			<version>${version.bukkitutils}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.aumgn.bukkitutils</groupId>
+			<artifactId>playerid</artifactId>
+			<version>${version.bukkitutils}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.aumgn.bukkitutils</groupId>
+			<artifactId>gconf</artifactId>
+			<version>${version.bukkitutils}</version>
 		</dependency>
 	</dependencies>
 
@@ -71,6 +80,7 @@
 
 		<!-- Plugins -->
 		<plugins>
+
 			<!-- Javadoc plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -80,6 +90,7 @@
 					<excludePackageNames>fr.aumgn.dac.plugin:fr.aumgn.dac.plugin.*</excludePackageNames>
 				</configuration>
 			</plugin>
+
 			<!-- Compile plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -90,12 +101,39 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
 			<!-- JAR creation plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.2</version>
 			</plugin>
+
+			<!-- JAR shading plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>fr.aumgn.bukkitutils:core</include>
+									<include>fr.aumgn.bukkitutils:command</include>
+									<include>fr.aumgn.bukkitutils:playerid</include>
+									<include>fr.aumgn.bukkitutils:gconf</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

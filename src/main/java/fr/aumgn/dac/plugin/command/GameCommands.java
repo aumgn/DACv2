@@ -1,6 +1,7 @@
 package fr.aumgn.dac.plugin.command;
 
-import org.bukkit.Bukkit;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -75,17 +76,16 @@ public class GameCommands extends DACCommands {
     public void kick(CommandSender sender, CommandArgs args) {
         int count = 0;
         StagePlayerManager playerManager = DAC.getPlayerManager();
-        String pattern = args.get(0);
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getName().startsWith(pattern)) {
-                StagePlayer stagePlayer = playerManager.get(player);
-                if (stagePlayer == null) {
-                    continue;
-                }
 
-                stagePlayer.getStage().removePlayer(stagePlayer, StageQuitReason.Forced);
-                count++;
+        List<Player> players = args.getPlayers(0);
+        for (Player player : players) {
+            StagePlayer stagePlayer = playerManager.get(player);
+            if (stagePlayer == null) {
+                continue;
             }
+
+            stagePlayer.getStage().removePlayer(stagePlayer, StageQuitReason.Forced);
+            count++;
         }
 
         if (count == 0) {
