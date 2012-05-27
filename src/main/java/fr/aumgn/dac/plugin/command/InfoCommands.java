@@ -6,8 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.Command;
-import fr.aumgn.bukkitutils.command.CommandArgs;
 import fr.aumgn.bukkitutils.command.NestedCommands;
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.dac.api.DAC;
 import fr.aumgn.dac.api.config.DACColor;
 import fr.aumgn.dac.api.config.DACMessage;
