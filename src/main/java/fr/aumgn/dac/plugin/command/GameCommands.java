@@ -77,7 +77,7 @@ public class GameCommands extends DACCommands {
         int count = 0;
         StagePlayerManager playerManager = DAC.getPlayerManager();
 
-        List<Player> players = args.getPlayers(0);
+        List<Player> players = args.getPlayers(0).value();
         for (Player player : players) {
             StagePlayer stagePlayer = playerManager.get(player);
             if (stagePlayer == null) {
