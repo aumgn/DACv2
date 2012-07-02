@@ -3,6 +3,7 @@ package fr.aumgn.dac.plugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -15,7 +16,6 @@ import com.google.gson.GsonBuilder;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
-import fr.aumgn.bukkitutils.command.messages.FrenchMessages;
 import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.bukkitutils.gconf.GConfLoader;
 import fr.aumgn.dac.api.DAC;
@@ -94,7 +94,7 @@ public class DACPlugin extends JavaPlugin implements DACGameModeProvider {
 
     private void registerCommands() {
         CommandsRegistration registration = new CommandsRegistration(
-                this, new FrenchMessages());
+                this, Locale.FRENCH);
         registration.register(new AdminCommands());
         registration.register(new ArenasCommands());
         registration.register(new GameCommands());

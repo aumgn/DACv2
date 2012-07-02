@@ -9,7 +9,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<version.bukkitutils>1.0.0-SNAPSHOT</version.bukkitutils>
 	</properties>
 
 	<repositories>
@@ -36,19 +35,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>fr.aumgn.bukkitutils</groupId>
-			<artifactId>command</artifactId>
-			<version>${version.bukkitutils}</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.aumgn.bukkitutils</groupId>
-			<artifactId>playerid</artifactId>
-			<version>${version.bukkitutils}</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.aumgn.bukkitutils</groupId>
-			<artifactId>gconf</artifactId>
-			<version>${version.bukkitutils}</version>
+			<groupId>fr.aumgn</groupId>
+			<artifactId>bukkitutils</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

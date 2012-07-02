@@ -24,7 +24,7 @@ public class SpectatorCommands extends DACCommands {
             }
             watchArena(player, arena);
         } else {
-            for (String arg : args) {
+            for (String arg : args.asList()) {
                 Arena arena = DAC.getArenas().get(arg);
                 if (arena == null) {
                     throw new DACException(DACMessage.CmdWatchUnknown.getContent(arg));
@@ -58,7 +58,7 @@ public class SpectatorCommands extends DACCommands {
                 unwatchArena(player, arena);
             }
         } else {
-            for (String arg : args) {
+            for (String arg : args.asList()) {
                 Arena arena = DAC.getArenas().get(arg);
                 if (arena == null) {
                     throw new DACException(DACMessage.CmdWatchUnknown.getContent(arg));
