@@ -47,6 +47,12 @@
 				<directory>${basedir}/src/main/resources</directory>
 				<includes>
 					<include>plugin.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>fr/aumgn/dac2</targetPath>
+				<directory>${basedir}/src/main/resources/fr/aumgn/dac2</directory>
+				<includes>
 					<include>*.json</include>
 				</includes>
 			</resource>

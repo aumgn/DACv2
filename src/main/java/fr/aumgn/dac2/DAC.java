@@ -7,17 +7,14 @@ import fr.aumgn.dac2.config.DACConfig;
 public class DAC {
 
     private final DACPlugin plugin;
-    private final DACConfig config;
-    private final PluginResourceBundle cmdMessages;
-    private final PluginResourceBundle messages;
+
+    private DACConfig config;
+    private PluginResourceBundle cmdMessages;
+    private PluginResourceBundle messages;
 
     public DAC(DACPlugin plugin) {
         this.plugin = plugin;
-        this.config = plugin.reloadDACConfig();
-        PluginResourceBundles bundles = new PluginResourceBundles(plugin,
-                config.getLocale(), plugin.getDataFolder());
-        this.cmdMessages = bundles.get("commands");
-        this.messages = bundles.get("messages");
+        reloadData();
     }
 
     public DACPlugin getPlugin() {
@@ -34,5 +31,13 @@ public class DAC {
 
     public PluginResourceBundle getMessages() {
         return messages;
+    }
+
+    public void reloadData() {
+        config = plugin.reloadDACConfig();
+        PluginResourceBundles bundles = new PluginResourceBundles(plugin,
+                config.getLocale(), plugin.getDataFolder());
+        cmdMessages = bundles.get("commands");
+        messages = bundles.get("messages");
     }
 }

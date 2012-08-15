@@ -4,7 +4,7 @@ version: ${project.version}-b${BUILD_NUMBER}
 author: aumgn
 website: ${project.url}
 
-main: fr.aumgn.dac2.DAC2Plugin
+main: fr.aumgn.dac2.DACPlugin
 depend: [WorldEdit]
 
 commands:
@@ -12,3 +12,24 @@ commands:
         description: "Main command"
         usage: ""
         aliases: ["dac"]
+
+    # Admin Commands
+    "dac2 version":
+        description: "Show current version."
+        usage: ""
+        permission: "dac2.admin.version"
+    "dac2 reload":
+        description: "Reload all data (config, messages, ...)"
+        usage: ""
+        permission: "dac2.admin.reload"
+
+permissions:
+    dac2.*:
+        default: op
+        children:
+            - dac2.admin: true
+
+    dac2.admin:
+        children:
+            - dac2.admin.version: true
+            - dac2.admin.reload: true

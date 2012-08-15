@@ -6,8 +6,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.bukkitutils.gconf.GConfLoader;
+import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.config.DACConfig;
 
 public class DACPlugin extends JavaPlugin {
@@ -16,7 +18,11 @@ public class DACPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new DAC(this);
+        DAC dac = new DAC(this);
+
+        CommandsRegistration registration = new CommandsRegistration(
+                this, dac.getConfig().getLocale());
+        registration.register(new AdminCommands(dac));
 
         getLogger().info("Enabled.");
     }
