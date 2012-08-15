@@ -17,6 +17,7 @@ public class DACPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         new DAC(this);
+
         getLogger().info("Enabled.");
     }
 
