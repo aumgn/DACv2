@@ -1,3 +1,4 @@
 {
-	"version": "{green}La version est {0}."
+    "version": "{green}La version est {0}.",
+    "reload.success": "{green}Données rechargées."
 }

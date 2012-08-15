@@ -1,3 +1,4 @@
 {
-	"version": "{green}You are running the {0} version"
+    "version": "{green}You are running the {0} version",
+    "reload.success": "{green}Data reloaded."
 }

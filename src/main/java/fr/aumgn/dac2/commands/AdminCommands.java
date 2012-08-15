@@ -23,5 +23,6 @@ public class AdminCommands extends DACCommands {
     @Command(name = "reload")
     public void reload(CommandSender sender) {
         dac.reloadData();
+        sender.sendMessage(dac.getCmdMessages().get("reload.success"));
     }
 }
