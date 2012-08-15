@@ -13,12 +13,12 @@
 
 	<repositories>
 		<repository>
-			<id>sk89q-mvn2</id>
-			<url>http://mvn2.sk89q.com/repo</url>
+			<id>sk89q-repo</id>
+			<url>http://maven.sk89q.com/repo</url>
 		</repository>
 		<repository>
 			<id>aumgn-repo</id>
-			<url>https://repository-aumgn.forge.cloudbees.com/snapshot/</url>
+			<url>http://aumgn.fr/maven/</url>
 		</repository>
 	</repositories>
 
@@ -95,31 +95,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.2</version>
-			</plugin>
-
-			<!-- JAR shading plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>1.4</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-						<configuration>
-							<artifactSet>
-								<includes>
-									<include>fr.aumgn.bukkitutils:core</include>
-									<include>fr.aumgn.bukkitutils:command</include>
-									<include>fr.aumgn.bukkitutils:playerid</include>
-									<include>fr.aumgn.bukkitutils:gconf</include>
-								</includes>
-							</artifactSet>
-						</configuration>
-					</execution>
-				</executions>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Class-Path>../lib/BukkitUtils.jar</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
 			</plugin>
 
 		</plugins>
