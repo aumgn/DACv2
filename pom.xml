@@ -9,6 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<BUILD_NUMBER>Custom</BUILD_NUMBER>
 	</properties>
 
 	<repositories>
