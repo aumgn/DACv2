@@ -4,7 +4,7 @@ import java.util.Locale;
 
 public class DACConfig {
 
-    private String language = Locale.US.toString();
+    private String language = Locale.getDefault().toString();
 
     public Locale getLocale() {
         String[] splitted = language.split("_");
