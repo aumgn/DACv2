@@ -1,0 +1,14 @@
+name: ${project.name}
+version: ${project.version}-b${BUILD_NUMBER}
+
+author: aumgn
+website: ${project.url}
+
+main: fr.aumgn.dac2.DAC2Plugin
+depend: [WorldEdit]
+
+commands:
+    dac2:
+        description: "Main command"
+        usage: ""
+        aliases: ["dac"]
