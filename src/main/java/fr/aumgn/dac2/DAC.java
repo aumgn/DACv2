@@ -35,6 +35,7 @@ public class DAC {
 
     public void reloadData() {
         config = plugin.reloadDACConfig();
+        PluginResourceBundles.clearCache(plugin);
         PluginResourceBundles bundles = new PluginResourceBundles(plugin,
                 config.getLocale(), plugin.getDataFolder());
         cmdMessages = bundles.get("commands");
