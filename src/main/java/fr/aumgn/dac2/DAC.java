@@ -1,7 +1,7 @@
 package fr.aumgn.dac2;
 
-import fr.aumgn.bukkitutils.localization.PluginResourceBundles;
-import fr.aumgn.bukkitutils.localization.bundle.PluginResourceBundle;
+import fr.aumgn.bukkitutils.localization.Localization;
+import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.config.DACConfig;
 
 public class DAC {
@@ -9,8 +9,8 @@ public class DAC {
     private final DACPlugin plugin;
 
     private DACConfig config;
-    private PluginResourceBundle cmdMessages;
-    private PluginResourceBundle messages;
+    private PluginMessages cmdMessages;
+    private PluginMessages messages;
 
     public DAC(DACPlugin plugin) {
         this.plugin = plugin;
@@ -25,20 +25,20 @@ public class DAC {
         return config;
     }
 
-    public PluginResourceBundle getCmdMessages() {
+    public PluginMessages getCmdMessages() {
         return cmdMessages;
     }
 
-    public PluginResourceBundle getMessages() {
+    public PluginMessages getMessages() {
         return messages;
     }
 
     public void reloadData() {
         config = plugin.reloadDACConfig();
-        PluginResourceBundles.clearCache(plugin);
-        PluginResourceBundles bundles = new PluginResourceBundles(plugin,
-                config.getLocale(), plugin.getDataFolder());
-        cmdMessages = bundles.get("commands");
-        messages = bundles.get("messages");
+
+        Localization localization =
+                new Localization(plugin, config.getLocale());
+        cmdMessages = localization.get("commands");
+        messages = localization.get("messages");
     }
 }

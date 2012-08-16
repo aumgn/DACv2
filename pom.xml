@@ -54,7 +54,7 @@
 				<targetPath>fr/aumgn/dac2</targetPath>
 				<directory>${basedir}/src/main/resources/fr/aumgn/dac2</directory>
 				<includes>
-					<include>*.json</include>
+					<include>*</include>
 				</includes>
 			</resource>
 			<resource>
