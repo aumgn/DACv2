@@ -11,14 +11,17 @@ import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.bukkitutils.gconf.GConfLoader;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.config.DACConfig;
+import fr.aumgn.dac2.regions.DACRegionTypeAdapterFactory;
 
 public class DACPlugin extends JavaPlugin {
 
     private final static double GSON_VERSION = 1.0;
 
+    private DAC dac;
+
     @Override
     public void onEnable() {
-        DAC dac = new DAC(this);
+        dac = new DAC(this);
 
         CommandsRegistration registration = new CommandsRegistration(
                 this, dac.getConfig().getLocale());
@@ -29,11 +32,13 @@ public class DACPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        dac.getArenas().save(dac);
         getLogger().info("Disabled.");
     }
 
-    private GConfLoader getGsonLoader() {
+    public GConfLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
+            .registerTypeAdapterFactory(new DACRegionTypeAdapterFactory())
             .setVersion(GSON_VERSION)
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
             .setPrettyPrinting()
