@@ -9,9 +9,10 @@ import com.google.gson.GsonBuilder;
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.bukkitutils.gconf.GConfLoader;
+import fr.aumgn.bukkitutils.gconf.typeadapter.DirectionTypeAdapterFactory;
+import fr.aumgn.dac2.arena.regions.RegionsFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.config.DACConfig;
-import fr.aumgn.dac2.regions.DACRegionTypeAdapterFactory;
 
 public class DACPlugin extends JavaPlugin {
 
@@ -38,7 +39,8 @@ public class DACPlugin extends JavaPlugin {
 
     public GConfLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
-            .registerTypeAdapterFactory(new DACRegionTypeAdapterFactory())
+            .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
+            .registerTypeAdapterFactory(new RegionsFactory())
             .setVersion(GSON_VERSION)
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
             .setPrettyPrinting()

@@ -1,35 +1,46 @@
 package fr.aumgn.dac2.arena;
 
-import fr.aumgn.bukkitutils.geom.Position;
-import fr.aumgn.dac2.regions.DACRegion;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+
+import fr.aumgn.dac2.arena.regions.Pool;
+import fr.aumgn.dac2.arena.regions.Region;
+import fr.aumgn.dac2.arena.regions.StartRegion;
 
 public class Arena {
 
-    private String name;
-    private DACRegion pool;
-    private DACRegion startRegion;
-    private Position diving;
+    private final String name;
+    private final UUID worldId;
+    private Pool pool;
+    private StartRegion startRegion;
+    private Diving diving;
 
-    public Arena(String name) {
+    public Arena(String name, World world) {
         this.name = name;
-        pool = null;
-        startRegion = null;
-        diving = null;
+        this.worldId = null;
+        this.startRegion = null;
+        this.diving = null;
     }
 
     public String getName() {
         return name;
     }
 
-    public DACRegion getPool() {
+    public World getWorld() {
+        return Bukkit.getWorld(worldId);
+    }
+
+    public Region getPool() {
         return pool;
     }
 
-    public DACRegion getStartRegion() {
+    public Region getStartRegion() {
         return startRegion;
     }
 
-    public Position getDiving() {
+    public Diving getDiving() {
         return diving;
     }
 }

@@ -3,6 +3,8 @@ package fr.aumgn.dac2.arena;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.World;
+
 import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.dac2.DAC;
 
@@ -39,5 +41,9 @@ public class Arenas {
 
     public Arena get(String name) {
         return arenas.get(name);
+    }
+
+    public void create(String name, World world) {
+        arenas.put(name, new Arena(name, world));
     }
 }
