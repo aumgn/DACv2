@@ -10,4 +10,12 @@ public abstract class DACCommands implements Commands {
     public DACCommands(DAC dac) {
         this.dac = dac;
     }
+
+    protected String msg(String key) {
+        return dac.getCmdMessages().get(key);
+    }
+
+    protected String msg(String key, Object... arguments) {
+        return dac.getCmdMessages().get(key, arguments);
+    }
 }

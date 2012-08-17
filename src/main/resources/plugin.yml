@@ -23,13 +23,31 @@ commands:
         usage: ""
         permission: "dac2.admin.reload"
 
+    # Arenas Commands
+    "dac2 define":
+        description: "Create an arena with the given name and world."
+        usage: "<name> [world]"
+        permission: "dac2.arenas.define"
+        aliases: ["dac2 def"]
+    "dac2 delete":
+        description: "Remove given arena."
+        usage: "<arena>"
+        permission: "dac2.arenas.delete"
+        aliases: ["dac2 del", "dac2 remove", "dac2 rm"]
+
 permissions:
     dac2.*:
         default: op
         children:
             - dac2.admin: true
+            - dac2.arenas: true
 
     dac2.admin:
         children:
             - dac2.admin.version: true
             - dac2.admin.reload: true
+
+    dac2.arenas:
+        children:
+            - dac2.arenas.define: true
+            - dac2.arenas.delete: true

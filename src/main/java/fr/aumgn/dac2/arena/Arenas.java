@@ -1,6 +1,9 @@
 package fr.aumgn.dac2.arena;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.World;
@@ -39,11 +42,24 @@ public class Arenas {
         }
     }
 
+    public boolean has(String name) {
+        return arenas.containsKey(name);
+    }
+
     public Arena get(String name) {
         return arenas.get(name);
     }
 
     public void create(String name, World world) {
         arenas.put(name, new Arena(name, world));
+    }
+
+    public void delete(Arena arena) {
+        arenas.remove(arena.getName());
+    }
+
+    public List<Arena> all() {
+        return Collections.unmodifiableList(new ArrayList<Arena>(
+                arenas.values()));
     }
 }

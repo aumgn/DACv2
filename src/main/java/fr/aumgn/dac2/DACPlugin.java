@@ -7,11 +7,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
+import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.bukkitutils.gconf.GConfLoader;
 import fr.aumgn.bukkitutils.gconf.typeadapter.DirectionTypeAdapterFactory;
+import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.RegionsFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
+import fr.aumgn.dac2.commands.arg.ArenaArg;
 import fr.aumgn.dac2.config.DACConfig;
 
 public class DACPlugin extends JavaPlugin {
@@ -24,6 +27,7 @@ public class DACPlugin extends JavaPlugin {
     public void onEnable() {
         dac = new DAC(this);
 
+        CommandArgFactory.register(Arena.class, new ArenaArg.Factory(dac));
         CommandsRegistration registration = new CommandsRegistration(
                 this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));

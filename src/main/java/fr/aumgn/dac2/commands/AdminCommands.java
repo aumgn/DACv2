@@ -17,12 +17,12 @@ public class AdminCommands extends DACCommands {
     @Command(name = "version")
     public void version(CommandSender sender) {
         PluginDescriptionFile desc = dac.getPlugin().getDescription();
-        sender.sendMessage(dac.getCmdMessages().get("version", desc.getVersion()));
+        sender.sendMessage(msg("version", desc.getVersion()));
     }
 
     @Command(name = "reload")
     public void reload(CommandSender sender) {
         dac.reloadData();
-        sender.sendMessage(dac.getCmdMessages().get("reload.success"));
+        sender.sendMessage(msg("reload.success"));
     }
 }
