@@ -32,11 +32,6 @@ public class CuboidShape implements Shape {
 
     @Override
     public boolean contains(Vector pt) {
-        return pt.getX() >= min.getX()
-                && pt.getY() >= min.getY()
-                && pt.getZ() >= min.getZ()
-                && pt.getX() <= max.getX()
-                && pt.getY() <= max.getY()
-                && pt.getZ() <= max.getZ();
+        return pt.isInside(min, max);
     }
 }
