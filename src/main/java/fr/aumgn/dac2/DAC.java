@@ -1,9 +1,15 @@
 package fr.aumgn.dac2;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+
 import fr.aumgn.bukkitutils.localization.Localization;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.arena.Arenas;
 import fr.aumgn.dac2.config.DACConfig;
+import fr.aumgn.dac2.exceptions.WorldEditNotAvailable;
 
 public class DAC {
 
@@ -48,5 +54,14 @@ public class DAC {
 
     public Arenas getArenas() {
         return arenas;
+    }
+
+    public WorldEditPlugin getWorldEdit() {
+        Plugin worldEdit = Bukkit.getPluginManager().getPlugin("WorldEdit");
+        if (!(worldEdit instanceof WorldEditPlugin)) {
+            throw new WorldEditNotAvailable(this);
+        }
+
+        return (WorldEditPlugin) worldEdit;
     }
 }

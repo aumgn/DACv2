@@ -34,13 +34,38 @@ commands:
         usage: "<arena>"
         permission: "dac2.arenas.delete"
         aliases: ["dac2 del", "dac2 remove", "dac2 rm"]
+    "dac2 arenas":
+        description: "List all arenas."
+        usage: ""
+        permission: "dac.arenas.arenas"
+        aliases: ["dac2 list", "dac2 ls"]
+
+    # Setup Commands
+    "dac2 set":
+        description: "Set main command"
+    "dac2 set pool":
+        description: "Define the pool of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.pool"
+        aliases: ["dac2 set p"]
+    "dac2 set start":
+        description: "Define the start region of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.start"
+        aliases: ["dac2 set s"]
+    "dac2 set diving":
+        description: "Define the diving of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.diving"
+        aliases: ["dac2 set d"]
 
 permissions:
-    dac2.*:
+    "dac2.*":
         default: op
         children:
             - dac2.admin: true
             - dac2.arenas: true
+            - dac2.setup: true
 
     dac2.admin:
         children:
@@ -51,3 +76,10 @@ permissions:
         children:
             - dac2.arenas.define: true
             - dac2.arenas.delete: true
+            - dac2.arenas.arenas: true
+
+    dac2.setup:
+        children:
+            - dac2.setup.pool: true
+            - dac2.setup.start: true
+            - dac2.setup.diving: true

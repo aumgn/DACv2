@@ -14,6 +14,8 @@ import fr.aumgn.bukkitutils.gconf.typeadapter.DirectionTypeAdapterFactory;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.RegionsFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
+import fr.aumgn.dac2.commands.ArenasCommands;
+import fr.aumgn.dac2.commands.SetupCommands;
 import fr.aumgn.dac2.commands.arg.ArenaArg;
 import fr.aumgn.dac2.config.DACConfig;
 
@@ -31,6 +33,8 @@ public class DACPlugin extends JavaPlugin {
         CommandsRegistration registration = new CommandsRegistration(
                 this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));
+        registration.register(new ArenasCommands(dac));
+        registration.register(new SetupCommands(dac));
 
         getLogger().info("Enabled.");
     }

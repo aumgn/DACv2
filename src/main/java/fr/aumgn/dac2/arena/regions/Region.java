@@ -5,7 +5,7 @@ import fr.aumgn.dac2.arena.regions.shape.Shape;
 
 public abstract class Region {
 
-    private Shape shape;
+    private final Shape shape;
 
     public Region(Shape shape) {
         this.shape = shape;
@@ -13,10 +13,6 @@ public abstract class Region {
 
     public Shape getShape() {
         return shape;
-    }
-
-    public void setShape(Shape shape) {
-        this.shape = shape;
     }
 
     public boolean contains(Vector pt) {

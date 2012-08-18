@@ -12,7 +12,7 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Arenas;
 
-@NestedCommands(name = "dac")
+@NestedCommands(name = "dac2")
 public class ArenasCommands extends DACCommands {
 
     public ArenasCommands(DAC dac) {
@@ -36,6 +36,15 @@ public class ArenasCommands extends DACCommands {
         for (Arena arena : arenasList) {
             arenas.delete(arena);
             sender.sendMessage(msg("delete.success", arena.getName()));
+        }
+    }
+
+    @Command(name = "arenas")
+    public void arenas(CommandSender sender) {
+        sender.sendMessage(msg("arenas.header"));
+        for (Arena arena : dac.getArenas().all()) {
+            sender.sendMessage(msg("arenas.arena", arena.getName(),
+                    arena.getWorld().getName()));
         }
     }
 }
