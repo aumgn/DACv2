@@ -15,6 +15,9 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import fr.aumgn.dac2.arena.regions.shape.CuboidShape;
+import fr.aumgn.dac2.arena.regions.shape.CylinderShape;
+import fr.aumgn.dac2.arena.regions.shape.EllipsoidShape;
+import fr.aumgn.dac2.arena.regions.shape.PolygonalShape;
 import fr.aumgn.dac2.arena.regions.shape.Shape;
 import fr.aumgn.dac2.arena.regions.shape.ShapeName;
 
@@ -35,6 +38,9 @@ public class GsonRegionFactory implements TypeAdapterFactory {
 
     static {
         registerShape(CuboidShape.class);
+        registerShape(CylinderShape.class);
+        registerShape(PolygonalShape.class);
+        registerShape(EllipsoidShape.class);
     }
 
     private static class RegionTypeAdapter extends TypeAdapter<Region> {
