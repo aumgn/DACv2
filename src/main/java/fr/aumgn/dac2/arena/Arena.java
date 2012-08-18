@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 import fr.aumgn.dac2.arena.regions.Pool;
-import fr.aumgn.dac2.arena.regions.Region;
 import fr.aumgn.dac2.arena.regions.StartRegion;
 
 public class Arena {
@@ -33,7 +32,7 @@ public class Arena {
         return Bukkit.getWorld(worldId);
     }
 
-    public Region getPool() {
+    public Pool getPool() {
         return pool;
     }
 
@@ -41,7 +40,7 @@ public class Arena {
         this.pool = pool;
     }
 
-    public Region getStartRegion() {
+    public StartRegion getStartRegion() {
         return startRegion;
     }
 

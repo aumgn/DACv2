@@ -48,6 +48,11 @@ commands:
         usage: "<pool|start> <arena>"
         permission: "dac2.arenas.select"
         aliases: ["dac2 sel"]
+    "dac2 reset":
+        description: "Reset the given arena's pool."
+        usage: "<arena>"
+        permission: "dac2.arenas.reset"
+        aliases: ["dac rs"]
 
     # Setup Commands
     "dac2 set":
@@ -88,6 +93,7 @@ permissions:
             - dac2.arenas.arenas: true
             - dac2.arenas.tparena: true
             - dac2.arenas.select: true
+            - dac2.arenas.reset: true
 
     dac2.setup:
         children:

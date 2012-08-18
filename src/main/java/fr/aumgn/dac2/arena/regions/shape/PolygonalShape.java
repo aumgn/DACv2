@@ -3,6 +3,7 @@ package fr.aumgn.dac2.arena.regions.shape;
 import static fr.aumgn.dac2.utils.WEUtils.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.World;
@@ -13,6 +14,7 @@ import com.sk89q.worldedit.regions.Polygonal2DRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.dac2.arena.regions.shape.iterator.ColumnsIterator;
 
 @ShapeName("polygonal")
 public class PolygonalShape implements FlatShape {
@@ -20,6 +22,9 @@ public class PolygonalShape implements FlatShape {
     private final int minY;
     private final int maxY;
     private final Vector2D[] points;
+
+    private transient Vector2D min2D = null;
+    private transient Vector2D max2D = null;
 
     public PolygonalShape(Polygonal2DRegion region) {
         this.minY = region.getMinimumY();
@@ -33,22 +38,86 @@ public class PolygonalShape implements FlatShape {
         }
     }
 
-    /**
-     * Extracted (and slightly modified) from WorldEdit.
+    @Override
+    public boolean contains(Vector pt) {
+        int targetY = pt.getBlockY();
+        return targetY >= minY && targetY <= maxY && contains2D(pt.to2D());
+    }
+
+    @Override
+    public Polygonal2DSelection getSelection(World world) {
+        List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
+        for (Vector2D pt : points) {
+            wePoints.add(bu2blockwe(pt));
+        }
+        return new Polygonal2DSelection(world, wePoints, minY, maxY);
+    }
+
+    @Override
+    public double getMinY() {
+        return minY;
+    }
+
+    @Override
+    public double getMaxY() {
+        return maxY;
+    }
+
+    @Override
+    public Vector2D getMin2D() {
+        if (min2D == null) {
+            calculateMinMax2D();
+        }
+
+        return min2D;
+    }
+
+    @Override
+    public Vector2D getMax2D() {
+        if (max2D == null) {
+            calculateMinMax2D();
+        }
+
+        return max2D;
+    }
+
+    private void calculateMinMax2D() {
+        double minX = Double.MAX_VALUE;
+        double minZ = Double.MAX_VALUE;
+        double maxX = -Double.MAX_VALUE;
+        double maxZ = -Double.MAX_VALUE;
+
+        for (Vector2D pt : points) {
+            if (minX > pt.getX()) {
+                minX = pt.getX();
+            }
+            if (minZ > pt.getZ()) {
+                minZ = pt.getZ();
+            }
+            if (maxX < pt.getX()) {
+                maxX = pt.getX();
+            }
+            if (maxZ < pt.getZ()) {
+                maxZ = pt.getZ();
+            }
+        }
+
+        min2D = new Vector2D(minX, minZ);
+        max2D = new Vector2D(maxX, maxZ);
+    }
+
+    /*
+     * Extracted (and slightly adapted) from WorldEdit.
      * Credits goes to sk89q.
      */
     @Override
-    public boolean contains(Vector pt) {
+    public boolean contains2D(Vector2D pt) {
         if (points.length < 3) {
             return false;
         }
-        int targetX = pt.getBlockX(); //wide
-        int targetY = pt.getBlockY(); //height
-        int targetZ = pt.getBlockZ(); //depth
 
-        if (targetY < minY || targetY > maxY) {
-            return false;
-        }
+        int targetX = pt.getBlockX(); //wide
+        int targetZ = pt.getBlockZ(); //depth
 
         boolean inside = false;
         int npoints = points.length;
@@ -97,11 +166,7 @@ public class PolygonalShape implements FlatShape {
     }
 
     @Override
-    public Polygonal2DSelection getSelection(World world) {
-        List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
-        for (Vector2D pt : points) {
-            wePoints.add(bu2blockwe(pt));
-        }
-        return new Polygonal2DSelection(world, wePoints, minY, maxY);
+    public Iterator<Column> iterator() {
+        return new ColumnsIterator(this);
     }
 }

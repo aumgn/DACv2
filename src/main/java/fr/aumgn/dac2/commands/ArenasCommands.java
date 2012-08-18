@@ -78,4 +78,11 @@ public class ArenasCommands extends DACCommands {
         dac.getWorldEdit().setSelection(sender, sel);
         sender.sendMessage(msg("select.success"));
     }
+
+    @Command(name = "reset", min = 1, max = 1)
+    public void reset(CommandSender sender, CommandArgs args) {
+        Arena arena = args.get(0, Arena.class).value();
+        arena.getPool().reset(arena.getWorld());
+        sender.sendMessage(msg("reset.success"));
+    }
 }
