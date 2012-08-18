@@ -2,6 +2,9 @@ package fr.aumgn.dac2.arena.regions.shape;
 
 import static fr.aumgn.dac2.utils.WEUtils.*;
 
+import org.bukkit.World;
+
+import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.regions.CuboidRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
@@ -33,5 +36,10 @@ public class CuboidShape implements FlatShape {
     @Override
     public boolean contains(Vector pt) {
         return pt.isInside(min, max);
+    }
+
+    @Override
+    public CuboidSelection getSelection(World world) {
+        return new CuboidSelection(world, bu2we(min), bu2we(max));
     }
 }

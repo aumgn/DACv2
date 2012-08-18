@@ -2,9 +2,13 @@ package fr.aumgn.dac2.arena.regions.shape;
 
 import static fr.aumgn.dac2.utils.WEUtils.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.World;
+
 import com.sk89q.worldedit.BlockVector2D;
+import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
@@ -90,5 +94,14 @@ public class PolygonalShape implements FlatShape {
         }
 
         return inside;
+    }
+
+    @Override
+    public Polygonal2DSelection getSelection(World world) {
+        List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
+        for (Vector2D pt : points) {
+            wePoints.add(bu2blockwe(pt));
+        }
+        return new Polygonal2DSelection(world, wePoints, minY, maxY);
     }
 }

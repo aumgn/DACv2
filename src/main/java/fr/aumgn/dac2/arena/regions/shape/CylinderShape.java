@@ -2,10 +2,13 @@ package fr.aumgn.dac2.arena.regions.shape;
 
 import static fr.aumgn.dac2.utils.WEUtils.*;
 
+import org.bukkit.World;
+
 import com.sk89q.worldedit.regions.CylinderRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.dac2.utils.CylinderSelection;
 
 @ShapeName("cylinder")
 public class CylinderShape implements FlatShape {
@@ -26,5 +29,11 @@ public class CylinderShape implements FlatShape {
     public boolean contains(Vector pt) {
         return pt.getY() >= minY && pt.getY() <= maxY
                 && pt.to2D().subtract(center).divide(radius).lengthSq() <= 1;
+    }
+
+    @Override
+    public CylinderSelection getSelection(World world) {
+        return new CylinderSelection(world, bu2we(center), bu2we(radius),
+                minY, maxY);
     }
 }

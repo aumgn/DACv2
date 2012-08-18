@@ -11,7 +11,7 @@ public class StartRegion extends Region {
     }
 
     @Override
-    protected Shape getShape() {
+    public Shape getShape() {
         return shape;
     }
 }

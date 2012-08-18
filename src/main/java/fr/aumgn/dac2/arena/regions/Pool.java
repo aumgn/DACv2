@@ -18,7 +18,7 @@ public class Pool extends Region {
     }
 
     @Override
-    protected Shape getShape() {
+    public Shape getShape() {
         return shape;
     }
 }

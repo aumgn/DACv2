@@ -43,6 +43,11 @@ commands:
         description: "Teleport to the given arena's diving board."
         usage: "<arena>"
         permission: "dac2.arenas.tparena"
+    "dac2 select":
+        description: "Select specified region of the gievn arena."
+        usage: "<pool|start> <arena>"
+        permission: "dac2.arenas.select"
+        aliases: ["dac2 sel"]
 
     # Setup Commands
     "dac2 set":
@@ -82,6 +87,7 @@ permissions:
             - dac2.arenas.delete: true
             - dac2.arenas.arenas: true
             - dac2.arenas.tparena: true
+            - dac2.arenas.select: true
 
     dac2.setup:
         children:
