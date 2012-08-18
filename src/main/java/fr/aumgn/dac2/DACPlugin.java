@@ -12,7 +12,7 @@ import fr.aumgn.bukkitutils.gconf.GConfLoadException;
 import fr.aumgn.bukkitutils.gconf.GConfLoader;
 import fr.aumgn.bukkitutils.gconf.typeadapter.DirectionTypeAdapterFactory;
 import fr.aumgn.dac2.arena.Arena;
-import fr.aumgn.dac2.arena.regions.RegionsFactory;
+import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
 import fr.aumgn.dac2.commands.SetupCommands;
@@ -48,7 +48,7 @@ public class DACPlugin extends JavaPlugin {
     public GConfLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
             .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
-            .registerTypeAdapterFactory(new RegionsFactory())
+            .registerTypeAdapterFactory(new GsonRegionFactory())
             .setVersion(GSON_VERSION)
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
             .setPrettyPrinting()

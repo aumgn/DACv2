@@ -8,7 +8,7 @@ import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 
 @ShapeName("cylinder")
-public class CylinderShape implements Shape {
+public class CylinderShape implements FlatShape {
 
     private final Vector2D center;
     private final Vector2D radius;

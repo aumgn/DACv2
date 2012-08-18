@@ -5,17 +5,9 @@ import fr.aumgn.dac2.arena.regions.shape.Shape;
 
 public abstract class Region {
 
-    private final Shape shape;
-
-    public Region(Shape shape) {
-        this.shape = shape;
-    }
-
-    public Shape getShape() {
-        return shape;
-    }
+    protected abstract Shape getShape();
 
     public boolean contains(Vector pt) {
-        return shape.contains(pt);
+        return getShape().contains(pt);
     }
 }

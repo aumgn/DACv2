@@ -18,7 +18,7 @@ import fr.aumgn.dac2.arena.regions.shape.CuboidShape;
 import fr.aumgn.dac2.arena.regions.shape.Shape;
 import fr.aumgn.dac2.arena.regions.shape.ShapeName;
 
-public class RegionsFactory implements TypeAdapterFactory {
+public class GsonRegionFactory implements TypeAdapterFactory {
 
     private static final Map<String, Class<? extends Shape>> classes =
             new HashMap<String, Class<? extends Shape>>();
@@ -110,7 +110,8 @@ public class RegionsFactory implements TypeAdapterFactory {
 
         try {
             Constructor<Region> ctor = (Constructor<Region>)
-                    type.getRawType().getConstructor(Shape.class);
+                    type.getRawType().getDeclaredConstructor(Shape.class);
+            ctor.setAccessible(true);
             return (TypeAdapter<T>) new RegionTypeAdapter(gson, ctor)
                     .nullSafe();
         } catch (SecurityException _) {

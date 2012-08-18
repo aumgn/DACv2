@@ -7,7 +7,7 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import fr.aumgn.bukkitutils.geom.Vector;
 
 @ShapeName("cuboid")
-public class CuboidShape implements Shape {
+public class CuboidShape implements FlatShape {
 
     private final Vector min;
     private final Vector max;

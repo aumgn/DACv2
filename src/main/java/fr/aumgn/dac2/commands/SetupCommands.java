@@ -17,8 +17,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Diving;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
-import fr.aumgn.dac2.arena.regions.shape.WEShapeFactory;
+import fr.aumgn.dac2.arena.regions.WERegionFactory;
 import fr.aumgn.dac2.exceptions.WERegionIncomplete;
 
 @NestedCommands(name = {"dac2", "set"})
@@ -32,8 +31,7 @@ public class SetupCommands extends DACCommands {
     public void pool(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena.class).value();
         Region region = getRegion(sender);
-        Shape shape = WEShapeFactory.create(dac, region);
-        Pool pool = new Pool(shape);
+        Pool pool = WERegionFactory.createPool(dac, region);
         arena.setPool(pool);
         sender.sendMessage(msg("set.pool.success"));
     }
@@ -42,8 +40,7 @@ public class SetupCommands extends DACCommands {
     public void start(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena.class).value();
         Region region = getRegion(sender);
-        Shape shape = WEShapeFactory.create(dac, region);
-        StartRegion start = new StartRegion(shape);
+        StartRegion start = WERegionFactory.createStartRegion(dac, region);
         arena.setStartRegion(start);
         sender.sendMessage(msg("set.start.success"));
     }
