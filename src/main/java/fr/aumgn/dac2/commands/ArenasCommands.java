@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
@@ -46,5 +47,12 @@ public class ArenasCommands extends DACCommands {
             sender.sendMessage(msg("arenas.arena", arena.getName(),
                     arena.getWorld().getName()));
         }
+    }
+
+    @Command(name = "tparena", min = 1, max = 1)
+    public void tparena(Player sender, CommandArgs args) {
+        Arena arena = args.get(0, Arena.class).value();
+        sender.teleport(arena.getDiving().toLocation(arena.getWorld()));
+        sender.sendMessage(msg("tparena.success"));
     }
 }

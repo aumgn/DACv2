@@ -39,6 +39,10 @@ commands:
         usage: ""
         permission: "dac.arenas.arenas"
         aliases: ["dac2 list", "dac2 ls"]
+    "dac2 tparena":
+        description: "Teleport to the given arena's diving board."
+        usage: "<arena>"
+        permission: "dac2.arenas.tparena"
 
     # Setup Commands
     "dac2 set":
@@ -77,6 +81,7 @@ permissions:
             - dac2.arenas.define: true
             - dac2.arenas.delete: true
             - dac2.arenas.arenas: true
+            - dac2.arenas.tparena: true
 
     dac2.setup:
         children:
