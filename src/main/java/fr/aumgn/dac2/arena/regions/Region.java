@@ -1,7 +1,7 @@
 package fr.aumgn.dac2.arena.regions;
 
 import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
+import fr.aumgn.dac2.shape.Shape;
 
 public abstract class Region {
 

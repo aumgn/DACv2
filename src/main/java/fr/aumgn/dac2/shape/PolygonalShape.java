@@ -1,4 +1,4 @@
-package fr.aumgn.dac2.arena.regions.shape;
+package fr.aumgn.dac2.shape;
 
 import static fr.aumgn.dac2.utils.WEUtils.*;
 
@@ -14,7 +14,7 @@ import com.sk89q.worldedit.regions.Polygonal2DRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.dac2.arena.regions.shape.iterator.ColumnsIterator;
+import fr.aumgn.dac2.shape.iterator.ColumnsIterator;
 
 @ShapeName("polygonal")
 public class PolygonalShape implements FlatShape {

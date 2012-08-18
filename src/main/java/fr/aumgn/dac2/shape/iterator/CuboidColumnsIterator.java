@@ -1,12 +1,12 @@
-package fr.aumgn.dac2.arena.regions.shape.iterator;
+package fr.aumgn.dac2.shape.iterator;
 
 import org.apache.commons.lang.Validate;
 
 import com.google.common.collect.AbstractIterator;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.dac2.arena.regions.shape.Column;
-import fr.aumgn.dac2.arena.regions.shape.FlatShape;
+import fr.aumgn.dac2.shape.Column;
+import fr.aumgn.dac2.shape.FlatShape;
 
 public class CuboidColumnsIterator extends AbstractIterator<Column> {
 

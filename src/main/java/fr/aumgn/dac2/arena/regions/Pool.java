@@ -4,9 +4,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.dac2.arena.regions.shape.Column;
-import fr.aumgn.dac2.arena.regions.shape.FlatShape;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
+import fr.aumgn.dac2.shape.Column;
+import fr.aumgn.dac2.shape.FlatShape;
+import fr.aumgn.dac2.shape.Shape;
 
 public class Pool extends Region {
 

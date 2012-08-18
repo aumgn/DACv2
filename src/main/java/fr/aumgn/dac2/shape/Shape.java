@@ -1,4 +1,4 @@
-package fr.aumgn.dac2.arena.regions.shape;
+package fr.aumgn.dac2.shape;
 
 import org.bukkit.World;
 

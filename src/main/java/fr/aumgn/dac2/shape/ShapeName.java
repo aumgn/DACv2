@@ -1,4 +1,4 @@
-package fr.aumgn.dac2.arena.regions.shape;
+package fr.aumgn.dac2.shape;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

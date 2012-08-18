@@ -1,6 +1,6 @@
 package fr.aumgn.dac2.arena.regions;
 
-import fr.aumgn.dac2.arena.regions.shape.Shape;
+import fr.aumgn.dac2.shape.Shape;
 
 public class StartRegion extends Region {
 

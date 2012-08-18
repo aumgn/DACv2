@@ -1,7 +1,7 @@
 package fr.aumgn.dac2.exceptions;
 
 import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
+import fr.aumgn.dac2.shape.Shape;
 
 public class PoolShapeNotFlat extends DACException {
 

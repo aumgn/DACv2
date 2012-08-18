@@ -15,7 +15,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Arenas;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
+import fr.aumgn.dac2.shape.Shape;
 
 @NestedCommands(name = "dac2")
 public class ArenasCommands extends DACCommands {

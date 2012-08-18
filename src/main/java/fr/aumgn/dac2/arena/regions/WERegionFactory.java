@@ -7,14 +7,14 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.CuboidRegion;
 
 import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.arena.regions.shape.CuboidShape;
-import fr.aumgn.dac2.arena.regions.shape.CylinderShape;
-import fr.aumgn.dac2.arena.regions.shape.EllipsoidShape;
-import fr.aumgn.dac2.arena.regions.shape.FlatShape;
-import fr.aumgn.dac2.arena.regions.shape.PolygonalShape;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
 import fr.aumgn.dac2.exceptions.PoolShapeNotFlat;
 import fr.aumgn.dac2.exceptions.WERegionNotSupported;
+import fr.aumgn.dac2.shape.CuboidShape;
+import fr.aumgn.dac2.shape.CylinderShape;
+import fr.aumgn.dac2.shape.EllipsoidShape;
+import fr.aumgn.dac2.shape.FlatShape;
+import fr.aumgn.dac2.shape.PolygonalShape;
+import fr.aumgn.dac2.shape.Shape;
 
 public class WERegionFactory {
 

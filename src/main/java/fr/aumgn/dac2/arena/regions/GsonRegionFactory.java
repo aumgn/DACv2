@@ -14,12 +14,12 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-import fr.aumgn.dac2.arena.regions.shape.CuboidShape;
-import fr.aumgn.dac2.arena.regions.shape.CylinderShape;
-import fr.aumgn.dac2.arena.regions.shape.EllipsoidShape;
-import fr.aumgn.dac2.arena.regions.shape.PolygonalShape;
-import fr.aumgn.dac2.arena.regions.shape.Shape;
-import fr.aumgn.dac2.arena.regions.shape.ShapeName;
+import fr.aumgn.dac2.shape.CuboidShape;
+import fr.aumgn.dac2.shape.CylinderShape;
+import fr.aumgn.dac2.shape.EllipsoidShape;
+import fr.aumgn.dac2.shape.PolygonalShape;
+import fr.aumgn.dac2.shape.Shape;
+import fr.aumgn.dac2.shape.ShapeName;
 
 public class GsonRegionFactory implements TypeAdapterFactory {
 
