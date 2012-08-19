@@ -10,6 +10,7 @@ import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.arena.Arenas;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.exceptions.WorldEditNotAvailable;
+import fr.aumgn.dac2.stage.Stages;
 
 public class DAC {
 
@@ -20,11 +21,13 @@ public class DAC {
     private PluginMessages messages;
 
     private Arenas arenas;
+    private Stages stages;
 
     public DAC(DACPlugin plugin) {
         this.plugin = plugin;
         reloadData();
         this.arenas = new Arenas(this);
+        this.stages = new Stages(this);
     }
 
     public DACPlugin getPlugin() {
@@ -52,10 +55,6 @@ public class DAC {
         messages = localization.get("messages");
     }
 
-    public Arenas getArenas() {
-        return arenas;
-    }
-
     public WorldEditPlugin getWorldEdit() {
         Plugin worldEdit = Bukkit.getPluginManager().getPlugin("WorldEdit");
         if (!(worldEdit instanceof WorldEditPlugin)) {
@@ -63,5 +62,13 @@ public class DAC {
         }
 
         return (WorldEditPlugin) worldEdit;
+    }
+
+    public Arenas getArenas() {
+        return arenas;
+    }
+
+    public Stages getStages() {
+        return stages;
     }
 }

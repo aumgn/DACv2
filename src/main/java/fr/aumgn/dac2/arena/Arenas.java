@@ -62,4 +62,8 @@ public class Arenas {
         return Collections.unmodifiableList(new ArrayList<Arena>(
                 arenas.values()));
     }
+
+    public int length() {
+        return arenas.values().size();
+    }
 }
