@@ -1,5 +1,7 @@
 package fr.aumgn.dac2;
 
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -8,6 +10,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import fr.aumgn.bukkitutils.localization.Localization;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.arena.Arenas;
+import fr.aumgn.dac2.config.Colors;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.exceptions.WorldEditNotAvailable;
 import fr.aumgn.dac2.stage.Stages;
@@ -17,6 +20,7 @@ public class DAC {
     private final DACPlugin plugin;
 
     private DACConfig config;
+    private Colors colors;
     private PluginMessages cmdMessages;
     private PluginMessages messages;
 
@@ -30,12 +34,20 @@ public class DAC {
         this.stages = new Stages(this);
     }
 
+    public Logger getLogger() {
+        return plugin.getLogger();
+    }
+
     public DACPlugin getPlugin() {
         return plugin;
     }
 
     public DACConfig getConfig() {
         return config;
+    }
+
+    public Colors getColors() {
+        return colors;
     }
 
     public PluginMessages getCmdMessages() {
@@ -48,6 +60,7 @@ public class DAC {
 
     public void reloadData() {
         config = plugin.reloadDACConfig();
+        colors = new Colors(this);
 
         Localization localization =
                 new Localization(plugin, config.getLocale());

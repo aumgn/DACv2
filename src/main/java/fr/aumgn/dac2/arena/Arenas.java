@@ -29,7 +29,7 @@ public class Arenas {
                 arenas.put(arena.getName(), arena);
             }
         } catch (GConfLoadException exc) {
-            dac.getPlugin().getLogger().severe("Unable to load arenas.json`");
+            dac.getLogger().severe("Unable to load arenas.json`");
         }
     }
 
