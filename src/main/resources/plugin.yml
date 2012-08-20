@@ -10,7 +10,7 @@ depend: [WorldEdit]
 commands:
     dac2:
         description: "Main command"
-        usage: "<subcommand>"
+        usage: "<command>"
         aliases: ["dac"]
 
     # Admin Commands
@@ -79,6 +79,11 @@ commands:
         usage: "[arena]"
         permission: "dac2.stages.init"
         aliases: ["dac2 init"]
+    "dac2 join":
+        description: "Join a game"
+        usage: "[-a=<arena>]  [colors...]"
+        permission: "dac2.stages.join"
+        aliases: ["dac2 j"]
 
 permissions:
     "dac2.*":
@@ -112,3 +117,5 @@ permissions:
     dac2.stages:
         children:
             - dac2.stages.init: true
+            - dac2.stages.join: true
+            - dac2.stages.join.arena: true

@@ -2,11 +2,14 @@ package fr.aumgn.dac2.stage;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
+import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.bukkitutils.util.Util;
@@ -19,13 +22,13 @@ public class JoinStage implements Stage, Listener {
     private final DAC dac;
     private final Arena arena;
     private final Map<String, Color> colors;
-    private final PlayersIdMap<Color> players;
+    private final PlayersIdMap<JoinPlayerData> players;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colors = dac.getColors().toMap();
-        this.players = new PlayersIdHashMap<Color>();
+        this.players = new PlayersIdHashMap<JoinPlayerData>();
     }
 
     @Override
@@ -74,7 +77,30 @@ public class JoinStage implements Stage, Listener {
             color = colors.values().iterator().next();
         }
 
-        players.put(player, color);
-        colors.remove(color.getName());
+        PluginMessages msgs = dac.getMessages();
+        String playerName = color.chat + player.getDisplayName();
+        for (Player playerIG : players.playersSet()) {
+            playerIG.sendMessage(msgs.get("joinstage.join", playerName));
+        }
+
+        players.put(player, new JoinPlayerData(color, player.getLocation()));
+        colors.remove(color.name);
+
+        player.sendMessage(msgs.get("joinstage.playerslist"));
+        for (Entry<PlayerId, JoinPlayerData> playerIG : players.entrySet()) {
+            PlayerId playerId = playerIG.getKey();
+            JoinPlayerData data = playerIG.getValue();
+
+            String name;
+            if (playerId.isOnline()) {
+                name = data.color.chat
+                        + playerIG.getKey().getPlayer().getDisplayName();
+            } else {
+                name = ChatColor.ITALIC.toString() + data.color.chat
+                        + playerId.getName();
+            }
+
+            player.sendMessage(msgs.get("joinstage.playerentry", name));
+        }
     }
 }

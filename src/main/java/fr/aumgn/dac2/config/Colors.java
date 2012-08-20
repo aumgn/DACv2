@@ -1,6 +1,6 @@
 package fr.aumgn.dac2.config;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -43,9 +43,9 @@ public class Colors {
     }
 
     public Map<String, Color> toMap() {
-        HashMap<String, Color> map = new HashMap<String, Color>();
+        Map<String, Color> map = new LinkedHashMap<String, Color>();
         for (Color color : colors) {
-            map.put(color.getName().toLowerCase(), color);
+            map.put(color.name.toLowerCase(), color);
         }
 
         return map;
