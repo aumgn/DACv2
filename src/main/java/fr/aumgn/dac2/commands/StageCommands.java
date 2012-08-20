@@ -33,6 +33,10 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "join", argsFlags = "a", min = 0, max = -1)
     public void join(Player sender, CommandArgs args) {
+        if (dac.getStages().get(sender) != null) {
+            throw new CommandError(msg("join.alreadyingame"));
+        }
+
         Arena arena = args.get('a', Arena.class)
                 .valueWithPermOr("dac2.stages.join.arena", sender);
         Stage stage = dac.getStages().get(arena);
