@@ -46,6 +46,9 @@ public class JoinStage implements Stage, Listener {
 
     @Override
     public void stop() {
+        for (Player player : players.playersSet()) {
+            player.sendMessage(dac.getMessages().get("joinstage.stopped"));
+        }
     }
 
     @Override

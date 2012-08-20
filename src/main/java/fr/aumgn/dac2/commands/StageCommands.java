@@ -34,7 +34,7 @@ public class StageCommands extends DACCommands {
     @Command(name = "join", argsFlags = "a", min = 0, max = -1)
     public void join(Player sender, CommandArgs args) {
         Arena arena = args.get('a', Arena.class)
-                .valueWithPermOr("dac2.join.arena", sender);
+                .valueWithPermOr("dac2.stages.join.arena", sender);
         Stage stage = dac.getStages().get(arena);
 
         if (!(stage instanceof JoinStage)) {
@@ -42,5 +42,14 @@ public class StageCommands extends DACCommands {
         }
 
         ((JoinStage) stage).addPlayer(sender, args.asList());
+    }
+
+    @Command(name = "stop", min = 0, max = 1)
+    public void stop(CommandSender sender, CommandArgs args) {
+        Stage stage = args.get(0, Stage.class)
+                .valueWithPermOr("dac2.stage.stop.others", sender);
+
+        dac.getStages().stop(stage);
+        sender.sendMessage(msg("stop.success", stage.getArena().getName()));
     }
 }

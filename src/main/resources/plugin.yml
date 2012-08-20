@@ -84,6 +84,10 @@ commands:
         usage: "[-a=<arena>]  [colors...]"
         permission: "dac2.stages.join"
         aliases: ["dac2 j"]
+    "dac2 stop":
+        description: "Stop a game."
+        usage: "[arena]"
+        permission: "dac2.stages.stop"
 
 permissions:
     "dac2.*":
@@ -119,3 +123,5 @@ permissions:
             - dac2.stages.init: true
             - dac2.stages.join: true
             - dac2.stages.join.arena: true
+            - dac2.stages.stop: true
+            - dac2.stages.stop.others: true
