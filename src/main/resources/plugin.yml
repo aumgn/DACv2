@@ -10,7 +10,7 @@ depend: [WorldEdit]
 commands:
     dac2:
         description: "Main command"
-        usage: ""
+        usage: "<subcommand>"
         aliases: ["dac"]
 
     # Admin Commands
@@ -73,6 +73,13 @@ commands:
         permission: "dac2.setup.diving"
         aliases: ["dac2 set d"]
 
+    # Stages Commands
+    "dac2 initialize":
+        description: "Initialize a new game in the given arena"
+        usage: "[arena]"
+        permission: "dac2.stages.init"
+        aliases: ["dac2 init"]
+
 permissions:
     "dac2.*":
         default: op
@@ -80,6 +87,7 @@ permissions:
             - dac2.admin: true
             - dac2.arenas: true
             - dac2.setup: true
+            - dac2.stages: true
 
     dac2.admin:
         children:
@@ -100,3 +108,7 @@ permissions:
             - dac2.setup.pool: true
             - dac2.setup.start: true
             - dac2.setup.diving: true
+
+    dac2.stages:
+        children:
+            - dac2.stages.init: true

@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.gconf.GConfLoadException;
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.dac2.DAC;
 
 public class Arenas {
@@ -48,6 +50,17 @@ public class Arenas {
 
     public Arena get(String name) {
         return arenas.get(name);
+    }
+
+    public Arena get(Player player) {
+        Vector pt = new Vector(player);
+        for (Arena arena : arenas.values()) {
+            if (arena.getStartRegion().contains(pt)) {
+                return arena;
+            }
+        }
+
+        return null;
     }
 
     public void create(String name, World world) {
