@@ -8,7 +8,6 @@ import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.localization.PluginMessages;
 
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
@@ -32,8 +31,8 @@ public class ArenaArg extends CommandArg<Arena> {
     public static class NoSuchArena extends CommandError {
         private static final long serialVersionUID = -4832133406864970323L;
 
-        public NoSuchArena(PluginMessages messages, String name) {
-            super(messages.get("arena.arg.notfound", name));
+        public NoSuchArena(DAC dac, String name) {
+            super(dac.getCmdMessages().get("arena.arg.notfound", name));
         }
     }
 
@@ -41,8 +40,8 @@ public class ArenaArg extends CommandArg<Arena> {
 
         private static final long serialVersionUID = 6112644121244362679L;
 
-        public NotInArena(PluginMessages messages) {
-            super(messages.get("arena.arg.notinarena"));
+        public NotInArena(DAC dac) {
+            super(dac.getCmdMessages().get("arena.arg.notinarena"));
         }
     }
 
@@ -56,7 +55,7 @@ public class ArenaArg extends CommandArg<Arena> {
     @Override
     public Arena value() {
         if (!dac.getArenas().has(string)) {
-            throw new NoSuchArena(dac.getCmdMessages(), string);
+            throw new NoSuchArena(dac, string);
         }
 
         return dac.getArenas().get(string);
@@ -71,7 +70,7 @@ public class ArenaArg extends CommandArg<Arena> {
 
         Arena arena = dac.getArenas().get((Player) sender);
         if (arena == null) {
-            throw new NotInArena(dac.getCmdMessages());
+            throw new NotInArena(dac);
         }
 
         return arena;

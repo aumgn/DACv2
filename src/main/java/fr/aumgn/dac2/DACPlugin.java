@@ -18,7 +18,9 @@ import fr.aumgn.dac2.commands.ArenasCommands;
 import fr.aumgn.dac2.commands.SetupCommands;
 import fr.aumgn.dac2.commands.StageCommands;
 import fr.aumgn.dac2.commands.arg.ArenaArg;
+import fr.aumgn.dac2.commands.arg.StageArg;
 import fr.aumgn.dac2.config.DACConfig;
+import fr.aumgn.dac2.stage.Stage;
 
 public class DACPlugin extends JavaPlugin {
 
@@ -31,6 +33,7 @@ public class DACPlugin extends JavaPlugin {
         dac = new DAC(this);
 
         CommandArgFactory.register(Arena.class, new ArenaArg.Factory(dac));
+        CommandArgFactory.register(Stage.class, new StageArg.Factory(dac));
         CommandsRegistration registration = new CommandsRegistration(
                 this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));
