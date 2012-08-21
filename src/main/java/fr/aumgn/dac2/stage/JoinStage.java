@@ -45,9 +45,11 @@ public class JoinStage implements Stage, Listener {
     }
 
     @Override
-    public void stop() {
-        for (Player player : players.playersSet()) {
-            player.sendMessage(dac.getMessages().get("joinstage.stopped"));
+    public void stop(boolean force) {
+        if (force) {
+            for (Player player : players.playersSet()) {
+                player.sendMessage(dac.getMessages().get("joinstage.stopped"));
+            }
         }
     }
 
@@ -59,6 +61,10 @@ public class JoinStage implements Stage, Listener {
     @Override
     public boolean contains(Player player) {
         return players.containsKey(player);
+    }
+
+    public Map<PlayerId, JoinPlayerData> getPlayers() {
+        return players;
     }
 
     public void addPlayer(Player player, List<String> colorsName) {
@@ -87,7 +93,10 @@ public class JoinStage implements Stage, Listener {
         }
 
         players.put(player, new JoinPlayerData(color, player.getLocation()));
+        System.out.println(color.name);
+        System.out.println(colors.containsKey(color.name));
         colors.remove(color.name);
+        System.out.println(colors.containsKey(color.name));
 
         player.sendMessage(msgs.get("joinstage.playerslist"));
         for (Entry<PlayerId, JoinPlayerData> playerIG : players.entrySet()) {

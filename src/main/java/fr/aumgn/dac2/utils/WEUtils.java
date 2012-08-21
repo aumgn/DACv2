@@ -11,7 +11,7 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 
-public class WEUtils {
+public final class WEUtils {
 
     public static Vector we2bu(com.sk89q.worldedit.Vector vector) {
         return new Vector(vector.getX(), vector.getY(), vector.getZ());

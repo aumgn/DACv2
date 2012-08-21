@@ -45,7 +45,7 @@ public class Colors {
     public Map<String, Color> toMap() {
         Map<String, Color> map = new LinkedHashMap<String, Color>();
         for (Color color : colors) {
-            map.put(color.name.toLowerCase(), color);
+            map.put(color.name, color);
         }
 
         return map;

@@ -65,6 +65,11 @@ public class CuboidShape implements FlatShape {
     }
 
     @Override
+    public Column getColumn(Vector2D pt) {
+        return new Column(this, pt);
+    }
+
+    @Override
     public Iterator<Column> iterator() {
         return new CuboidColumnsIterator(this);
     }

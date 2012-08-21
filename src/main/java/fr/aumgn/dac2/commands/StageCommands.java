@@ -9,6 +9,8 @@ import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.game.ClassicGame;
+import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.stage.JoinStage;
 import fr.aumgn.dac2.stage.Stage;
 
@@ -53,7 +55,20 @@ public class StageCommands extends DACCommands {
         Stage stage = args.get(0, Stage.class)
                 .valueWithPermOr("dac2.stage.stop.others", sender);
 
-        dac.getStages().stop(stage);
+        dac.getStages().forceStop(stage);
         sender.sendMessage(msg("stop.success", stage.getArena().getName()));
+    }
+
+    @Command(name = "start", min = 0, max = 1)
+    public void start(CommandSender sender, CommandArgs args) {
+        Stage stage = args.get(0, Stage.class)
+                .valueWithPermOr("dac2.stage.start.others", sender);
+
+        if (!(stage instanceof JoinStage)) {
+            throw new CommandError("Already started.");
+        }
+
+        Game game = new ClassicGame(dac, (JoinStage) stage);
+        dac.getStages().switchTo(game);
     }
 }

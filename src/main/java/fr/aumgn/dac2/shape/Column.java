@@ -3,6 +3,8 @@ package fr.aumgn.dac2.shape;
 import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 import com.google.common.collect.AbstractLinkedIterator;
 
@@ -34,5 +36,12 @@ public class Column implements Iterable<Vector> {
                 return (pt.getY() >= maxY) ? null : pt.addY(1);
             }
         };
+    }
+
+    public void set(World world, Material block, short data) {
+        for (Vector pt : this) {
+            pt.toBlock(world).setType(block);
+            pt.toBlock(world).setData((byte) data);
+        }
     }
 }

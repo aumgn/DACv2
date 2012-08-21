@@ -11,7 +11,7 @@ public interface Stage {
 
     void start();
 
-    void stop();
+    void stop(boolean force);
 
     Listener[] getListeners();
 

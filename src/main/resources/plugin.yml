@@ -45,7 +45,7 @@ commands:
         permission: "dac2.arenas.tparena"
     "dac2 select":
         description: "Select specified region of the gievn arena."
-        usage: "<pool|start> <arena>"
+        usage: "<pool|start|surrounding> <arena>"
         permission: "dac2.arenas.select"
         aliases: ["dac2 sel"]
     "dac2 reset":
@@ -88,6 +88,11 @@ commands:
         description: "Stop a game."
         usage: "[arena]"
         permission: "dac2.stages.stop"
+    "dac2 start":
+        description: "Start the game."
+        usage: "[arena]"
+        permission: "dac2.stages.start"
+        aliases: ["dac2 s"]
 
 permissions:
     "dac2.*":
@@ -125,3 +130,5 @@ permissions:
             - dac2.stages.join.arena: true
             - dac2.stages.stop: true
             - dac2.stages.stop.others: true
+            - dac2.stages.start: true
+            - dac2.stages.start.others: true

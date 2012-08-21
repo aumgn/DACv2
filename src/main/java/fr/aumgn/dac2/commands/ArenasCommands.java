@@ -70,6 +70,8 @@ public class ArenasCommands extends DACCommands {
             shape = arena.getPool().getShape();
         } else if (type.equalsIgnoreCase("start")) {
             shape = arena.getStartRegion().getShape();
+        } else if (type.equalsIgnoreCase("surrounding")) {
+            shape = arena.getSurroundingRegion().getShape();
         } else {
             throw new CommandUsageError();
         }

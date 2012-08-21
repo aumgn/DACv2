@@ -54,7 +54,13 @@ public class Stages {
 
     public void stop(Stage stage) {
         unregisterListeners(stage);
-        stage.stop();
+        stage.stop(false);
+        stages.remove(stage);
+    }
+
+    public void forceStop(Stage stage) {
+        unregisterListeners(stage);
+        stage.stop(true);
         stages.remove(stage);
     }
 
@@ -64,7 +70,7 @@ public class Stages {
             stages.add(stage);
         } else {
             unregisterListeners(oldStage);
-            oldStage.stop();
+            oldStage.stop(false);
             int index = stages.indexOf(oldStage);
             stages.add(index, stage);
         }

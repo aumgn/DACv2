@@ -17,6 +17,10 @@ public class Diving {
         this.direction = Directions.fromLocation(location);
     }
 
+    public Vector getPosition() {
+        return position;
+    }
+
     public Location toLocation(World world) {
         return position.toLocation(world, direction);
     }

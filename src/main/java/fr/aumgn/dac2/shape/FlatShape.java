@@ -13,4 +13,6 @@ public interface FlatShape extends Shape, Iterable<Column> {
     Vector2D getMax2D();
 
     boolean contains2D(Vector2D pt);
+
+    Column getColumn(Vector2D pt);
 }

@@ -4,6 +4,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 import fr.aumgn.bukkitutils.geom.Vector;
+import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.shape.Column;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
@@ -23,7 +25,7 @@ public class Pool extends Region {
     }
 
     @Override
-    public Shape getShape() {
+    public FlatShape getShape() {
         return shape;
     }
 
@@ -37,5 +39,9 @@ public class Pool extends Region {
                 pt.toBlock(world).setType(material);
             }
         }
+    }
+
+    public void putColumn(World world, Vector2D pt, Color color) {
+        shape.getColumn(pt).set(world, color.block, color.data);
     }
 }

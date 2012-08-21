@@ -7,6 +7,7 @@ import org.bukkit.World;
 
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
+import fr.aumgn.dac2.arena.regions.SurroundingRegion;
 
 public class Arena {
 
@@ -16,12 +17,15 @@ public class Arena {
     private StartRegion startRegion;
     private Diving diving;
 
+    private transient SurroundingRegion surrounding;
+
     public Arena(String name, World world) {
         this.name = name;
         this.worldId = world.getUID();
         this.pool = null;
         this.startRegion = null;
         this.diving = null;
+        this.surrounding = null;
     }
 
     public String getName() {
@@ -32,12 +36,17 @@ public class Arena {
         return Bukkit.getWorld(worldId);
     }
 
+    public boolean isIn(World world) {
+        return worldId.equals(world.getUID());
+    }
+
     public Pool getPool() {
         return pool;
     }
 
     public void setPool(Pool pool) {
         this.pool = pool;
+        this.surrounding = null;
     }
 
     public StartRegion getStartRegion() {
@@ -54,5 +63,14 @@ public class Arena {
 
     public void setDiving(Diving diving) {
         this.diving = diving;
+        this.surrounding = null;
+    }
+
+    public SurroundingRegion getSurroundingRegion() {
+        if (surrounding == null) {
+            surrounding = new SurroundingRegion(diving, pool);
+        }
+
+        return surrounding;
     }
 }
