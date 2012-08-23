@@ -12,7 +12,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.stage.JoinStage;
 import fr.aumgn.dac2.stage.Stage;
 
-@NestedCommands(name = "dac2")
+@NestedCommands("dac2")
 public class StageCommands extends DACCommands {
 
     public StageCommands(DAC dac) {

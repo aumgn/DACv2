@@ -3,7 +3,7 @@ package fr.aumgn.dac2.commands.arg;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -24,7 +24,8 @@ public class StageArg extends CommandArg<Stage> {
         }
 
         @Override
-        public CommandArg<Stage> createCommandArg(Messages messages, String string) {
+        public CommandArg<Stage> createCommandArg(CommandsMessages messages,
+                String string) {
             return new StageArg(dac, messages, string);
         }
     }
@@ -51,7 +52,7 @@ public class StageArg extends CommandArg<Stage> {
 
     private final DAC dac;
 
-    public StageArg(DAC dac, Messages messages, String string) {
+    public StageArg(DAC dac, CommandsMessages messages, String string) {
         super(messages, string);
         this.dac = dac;
     }

@@ -7,7 +7,7 @@ import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.dac2.DAC;
 
-@NestedCommands(name = "dac2")
+@NestedCommands("dac2")
 public class AdminCommands extends DACCommands {
 
     public AdminCommands(DAC dac) {

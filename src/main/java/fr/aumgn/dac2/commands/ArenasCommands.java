@@ -17,7 +17,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Arenas;
 import fr.aumgn.dac2.shape.Shape;
 
-@NestedCommands(name = "dac2")
+@NestedCommands("dac2")
 public class ArenasCommands extends DACCommands {
 
     public ArenasCommands(DAC dac) {

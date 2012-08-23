@@ -9,8 +9,10 @@ import java.util.Map;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.gconf.GConfLoadException;
+import com.google.gson.reflect.TypeToken;
+
 import fr.aumgn.bukkitutils.geom.Vector;
+import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.dac2.DAC;
 
 public class Arenas {
@@ -25,13 +27,16 @@ public class Arenas {
         arenas = new HashMap<String, Arena>();
 
         try {
-            Arena[] arenasList = dac.getPlugin().getGsonLoader()
-                    .loadOrCreate("arenas.json", Arena[].class);
+            TypeToken<ArrayList<Arena>> typeToken =
+                    new TypeToken<ArrayList<Arena>>() {};
+            List<Arena> arenasList = dac.getPlugin().getGsonLoader()
+                    .loadOrCreate("arenas.json", typeToken);
             for (Arena arena : arenasList) {
                 arenas.put(arena.getName(), arena);
             }
-        } catch (GConfLoadException exc) {
-            dac.getLogger().severe("Unable to load arenas.json`");
+        } catch (GsonLoadException exc) {
+            dac.getLogger().severe("Unable to load `arenas.json`");
+            throw new RuntimeException(exc);
         }
     }
 
@@ -39,7 +44,7 @@ public class Arenas {
         try {
             dac.getPlugin().getGsonLoader().write(
                     "arenas.json", arenas.values());
-        } catch (GConfLoadException exc) {
+        } catch (GsonLoadException exc) {
             dac.getPlugin().getLogger().severe("Unable to save arenas.json`");
         }
     }

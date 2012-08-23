@@ -20,7 +20,7 @@ import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.arena.regions.WERegionFactory;
 import fr.aumgn.dac2.exceptions.WERegionIncomplete;
 
-@NestedCommands(name = {"dac2", "set"})
+@NestedCommands({"dac2", "set"})
 public class SetupCommands extends DACCommands {
 
     public SetupCommands(DAC dac) {

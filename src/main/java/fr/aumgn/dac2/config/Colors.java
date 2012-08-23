@@ -7,7 +7,7 @@ import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-import fr.aumgn.bukkitutils.gconf.GConfLoadException;
+import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 
@@ -25,12 +25,12 @@ public class Colors {
                         "Using defaults colors instead.");
                 colorsTmp = getDefaults(dac.getConfig().getLocale());
             }
-        } catch (GConfLoadException _) {
+        } catch (GsonLoadException _) {
             colorsTmp = getDefaults(dac.getConfig().getLocale());
             try {
                 dac.getPlugin().getGsonLoader()
-                .write("colors.json", colorsTmp);
-            } catch (GConfLoadException __) {
+                    .write("colors.json", colorsTmp);
+            } catch (GsonLoadException __) {
                 dac.getLogger().info("Unable to write default color.json.");
             }
         }

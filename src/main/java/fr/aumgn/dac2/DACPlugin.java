@@ -8,9 +8,9 @@ import com.google.gson.GsonBuilder;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
-import fr.aumgn.bukkitutils.gconf.GConfLoadException;
-import fr.aumgn.bukkitutils.gconf.GConfLoader;
-import fr.aumgn.bukkitutils.gconf.typeadapter.DirectionTypeAdapterFactory;
+import fr.aumgn.bukkitutils.gson.GsonLoadException;
+import fr.aumgn.bukkitutils.gson.GsonLoader;
+import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
@@ -50,7 +50,7 @@ public class DACPlugin extends JavaPlugin {
         getLogger().info("Disabled.");
     }
 
-    public GConfLoader getGsonLoader() {
+    public GsonLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
             .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
             .registerTypeAdapterFactory(new GsonRegionFactory())
@@ -58,17 +58,17 @@ public class DACPlugin extends JavaPlugin {
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
             .setPrettyPrinting()
             .create();
-        return new GConfLoader(gson, this);
+        return new GsonLoader(gson, this);
     }
 
     public DACConfig reloadDACConfig() {
         try {
-            GConfLoader loader = getGsonLoader();
+            GsonLoader loader = getGsonLoader();
             return loader.loadOrCreate("config.json", DACConfig.class);
-         } catch (GConfLoadException exc) {
+         } catch (GsonLoadException exc) {
              getLogger().warning(
-                     "Impossible de charger le fichier de configuration.");
-             getLogger().warning("Utilisation des valeurs par défaut.");
+                     "Unable to load configuration file.");
+             getLogger().warning("Using default values instead.");
              return new DACConfig();
          }
     }
