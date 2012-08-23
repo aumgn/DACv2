@@ -52,9 +52,9 @@
 			</resource>
 			<resource>
 				<targetPath>fr/aumgn/dac2</targetPath>
-				<directory>${basedir}/src/main/resources/fr/aumgn/dac2</directory>
+				<directory>${basedir}/src/main/resources/</directory>
 				<includes>
-					<include>*</include>
+					<include>*.properties</include>
 				</includes>
 			</resource>
 			<resource>
