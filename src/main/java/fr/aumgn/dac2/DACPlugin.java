@@ -22,6 +22,7 @@ import fr.aumgn.dac2.commands.arg.StageArg;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.game.GameFactory;
 import fr.aumgn.dac2.game.classic.ClassicGameFactory;
+import fr.aumgn.dac2.game.training.TrainingFactory;
 import fr.aumgn.dac2.stage.Stage;
 
 public class DACPlugin extends JavaPlugin {
@@ -45,6 +46,8 @@ public class DACPlugin extends JavaPlugin {
 
         GameFactory.register("classic", new ClassicGameFactory(),
                 "cl", "default", "def");
+        GameFactory.register("training", new TrainingFactory(),
+                "t", "tr");
 
         getLogger().info("Enabled.");
     }

@@ -55,7 +55,8 @@ public class ClassicGame implements Game {
         for (int i = 0; i< players.length; i++) {
             int j = rand.nextInt(roulette.size());
             PlayerId playerId = roulette.remove(j);
-            players[i] = new ClassicGamePlayer(playerId, joinDatas.get(playerId), i);
+            players[i] = new ClassicGamePlayer(playerId,
+                    joinDatas.get(playerId), i);
             playersMap.put(playerId, players[i]);
         }
 
@@ -125,7 +126,8 @@ public class ClassicGame implements Game {
     private void removePlayer(ClassicGamePlayer player) {
         int index = player.getIndex();
 
-        ClassicGamePlayer[] newPlayers = new ClassicGamePlayer[players.length - 1];
+        ClassicGamePlayer[] newPlayers =
+                new ClassicGamePlayer[players.length - 1];
         System.arraycopy(players, 0, newPlayers, 0, index);
         System.arraycopy(players, index + 1, newPlayers,
                 index, players.length - index - 1);
