@@ -9,7 +9,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.dac2.arena.Arena;
 
 public class GameListener implements Listener {
@@ -30,7 +29,7 @@ public class GameListener implements Listener {
         }
 
         if (!(arena.isIn(player.getWorld())
-                && arena.getPool().contains(new Vector(player)))) {
+                && arena.getPool().contains(player))) {
             return;
         }
 
@@ -53,7 +52,7 @@ public class GameListener implements Listener {
         }
 
         if (!(arena.isIn(player.getWorld()) && arena.getSurroundingRegion()
-                .contains(new Vector(player)))) {
+                .contains(player))) {
             return;
         }
 

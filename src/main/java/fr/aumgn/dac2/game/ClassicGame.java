@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -177,14 +178,22 @@ public class ClassicGame implements Game {
     @Override
     public void onJumpSuccess(Player player) {
         GamePlayer gamePlayer = playersMap.get(player);
+        World world = arena.getWorld();
         Pool pool = arena.getPool();
 
-        Vector2D pos = new Vector2D(player);
+        Vector2D pos = new Vector2D(player.getLocation().getBlockX(),
+                player.getLocation().getBlockZ());
         player.setFallDistance(0.0f);
 
-        send("game.jump.success", gamePlayer.getDisplayName());
+        if (pool.isADAC(world, pos)) {
+            send("game.jump.dac", gamePlayer.getDisplayName());
+            pool.putDACColumn(world, pos, gamePlayer.color);
+        } else {
+            send("game.jump.success", gamePlayer.getDisplayName());
+            pool.putColumn(world, pos, gamePlayer.color);
+        }
+
         tpAfterJump(gamePlayer);
-        pool.putColumn(arena.getWorld(), pos, gamePlayer.color);
         nextTurn();
     }
 

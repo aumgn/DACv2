@@ -93,10 +93,7 @@ public class JoinStage implements Stage, Listener {
         }
 
         players.put(player, new JoinPlayerData(color, player.getLocation()));
-        System.out.println(color.name);
-        System.out.println(colors.containsKey(color.name));
         colors.remove(color.name);
-        System.out.println(colors.containsKey(color.name));
 
         player.sendMessage(msgs.get("joinstage.playerslist"));
         for (Entry<PlayerId, JoinPlayerData> playerIG : players.entrySet()) {
