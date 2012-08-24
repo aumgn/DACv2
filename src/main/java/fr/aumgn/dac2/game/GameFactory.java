@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.aumgn.dac2.DAC;
+import fr.aumgn.dac2.game.classic.ClassicGame;
+import fr.aumgn.dac2.game.training.Training;
 import fr.aumgn.dac2.stage.JoinStage;
 
 public abstract class GameFactory {
@@ -36,4 +38,27 @@ public abstract class GameFactory {
     }
 
     public abstract Game createGame(DAC dac, JoinStage joinStage);
+
+    static {
+        GameFactory.register("classic", new GameFactory() {
+
+            @Override
+            public Game createGame(DAC dac, JoinStage joinStage) {
+                return new ClassicGame(dac, joinStage);
+            }
+        }, "cl", "default", "def");
+
+        GameFactory.register("training", new GameFactory() {
+
+            @Override
+            public int getMinimumPlayers() {
+                return 1;
+            }
+
+            @Override
+            public Game createGame(DAC dac, JoinStage joinStage) {
+                return new Training(dac, joinStage);
+            }
+        }, "t", "tr");
+    }
 }
