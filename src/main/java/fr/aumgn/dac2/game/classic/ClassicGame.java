@@ -1,4 +1,4 @@
-package fr.aumgn.dac2.game;
+package fr.aumgn.dac2.game.classic;
 
 import static fr.aumgn.dac2.utils.DACUtil.*;
 
@@ -22,6 +22,8 @@ import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.Pool;
+import fr.aumgn.dac2.game.Game;
+import fr.aumgn.dac2.game.GameListener;
 import fr.aumgn.dac2.stage.JoinPlayerData;
 import fr.aumgn.dac2.stage.JoinStage;
 
@@ -31,10 +33,10 @@ public class ClassicGame implements Game {
     private final Arena arena;
     private final Listener listener;
 
-    private final PlayersIdMap<GamePlayer> playersMap;
+    private final PlayersIdMap<ClassicGamePlayer> playersMap;
     private final PlayersIdList spectators;
 
-    private GamePlayer[] players;
+    private ClassicGamePlayer[] players;
     private int turn;
     private boolean finished;
 
@@ -46,14 +48,14 @@ public class ClassicGame implements Game {
         Map<PlayerId, JoinPlayerData> joinDatas = joinStage.getPlayers();
         List<PlayerId> roulette = new LinkedList<PlayerId>(joinDatas.keySet());
 
-        playersMap = new PlayersIdHashMap<GamePlayer>();
-        players = new GamePlayer[roulette.size()];
+        playersMap = new PlayersIdHashMap<ClassicGamePlayer>();
+        players = new ClassicGamePlayer[roulette.size()];
 
         Random rand = Util.getRandom();
         for (int i = 0; i< players.length; i++) {
             int j = rand.nextInt(roulette.size());
             PlayerId playerId = roulette.remove(j);
-            players[i] = new GamePlayer(playerId, joinDatas.get(playerId), i);
+            players[i] = new ClassicGamePlayer(playerId, joinDatas.get(playerId), i);
             playersMap.put(playerId, players[i]);
         }
 
@@ -73,7 +75,7 @@ public class ClassicGame implements Game {
 
         send("game.start");
         send("game.playerslist");
-        for (GamePlayer player : players) {
+        for (ClassicGamePlayer player : players) {
             send("game.playerentry", player.getIndex() + 1, player.getDisplayName());
         }
         send("game.enjoy");
@@ -94,7 +96,7 @@ public class ClassicGame implements Game {
 
     @Override
     public void sendMessage(String message) {
-        for (GamePlayer player : players) {
+        for (ClassicGamePlayer player : players) {
             player.sendMessage(message);
         }
         for (Player spectator : spectators.players()) {
@@ -115,15 +117,15 @@ public class ClassicGame implements Game {
 
     private void nextTurn() {
         incrementTurn();
-        GamePlayer player = players[turn];
+        ClassicGamePlayer player = players[turn];
         tpBeforeJump(player);
         send("game.playerturn", player.getDisplayName());
     }
 
-    private void removePlayer(GamePlayer player) {
+    private void removePlayer(ClassicGamePlayer player) {
         int index = player.getIndex();
 
-        GamePlayer[] newPlayers = new GamePlayer[players.length - 1];
+        ClassicGamePlayer[] newPlayers = new ClassicGamePlayer[players.length - 1];
         System.arraycopy(players, 0, newPlayers, 0, index);
         System.arraycopy(players, index + 1, newPlayers,
                 index, players.length - index - 1);
@@ -140,13 +142,13 @@ public class ClassicGame implements Game {
         spectators.add(player.playerId);
     }
 
-    private void tpBeforeJump(GamePlayer player) {
+    private void tpBeforeJump(ClassicGamePlayer player) {
         if (dac.getConfig().getTpBeforeJump()) {
             player.teleport(arena.getDiving().toLocation(arena.getWorld()));
         }
     }
 
-    private void tpAfterJump(final GamePlayer player) {
+    private void tpAfterJump(final ClassicGamePlayer player) {
         if (dac.getConfig().getTpAfterJump()) {
             int delay = dac.getConfig().getTpAfterSuccessDelay();
             if (delay > 0) {
@@ -166,7 +168,7 @@ public class ClassicGame implements Game {
         }
     }
 
-    private boolean isPlayerTurn(GamePlayer player) {
+    private boolean isPlayerTurn(ClassicGamePlayer player) {
         return player != null && turn == player.getIndex();
     }
 
@@ -177,7 +179,7 @@ public class ClassicGame implements Game {
 
     @Override
     public void onJumpSuccess(Player player) {
-        GamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = playersMap.get(player);
         World world = arena.getWorld();
         Pool pool = arena.getPool();
 
@@ -208,7 +210,7 @@ public class ClassicGame implements Game {
             player.damage(1);
         }
 
-        GamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = playersMap.get(player);
 
         send("game.jump.fail", gamePlayer.getDisplayName());
         onPlayerLoss(gamePlayer);
@@ -220,19 +222,19 @@ public class ClassicGame implements Game {
 
     @Override
     public void onQuit(Player player) {
-        GamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = playersMap.get(player);
         send("game.player.quit", gamePlayer.getDisplayName());
         removePlayer(gamePlayer);
     }
 
-    public void onPlayerLoss(GamePlayer player) {
+    public void onPlayerLoss(ClassicGamePlayer player) {
         removePlayer(player);
         if (players.length == 1) {
             onPlayerWin(players[0]);
         }
     }
 
-    public void onPlayerWin(GamePlayer player) {
+    public void onPlayerWin(ClassicGamePlayer player) {
         send("game.finished");
         send("game.winner", player.getDisplayName());
         dac.getStages().stop(this);

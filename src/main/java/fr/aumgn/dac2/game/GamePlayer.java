@@ -21,23 +21,12 @@ public class GamePlayer {
     private final Vector pos;
     private final Direction dir;
 
-    private int index;
-
-    public GamePlayer(PlayerId playerId, JoinPlayerData joinData, int index) {
-        this.index = index;
+    public GamePlayer(PlayerId playerId, JoinPlayerData joinData) {
         this.playerId = playerId;
         this.color = joinData.color;
         this.worldId = joinData.worldId;
         this.pos = joinData.pos;
         this.dir = joinData.dir;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
     }
 
     public String getDisplayName() {

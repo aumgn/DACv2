@@ -112,4 +112,8 @@ public class JoinStage implements Stage, Listener {
             player.sendMessage(msgs.get("joinstage.playerentry", name));
         }
     }
+
+    public int size() {
+        return players.size();
+    }
 }

@@ -9,8 +9,8 @@ import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
-import fr.aumgn.dac2.game.ClassicGame;
 import fr.aumgn.dac2.game.Game;
+import fr.aumgn.dac2.game.GameFactory;
 import fr.aumgn.dac2.stage.JoinStage;
 import fr.aumgn.dac2.stage.Stage;
 
@@ -33,7 +33,7 @@ public class StageCommands extends DACCommands {
         }
     }
 
-    @Command(name = "join", argsFlags = "a", min = 0, max = -1)
+    @Command(name = "join", min = 0, max = -1, argsFlags = "a")
     public void join(Player sender, CommandArgs args) {
         if (dac.getStages().get(sender) != null) {
             throw new CommandError(msg("join.alreadyingame"));
@@ -50,7 +50,7 @@ public class StageCommands extends DACCommands {
         ((JoinStage) stage).addPlayer(sender, args.asList());
     }
 
-    @Command(name = "stop", min = 0, max = 1)
+    @Command(name = "stop", min = 0, max = 1, argsFlags = "a")
     public void stop(CommandSender sender, CommandArgs args) {
         Stage stage = args.get(0, Stage.class)
                 .valueWithPermOr("dac2.stage.stop.others", sender);
@@ -59,16 +59,24 @@ public class StageCommands extends DACCommands {
         sender.sendMessage(msg("stop.success", stage.getArena().getName()));
     }
 
-    @Command(name = "start", min = 0, max = 1)
+    @Command(name = "start", min = 0, max = 1, argsFlags = "a")
     public void start(CommandSender sender, CommandArgs args) {
-        Stage stage = args.get(0, Stage.class)
+        Stage stage = args.get('a', Stage.class)
                 .valueWithPermOr("dac2.stage.start.others", sender);
+        String gameMode = args.get(0, "classic");
 
-        if (!(stage instanceof JoinStage)) {
-            throw new CommandError("Already started.");
+        if (stage == null) {
+            throw new CommandError(msg("start.notajoinstage"));
+        } else if (!(stage instanceof JoinStage)) {
+            throw new CommandError(msg("start.alreadystarted"));
         }
 
-        Game game = new ClassicGame(dac, (JoinStage) stage);
+        JoinStage joinStage = (JoinStage) stage;
+        GameFactory factory = GameFactory.getByAlias(gameMode);
+        if (joinStage.size() < factory.getMinimumPlayers()) {
+            throw new CommandError(msg("start.notenoughplayers"));
+        }
+        Game game = factory.createGame(dac, joinStage);
         dac.getStages().switchTo(game);
     }
 }
