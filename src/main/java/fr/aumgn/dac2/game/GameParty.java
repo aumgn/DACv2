@@ -80,7 +80,7 @@ public class GameParty<T extends GamePlayer> {
 
         if (index <= turn) {
             if (turn == 0) {
-                turn = players.length - 1;
+                turn = players.length - 2;
             } else {
                 turn--;
             }

@@ -20,6 +20,7 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
+import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.stage.JoinPlayerData;
 import fr.aumgn.dac2.stage.JoinStage;
 
@@ -29,7 +30,15 @@ public class ClassicGame extends AbstractGame {
     private final PlayersIdMap<ClassicGamePlayer> playersMap;
     private final PlayersIdList spectators;
 
+    private final Runnable turnTimedOut = new Runnable() {
+        @Override
+        public void run() {
+            turnTimedOut();
+        }
+    };
+
     private boolean finished;
+    private GameTimer timer;
 
     public ClassicGame(DAC dac, JoinStage joinStage) {
         super(dac, joinStage.getArena());
@@ -89,14 +98,40 @@ public class ClassicGame extends AbstractGame {
 
     private void nextTurn() {
         ClassicGamePlayer player = party.nextTurn();
-        tpBeforeJump(player);
+
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new GameTimer(dac, this, turnTimedOut);
+
         send("game.playerturn", player.getDisplayName());
+        tpBeforeJump(player);
+        timer.start();
+    }
+
+    private void turnTimedOut() {
+        ClassicGamePlayer player = party.getCurrent();
+        send("game.turn.timedout", player.getDisplayName());
+        removePlayer(player);
+        if (!finished) {
+            nextTurn();
+        }
     }
 
     @Override
     public boolean isPlayerTurn(Player player) {
         ClassicGamePlayer gamePlayer = playersMap.get(player);
         return gamePlayer != null && party.isTurn(gamePlayer);
+    }
+
+    private void removePlayer(ClassicGamePlayer player) {
+        party.removePlayer(player);
+        playersMap.remove(player.playerId);
+        spectators.add(player.playerId);
+
+        if (party.size() == 1) {
+            onPlayerWin(party.getCurrent());
+        }
     }
 
     @Override
@@ -146,14 +181,11 @@ public class ClassicGame extends AbstractGame {
     public void onQuit(Player player) {
         ClassicGamePlayer gamePlayer = playersMap.get(player);
         send("game.player.quit", gamePlayer.getDisplayName());
-        party.removePlayer(gamePlayer);
+        removePlayer(gamePlayer);
     }
 
     public void onPlayerLoss(ClassicGamePlayer player) {
-        party.removePlayer(player);
-        if (party.size() == 1) {
-            onPlayerWin(party.getCurrent());
-        }
+        removePlayer(player);
     }
 
     public void onPlayerWin(ClassicGamePlayer player) {
@@ -163,6 +195,10 @@ public class ClassicGame extends AbstractGame {
     }
 
     public void stop(boolean force) {
+        if (timer != null) {
+            timer.cancel();
+        }
+
         finished = true;
         if (dac.getConfig().getResetOnEnd()) {
             arena.getPool().reset(arena.getWorld());

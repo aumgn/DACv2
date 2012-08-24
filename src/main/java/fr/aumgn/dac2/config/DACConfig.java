@@ -9,7 +9,7 @@ public class DACConfig {
 
     private String language = Locale.getDefault().toString();
     private PoolReset poolReset = PoolReset.START;
-    private TimerConfig timer = TimerConfig.DEFAULT;
+    private String timerFormat = "%02d:%02d";
     private int timeOut = 60;
     private boolean tpBeforeJump = true;
     private boolean tpAfterJump = true;
@@ -27,8 +27,8 @@ public class DACConfig {
         return (poolReset.flag() & PoolReset.END.flag()) != 0;
     }
 
-    public TimerConfig getTimer() {
-        return timer;
+    public TimerConfig getTimerConfig() {
+        return new TimerConfig(timeOut / 2, timeOut / 4, timerFormat, "");
     }
 
     public int getTimeOut() {
