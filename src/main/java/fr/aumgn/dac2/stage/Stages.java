@@ -72,7 +72,7 @@ public class Stages {
             unregisterListeners(oldStage);
             oldStage.stop(false);
             int index = stages.indexOf(oldStage);
-            stages.add(index, stage);
+            stages.set(index, stage);
         }
 
         registerListeners(stage);
