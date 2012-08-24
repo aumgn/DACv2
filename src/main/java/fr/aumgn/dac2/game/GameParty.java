@@ -41,6 +41,10 @@ public class GameParty<T extends GamePlayer> {
         return player.getIndex() == turn;
     }
 
+    public boolean isLastTurn() {
+        return turn == players.length - 1;
+    }
+
     public T getCurrent() {
         return players[turn];
     }

@@ -146,6 +146,8 @@ public class ClassicGame extends AbstractGame {
 
         if (pool.isADAC(world, pos)) {
             send("game.jump.dac", gamePlayer.getDisplayName());
+            gamePlayer.incrementLives();
+            send("game.livesafterdac", gamePlayer.getLives());
             pool.putDACColumn(world, pos, gamePlayer.color);
         } else {
             send("game.jump.success", gamePlayer.getDisplayName());
@@ -167,13 +169,19 @@ public class ClassicGame extends AbstractGame {
             player.damage(1);
         }
 
+        Vector2D pos = new Vector2D(player.getLocation().getBlock());
         ClassicGamePlayer gamePlayer = playersMap.get(player);
 
         send("game.jump.fail", gamePlayer.getDisplayName());
-        onPlayerLoss(gamePlayer);
-        if (!finished) {
-            tpAfterJump(gamePlayer);
-            nextTurn();
+        gamePlayer.onFail(pos);
+        if (gamePlayer.isDead()) {
+            onPlayerLoss(gamePlayer);
+            if (!finished) {
+                tpAfterJump(gamePlayer);
+                nextTurn();
+            }
+        } else {
+            send("game.livesafterfail", gamePlayer.getLives());
         }
     }
 
