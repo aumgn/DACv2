@@ -104,9 +104,15 @@ public class ClassicGame extends AbstractGame {
         }
         timer = new GameTimer(dac, this, turnTimedOut);
 
-        send("game.playerturn", player.getDisplayName());
-        tpBeforeJump(player);
-        timer.start();
+        if (!player.isOnline()) {
+            send("game.playerturn.notconnected", player.getDisplayName());
+            removePlayer(player);
+            nextTurn();
+        } else {
+            send("game.playerturn", player.getDisplayName());
+            tpBeforeJump(player);
+            timer.start();
+        }
     }
 
     private void turnTimedOut() {
