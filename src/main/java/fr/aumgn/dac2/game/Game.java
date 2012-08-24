@@ -15,4 +15,6 @@ public interface Game extends Stage {
     void onJumpFail(Player player);
 
     void onQuit(Player player);
+
+    void onNewTurn();
 }

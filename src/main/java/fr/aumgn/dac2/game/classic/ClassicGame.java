@@ -2,10 +2,10 @@ package fr.aumgn.dac2.game.classic;
 
 import static fr.aumgn.dac2.utils.DACUtil.*;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -18,12 +18,12 @@ import fr.aumgn.bukkitutils.playerid.list.PlayersIdArrayList;
 import fr.aumgn.bukkitutils.playerid.list.PlayersIdList;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
-import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.game.GameListener;
+import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.stage.JoinPlayerData;
 import fr.aumgn.dac2.stage.JoinStage;
 
@@ -33,11 +33,10 @@ public class ClassicGame implements Game {
     private final Arena arena;
     private final Listener listener;
 
+    private final GameParty<ClassicGamePlayer> party;
     private final PlayersIdMap<ClassicGamePlayer> playersMap;
     private final PlayersIdList spectators;
 
-    private ClassicGamePlayer[] players;
-    private int turn;
     private boolean finished;
 
     public ClassicGame(DAC dac, JoinStage joinStage) {
@@ -46,19 +45,19 @@ public class ClassicGame implements Game {
         this.listener = new GameListener(this);
 
         Map<PlayerId, JoinPlayerData> joinDatas = joinStage.getPlayers();
-        List<PlayerId> roulette = new LinkedList<PlayerId>(joinDatas.keySet());
-
+        List<ClassicGamePlayer> list =
+                new ArrayList<ClassicGamePlayer>(joinDatas.size());
         playersMap = new PlayersIdHashMap<ClassicGamePlayer>();
-        players = new ClassicGamePlayer[roulette.size()];
 
-        Random rand = Util.getRandom();
-        for (int i = 0; i< players.length; i++) {
-            int j = rand.nextInt(roulette.size());
-            PlayerId playerId = roulette.remove(j);
-            players[i] = new ClassicGamePlayer(playerId,
-                    joinDatas.get(playerId), i);
-            playersMap.put(playerId, players[i]);
+        for (Entry<PlayerId, JoinPlayerData> entry : joinDatas.entrySet()) {
+            PlayerId playerId = entry.getKey();
+            ClassicGamePlayer player =
+                    new ClassicGamePlayer(playerId, joinDatas.get(playerId));
+            list.add(player);
+            playersMap.put(playerId, player);
         }
+        party = new GameParty<ClassicGamePlayer>(this, ClassicGamePlayer.class,
+                list);
 
         spectators = new PlayersIdArrayList();
     }
@@ -76,12 +75,11 @@ public class ClassicGame implements Game {
 
         send("game.start");
         send("game.playerslist");
-        for (ClassicGamePlayer player : players) {
+        for (ClassicGamePlayer player : party.iterable()) {
             send("game.playerentry", player.getIndex() + 1, player.getDisplayName());
         }
         send("game.enjoy");
 
-        turn = -1;
         nextTurn();
     }
 
@@ -97,7 +95,7 @@ public class ClassicGame implements Game {
 
     @Override
     public void sendMessage(String message) {
-        for (ClassicGamePlayer player : players) {
+        for (ClassicGamePlayer player : party.iterable()) {
             player.sendMessage(message);
         }
         for (Player spectator : spectators.players()) {
@@ -109,39 +107,10 @@ public class ClassicGame implements Game {
         sendMessage(dac.getMessages().get(key, arguments));
     }
 
-    private void incrementTurn() {
-        turn++;
-        if (turn >= players.length) {
-            turn = 0;
-        }
-    }
-
     private void nextTurn() {
-        incrementTurn();
-        ClassicGamePlayer player = players[turn];
+        ClassicGamePlayer player = party.nextTurn();
         tpBeforeJump(player);
         send("game.playerturn", player.getDisplayName());
-    }
-
-    private void removePlayer(ClassicGamePlayer player) {
-        int index = player.getIndex();
-
-        ClassicGamePlayer[] newPlayers =
-                new ClassicGamePlayer[players.length - 1];
-        System.arraycopy(players, 0, newPlayers, 0, index);
-        System.arraycopy(players, index + 1, newPlayers,
-                index, players.length - index - 1);
-
-        for (int i = index + 1; i < players.length; i++) {
-            players[i].setIndex(i - 1);
-        }
-        if (index <= turn) {
-            turn--;
-        }
-
-        players = newPlayers;
-        playersMap.remove(player.playerId);
-        spectators.add(player.playerId);
     }
 
     private void tpBeforeJump(ClassicGamePlayer player) {
@@ -170,13 +139,14 @@ public class ClassicGame implements Game {
         }
     }
 
-    private boolean isPlayerTurn(ClassicGamePlayer player) {
-        return player != null && turn == player.getIndex();
+    @Override
+    public void onNewTurn() {
     }
 
     @Override
     public boolean isPlayerTurn(Player player) {
-        return isPlayerTurn(playersMap.get(player));
+        ClassicGamePlayer gamePlayer = playersMap.get(player);
+        return gamePlayer != null && party.isTurn(gamePlayer);
     }
 
     @Override
@@ -226,13 +196,13 @@ public class ClassicGame implements Game {
     public void onQuit(Player player) {
         ClassicGamePlayer gamePlayer = playersMap.get(player);
         send("game.player.quit", gamePlayer.getDisplayName());
-        removePlayer(gamePlayer);
+        party.removePlayer(gamePlayer);
     }
 
     public void onPlayerLoss(ClassicGamePlayer player) {
-        removePlayer(player);
-        if (players.length == 1) {
-            onPlayerWin(players[0]);
+        party.removePlayer(player);
+        if (party.size() == 1) {
+            onPlayerWin(party.getCurrent());
         }
     }
 

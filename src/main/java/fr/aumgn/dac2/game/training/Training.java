@@ -2,6 +2,8 @@ package fr.aumgn.dac2.game.training;
 
 import static fr.aumgn.dac2.utils.DACUtil.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -19,6 +21,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.game.GameListener;
+import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.stage.JoinPlayerData;
 import fr.aumgn.dac2.stage.JoinStage;
 
@@ -28,9 +31,8 @@ public class Training implements Game {
     private final Arena arena;
     private final Listener listener;
 
-    private TrainingPlayer[] players;
+    private GameParty<TrainingPlayer> party;
     private PlayersIdMap<TrainingPlayer> playersMap;
-    private int turn;
 
     public Training(DAC dac, JoinStage joinStage) {
         this.dac = dac;
@@ -38,16 +40,19 @@ public class Training implements Game {
         this.listener = new GameListener(this);
 
         Map<PlayerId, JoinPlayerData> joinDatas = joinStage.getPlayers();
-        this.players = new TrainingPlayer[joinDatas.size()];
-        this.playersMap = new PlayersIdHashMap<TrainingPlayer>();
+        List<TrainingPlayer> list =
+                new ArrayList<TrainingPlayer>(joinDatas.size());
+        playersMap = new PlayersIdHashMap<TrainingPlayer>();
 
-        int i = 0;
         for (Entry<PlayerId, JoinPlayerData> entry : joinDatas.entrySet()) {
             PlayerId playerId = entry.getKey();
-            players[i] = new TrainingPlayer(playerId, entry.getValue());
-            playersMap.put(playerId, players[i]);
-            i++;
+            TrainingPlayer player =
+                    new TrainingPlayer(playerId, entry.getValue());
+            list.add(player);
+            playersMap.put(playerId, player);
         }
+        party = new GameParty<TrainingPlayer>(this, TrainingPlayer.class,
+                list);
     }
 
     @Override
@@ -62,20 +67,11 @@ public class Training implements Game {
         }
 
         send("training.start");
-        turn = -1;
         nextTurn();
     }
 
-    private void incrementTurn() {
-        turn++;
-        if (turn >= players.length) {
-            turn = 0;
-        }
-    }
-
     private void nextTurn() {
-        incrementTurn();
-        TrainingPlayer player = players[turn];
+        TrainingPlayer player = party.nextTurn();
         tpBeforeJump(player);
         send("training.playerturn", player.getDisplayName());
     }
@@ -108,7 +104,7 @@ public class Training implements Game {
 
     @Override
     public void stop(boolean force) {
-        for (TrainingPlayer player : players) {
+        for (TrainingPlayer player : party.iterable()) {
             player.sendStats(dac.getMessages());
         }
     }
@@ -125,7 +121,7 @@ public class Training implements Game {
 
     @Override
     public void sendMessage(String message) {
-        for (TrainingPlayer player : players) {
+        for (TrainingPlayer player : party.iterable()) {
             player.sendMessage(message);
         }
     }
@@ -135,9 +131,13 @@ public class Training implements Game {
     }
 
     @Override
+    public void onNewTurn() {
+    }
+
+    @Override
     public boolean isPlayerTurn(Player player) {
         TrainingPlayer trainingPlayer = playersMap.get(player);
-        return trainingPlayer == players[turn];
+        return trainingPlayer != null && party.isTurn(trainingPlayer);
     }
 
     @Override
@@ -171,28 +171,7 @@ public class Training implements Game {
     @Override
     public void onQuit(Player player) {
         TrainingPlayer trainingPlayer = playersMap.get(player);
-        removePlayer(trainingPlayer);
+        party.removePlayer(trainingPlayer);
         trainingPlayer.sendStats(dac.getMessages());
-    }
-
-    private void removePlayer(TrainingPlayer trainingPlayer) {
-        int index;
-        for (index = 0; index < players.length; index++) {
-            if (players[index] == trainingPlayer) {
-                break;
-            }
-        }
-
-        TrainingPlayer[] newPlayers = new TrainingPlayer[players.length - 1];
-        System.arraycopy(players, 0, newPlayers, 0, index);
-        System.arraycopy(players, index + 1, newPlayers,
-                index, players.length - index - 1);
-
-        if (index <= turn) {
-            turn--;
-        }
-
-        players = newPlayers;
-        playersMap.remove(trainingPlayer.playerId);
     }
 }
