@@ -1,43 +1,31 @@
 package fr.aumgn.dac2.game.training;
 
-import static fr.aumgn.dac2.utils.DACUtil.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.Pool;
-import fr.aumgn.dac2.game.Game;
-import fr.aumgn.dac2.game.GameListener;
+import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.stage.JoinPlayerData;
 import fr.aumgn.dac2.stage.JoinStage;
 
-public class Training implements Game {
-
-    private final DAC dac;
-    private final Arena arena;
-    private final Listener listener;
+public class Training extends AbstractGame {
 
     private GameParty<TrainingPlayer> party;
     private PlayersIdMap<TrainingPlayer> playersMap;
 
     public Training(DAC dac, JoinStage joinStage) {
-        this.dac = dac;
-        this.arena = joinStage.getArena();
-        this.listener = new GameListener(this);
+        super(dac, joinStage.getArena());
 
         Map<PlayerId, JoinPlayerData> joinDatas = joinStage.getPlayers();
         List<TrainingPlayer> list =
@@ -56,11 +44,6 @@ public class Training implements Game {
     }
 
     @Override
-    public Arena getArena() {
-        return arena;
-    }
-
-    @Override
     public void start() {
         if (dac.getConfig().getResetOnStart()) {
             arena.getPool().reset(arena.getWorld());
@@ -76,32 +59,6 @@ public class Training implements Game {
         send("training.playerturn", player.getDisplayName());
     }
 
-    private void tpBeforeJump(TrainingPlayer player) {
-        if (dac.getConfig().getTpBeforeJump()) {
-            player.teleport(arena.getDiving().toLocation(arena.getWorld()));
-        }
-    }
-
-    private void tpAfterJump(final TrainingPlayer player) {
-        if (dac.getConfig().getTpAfterJump()) {
-            int delay = dac.getConfig().getTpAfterSuccessDelay();
-            if (delay > 0) {
-                player.setNoDamageTicks(TICKS_PER_SECONDS);
-                Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
-                        new Runnable() {
-                    @Override
-                    public void run() {
-                        player.tpToStart();
-                    }
-                });
-            } else {
-                player.tpToStart();
-            }
-        } else {
-            player.setNoDamageTicks(TICKS_PER_SECONDS);
-        }
-    }
-
     @Override
     public void stop(boolean force) {
         for (TrainingPlayer player : party.iterable()) {
@@ -110,13 +67,8 @@ public class Training implements Game {
     }
 
     @Override
-    public Listener[] getListeners() {
-        return new Listener[] { listener };
-    }
-
-    @Override
     public boolean contains(Player player) {
-        return false;
+        return playersMap.containsKey(player);
     }
 
     @Override
@@ -128,10 +80,6 @@ public class Training implements Game {
 
     private void send(String key, Object... arguments) {
         sendMessage(dac.getMessages().get(key, arguments));
-    }
-
-    @Override
-    public void onNewTurn() {
     }
 
     @Override
