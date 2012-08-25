@@ -1,0 +1,37 @@
+package fr.aumgn.dac2.game.colonnisation;
+
+import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.dac2.game.GamePlayer;
+import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+
+public class ColonnPlayer extends GamePlayer {
+
+    private int multiplier;
+    private int score;
+
+    public ColonnPlayer(PlayerId playerId, PlayerData joinData) {
+        super(playerId, joinData);
+        this.multiplier = 1;
+        this.score = 0;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getMultiplier() {
+        return multiplier;
+    }
+
+    public void addPoints(int value) {
+        score += value;
+    }
+
+    public void incrementMultiplier() {
+        multiplier++;
+    }
+
+    public void resetMultiplier() {
+        multiplier = 1;
+    }
+}

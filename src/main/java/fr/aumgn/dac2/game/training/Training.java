@@ -47,10 +47,7 @@ public class Training extends AbstractGame {
 
     @Override
     public void start() {
-        if (dac.getConfig().getResetOnStart()) {
-            arena.getPool().reset(arena.getWorld());
-        }
-
+        resetPoolOnStart();
         send("training.start");
         nextTurn();
     }
@@ -63,6 +60,7 @@ public class Training extends AbstractGame {
 
     @Override
     public void stop(boolean force) {
+        resetPoolOnEnd();
         for (TrainingPlayer player : party.iterable()) {
             player.sendStats(dac.getMessages());
         }
@@ -78,10 +76,6 @@ public class Training extends AbstractGame {
         for (TrainingPlayer player : party.iterable()) {
             player.sendMessage(message);
         }
-    }
-
-    private void send(String key, Object... arguments) {
-        sendMessage(dac.getMessages().get(key, arguments));
     }
 
     @Override

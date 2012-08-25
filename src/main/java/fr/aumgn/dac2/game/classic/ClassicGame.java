@@ -67,9 +67,7 @@ public class ClassicGame extends AbstractGame {
 
     @Override
     public void start() {
-        if (dac.getConfig().getResetOnStart()) {
-            arena.getPool().reset(arena.getWorld());
-        }
+        resetPoolOnStart();
 
         send("game.start");
         send("game.playerslist");
@@ -94,10 +92,6 @@ public class ClassicGame extends AbstractGame {
         for (Player spectator : spectators.players()) {
             spectator.sendMessage(message);
         }
-    }
-
-    private void send(String key, Object... arguments) {
-        sendMessage(dac.getMessages().get(key, arguments));
     }
 
     @Override
@@ -295,9 +289,7 @@ public class ClassicGame extends AbstractGame {
         }
 
         finished = true;
-        if (dac.getConfig().getResetOnEnd()) {
-            arena.getPool().reset(arena.getWorld());
-        }
+        resetPoolOnEnd();
 
         if (force) {
             send("game.stopped");

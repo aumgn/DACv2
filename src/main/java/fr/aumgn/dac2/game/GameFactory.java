@@ -3,8 +3,10 @@ package fr.aumgn.dac2.game;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.classic.ClassicGame;
+import fr.aumgn.dac2.game.colonnisation.Colonnisation;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.training.Training;
 
@@ -43,8 +45,8 @@ public abstract class GameFactory {
         GameFactory.register("classic", new GameFactory() {
 
             @Override
-            public Game createGame(DAC dac, GameStartData joinStage) {
-                return new ClassicGame(dac, joinStage);
+            public Game createGame(DAC dac, GameStartData data) {
+                return new ClassicGame(dac, data);
             }
         }, "cl", "default", "def");
 
@@ -56,9 +58,17 @@ public abstract class GameFactory {
             }
 
             @Override
-            public Game createGame(DAC dac, GameStartData joinStage) {
-                return new Training(dac, joinStage);
+            public Game createGame(DAC dac, GameStartData data) {
+                return new Training(dac, data);
             }
-        }, "t", "tr");
+        }, "tr", "t");
+
+        GameFactory.register("colonnisation", new GameFactory() {
+
+            @Override
+            public Game createGame(DAC dac, GameStartData data) {
+                return new Colonnisation(dac, data);
+            }
+        }, "col", "c");
     }
 }

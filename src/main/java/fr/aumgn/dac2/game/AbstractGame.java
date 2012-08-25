@@ -31,8 +31,24 @@ public abstract class AbstractGame implements Game {
         return new Listener[] { listener };
     }
 
+    protected void send(String key, Object... arguments) {
+        sendMessage(dac.getMessages().get(key, arguments));
+    }
+
     @Override
     public void onNewTurn() {
+    }
+
+    protected void resetPoolOnStart() {
+        if (dac.getConfig().getResetOnStart()) {
+            arena.getPool().reset(arena.getWorld());
+        }
+    }
+
+    protected void resetPoolOnEnd() {
+        if (dac.getConfig().getResetOnEnd()) {
+            arena.getPool().reset(arena.getWorld());
+        }
     }
 
     protected void tpBeforeJump(GamePlayer player) {
