@@ -16,4 +16,6 @@ public interface Stage {
     Listener[] getListeners();
 
     boolean contains(Player player);
+
+    void sendMessage(String message);
 }

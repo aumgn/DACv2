@@ -6,8 +6,6 @@ import fr.aumgn.dac2.stage.Stage;
 
 public interface Game extends Stage {
 
-    void sendMessage(String message);
-
     boolean isPlayerTurn(Player player);
 
     void onJumpSuccess(Player player);
