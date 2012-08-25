@@ -109,12 +109,36 @@ public class ClassicGame extends AbstractGame {
         if (!player.isOnline()) {
             send("game.playerturn.notconnected", player.getDisplayName());
             removePlayer(player);
+            if (isConfirmationTurn()) {
+                send("game.jump.confirmationfail");
+                for (ClassicGamePlayer deadPlayer : party.iterable()) {
+                    deadPlayer.incrementLives();
+                }
+            }
             nextTurn();
         } else {
             send("game.playerturn", player.getDisplayName());
+            if (isConfirmationTurn()) {
+                send("game.confirmationneeded");
+            }
             tpBeforeJump(player);
             timer.start();
         }
+    }
+
+    private boolean isConfirmationTurn() {
+        if (!party.isLastTurn()) {
+            return false;
+        }
+
+        int remaining = 0;
+        for (ClassicGamePlayer player : party.iterable()) {
+            if (!player.isDead()) {
+                remaining++;
+            }
+        }
+
+        return remaining == 1;
     }
 
     private void turnTimedOut() {
@@ -152,14 +176,26 @@ public class ClassicGame extends AbstractGame {
                 player.getLocation().getBlockZ());
         player.setFallDistance(0.0f);
 
-        if (pool.isADAC(world, pos)) {
-            send("game.jump.dac", gamePlayer.getDisplayName());
-            gamePlayer.incrementLives();
-            send("game.livesafterdac", gamePlayer.getLives());
-            pool.putDACColumn(world, pos, gamePlayer.color);
+        if (isConfirmationTurn()) {
+            if (pool.isADAC(world, pos)) {
+                send("game.jump.dacconfirmation", gamePlayer.getDisplayName());
+                send("game.jump.dacconfirmation2");
+                pool.putDACColumn(world, pos, gamePlayer.color);
+            } else {
+                send("game.jump.confirmation", gamePlayer.getDisplayName());
+                pool.putColumn(world, pos, gamePlayer.color);
+            }
+            onPlayerWin(gamePlayer);
         } else {
-            send("game.jump.success", gamePlayer.getDisplayName());
-            pool.putColumn(world, pos, gamePlayer.color);
+            if (pool.isADAC(world, pos)) {
+                send("game.jump.dac", gamePlayer.getDisplayName());
+                gamePlayer.incrementLives();
+                send("game.livesafterdac", gamePlayer.getLives());
+                pool.putDACColumn(world, pos, gamePlayer.color);
+            } else {
+                send("game.jump.success", gamePlayer.getDisplayName());
+                pool.putColumn(world, pos, gamePlayer.color);
+            }
         }
 
         tpAfterJump(gamePlayer);
@@ -181,15 +217,24 @@ public class ClassicGame extends AbstractGame {
         ClassicGamePlayer gamePlayer = playersMap.get(player);
 
         send("game.jump.fail", gamePlayer.getDisplayName());
-        gamePlayer.onFail(pos);
-        if (gamePlayer.isDead()) {
-            onPlayerLoss(gamePlayer);
-            if (!finished) {
-                tpAfterJump(gamePlayer);
-                nextTurn();
+        if (isConfirmationTurn()) {
+            send("game.jump.confirmationfail");
+            for (ClassicGamePlayer deadPlayer : party.iterable()) {
+                if (deadPlayer.isDead()) {
+                    deadPlayer.incrementLives();
+                }
             }
         } else {
-            send("game.livesafterfail", gamePlayer.getLives());
+            gamePlayer.onFail(pos);
+            if (gamePlayer.isDead()) {
+                onPlayerLoss(gamePlayer);
+                if (!finished) {
+                    tpAfterJump(gamePlayer);
+                    nextTurn();
+                }
+            } else {
+                send("game.livesafterfail", gamePlayer.getLives());
+            }
         }
     }
 
