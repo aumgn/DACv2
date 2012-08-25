@@ -1,16 +1,8 @@
 package fr.aumgn.dac2.shape;
 
-import static fr.aumgn.dac2.utils.WEUtils.*;
-
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import org.bukkit.World;
-
-import com.sk89q.worldedit.BlockVector2D;
-import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
-import com.sk89q.worldedit.regions.Polygonal2DRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
@@ -26,31 +18,16 @@ public class PolygonalShape implements FlatShape {
     private transient Vector2D min2D = null;
     private transient Vector2D max2D = null;
 
-    public PolygonalShape(Polygonal2DRegion region) {
-        this.minY = region.getMinimumY();
-        this.maxY = region.getMaximumY();
-        List<BlockVector2D> wePoints = region.getPoints();
-        this.points = new Vector2D[wePoints.size()];
-        int i = 0;
-        for (BlockVector2D wePoint : wePoints) {
-            points[i] = we2bu(wePoint);
-            i++;
-        }
+    public PolygonalShape(int minY, int maxY, Vector2D[] points) {
+        this.minY = minY;
+        this.maxY = maxY;
+        this.points = points;
     }
 
     @Override
     public boolean contains(Vector pt) {
         int targetY = pt.getBlockY();
         return targetY >= minY && targetY <= maxY && contains2D(pt.to2D());
-    }
-
-    @Override
-    public Polygonal2DSelection getSelection(World world) {
-        List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
-        for (Vector2D pt : points) {
-            wePoints.add(bu2blockwe(pt));
-        }
-        return new Polygonal2DSelection(world, wePoints, minY, maxY);
     }
 
     @Override
@@ -116,6 +93,13 @@ public class PolygonalShape implements FlatShape {
             return false;
         }
 
+        if (min2D == null) {
+            calculateMinMax2D();
+        }
+        if (!pt.isInside(min2D, max2D)) {
+            return false;
+        }
+
         int targetX = pt.getBlockX(); //wide
         int targetZ = pt.getBlockZ(); //depth
 
@@ -173,5 +157,9 @@ public class PolygonalShape implements FlatShape {
     @Override
     public Iterator<Column> iterator() {
         return new ColumnsIterator(this);
+    }
+
+    public List<Vector2D> getPoints() {
+        return Arrays.<Vector2D>asList(points);
     }
 }

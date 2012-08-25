@@ -1,4 +1,4 @@
-package fr.aumgn.dac2.commands;
+package fr.aumgn.dac2.commands.worldedit;
 
 import org.bukkit.entity.Player;
 
@@ -6,6 +6,7 @@ import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.regions.FlatRegion;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.RegionSelector;
 
@@ -17,11 +18,14 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Diving;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
-import fr.aumgn.dac2.arena.regions.WERegionFactory;
+import fr.aumgn.dac2.exceptions.PoolShapeNotFlat;
 import fr.aumgn.dac2.exceptions.WERegionIncomplete;
+import fr.aumgn.dac2.shape.FlatShape;
+import fr.aumgn.dac2.shape.Shape;
+import fr.aumgn.dac2.shape.WEShapeUtils;
 
 @NestedCommands({"dac2", "set"})
-public class SetupCommands extends DACCommands {
+public class SetupCommands extends WorldEditCommands {
 
     public SetupCommands(DAC dac) {
         super(dac);
@@ -31,7 +35,12 @@ public class SetupCommands extends DACCommands {
     public void pool(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena.class).value();
         Region region = getRegion(sender);
-        Pool pool = WERegionFactory.createPool(dac, region);
+        if (!(region instanceof FlatRegion)) {
+            throw new PoolShapeNotFlat(dac, region);
+        }
+
+        FlatShape shape = (FlatShape) WEShapeUtils.getShape(dac, region);
+        Pool pool = new Pool(shape);
         arena.setPool(pool);
         sender.sendMessage(msg("set.pool.success"));
     }
@@ -40,13 +49,15 @@ public class SetupCommands extends DACCommands {
     public void start(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena.class).value();
         Region region = getRegion(sender);
-        StartRegion start = WERegionFactory.createStartRegion(dac, region);
+
+        Shape shape = WEShapeUtils.getShape(dac, region);
+        StartRegion start = new StartRegion(shape);
         arena.setStartRegion(start);
         sender.sendMessage(msg("set.start.success"));
     }
 
     private Region getRegion(Player player) {
-        WorldEditPlugin worldEdit = dac.getWorldEdit();
+        WorldEditPlugin worldEdit = getWorldEdit();
         LocalWorld world = BukkitUtil.getLocalWorld(player.getWorld());
         RegionSelector selector = worldEdit.getSession(player)
                 .getRegionSelector(world);

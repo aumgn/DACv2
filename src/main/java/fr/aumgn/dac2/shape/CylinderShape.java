@@ -1,17 +1,10 @@
 package fr.aumgn.dac2.shape;
 
-import static fr.aumgn.dac2.utils.WEUtils.*;
-
 import java.util.Iterator;
-
-import org.bukkit.World;
-
-import com.sk89q.worldedit.regions.CylinderRegion;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.iterator.ColumnsIterator;
-import fr.aumgn.dac2.utils.CylinderSelection;
 
 @ShapeName("cylinder")
 public class CylinderShape implements FlatShape {
@@ -21,23 +14,17 @@ public class CylinderShape implements FlatShape {
     private final int minY;
     private final int maxY;
 
-    public CylinderShape(CylinderRegion region) {
-        this.center = we2bu(region.getCenter().toVector2D());
-        this.radius = we2bu(region.getRadius()).add(0.5);
-        this.minY = region.getMinimumY();
-        this.maxY = region.getMaximumY();
+    public CylinderShape(Vector2D center, Vector2D radius, int minY, int maxY) {
+        this.center = center;
+        this.radius = radius.add(0.5);
+        this.minY = minY;
+        this.maxY = maxY;
     }
 
     @Override
     public boolean contains(Vector pt) {
         return pt.getY() >= minY && pt.getY() <= maxY
                 && pt.to2D().subtract(center).divide(radius).lengthSq() <= 1;
-    }
-
-    @Override
-    public CylinderSelection getSelection(World world) {
-        return new CylinderSelection(world, bu2we(center),
-                bu2we(radius.subtract(0.5)), minY, maxY);
     }
 
     @Override
@@ -73,5 +60,13 @@ public class CylinderShape implements FlatShape {
     @Override
     public Iterator<Column> iterator() {
         return new ColumnsIterator(this);
+    }
+
+    public Vector2D getCenter() {
+        return center;
+    }
+
+    public Vector2D getRadius() {
+        return radius.subtract(0.5);
     }
 }

@@ -99,9 +99,11 @@ public class Training extends AbstractGame {
 
         if (pool.isADAC(world, pos)) {
             send("training.jump.dac", trainingPlayer.getDisplayName());
+            trainingPlayer.incrementDacs();
             pool.putDACColumn(world, pos, trainingPlayer.color);
         } else {
             send("training.jump.success", trainingPlayer.getDisplayName());
+            trainingPlayer.incrementSuccesses();
             pool.putColumn(world, pos, trainingPlayer.color);
         }
 
@@ -113,6 +115,7 @@ public class Training extends AbstractGame {
     public void onJumpFail(Player player) {
         TrainingPlayer trainingPlayer = playersMap.get(player);
         send("training.jump.fail", trainingPlayer.getDisplayName());
+        trainingPlayer.incrementFails();
 
         tpAfterJump(trainingPlayer);
         nextTurn();
@@ -122,6 +125,7 @@ public class Training extends AbstractGame {
     public void onQuit(Player player) {
         TrainingPlayer trainingPlayer = playersMap.get(player);
         party.removePlayer(trainingPlayer);
+        playersMap.remove(player);
         trainingPlayer.sendStats(dac.getMessages());
     }
 }

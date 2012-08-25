@@ -5,12 +5,12 @@ author: aumgn
 website: ${project.url}
 
 main: fr.aumgn.dac2.DACPlugin
-depend: [WorldEdit]
+softdepend: [WorldEdit]
 
 commands:
     dac2:
         description: "Main command"
-        usage: "<command>"
+        usage: "<subcommand>"
         aliases: ["dac"]
 
     # Admin Commands
@@ -43,11 +43,6 @@ commands:
         description: "Teleport to the given arena's diving board."
         usage: "<arena>"
         permission: "dac2.arenas.tparena"
-    "dac2 select":
-        description: "Select specified region of the gievn arena."
-        usage: "<pool|start|surrounding> <arena>"
-        permission: "dac2.arenas.select"
-        aliases: ["dac2 sel"]
     "dac2 reset":
         description: "Reset the given arena's pool."
         usage: "<arena>"
@@ -57,6 +52,7 @@ commands:
     # Setup Commands
     "dac2 set":
         description: "Set main command"
+        usage: "<pool|start|diving> <arena>"
     "dac2 set pool":
         description: "Define the pool of the given arena."
         usage: "<arena>"
@@ -72,6 +68,24 @@ commands:
         usage: "<arena>"
         permission: "dac2.setup.diving"
         aliases: ["dac2 set d"]
+
+    # Select Commands
+    "dac2 select":
+        description: "Select main command."
+        usage: "<pool|start|surrounding> <arena>"
+        aliases: ["dac2 sel"]
+    "dac2 select pool":
+        description: "Select the pool of the given arena."
+        usage: "<arena>"
+        permission: "dac2.arenas.select.pool"
+    "dac2 select start":
+        description: "Select the start region of the given arena."
+        usage: "<arena>"
+        permission: "dac2.arenas.select.start"
+    "dac2 select surrounding":
+        description: "Select the surrounding region of the given arena."
+        usage: " <arena>"
+        permission: "dac2.arenas.select.surrounding"
 
     # Stages Commands
     "dac2 initialize":
@@ -95,7 +109,7 @@ commands:
         aliases: ["dac2 s"]
     "dac2 quickstart":
         description: "Start the game skipping the join stage"
-        usage: "[-a=arena] [gamemode]
+        usage: "[-a=arena] [gamemode]"
         permission: "dac2.stages.quickstart"
         aliases: ["dac2 qs"]
 
@@ -106,6 +120,7 @@ permissions:
             - dac2.admin: true
             - dac2.arenas: true
             - dac2.setup: true
+            - dac2.select: true
             - dac2.stages: true
 
     dac2.admin:
@@ -119,7 +134,6 @@ permissions:
             - dac2.arenas.delete: true
             - dac2.arenas.arenas: true
             - dac2.arenas.tparena: true
-            - dac2.arenas.select: true
             - dac2.arenas.reset: true
 
     dac2.setup:
@@ -127,6 +141,12 @@ permissions:
             - dac2.setup.pool: true
             - dac2.setup.start: true
             - dac2.setup.diving: true
+
+    dac2.select:
+        children:
+            - dac2.arenas.select.pool: true
+            - dac2.arenas.select.start: true
+            - dac2.arenas.select.surrounding: true
 
     dac2.stages:
         children:

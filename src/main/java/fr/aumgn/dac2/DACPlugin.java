@@ -1,5 +1,6 @@
 package fr.aumgn.dac2;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.gson.FieldNamingPolicy;
@@ -15,10 +16,12 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
-import fr.aumgn.dac2.commands.SetupCommands;
 import fr.aumgn.dac2.commands.StageCommands;
 import fr.aumgn.dac2.commands.arg.ArenaArg;
 import fr.aumgn.dac2.commands.arg.StageArg;
+import fr.aumgn.dac2.commands.worldedit.DisabledWorldEditCommands;
+import fr.aumgn.dac2.commands.worldedit.SelectCommands;
+import fr.aumgn.dac2.commands.worldedit.SetupCommands;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.stage.Stage;
 
@@ -38,10 +41,19 @@ public class DACPlugin extends JavaPlugin {
                 this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));
         registration.register(new ArenasCommands(dac));
-        registration.register(new SetupCommands(dac));
         registration.register(new StageCommands(dac));
+        if (isWorldEditEnabled()) {
+            registration.register(new SetupCommands(dac));
+            registration.register(new SelectCommands(dac));
+        } else {
+            registration.register(new DisabledWorldEditCommands(dac));
+        }
 
         getLogger().info("Enabled.");
+    }
+
+    public boolean isWorldEditEnabled() {
+        return Bukkit.getPluginManager().isPluginEnabled("WorldEdit");
     }
 
     @Override

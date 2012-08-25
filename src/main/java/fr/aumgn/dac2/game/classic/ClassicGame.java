@@ -29,7 +29,7 @@ public class ClassicGame extends AbstractGame {
     private final GameParty<ClassicGamePlayer> party;
     private final PlayersIdMap<ClassicGamePlayer> playersMap;
     private final PlayersIdList spectators;
-    private final ClassicGamePlayer[] rank;
+    private final ClassicGamePlayer[] ranking;
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -62,7 +62,7 @@ public class ClassicGame extends AbstractGame {
 
         spectators = new PlayersIdArrayList();
         spectators.addAll(data.getSpectators());
-        rank = new ClassicGamePlayer[party.size() - 1];
+        ranking = new ClassicGamePlayer[party.size() - 1];
     }
 
     @Override
@@ -100,8 +100,20 @@ public class ClassicGame extends AbstractGame {
         sendMessage(dac.getMessages().get(key, arguments));
     }
 
+    @Override
+    public void onNewTurn() {
+        for (ClassicGamePlayer player : party.iterable().clone()) {
+            if (player.isDead()) {
+                removePlayer(player);
+            }
+        }
+    }
+
     private void nextTurn() {
         ClassicGamePlayer player = party.nextTurn();
+        if (finished) {
+            return;
+        }
 
         if (timer != null) {
             timer.cancel();
@@ -111,17 +123,20 @@ public class ClassicGame extends AbstractGame {
         if (!player.isOnline()) {
             send("game.playerturn.notconnected", player.getDisplayName());
             removePlayer(player);
-            if (isConfirmationTurn()) {
-                send("game.jump.confirmationfail");
-                for (ClassicGamePlayer deadPlayer : party.iterable()) {
-                    deadPlayer.incrementLives();
+            if (!finished) {
+                if (isConfirmationTurn()) {
+                    send("game.jump.confirmationfail");
+                    for (ClassicGamePlayer deadPlayer : party.iterable()) {
+                        deadPlayer.incrementLives();
+                    }
                 }
+                nextTurn();
             }
-            nextTurn();
         } else {
-            send("game.playerturn", player.getDisplayName());
             if (isConfirmationTurn()) {
-                send("game.confirmationneeded");
+                send("game.confirmationneeded", player.getDisplayName());
+            } else {
+                send("game.playerturn", player.getDisplayName());
             }
             tpBeforeJump(player);
             timer.start();
@@ -161,7 +176,7 @@ public class ClassicGame extends AbstractGame {
     private void removePlayer(ClassicGamePlayer player) {
         party.removePlayer(player);
         playersMap.remove(player.playerId);
-        addToRank(player);
+        addToRanking(player);
         spectators.add(player.playerId);
 
         if (party.size() == 1) {
@@ -169,10 +184,10 @@ public class ClassicGame extends AbstractGame {
         }
     }
 
-    private void addToRank(ClassicGamePlayer player) {
-        for (int i = rank.length; i >= 0; i--) {
-            if (rank[i] == null) {
-                rank[i] = player;
+    private void addToRanking(ClassicGamePlayer player) {
+        for (int i = ranking.length - 1; i >= 0; i--) {
+            if (ranking[i] == null) {
+                ranking[i] = player;
                 return;
             }
         }
@@ -200,6 +215,9 @@ public class ClassicGame extends AbstractGame {
             for (ClassicGamePlayer deadPlayer : party.iterable()) {
                 if (deadPlayer.isDead()) {
                     removePlayer(deadPlayer);
+                }
+                if (finished) {
+                    return;
                 }
             }
             onPlayerWin(gamePlayer);
@@ -243,16 +261,12 @@ public class ClassicGame extends AbstractGame {
             }
         } else {
             gamePlayer.onFail(pos);
-            if (gamePlayer.isDead()) {
-                onPlayerLoss(gamePlayer);
-                if (!finished) {
-                    tpAfterJump(gamePlayer);
-                    nextTurn();
-                }
-            } else {
+            if (!gamePlayer.isDead()) {
                 send("game.livesafterfail", gamePlayer.getLives());
             }
         }
+
+        nextTurn();
     }
 
     @Override
@@ -269,8 +283,8 @@ public class ClassicGame extends AbstractGame {
     public void onPlayerWin(ClassicGamePlayer player) {
         send("game.finished");
         send("game.winner", player.getDisplayName());
-        for (int i = 0; i < rank.length; i++) {
-            send("game.rank", i + 2, player.getDisplayName());
+        for (int i = 0; i < ranking.length; i++) {
+            send("game.rank", i + 2, ranking[i].getDisplayName());
         }
         dac.getStages().stop(this);
     }
