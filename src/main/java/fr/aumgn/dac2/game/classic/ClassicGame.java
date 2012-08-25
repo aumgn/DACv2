@@ -29,6 +29,7 @@ public class ClassicGame extends AbstractGame {
     private final GameParty<ClassicGamePlayer> party;
     private final PlayersIdMap<ClassicGamePlayer> playersMap;
     private final PlayersIdList spectators;
+    private final ClassicGamePlayer[] rank;
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -61,6 +62,7 @@ public class ClassicGame extends AbstractGame {
 
         spectators = new PlayersIdArrayList();
         spectators.addAll(data.getSpectators());
+        rank = new ClassicGamePlayer[party.size() - 1];
     }
 
     @Override
@@ -159,10 +161,20 @@ public class ClassicGame extends AbstractGame {
     private void removePlayer(ClassicGamePlayer player) {
         party.removePlayer(player);
         playersMap.remove(player.playerId);
+        addToRank(player);
         spectators.add(player.playerId);
 
         if (party.size() == 1) {
             onPlayerWin(party.getCurrent());
+        }
+    }
+
+    private void addToRank(ClassicGamePlayer player) {
+        for (int i = rank.length; i >= 0; i--) {
+            if (rank[i] == null) {
+                rank[i] = player;
+                return;
+            }
         }
     }
 
@@ -184,6 +196,11 @@ public class ClassicGame extends AbstractGame {
             } else {
                 send("game.jump.confirmation", gamePlayer.getDisplayName());
                 pool.putColumn(world, pos, gamePlayer.color);
+            }
+            for (ClassicGamePlayer deadPlayer : party.iterable()) {
+                if (deadPlayer.isDead()) {
+                    removePlayer(deadPlayer);
+                }
             }
             onPlayerWin(gamePlayer);
         } else {
@@ -252,6 +269,9 @@ public class ClassicGame extends AbstractGame {
     public void onPlayerWin(ClassicGamePlayer player) {
         send("game.finished");
         send("game.winner", player.getDisplayName());
+        for (int i = 0; i < rank.length; i++) {
+            send("game.rank", i + 2, player.getDisplayName());
+        }
         dac.getStages().stop(this);
     }
 
