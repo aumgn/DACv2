@@ -5,8 +5,8 @@ import java.util.Map;
 
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.classic.ClassicGame;
+import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.training.Training;
-import fr.aumgn.dac2.stage.JoinStage;
 
 public abstract class GameFactory {
 
@@ -37,13 +37,13 @@ public abstract class GameFactory {
         return 2;
     }
 
-    public abstract Game createGame(DAC dac, JoinStage joinStage);
+    public abstract Game createGame(DAC dac, GameStartData data);
 
     static {
         GameFactory.register("classic", new GameFactory() {
 
             @Override
-            public Game createGame(DAC dac, JoinStage joinStage) {
+            public Game createGame(DAC dac, GameStartData joinStage) {
                 return new ClassicGame(dac, joinStage);
             }
         }, "cl", "default", "def");
@@ -56,7 +56,7 @@ public abstract class GameFactory {
             }
 
             @Override
-            public Game createGame(DAC dac, JoinStage joinStage) {
+            public Game createGame(DAC dac, GameStartData joinStage) {
                 return new Training(dac, joinStage);
             }
         }, "t", "tr");

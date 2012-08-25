@@ -1,8 +1,10 @@
-package fr.aumgn.dac2.stage;
+package fr.aumgn.dac2.stage.join;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,19 +18,22 @@ import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.config.Color;
+import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.game.start.SimplePlayerData;
+import fr.aumgn.dac2.stage.Stage;
 
-public class JoinStage implements Stage, Listener {
+public class JoinStage implements Stage, Listener, GameStartData {
 
     private final DAC dac;
     private final Arena arena;
     private final Map<String, Color> colors;
-    private final PlayersIdMap<JoinPlayerData> players;
+    private final PlayersIdMap<PlayerData> players;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colors = dac.getColors().toMap();
-        this.players = new PlayersIdHashMap<JoinPlayerData>();
+        this.players = new PlayersIdHashMap<PlayerData>();
     }
 
     @Override
@@ -68,10 +73,6 @@ public class JoinStage implements Stage, Listener {
         }
     }
 
-    public Map<PlayerId, JoinPlayerData> getPlayers() {
-        return players;
-    }
-
     public void addPlayer(Player player, List<String> colorsName) {
         Color color = null;
         for (String rawColorName : colorsName) {
@@ -95,20 +96,20 @@ public class JoinStage implements Stage, Listener {
         String playerName = color.chat + player.getDisplayName();
         sendMessage(msgs.get("joinstage.join", playerName));
 
-        players.put(player, new JoinPlayerData(color, player.getLocation()));
+        players.put(player, new SimplePlayerData(color, player));
         colors.remove(color.name);
 
         player.sendMessage(msgs.get("joinstage.playerslist"));
-        for (Entry<PlayerId, JoinPlayerData> playerIG : players.entrySet()) {
+        for (Entry<PlayerId, PlayerData> playerIG : players.entrySet()) {
             PlayerId playerId = playerIG.getKey();
-            JoinPlayerData data = playerIG.getValue();
+            PlayerData data = playerIG.getValue();
 
             String name;
             if (playerId.isOnline()) {
-                name = data.color.chat
+                name = data.getColor().chat
                         + playerIG.getKey().getPlayer().getDisplayName();
             } else {
-                name = ChatColor.ITALIC.toString() + data.color.chat
+                name = ChatColor.ITALIC.toString() + data.getColor().chat
                         + playerId.getName();
             }
 
@@ -118,5 +119,15 @@ public class JoinStage implements Stage, Listener {
 
     public int size() {
         return players.size();
+    }
+
+    @Override
+    public Map<PlayerId, PlayerData> getPlayersData() {
+        return players;
+    }
+
+    @Override
+    public Set<PlayerId> getSpectators() {
+        return Collections.<PlayerId>emptySet();
     }
 }

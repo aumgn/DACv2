@@ -1,5 +1,7 @@
 package fr.aumgn.dac2.config;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -11,7 +13,7 @@ import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 
-public class Colors {
+public class Colors implements Iterable<Color> {
 
     private final Color[] colors;
 
@@ -49,6 +51,10 @@ public class Colors {
         }
 
         return map;
+    }
+
+    public Iterator<Color> iterator() {
+        return Arrays.asList(colors).iterator();
     }
 
     private static Color[] getDefaults(Locale locale) {

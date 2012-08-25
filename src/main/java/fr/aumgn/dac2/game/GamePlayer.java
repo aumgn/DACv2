@@ -11,7 +11,7 @@ import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.config.Color;
-import fr.aumgn.dac2.stage.JoinPlayerData;
+import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 
 public class GamePlayer {
 
@@ -23,12 +23,12 @@ public class GamePlayer {
 
     private int index;
 
-    public GamePlayer(PlayerId playerId, JoinPlayerData joinData) {
+    public GamePlayer(PlayerId playerId, PlayerData joinData) {
         this.playerId = playerId;
-        this.color = joinData.color;
-        this.worldId = joinData.worldId;
-        this.pos = joinData.pos;
-        this.dir = joinData.dir;
+        this.color = joinData.getColor();
+        this.worldId = joinData.getWorldId();
+        this.pos = joinData.getPosition();
+        this.dir = joinData.getDirection();
         this.index = -1;
     }
 

@@ -20,9 +20,9 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
+import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 import fr.aumgn.dac2.game.GameTimer;
-import fr.aumgn.dac2.stage.JoinPlayerData;
-import fr.aumgn.dac2.stage.JoinStage;
 
 public class ClassicGame extends AbstractGame {
 
@@ -40,18 +40,19 @@ public class ClassicGame extends AbstractGame {
     private boolean finished;
     private GameTimer timer;
 
-    public ClassicGame(DAC dac, JoinStage joinStage) {
-        super(dac, joinStage.getArena());
+    public ClassicGame(DAC dac, GameStartData data) {
+        super(dac, data);
 
-        Map<PlayerId, JoinPlayerData> joinDatas = joinStage.getPlayers();
+        Map<PlayerId, ? extends PlayerData> playersData = data.getPlayersData();
         List<ClassicGamePlayer> list =
-                new ArrayList<ClassicGamePlayer>(joinDatas.size());
+                new ArrayList<ClassicGamePlayer>(playersData.size());
         playersMap = new PlayersIdHashMap<ClassicGamePlayer>();
 
-        for (Entry<PlayerId, JoinPlayerData> entry : joinDatas.entrySet()) {
+        for (Entry<PlayerId, ? extends PlayerData> entry :
+                playersData.entrySet()) {
             PlayerId playerId = entry.getKey();
-            ClassicGamePlayer player =
-                    new ClassicGamePlayer(playerId, joinDatas.get(playerId));
+            ClassicGamePlayer player = new ClassicGamePlayer(playerId,
+                    playersData.get(playerId));
             list.add(player);
             playersMap.put(playerId, player);
         }
@@ -59,6 +60,7 @@ public class ClassicGame extends AbstractGame {
                 list);
 
         spectators = new PlayersIdArrayList();
+        spectators.addAll(data.getSpectators());
     }
 
     @Override

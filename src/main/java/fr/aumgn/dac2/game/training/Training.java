@@ -16,23 +16,25 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
-import fr.aumgn.dac2.stage.JoinPlayerData;
-import fr.aumgn.dac2.stage.JoinStage;
+import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 
 public class Training extends AbstractGame {
 
     private GameParty<TrainingPlayer> party;
     private PlayersIdMap<TrainingPlayer> playersMap;
 
-    public Training(DAC dac, JoinStage joinStage) {
-        super(dac, joinStage.getArena());
+    public Training(DAC dac, GameStartData data) {
+        super(dac, data);
 
-        Map<PlayerId, JoinPlayerData> joinDatas = joinStage.getPlayers();
+        Map<PlayerId, ? extends GameStartData.PlayerData> playersData =
+                data.getPlayersData();
         List<TrainingPlayer> list =
-                new ArrayList<TrainingPlayer>(joinDatas.size());
+                new ArrayList<TrainingPlayer>(playersData.size());
         playersMap = new PlayersIdHashMap<TrainingPlayer>();
 
-        for (Entry<PlayerId, JoinPlayerData> entry : joinDatas.entrySet()) {
+        for (Entry<PlayerId, ? extends PlayerData> entry :
+                playersData.entrySet()) {
             PlayerId playerId = entry.getKey();
             TrainingPlayer player =
                     new TrainingPlayer(playerId, entry.getValue());

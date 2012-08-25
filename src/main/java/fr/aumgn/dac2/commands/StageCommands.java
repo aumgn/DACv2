@@ -11,8 +11,9 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.game.GameFactory;
-import fr.aumgn.dac2.stage.JoinStage;
+import fr.aumgn.dac2.game.start.GameQuickStart;
 import fr.aumgn.dac2.stage.Stage;
+import fr.aumgn.dac2.stage.join.JoinStage;
 
 @NestedCommands("dac2")
 public class StageCommands extends DACCommands {
@@ -23,7 +24,8 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "initialize", min = 0, max = 1)
     public void init(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).valueOr(sender);
+        Arena arena = args.get(0, Arena.class)
+                .valueWithPermOr("dac.stages.init.arena", sender);
 
         JoinStage joinStage = new JoinStage(dac, arena);
         dac.getStages().start(joinStage);
@@ -79,4 +81,20 @@ public class StageCommands extends DACCommands {
         Game game = factory.createGame(dac, joinStage);
         dac.getStages().switchTo(game);
     }
+
+    @Command(name = "quickstart", min = 0, max = 1, argsFlags = "a")
+    public void quickstart(CommandSender sender, CommandArgs args) {
+        Arena arena = args.get('a', Arena.class)
+                .valueWithPermOr("dac.stages.quickstart.arena", sender);
+
+        String gameMode = args.get(0, "classic");
+        GameQuickStart quickStart = new GameQuickStart(dac, arena);
+        GameFactory factory = GameFactory.getByAlias(gameMode);
+        if (quickStart.size() < factory.getMinimumPlayers()) {
+            throw new CommandError(msg("quickstart.notenoughplayers"));
+        }
+        Game game = factory.createGame(dac, quickStart);
+        dac.getStages().start(game);
+    }
+
 }

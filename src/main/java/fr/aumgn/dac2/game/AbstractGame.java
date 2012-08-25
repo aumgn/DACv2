@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.game.start.GameStartData;
 
 public abstract class AbstractGame implements Game {
 
@@ -14,9 +15,9 @@ public abstract class AbstractGame implements Game {
     protected final Arena arena;
     protected final Listener listener;
 
-    public AbstractGame(DAC dac, Arena arena) {
+    public AbstractGame(DAC dac, GameStartData data) {
         this.dac = dac;
-        this.arena = arena;
+        this.arena = data.getArena();
         this.listener = new GameListener(this);
     }
 
