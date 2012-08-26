@@ -1,13 +1,12 @@
 package fr.aumgn.dac2.game;
 
-import static fr.aumgn.dac2.utils.DACUtil.*;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.shape.column.Column;
 
 public abstract class AbstractGame implements Game {
 
@@ -57,23 +56,27 @@ public abstract class AbstractGame implements Game {
         }
     }
 
-    protected void tpAfterJump(final GamePlayer player) {
-        if (dac.getConfig().getTpAfterJump()) {
-            int delay = dac.getConfig().getTpAfterSuccessDelay();
-            if (delay > 0) {
-                player.setNoDamageTicks(TICKS_PER_SECONDS);
-                Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
-                        new Runnable() {
-                    @Override
-                    public void run() {
-                        player.tpToStart();
-                    }
-                });
-            } else {
-                player.tpToStart();
-            }
-        } else {
-            player.setNoDamageTicks(TICKS_PER_SECONDS);
+    protected void tpAfterJumpSuccess(final GamePlayer player, Column column) {
+        int delay = dac.getConfig().getTpAfterJumpSuccessDelay();
+        if (delay == 0) {
+            player.tpToStart();
+            return;
+        }
+
+        player.teleport(arena.getWorld(), column.getTop().addY(1));
+        if (delay > 0) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
+                    player.delayedTpToStart(), delay);
+        }
+    }
+
+    protected void tpAfterJumpFail(final GamePlayer player) {
+        int delay = dac.getConfig().getTpAfterJumpFailDelay();
+        if (delay == 0) {
+            player.tpToStart();
+        } else if (delay > 0) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
+                    player.delayedTpToStart(), delay);
         }
     }
 }

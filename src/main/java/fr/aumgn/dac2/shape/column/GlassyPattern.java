@@ -14,6 +14,6 @@ public class GlassyPattern implements ColumnPattern {
     @Override
     public void apply(World world, Column column) {
         pattern.apply(world, column);
-        column.get(column.getMaxY()).toBlock(world).setType(Material.GLASS);
+        column.getTop().toBlock(world).setType(Material.GLASS);
     }
 }

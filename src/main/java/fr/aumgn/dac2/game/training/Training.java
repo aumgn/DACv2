@@ -103,7 +103,7 @@ public class Training extends AbstractGame {
         }
 
         column.set(world, pattern);
-        tpAfterJump(trainingPlayer);
+        tpAfterJumpSuccess(trainingPlayer, column);
         nextTurn();
     }
 
@@ -113,7 +113,7 @@ public class Training extends AbstractGame {
         send("training.jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();
 
-        tpAfterJump(trainingPlayer);
+        tpAfterJumpFail(trainingPlayer);
         nextTurn();
     }
 

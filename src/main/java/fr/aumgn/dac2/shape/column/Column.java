@@ -24,16 +24,16 @@ public class Column implements Iterable<Vector> {
         this.pt2D = pt2D;
     }
 
-    public double getMinY() {
-        return minY;
-    }
-
-    public double getMaxY() {
-        return maxY;
-    }
-
     public Vector2D getPos() {
         return pt2D;
+    }
+
+    public Vector getBottom() {
+        return pt2D.to3D(minY);
+    }
+
+    public Vector getTop() {
+        return pt2D.to3D(maxY);
     }
 
     public Vector get(double y) {

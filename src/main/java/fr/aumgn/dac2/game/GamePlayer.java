@@ -5,9 +5,11 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.geom.Direction;
+import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.config.Color;
@@ -65,11 +67,17 @@ public class GamePlayer {
         return playerId.isOnline();
     }
 
-    public void setNoDamageTicks(int i) {
+    public void teleport(World world, Vector pos) {
         Player player = playerId.getPlayer();
-        if (player != null) {
-            player.setNoDamageTicks(i);
+        if (player == null) {
+            return;
         }
+;
+        teleport(world, pos, Directions.fromPlayer(player));
+    }
+
+    public void teleport(World world, Vector pos, Direction dir) {
+        teleport(pos.toLocation(world, dir));
     }
 
     public void teleport(Location location) {
@@ -80,8 +88,21 @@ public class GamePlayer {
         }
     }
 
+    public Runnable delayedTeleport(final Location location) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                teleport(location);
+            }
+        };
+    }
+
     public void tpToStart() {
         teleport(pos.toLocation(Bukkit.getWorld(worldId), dir));
+    }
+
+    public Runnable delayedTpToStart() {
+        return delayedTeleport(pos.toLocation(Bukkit.getWorld(worldId), dir));
     }
 
     public int getIndex() {

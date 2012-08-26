@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import fr.aumgn.bukkitutils.timer.TimerConfig;
 import fr.aumgn.bukkitutils.util.Util;
+import fr.aumgn.dac2.utils.DACUtil;
 
 public class DACConfig {
 
@@ -12,8 +13,8 @@ public class DACConfig {
     private String timerFormat = "%02d:%02d";
     private int timeOut = 60;
     private boolean tpBeforeJump = true;
-    private boolean tpAfterJump = true;
-    private int tpAfterSuccessDelay = 0;
+    private int tpAfterJumpSuccessDelay = 0;
+    private int tpAfterJumpFailDelay = 3;
 
     public Locale getLocale() {
         return Util.parseLocale(language);
@@ -39,11 +40,11 @@ public class DACConfig {
         return tpBeforeJump;
     }
 
-    public boolean getTpAfterJump() {
-        return tpAfterJump;
+    public int getTpAfterJumpSuccessDelay() {
+        return tpAfterJumpSuccessDelay * DACUtil.TICKS_PER_SECONDS;
     }
 
-    public int getTpAfterSuccessDelay() {
-        return tpAfterSuccessDelay;
+    public int getTpAfterJumpFailDelay() {
+        return tpAfterJumpFailDelay * DACUtil.TICKS_PER_SECONDS;
     }
 }

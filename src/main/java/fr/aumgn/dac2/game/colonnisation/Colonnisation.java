@@ -138,7 +138,7 @@ public class Colonnisation extends AbstractGame {
         if (pool.isFilled(world)) {
             dac.getStages().stop(this);
         } else {
-            tpAfterJump(gamePlayer);
+            tpAfterJumpSuccess(gamePlayer, column);
             nextTurn();
         }
     }
@@ -153,7 +153,7 @@ public class Colonnisation extends AbstractGame {
             send("colonnisation.multiplier.reset");
         }
 
-        tpAfterJump(gamePlayer);
+        tpAfterJumpFail(gamePlayer);
         nextTurn();
     }
 

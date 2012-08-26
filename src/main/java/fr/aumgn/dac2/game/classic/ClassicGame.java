@@ -228,7 +228,7 @@ public class ClassicGame extends AbstractGame {
             }
         }
 
-        tpAfterJump(gamePlayer);
+        tpAfterJumpSuccess(gamePlayer, column);
         nextTurn();
     }
 
@@ -261,6 +261,7 @@ public class ClassicGame extends AbstractGame {
             }
         }
 
+        tpAfterJumpFail(gamePlayer);
         nextTurn();
     }
 
