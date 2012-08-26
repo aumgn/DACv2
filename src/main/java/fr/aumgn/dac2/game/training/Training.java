@@ -12,6 +12,7 @@ import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.dac2.DAC;
+import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
@@ -89,8 +90,9 @@ public class Training extends AbstractGame {
     public void onJumpSuccess(Player player) {
         TrainingPlayer trainingPlayer = playersMap.get(player);
         World world = arena.getWorld();
+        Pool pool = arena.getPool();
 
-        Column column = arena.getPool().getColumn(player);
+        Column column = pool.getColumn(player);
         ColumnPattern pattern = trainingPlayer.getColumnPattern();
 
         if (column.isADAC(world)) {
@@ -103,6 +105,9 @@ public class Training extends AbstractGame {
         }
 
         column.set(world, pattern);
+        if (pool.isFilled(world)) {
+            pool.reset(world);
+        }
         tpAfterJumpSuccess(trainingPlayer, column);
         nextTurn();
     }
