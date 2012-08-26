@@ -10,12 +10,16 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerid.list.PlayersIdArrayList;
+import fr.aumgn.bukkitutils.playerid.list.PlayersIdList;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
+import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
+import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 import fr.aumgn.dac2.shape.column.Column;
@@ -26,7 +30,17 @@ public class Colonnisation extends AbstractGame {
 
     private final GameParty<ColonnPlayer> party;
     private final PlayersIdMap<ColonnPlayer> playersMap;
+    private final PlayersIdList spectators;
 
+    private final Runnable turnTimedOut = new Runnable() {
+        @Override
+        public void run() {
+            turnTimedOut();
+        }
+    };
+
+    private boolean finished;
+    private Timer timer;
     private int setupTurns;
 
     public Colonnisation(DAC dac, GameStartData data) {
@@ -47,6 +61,11 @@ public class Colonnisation extends AbstractGame {
             playersMap.put(playerId, player);
         }
         party = new GameParty<ColonnPlayer>(this, ColonnPlayer.class, list);
+
+        spectators = new PlayersIdArrayList();
+        spectators.addAll(data.getSpectators());
+
+        finished = false;
     }
 
     @Override
@@ -78,13 +97,51 @@ public class Colonnisation extends AbstractGame {
 
     private void nextTurn() {
         ColonnPlayer player = party.nextTurn();
+
+        if (!player.isOnline()) {
+            send("colonnisation.playerturn.notconnected",
+                    player.getDisplayName());
+            removePlayer(player);
+            if (!finished) {
+                nextTurn();
+            }
+            return;
+        }
+
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = new GameTimer(dac, this, turnTimedOut);
+        timer.start();
+
         send("colonnisation.playerturn", player.getDisplayName());
         tpBeforeJump(player);
     }
 
+    private void turnTimedOut() {
+        ColonnPlayer player = party.getCurrent();
+        removePlayer(player);
+        if (!finished) {
+            nextTurn();
+        }
+    }
+
+    private void removePlayer(ColonnPlayer player) {
+        party.removePlayer(player);
+        playersMap.remove(player.playerId);
+        spectators.add(player.playerId);
+        if (party.size() < 2) {
+            dac.getStages().stop(this);
+        }
+    }
+
     @Override
     public void stop(boolean force) {
+        finished = true;
         resetPoolOnEnd();
+        if (timer != null) {
+            timer.cancel();
+        }
 
         if (force) {
             send("colonnisation.stopped");
@@ -115,6 +172,10 @@ public class Colonnisation extends AbstractGame {
         for (ColonnPlayer player : party.iterable()) {
             player.sendMessage(message);
         }
+
+        for (Player spectator : spectators.players()) {
+            spectator.sendMessage(message);
+        }
     }
 
     @Override
@@ -141,13 +202,13 @@ public class Colonnisation extends AbstractGame {
                 gamePlayer.incrementMultiplier();
                 pattern = new GlassyPattern(pattern);
             }
-    
+
             PoolVisitor visitor = new PoolVisitor(world, pool,
                     gamePlayer.getColor());
             int points = visitor.visit(column.getPos());
             points *= gamePlayer.getMultiplier();
             gamePlayer.addPoints(points);
-    
+
             if (isADAC) {
                 send("colonnisation.multiplier.increment",
                         gamePlayer.getMultiplier());
@@ -182,8 +243,11 @@ public class Colonnisation extends AbstractGame {
     @Override
     public void onQuit(Player player) {
         ColonnPlayer gamePlayer = playersMap.get(player);
-
+        removePlayer(gamePlayer);
         send("colonnisation.player.quit", gamePlayer.getDisplayName(),
                 gamePlayer.getScore());
+        if (!finished) {
+            nextTurn();
+        }
     }
 }
