@@ -8,16 +8,17 @@ import java.util.Map.Entry;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.shape.column.Column;
+import fr.aumgn.dac2.shape.column.ColumnPattern;
+import fr.aumgn.dac2.shape.column.GlassyPattern;
 
 public class Training extends AbstractGame {
 
@@ -86,21 +87,22 @@ public class Training extends AbstractGame {
 
     @Override
     public void onJumpSuccess(Player player) {
-        World world = arena.getWorld();
-        Pool pool = arena.getPool();
-        Vector2D pos = new Vector2D(player.getLocation().getBlock());
         TrainingPlayer trainingPlayer = playersMap.get(player);
+        World world = arena.getWorld();
 
-        if (pool.isADAC(world, pos)) {
+        Column column = arena.getPool().getColumn(player);
+        ColumnPattern pattern = trainingPlayer.getColumnPattern();
+
+        if (column.isADAC(world)) {
             send("training.jump.dac", trainingPlayer.getDisplayName());
             trainingPlayer.incrementDacs();
-            pool.putDACColumn(world, pos, trainingPlayer.color);
+            pattern = new GlassyPattern(pattern);
         } else {
             send("training.jump.success", trainingPlayer.getDisplayName());
             trainingPlayer.incrementSuccesses();
-            pool.putColumn(world, pos, trainingPlayer.color);
         }
 
+        column.set(world, pattern);
         tpAfterJump(trainingPlayer);
         nextTurn();
     }

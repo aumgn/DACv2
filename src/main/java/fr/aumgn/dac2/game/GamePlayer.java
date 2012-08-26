@@ -12,11 +12,13 @@ import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.shape.column.ColorPattern;
+import fr.aumgn.dac2.shape.column.ColumnPattern;
 
 public class GamePlayer {
 
     public final PlayerId playerId;
-    public final Color color;
+    private final Color color;
     private final UUID worldId;
     private final Vector pos;
     private final Direction dir;
@@ -42,6 +44,14 @@ public class GamePlayer {
         }
 
         return color.chat + name + ChatColor.RESET;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public ColumnPattern getColumnPattern() {
+        return new ColorPattern(color);
     }
 
     public void sendMessage(String message) {

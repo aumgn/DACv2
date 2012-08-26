@@ -17,12 +17,14 @@ import fr.aumgn.bukkitutils.playerid.list.PlayersIdList;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 import fr.aumgn.dac2.game.GameTimer;
+import fr.aumgn.dac2.shape.column.Column;
+import fr.aumgn.dac2.shape.column.ColumnPattern;
+import fr.aumgn.dac2.shape.column.GlassyPattern;
 
 public class ClassicGame extends AbstractGame {
 
@@ -191,20 +193,21 @@ public class ClassicGame extends AbstractGame {
     public void onJumpSuccess(Player player) {
         ClassicGamePlayer gamePlayer = playersMap.get(player);
         World world = arena.getWorld();
-        Pool pool = arena.getPool();
 
-        Vector2D pos = new Vector2D(player.getLocation().getBlockX(),
-                player.getLocation().getBlockZ());
-        player.setFallDistance(0.0f);
+        Column column = arena.getPool().getColumn(player);
+        boolean isADAC = column.isADAC(world);
+        ColumnPattern pattern = gamePlayer.getColumnPattern();
+        if (isADAC) {
+            pattern = new GlassyPattern(pattern);
+        }
+        column.set(world, pattern);
 
         if (isConfirmationTurn()) {
-            if (pool.isADAC(world, pos)) {
+            if (isADAC) {
                 send("game.jump.dacconfirmation", gamePlayer.getDisplayName());
                 send("game.jump.dacconfirmation2");
-                pool.putDACColumn(world, pos, gamePlayer.color);
             } else {
                 send("game.jump.confirmation", gamePlayer.getDisplayName());
-                pool.putColumn(world, pos, gamePlayer.color);
             }
             for (ClassicGamePlayer deadPlayer : party.iterable()) {
                 if (deadPlayer.isDead()) {
@@ -216,14 +219,12 @@ public class ClassicGame extends AbstractGame {
             }
             onPlayerWin(gamePlayer);
         } else {
-            if (pool.isADAC(world, pos)) {
+            if (isADAC) {
                 send("game.jump.dac", gamePlayer.getDisplayName());
                 gamePlayer.incrementLives();
                 send("game.livesafterdac", gamePlayer.getLives());
-                pool.putDACColumn(world, pos, gamePlayer.color);
             } else {
                 send("game.jump.success", gamePlayer.getDisplayName());
-                pool.putColumn(world, pos, gamePlayer.color);
             }
         }
 

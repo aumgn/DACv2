@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
@@ -19,6 +18,9 @@ import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.shape.column.Column;
+import fr.aumgn.dac2.shape.column.ColumnPattern;
+import fr.aumgn.dac2.shape.column.GlassyPattern;
 
 public class Colonnisation extends AbstractGame {
 
@@ -108,22 +110,22 @@ public class Colonnisation extends AbstractGame {
     @Override
     public void onJumpSuccess(Player player) {
         ColonnPlayer gamePlayer = playersMap.get(player);
-        Pool pool = arena.getPool();
         World world = arena.getWorld();
+        Pool pool = arena.getPool();
 
-        Vector2D pos = new Vector2D(player.getLocation().getBlockX(),
-                player.getLocation().getBlockZ());
-
-        boolean isADAC = pool.isADAC(world, pos);
+        Column column = pool.getColumn(player);
+        ColumnPattern pattern = gamePlayer.getColumnPattern();
+        boolean isADAC = column.isADAC(world);
         if (isADAC) {
             gamePlayer.incrementMultiplier();
-            pool.putDACColumn(world, pos, gamePlayer.color);
-        } else {
-            pool.putColumn(world, pos, gamePlayer.color);
+            pattern = new GlassyPattern(pattern);
         }
+        column.set(world, pattern);
 
-        PoolVisitor visitor = new PoolVisitor(world, pool, gamePlayer.color);
-        int points = visitor.visit(pos) * gamePlayer.getMultiplier();
+        PoolVisitor visitor = new PoolVisitor(world, pool,
+                gamePlayer.getColor());
+        int points = visitor.visit(column.getPos());
+        points *= gamePlayer.getMultiplier();
         gamePlayer.addPoints(points);
 
         if (isADAC) {

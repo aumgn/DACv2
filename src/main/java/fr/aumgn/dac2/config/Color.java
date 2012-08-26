@@ -8,9 +8,9 @@ public class Color {
     public final String name;
     public final ChatColor chat;
     public final Material block;
-    public final short data;
+    public final byte data;
 
-    public Color(String name, ChatColor chat, Material material, short data) {
+    public Color(String name, ChatColor chat, Material material, byte data) {
         this.name = name;
         this.chat = chat;
         this.block = material;

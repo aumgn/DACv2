@@ -92,6 +92,6 @@ public class Colors implements Iterable<Color> {
     }
 
     private static Color createDefault(String name, ChatColor chat, int data) {
-        return new Color(name, chat, Material.WOOL, (short) data);
+        return new Color(name, chat, Material.WOOL, (byte) data);
     }
 }

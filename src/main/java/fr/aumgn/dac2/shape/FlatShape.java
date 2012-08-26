@@ -1,6 +1,7 @@
 package fr.aumgn.dac2.shape;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.dac2.shape.column.Column;
 
 public interface FlatShape extends Shape, Iterable<Column> {
 

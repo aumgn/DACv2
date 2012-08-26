@@ -1,14 +1,14 @@
 package fr.aumgn.dac2.arena.regions;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.dac2.config.Color;
-import fr.aumgn.dac2.shape.Column;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
+import fr.aumgn.dac2.shape.column.Column;
 
 public class Pool extends Region {
 
@@ -42,27 +42,24 @@ public class Pool extends Region {
         return new Column(shape, pt);
     }
 
+    public Column getColumn(Player player) {
+        Location location = player.getLocation();
+        return new Column(shape, new Vector2D(location.getBlockX(),
+                location.getBlockZ()));
+    }
+
     public void reset(World world) {
         fill(world, Material.STATIONARY_WATER);
     }
 
     public void fill(World world, Material material) {
-        for (Column column : shape) {
-            for (Vector pt : column) {
-                pt.toBlock(world).setType(material);
-            }
-        }
+        fill(world, material, (byte) 0);
     }
 
-    public boolean isADAC(World world, Vector2D pt) {
-        boolean water;
-
-        water =  getColumn(pt.subtractX(1)).isWater(world);
-        water |= getColumn(pt.addX(1)).isWater(world);
-        water |= getColumn(pt.subtractZ(1)).isWater(world);
-        water |= getColumn(pt.addZ(1)).isWater(world);
-
-        return !water;
+    public void fill(World world, Material material, byte data) {
+        for (Column column : shape) {
+            column.set(world, material, data);
+        }
     }
 
     public boolean isFilled(World world) {
@@ -73,14 +70,5 @@ public class Pool extends Region {
         }
 
         return true;
-    }
-
-    public void putColumn(World world, Vector2D pt, Color color) {
-        shape.getColumn(pt).set(world, color.block, color.data);
-    }
-
-    public void putDACColumn(World world, Vector2D pt, Color color) {
-        putColumn(world, pt, color);
-        pt.to3D(shape.getMaxY()).toBlock(world).setType(Material.GLASS);
     }
 }
