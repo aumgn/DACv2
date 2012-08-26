@@ -44,6 +44,7 @@ public class PoolVisitor {
         queue.clear();
         count = 0;
 
+        visited.add(pos);
         pushNeighbors(pos);
         while (!queue.isEmpty()) {
             visit();

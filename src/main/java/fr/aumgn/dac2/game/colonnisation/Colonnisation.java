@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game.colonnisation;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -67,8 +68,22 @@ public class Colonnisation extends AbstractGame {
     @Override
     public void stop(boolean force) {
         resetPoolOnEnd();
+
         if (force) {
             send("colonnisation.stopped");
+        } else {
+            send("colonnisation.finished");
+        }
+
+        ColonnPlayer[] ranking = party.iterable().clone();
+        Arrays.sort(ranking);
+
+        int index = ranking.length - 1;
+        send("colonnisation.winner", ranking[index].getDisplayName());
+        index--;
+        for (; index >= 0; index--) {
+            send("colonnisation.ranking", ranking.length - index,
+                    ranking[index].getDisplayName());
         }
     }
 
@@ -107,19 +122,23 @@ public class Colonnisation extends AbstractGame {
             pool.putColumn(world, pos, gamePlayer.color);
         }
 
-        PoolVisitor visitor = new PoolVisitor(arena, gamePlayer.color);
+        PoolVisitor visitor = new PoolVisitor(world, pool, gamePlayer.color);
         int points = visitor.visit(pos) * gamePlayer.getMultiplier();
         gamePlayer.addPoints(points);
 
         if (isADAC) {
             send("colonnisation.multiplier.increment",
-                    gamePlayer.getDisplayName(), gamePlayer.getMultiplier());
+                    gamePlayer.getMultiplier());
         }
         send("colonnisation.jump.success", gamePlayer.getDisplayName(), points,
                 gamePlayer.getScore());
 
-        tpAfterJump(gamePlayer);
-        nextTurn();
+        if (pool.isFilled(world)) {
+            dac.getStages().stop(this);
+        } else {
+            tpAfterJump(gamePlayer);
+            nextTurn();
+        }
     }
 
     @Override

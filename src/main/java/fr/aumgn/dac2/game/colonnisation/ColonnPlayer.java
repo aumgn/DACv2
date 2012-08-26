@@ -4,7 +4,8 @@ import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.game.GamePlayer;
 import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 
-public class ColonnPlayer extends GamePlayer {
+public class ColonnPlayer extends GamePlayer
+        implements Comparable<ColonnPlayer> {
 
     private int multiplier;
     private int score;
@@ -13,6 +14,11 @@ public class ColonnPlayer extends GamePlayer {
         super(playerId, joinData);
         this.multiplier = 1;
         this.score = 0;
+    }
+
+    @Override
+    public int compareTo(ColonnPlayer other) {
+        return new Integer(score).compareTo(other.score);
     }
 
     public int getScore() {

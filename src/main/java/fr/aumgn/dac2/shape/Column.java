@@ -44,4 +44,9 @@ public class Column implements Iterable<Vector> {
             pt.toBlock(world).setData((byte) data);
         }
     }
+
+    public boolean isWater(World world) {
+        Material type = pt2D.to3D(maxY).toBlock(world).getType();
+        return type == Material.WATER || type == Material.STATIONARY_WATER;
+    }
 }

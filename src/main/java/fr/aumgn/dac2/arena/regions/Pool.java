@@ -29,6 +29,19 @@ public class Pool extends Region {
         return shape;
     }
 
+    public int size2D() {
+        int size = 0;
+        for (@SuppressWarnings("unused") Column _: shape) {
+            size++;
+        }
+
+        return size;
+    }
+
+    public Column getColumn(Vector2D pt) {
+        return new Column(shape, pt);
+    }
+
     public void reset(World world) {
         fill(world, Material.STATIONARY_WATER);
     }
@@ -43,19 +56,23 @@ public class Pool extends Region {
 
     public boolean isADAC(World world, Vector2D pt) {
         boolean water;
-        Vector pt3D = pt.to3D(shape.getMaxY());
 
-        water =  isWater(world, pt3D.subtractX(1));
-        water |= isWater(world, pt3D.addX(1));
-        water |= isWater(world, pt3D.subtractZ(1));
-        water |= isWater(world, pt3D.addZ(1));
+        water =  getColumn(pt.subtractX(1)).isWater(world);
+        water |= getColumn(pt.addX(1)).isWater(world);
+        water |= getColumn(pt.subtractZ(1)).isWater(world);
+        water |= getColumn(pt.addZ(1)).isWater(world);
 
         return !water;
     }
 
-    private boolean isWater(World world, Vector pt) {
-        Material type = pt.toBlock(world).getType();
-        return type == Material.WATER || type == Material.STATIONARY_WATER;
+    public boolean isFilled(World world) {
+        for (Column column : shape) {
+            if (column.isWater(world)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void putColumn(World world, Vector2D pt, Color color) {
