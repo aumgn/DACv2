@@ -58,7 +58,6 @@ public class DACPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        dac.getArenas().save(dac);
         getLogger().info("Disabled.");
     }
 

@@ -25,7 +25,7 @@ public class ArenasCommands extends DACCommands {
         String name = args.get(0);
         World world = args.getWorld(1).valueOr(sender);
 
-        dac.getArenas().create(name, world);
+        dac.getArenas().create(dac, name, world);
         sender.sendMessage(msg("define.success", name));
     }
 
@@ -35,7 +35,7 @@ public class ArenasCommands extends DACCommands {
         List<Arena> arenasList = args.getList(0, Arena.class).value();
 
         for (Arena arena : arenasList) {
-            arenas.delete(arena);
+            arenas.delete(dac, arena);
             sender.sendMessage(msg("delete.success", arena.getName()));
         }
     }

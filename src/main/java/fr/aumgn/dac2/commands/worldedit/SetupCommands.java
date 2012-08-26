@@ -43,6 +43,7 @@ public class SetupCommands extends WorldEditCommands {
         FlatShape shape = (FlatShape) WEShapeUtils.getShape(dac, region);
         Pool pool = new Pool(shape);
         arena.setPool(pool);
+        dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.pool.success"));
     }
 
@@ -54,6 +55,7 @@ public class SetupCommands extends WorldEditCommands {
         Shape shape = WEShapeUtils.getShape(dac, region);
         StartRegion start = new StartRegion(shape);
         arena.setStartRegion(start);
+        dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.start.success"));
     }
 
@@ -65,6 +67,7 @@ public class SetupCommands extends WorldEditCommands {
         Shape shape = WEShapeUtils.getShape(dac, region);
         SurroundingRegion surrounding = new SurroundingRegion(shape);
         arena.setSurroundingRegion(surrounding);
+        dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.surrounding.success"));
     }
 
@@ -84,6 +87,7 @@ public class SetupCommands extends WorldEditCommands {
     public void diving(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena.class).value();
         arena.setDiving(new Diving(sender.getLocation()));
+        dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.diving.success"));
     }
 }
