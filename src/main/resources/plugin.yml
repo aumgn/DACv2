@@ -52,7 +52,7 @@ commands:
     # Setup Commands
     "dac2 set":
         description: "Set main command"
-        usage: "<pool|start|diving> <arena>"
+        usage: "<pool|start|surrounding|diving> <arena>"
     "dac2 set pool":
         description: "Define the pool of the given arena."
         usage: "<arena>"
@@ -63,6 +63,11 @@ commands:
         usage: "<arena>"
         permission: "dac2.setup.start"
         aliases: ["dac2 set s"]
+    "dac2 set surrounding":
+        description: "Define the surrounding region of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.surrouding"
+        aliases: ["dac2 set su"]
     "dac2 set diving":
         description: "Define the diving of the given arena."
         usage: "<arena>"
@@ -78,14 +83,17 @@ commands:
         description: "Select the pool of the given arena."
         usage: "<arena>"
         permission: "dac2.arenas.select.pool"
+        aliases: ["dac2 sel p"]
     "dac2 select start":
         description: "Select the start region of the given arena."
         usage: "<arena>"
         permission: "dac2.arenas.select.start"
+        aliases: ["dac2 sel s"]
     "dac2 select surrounding":
         description: "Select the surrounding region of the given arena."
         usage: " <arena>"
         permission: "dac2.arenas.select.surrounding"
+        aliases: ["dac2 sel su"]
 
     # Stages Commands
     "dac2 initialize":
@@ -140,6 +148,7 @@ permissions:
         children:
             - dac2.setup.pool: true
             - dac2.setup.start: true
+            - dac2.setup.surrouding: true
             - dac2.setup.diving: true
 
     dac2.select:

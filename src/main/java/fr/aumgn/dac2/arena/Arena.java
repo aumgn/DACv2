@@ -16,8 +16,9 @@ public class Arena {
     private Pool pool;
     private StartRegion startRegion;
     private Diving diving;
+    private SurroundingRegion surrounding;
 
-    private transient SurroundingRegion surrounding;
+    private transient SurroundingRegion autoSurrounding;
 
     public Arena(String name, World world) {
         this.name = name;
@@ -26,6 +27,7 @@ public class Arena {
         this.startRegion = null;
         this.diving = null;
         this.surrounding = null;
+        this.autoSurrounding = null;
     }
 
     public String getName() {
@@ -67,10 +69,18 @@ public class Arena {
     }
 
     public SurroundingRegion getSurroundingRegion() {
-        if (surrounding == null) {
-            surrounding = new SurroundingRegion(diving, pool);
+        if (surrounding != null) {
+            return surrounding;
         }
 
-        return surrounding;
+        if (autoSurrounding == null) {
+            autoSurrounding = new SurroundingRegion(diving, pool);
+        }
+        return autoSurrounding;
+    }
+
+    public void setSurroundingRegion(SurroundingRegion surrounding) {
+        this.surrounding = surrounding;
+        this.autoSurrounding = null;
     }
 }

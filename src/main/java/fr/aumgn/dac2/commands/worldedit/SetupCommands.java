@@ -18,6 +18,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Diving;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
+import fr.aumgn.dac2.arena.regions.SurroundingRegion;
 import fr.aumgn.dac2.exceptions.PoolShapeNotFlat;
 import fr.aumgn.dac2.exceptions.WERegionIncomplete;
 import fr.aumgn.dac2.shape.FlatShape;
@@ -54,6 +55,17 @@ public class SetupCommands extends WorldEditCommands {
         StartRegion start = new StartRegion(shape);
         arena.setStartRegion(start);
         sender.sendMessage(msg("set.start.success"));
+    }
+
+    @Command(name = "surrounding", min = 1, max = 1)
+    public void surrounding(Player sender, CommandArgs args) {
+        Arena arena = args.get(0, Arena.class).value();
+        Region region = getRegion(sender);
+
+        Shape shape = WEShapeUtils.getShape(dac, region);
+        SurroundingRegion surrounding = new SurroundingRegion(shape);
+        arena.setSurroundingRegion(surrounding);
+        sender.sendMessage(msg("set.surrounding.success"));
     }
 
     private Region getRegion(Player player) {
