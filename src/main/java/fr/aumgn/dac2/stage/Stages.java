@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.exceptions.IncompleteArena;
 import fr.aumgn.dac2.exceptions.StageAlreadyRunning;
 
 public class Stages {
@@ -43,10 +44,14 @@ public class Stages {
     }
 
     public void start(Stage stage) {
+        Arena arena = stage.getArena();
         if (get(stage.getArena()) != null) {
             throw new StageAlreadyRunning(dac.getMessages());
         }
 
+        if (!arena.isComplete()) {
+            throw new IncompleteArena(dac, arena);
+        }
         stages.add(stage);
         registerListeners(stage);
         stage.start();
