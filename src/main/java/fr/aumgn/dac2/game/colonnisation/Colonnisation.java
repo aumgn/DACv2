@@ -96,11 +96,12 @@ public class Colonnisation extends AbstractGame {
         Arrays.sort(ranking);
 
         int index = ranking.length - 1;
-        send("colonnisation.winner", ranking[index].getDisplayName());
+        send("colonnisation.winner", ranking[index].getDisplayName(),
+                ranking[index].getScore());
         index--;
         for (; index >= 0; index--) {
             send("colonnisation.ranking", ranking.length - index,
-                    ranking[index].getDisplayName());
+                    ranking[index].getDisplayName(), ranking[index].getScore());
         }
     }
 
