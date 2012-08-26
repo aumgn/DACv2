@@ -27,6 +27,8 @@ public class Colonnisation extends AbstractGame {
     private final GameParty<ColonnPlayer> party;
     private final PlayersIdMap<ColonnPlayer> playersMap;
 
+    private int setupTurns;
+
     public Colonnisation(DAC dac, GameStartData data) {
         super(dac, data);
 
@@ -44,21 +46,34 @@ public class Colonnisation extends AbstractGame {
             list.add(player);
             playersMap.put(playerId, player);
         }
-        party = new GameParty<ColonnPlayer>(this,
-                ColonnPlayer.class, list);
+        party = new GameParty<ColonnPlayer>(this, ColonnPlayer.class, list);
     }
 
     @Override
     public void start() {
         resetPoolOnStart();
+
+        double size = arena.getPool().size2D();
+        double setupColumns = size * dac.getConfig().getColonnisationRatio();
+        setupTurns = (int) Math.ceil(setupColumns / party.size());
+
         send("colonnisation.start");
         send("colonnisation.playerslist");
         for (ColonnPlayer player : party.iterable()) {
             send("colonnisation.playerentry", player.getIndex() + 1,
                     player.getDisplayName());
         }
-        send("colonnisation.enjoy");
+        send("colonnisation.setup.turns", setupTurns);
         nextTurn();
+    }
+
+    @Override
+    public void onNewTurn() {
+        setupTurns--;
+        if (setupTurns == 0) {
+            send("colonnisation.setup.finished");
+            send("colonnisation.enjoy");
+        }
     }
 
     private void nextTurn() {
@@ -114,27 +129,33 @@ public class Colonnisation extends AbstractGame {
         Pool pool = arena.getPool();
 
         Column column = pool.getColumn(player);
-        ColumnPattern pattern = gamePlayer.getColumnPattern();
-        boolean isADAC = column.isADAC(world);
-        if (isADAC) {
-            gamePlayer.incrementMultiplier();
-            pattern = new GlassyPattern(pattern);
+        ColumnPattern pattern;
+        if (setupTurns > 0) {
+            pattern = dac.getConfig().getNeutralPattern();
+            send("colonnisation.setup.success", gamePlayer.getDisplayName());
+        } else {
+            pattern = gamePlayer.getColumnPattern();
+            boolean isADAC = column.isADAC(world);
+            if (isADAC) {
+                gamePlayer.incrementMultiplier();
+                pattern = new GlassyPattern(pattern);
+            }
+    
+            PoolVisitor visitor = new PoolVisitor(world, pool,
+                    gamePlayer.getColor());
+            int points = visitor.visit(column.getPos());
+            points *= gamePlayer.getMultiplier();
+            gamePlayer.addPoints(points);
+    
+            if (isADAC) {
+                send("colonnisation.multiplier.increment",
+                        gamePlayer.getMultiplier());
+            }
+            send("colonnisation.jump.success", gamePlayer.getDisplayName(),
+                    points, gamePlayer.getScore());
         }
+
         column.set(world, pattern);
-
-        PoolVisitor visitor = new PoolVisitor(world, pool,
-                gamePlayer.getColor());
-        int points = visitor.visit(column.getPos());
-        points *= gamePlayer.getMultiplier();
-        gamePlayer.addPoints(points);
-
-        if (isADAC) {
-            send("colonnisation.multiplier.increment",
-                    gamePlayer.getMultiplier());
-        }
-        send("colonnisation.jump.success", gamePlayer.getDisplayName(), points,
-                gamePlayer.getScore());
-
         if (pool.isFilled(world)) {
             dac.getStages().stop(this);
         } else {
