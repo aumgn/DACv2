@@ -3,25 +3,24 @@ package fr.aumgn.dac2.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.World;
-
 import com.sk89q.worldedit.BlockVector2D;
-import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
-import com.sk89q.worldedit.bukkit.selections.Polygonal2DSelection;
-import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.LocalWorld;
+import com.sk89q.worldedit.regions.CuboidRegionSelector;
 import com.sk89q.worldedit.regions.CylinderRegion;
+import com.sk89q.worldedit.regions.CylinderRegionSelector;
 import com.sk89q.worldedit.regions.EllipsoidRegion;
+import com.sk89q.worldedit.regions.EllipsoidRegionSelector;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
+import com.sk89q.worldedit.regions.Polygonal2DRegionSelector;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.RegionSelector;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.WERegionNotSupported;
 import fr.aumgn.dac2.exceptions.WESelectionNotSupported;
-import fr.aumgn.dac2.utils.CylinderSelection;
-import fr.aumgn.dac2.utils.EllipsoidSelection;
 
 public class WEShapeUtils {
 
@@ -55,10 +54,10 @@ public class WEShapeUtils {
         }
     }
 
-    public static Selection getSelection(DAC dac, World world, Shape shape) {
+    public static RegionSelector getSelector(DAC dac, LocalWorld world, Shape shape) {
         if (shape instanceof CuboidShape) {
             CuboidShape cuboid = (CuboidShape) shape;
-            return new CuboidSelection(world, bu2we(cuboid.getMin()),
+            return new CuboidRegionSelector(world, bu2we(cuboid.getMin()),
                     bu2we(cuboid.getMax()));
         } else if (shape instanceof PolygonalShape) {
             PolygonalShape poly = (PolygonalShape) shape;
@@ -66,16 +65,16 @@ public class WEShapeUtils {
             for (Vector2D pt : poly.getPoints()) {
                 wePoints.add(bu2blockwe(pt));
             }
-            return new Polygonal2DSelection(world, wePoints,
+            return new Polygonal2DRegionSelector(world, wePoints,
                     (int) poly.getMinY(), (int) poly.getMaxY());
         } else if (shape instanceof CylinderShape) {
             CylinderShape cyl = (CylinderShape) shape;
-            return new CylinderSelection(world, bu2we(cyl.getCenter()),
+            return new CylinderRegionSelector(world, bu2we(cyl.getCenter()),
                     bu2we(cyl.getRadius()), (int) cyl.getMinY(),
                     (int) cyl.getMaxY()); 
         } else if (shape instanceof EllipsoidShape) {
             EllipsoidShape ellipsoid = (EllipsoidShape) shape;
-            return new EllipsoidSelection(world,
+            return new EllipsoidRegionSelector(world,
                     bu2we(ellipsoid.getCenter()),
                     bu2we(ellipsoid.getRadius()));
         } else {
