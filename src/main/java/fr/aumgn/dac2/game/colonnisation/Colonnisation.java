@@ -218,10 +218,10 @@ public class Colonnisation extends AbstractGame {
         }
 
         column.set(world, pattern);
+        tpAfterJumpSuccess(gamePlayer, column);
         if (pool.isFilled(world)) {
             dac.getStages().stop(this);
         } else {
-            tpAfterJumpSuccess(gamePlayer, column);
             nextTurn();
         }
     }
