@@ -7,7 +7,7 @@ import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.column.Column;
 
-@ShapeName("arbitrary-flat")
+@ShapeName("arbitrary")
 public class ArbitraryFlatShape implements FlatShape {
 
     private final Set<Vector2D> points;

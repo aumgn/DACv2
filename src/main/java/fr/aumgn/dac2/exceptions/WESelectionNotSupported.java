@@ -9,6 +9,6 @@ public class WESelectionNotSupported extends DACException {
 
     public WESelectionNotSupported(DAC dac, Class<? extends Shape> clazz) {
         super(dac.getMessages().get(
-                "worledit.selection.unsupported", clazz.getSimpleName()));
+                "worldedit.selection.unsupported", clazz.getSimpleName()));
     }
 }
