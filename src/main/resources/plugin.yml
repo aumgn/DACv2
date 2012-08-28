@@ -58,6 +58,16 @@ commands:
         usage: "<arena>"
         permission: "dac2.setup.diving"
         aliases: ["dac2 set d"]
+    "dac2 set pool":
+        description: "Define the pool of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.pool"
+        aliases: ["dac2 set p"]
+    "dac2 set start":
+        description: "Define the start region of the given arena."
+        usage: "<arena> <radius>"
+        permission: "dac2.setup.start"
+        aliases: ["dac2 set s"]
 
     # WorlEdit Setup Commands
     "dac2 setwe":
@@ -152,6 +162,8 @@ permissions:
     dac2.setup:
         children:
             - dac2.setup.diving: true
+            - dac2.setup.pool: true
+            - dac2.setup.start: true
             - dac2.setup.we: true
 
     dac2.setup.we:
