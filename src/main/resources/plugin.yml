@@ -52,20 +52,20 @@ commands:
     # Setup Commands
     "dac2 set":
         description: "Set main commands"
-        usage: "<diving|pool|start|surrounding> <arena> [args...]"
+        usage: "<diving|pool|start|surrounding> <arena>"
     "dac2 set diving":
         description: "Define the diving of the given arena."
-        usage: "<arena>"
+        usage: "<arena> [-p=<player>]"
         permission: "dac2.setup.diving"
         aliases: ["dac2 set d"]
     "dac2 set pool":
         description: "Define the pool of the given arena."
-        usage: "<arena>"
+        usage: "<arena> [-p=<player>] [-s=shape(default=arbitrary)] [radius] [height]"
         permission: "dac2.setup.pool"
         aliases: ["dac2 set p"]
     "dac2 set start":
         description: "Define the start region of the given arena."
-        usage: "<arena> <radius>"
+        usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
         permission: "dac2.setup.start"
         aliases: ["dac2 set s"]
 

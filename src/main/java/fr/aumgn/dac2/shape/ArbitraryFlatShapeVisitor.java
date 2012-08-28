@@ -45,8 +45,7 @@ public class ArbitraryFlatShapeVisitor {
         visited.add(pos);
         pushNeighbors(pos);
         points.add(pos.to2D());
-        minY = Integer.MAX_VALUE;
-        maxY = Integer.MIN_VALUE;
+        minY = maxY = pos.getBlockY();
 
         count = 0;
     }
