@@ -16,12 +16,13 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
+import fr.aumgn.dac2.commands.SetupCommands;
 import fr.aumgn.dac2.commands.StageCommands;
 import fr.aumgn.dac2.commands.arg.ArenaArg;
 import fr.aumgn.dac2.commands.arg.StageArg;
 import fr.aumgn.dac2.commands.worldedit.DisabledWorldEditCommands;
 import fr.aumgn.dac2.commands.worldedit.SelectCommands;
-import fr.aumgn.dac2.commands.worldedit.SetupCommands;
+import fr.aumgn.dac2.commands.worldedit.SetupWECommands;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.stage.Stage;
 
@@ -42,8 +43,9 @@ public class DACPlugin extends JavaPlugin {
         registration.register(new AdminCommands(dac));
         registration.register(new ArenasCommands(dac));
         registration.register(new StageCommands(dac));
+        registration.register(new SetupCommands(dac));
         if (isWorldEditEnabled()) {
-            registration.register(new SetupCommands(dac));
+            registration.register(new SetupWECommands(dac));
             registration.register(new SelectCommands(dac));
         } else {
             registration.register(new DisabledWorldEditCommands(dac));

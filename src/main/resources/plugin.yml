@@ -51,28 +51,33 @@ commands:
 
     # Setup Commands
     "dac2 set":
-        description: "Set main command"
-        usage: "<pool|start|surrounding|diving> <arena>"
-    "dac2 set pool":
-        description: "Define the pool of the given arena."
-        usage: "<arena>"
-        permission: "dac2.setup.pool"
-        aliases: ["dac2 set p"]
-    "dac2 set start":
-        description: "Define the start region of the given arena."
-        usage: "<arena>"
-        permission: "dac2.setup.start"
-        aliases: ["dac2 set s"]
-    "dac2 set surrounding":
-        description: "Define the surrounding region of the given arena."
-        usage: "<arena>"
-        permission: "dac2.setup.surrouding"
-        aliases: ["dac2 set su"]
+        description: "Set main commands"
+        usage: "<diving|pool|start|surrounding> <arena> [args...]"
     "dac2 set diving":
         description: "Define the diving of the given arena."
         usage: "<arena>"
         permission: "dac2.setup.diving"
         aliases: ["dac2 set d"]
+
+    # WorlEdit Setup Commands
+    "dac2 setwe":
+        description: "WorldEdit set main command"
+        usage: "<pool|start|surrounding> <arena>"
+    "dac2 setwe pool":
+        description: "Define the pool of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.we.pool"
+        aliases: ["dac2 setwe p"]
+    "dac2 setwe start":
+        description: "Define the start region of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.we.start"
+        aliases: ["dac2 setwe s"]
+    "dac2 setwe surrounding":
+        description: "Define the surrounding region of the given arena."
+        usage: "<arena>"
+        permission: "dac2.setup.we.surrouding"
+        aliases: ["dac2 setwe su"]
 
     # Select Commands
     "dac2 select":
@@ -146,10 +151,14 @@ permissions:
 
     dac2.setup:
         children:
-            - dac2.setup.pool: true
-            - dac2.setup.start: true
-            - dac2.setup.surrouding: true
             - dac2.setup.diving: true
+            - dac2.setup.we: true
+
+    dac2.setup.we:
+        children:
+            - dac2.setup.we.pool: true
+            - dac2.setup.we.start: true
+            - dac2.setup.we.surrouding: true
 
     dac2.select:
         children:

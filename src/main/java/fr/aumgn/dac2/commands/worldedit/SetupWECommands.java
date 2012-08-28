@@ -15,7 +15,6 @@ import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
-import fr.aumgn.dac2.arena.Diving;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.arena.regions.SurroundingRegion;
@@ -25,10 +24,10 @@ import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.WEShapeUtils;
 
-@NestedCommands({"dac2", "set"})
-public class SetupCommands extends WorldEditCommands {
+@NestedCommands({"dac2", "setwe"})
+public class SetupWECommands extends WorldEditCommands {
 
-    public SetupCommands(DAC dac) {
+    public SetupWECommands(DAC dac) {
         super(dac);
     }
 
@@ -44,7 +43,7 @@ public class SetupCommands extends WorldEditCommands {
         Pool pool = new Pool(shape);
         arena.setPool(pool);
         dac.getArenas().saveArena(dac, arena);
-        sender.sendMessage(msg("set.pool.success"));
+        sender.sendMessage(msg("setwe.pool.success"));
     }
 
     @Command(name = "start", min = 1, max = 1)
@@ -56,7 +55,7 @@ public class SetupCommands extends WorldEditCommands {
         StartRegion start = new StartRegion(shape);
         arena.setStartRegion(start);
         dac.getArenas().saveArena(dac, arena);
-        sender.sendMessage(msg("set.start.success"));
+        sender.sendMessage(msg("setwe.start.success"));
     }
 
     @Command(name = "surrounding", min = 1, max = 1)
@@ -68,7 +67,7 @@ public class SetupCommands extends WorldEditCommands {
         SurroundingRegion surrounding = new SurroundingRegion(shape);
         arena.setSurroundingRegion(surrounding);
         dac.getArenas().saveArena(dac, arena);
-        sender.sendMessage(msg("set.surrounding.success"));
+        sender.sendMessage(msg("setwe.surrounding.success"));
     }
 
     private Region getRegion(Player player) {
@@ -81,13 +80,5 @@ public class SetupCommands extends WorldEditCommands {
         } catch (IncompleteRegionException exc) {
             throw new WERegionIncomplete(dac);
         }
-    }
-
-    @Command(name = "diving", min = 1, max = 1)
-    public void diving(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
-        arena.setDiving(new Diving(sender.getLocation()));
-        dac.getArenas().saveArena(dac, arena);
-        sender.sendMessage(msg("set.diving.success"));
     }
 }
