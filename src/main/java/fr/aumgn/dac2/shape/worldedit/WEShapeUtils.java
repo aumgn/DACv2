@@ -1,26 +1,23 @@
-package fr.aumgn.dac2.shape;
+package fr.aumgn.dac2.shape.worldedit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.sk89q.worldedit.BlockVector2D;
-import com.sk89q.worldedit.LocalWorld;
-import com.sk89q.worldedit.regions.CuboidRegionSelector;
 import com.sk89q.worldedit.regions.CylinderRegion;
-import com.sk89q.worldedit.regions.CylinderRegionSelector;
 import com.sk89q.worldedit.regions.EllipsoidRegion;
-import com.sk89q.worldedit.regions.EllipsoidRegionSelector;
 import com.sk89q.worldedit.regions.Polygonal2DRegion;
-import com.sk89q.worldedit.regions.Polygonal2DRegionSelector;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.regions.RegionSelector;
 
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.WERegionNotSupported;
-import fr.aumgn.dac2.exceptions.WESelectionNotSupported;
+import fr.aumgn.dac2.shape.CuboidShape;
+import fr.aumgn.dac2.shape.CylinderShape;
+import fr.aumgn.dac2.shape.EllipsoidShape;
+import fr.aumgn.dac2.shape.PolygonalShape;
+import fr.aumgn.dac2.shape.Shape;
 
 public class WEShapeUtils {
 
@@ -54,52 +51,24 @@ public class WEShapeUtils {
         }
     }
 
-    public static RegionSelector getSelector(DAC dac, LocalWorld world, Shape shape) {
-        if (shape instanceof CuboidShape) {
-            CuboidShape cuboid = (CuboidShape) shape;
-            return new CuboidRegionSelector(world, bu2we(cuboid.getMin()),
-                    bu2we(cuboid.getMax()));
-        } else if (shape instanceof PolygonalShape) {
-            PolygonalShape poly = (PolygonalShape) shape;
-            List<BlockVector2D> wePoints = new ArrayList<BlockVector2D>();
-            for (Vector2D pt : poly.getPoints()) {
-                wePoints.add(bu2blockwe(pt));
-            }
-            return new Polygonal2DRegionSelector(world, wePoints,
-                    (int) poly.getMinY(), (int) poly.getMaxY());
-        } else if (shape instanceof CylinderShape) {
-            CylinderShape cyl = (CylinderShape) shape;
-            return new CylinderRegionSelector(world, bu2we(cyl.getCenter()),
-                    bu2we(cyl.getRadius()), (int) cyl.getMinY(),
-                    (int) cyl.getMaxY()); 
-        } else if (shape instanceof EllipsoidShape) {
-            EllipsoidShape ellipsoid = (EllipsoidShape) shape;
-            return new EllipsoidRegionSelector(world,
-                    bu2we(ellipsoid.getCenter()),
-                    bu2we(ellipsoid.getRadius()));
-        } else {
-            throw new WESelectionNotSupported(dac, shape.getClass());
-        }
-    }
-
-    private static Vector we2bu(com.sk89q.worldedit.Vector vector) {
+    public static Vector we2bu(com.sk89q.worldedit.Vector vector) {
         return new Vector(vector.getX(), vector.getY(), vector.getZ());
     }
 
-    private static com.sk89q.worldedit.Vector bu2we(Vector vector) {
+    public static com.sk89q.worldedit.Vector bu2we(Vector vector) {
         return new com.sk89q.worldedit.Vector(
                 vector.getX(), vector.getY(), vector.getZ());
     }
 
-    private static Vector2D we2bu(com.sk89q.worldedit.Vector2D vector) {
+    public static Vector2D we2bu(com.sk89q.worldedit.Vector2D vector) {
         return new Vector2D(vector.getX(), vector.getZ());
     }
 
-    private static com.sk89q.worldedit.Vector2D bu2we(Vector2D vector) {
+    public static com.sk89q.worldedit.Vector2D bu2we(Vector2D vector) {
         return new com.sk89q.worldedit.Vector2D(vector.getX(), vector.getZ());
     }
 
-    private static BlockVector2D bu2blockwe(Vector2D pt) {
+    public static BlockVector2D bu2blockwe(Vector2D pt) {
         return new BlockVector2D(pt.getX(), pt.getZ());
     }
 

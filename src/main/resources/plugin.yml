@@ -68,6 +68,11 @@ commands:
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
         permission: "dac2.setup.start"
         aliases: ["dac2 set s"]
+    "dac2 set surrounding":
+        description: "Define the surrounding region of the given arena."
+        usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
+        permission: "dac2.setup.surrounding"
+        aliases: ["dac2 set s"]
 
     # WorlEdit Setup Commands
     "dac2 setwe":
@@ -96,17 +101,17 @@ commands:
         aliases: ["dac2 sel"]
     "dac2 select pool":
         description: "Select the pool of the given arena."
-        usage: "<arena>"
+        usage: "[-s=<selector>] <arena>"
         permission: "dac2.arenas.select.pool"
         aliases: ["dac2 sel p"]
     "dac2 select start":
         description: "Select the start region of the given arena."
-        usage: "<arena>"
+        usage: "[-s=<selector>] <arena>"
         permission: "dac2.arenas.select.start"
         aliases: ["dac2 sel s"]
     "dac2 select surrounding":
         description: "Select the surrounding region of the given arena."
-        usage: " <arena>"
+        usage: "[-s=<selector>] <arena>"
         permission: "dac2.arenas.select.surrounding"
         aliases: ["dac2 sel su"]
 
@@ -164,6 +169,7 @@ permissions:
             - dac2.setup.diving: true
             - dac2.setup.pool: true
             - dac2.setup.start: true
+            - dac2.setup.surrounding: true
             - dac2.setup.we: true
 
     dac2.setup.we:

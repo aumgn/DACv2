@@ -13,6 +13,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.Diving;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
+import fr.aumgn.dac2.arena.regions.SurroundingRegion;
 import fr.aumgn.dac2.exceptions.PoolShapeNotFlat;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
@@ -69,6 +70,22 @@ public class SetupCommands extends DACCommands {
         Shape shape = factory.create(dac, player.getWorld(),
                 centerFrom(player), radius, height);
         arena.setStartRegion(new StartRegion(shape));
+        dac.getArenas().saveArena(dac, arena);
+        sender.sendMessage(msg("set.diving.success"));
+    }
+
+    @Command(name = "surrounding", min = 1, max = 3, argsFlags = "sp")
+    public void surrounding(CommandSender sender, CommandArgs args) {
+        Arena arena = args.get(0, Arena.class).value();
+        Player player = args.getPlayer('p').valueOr(sender);
+        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
+        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
+        ShapeFactory factory = args.get('s', ShapeFactory.class)
+                .valueOr(ShapeFactory.Cuboid);
+
+        Shape shape = factory.create(dac, player.getWorld(),
+                centerFrom(player), radius, height);
+        arena.setSurroundingRegion(new SurroundingRegion(shape));
         dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.diving.success"));
     }

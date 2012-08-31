@@ -22,7 +22,7 @@ import fr.aumgn.dac2.exceptions.PoolShapeNotFlat;
 import fr.aumgn.dac2.exceptions.WERegionIncomplete;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
-import fr.aumgn.dac2.shape.WEShapeUtils;
+import fr.aumgn.dac2.shape.worldedit.WEShapeUtils;
 
 @NestedCommands({"dac2", "setwe"})
 public class SetupWECommands extends WorldEditCommands {
