@@ -74,7 +74,7 @@ public class StageCommands extends DACCommands {
         }
 
         JoinStage joinStage = (JoinStage) stage;
-        GameFactory factory = GameFactory.getByAlias(gameMode);
+        GameFactory factory = GameFactory.getByAlias(dac, gameMode);
         if (joinStage.size() < factory.getMinimumPlayers()) {
             throw new CommandError(msg("start.notenoughplayers"));
         }
@@ -89,7 +89,7 @@ public class StageCommands extends DACCommands {
 
         String gameMode = args.get(0, "classic");
         GameQuickStart quickStart = new GameQuickStart(dac, arena);
-        GameFactory factory = GameFactory.getByAlias(gameMode);
+        GameFactory factory = GameFactory.getByAlias(dac, gameMode);
         if (quickStart.size() < factory.getMinimumPlayers()) {
             throw new CommandError(msg("quickstart.notenoughplayers"));
         }

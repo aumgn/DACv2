@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 import fr.aumgn.dac2.DAC;
+import fr.aumgn.dac2.exceptions.UnknownGameType;
 import fr.aumgn.dac2.game.classic.ClassicGame;
 import fr.aumgn.dac2.game.colonnisation.Colonnisation;
 import fr.aumgn.dac2.game.start.GameStartData;
@@ -31,7 +32,10 @@ public abstract class GameFactory {
         return factories.get(name);
     }
 
-    public static GameFactory getByAlias(String alias) {
+    public static GameFactory getByAlias(DAC dac, String alias) {
+        if (!byAliases.containsKey(alias)) {
+            throw new UnknownGameType(dac, alias);
+        }
         return byAliases.get(alias);
     }
 
