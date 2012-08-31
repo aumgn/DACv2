@@ -18,4 +18,10 @@ public interface Stage {
     boolean contains(Player player);
 
     void sendMessage(String message);
+
+    boolean isSpectator(Player player);
+
+    void addSpectator(Player player);
+
+    void removeSpectator(Player player);
 }

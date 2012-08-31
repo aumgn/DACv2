@@ -1,8 +1,11 @@
 package fr.aumgn.dac2.game;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import fr.aumgn.bukkitutils.playerid.set.PlayersIdHashSet;
+import fr.aumgn.bukkitutils.playerid.set.PlayersIdSet;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
@@ -13,11 +16,14 @@ public abstract class AbstractGame implements Game {
     protected final DAC dac;
     protected final Arena arena;
     protected final Listener listener;
+    protected final PlayersIdSet spectators;
 
     public AbstractGame(DAC dac, GameStartData data) {
         this.dac = dac;
         this.arena = data.getArena();
         this.listener = new GameListener(this);
+        this.spectators = new PlayersIdHashSet();
+        spectators.addAll(data.getSpectators());
     }
 
     @Override
@@ -36,6 +42,29 @@ public abstract class AbstractGame implements Game {
 
     @Override
     public void onNewTurn() {
+    }
+
+    @Override
+    public boolean isSpectator(Player player) {
+        return spectators.contains(player);
+    }
+
+    @Override
+    public void addSpectator(Player player) {
+        spectators.add(player);
+    }
+
+    @Override
+    public void removeSpectator(Player player) {
+        spectators.remove(player);
+    }
+
+    protected void sendSpectators(String message) {
+        String spectatorMessage = dac.getConfig().getSpectatorsMsg()
+                .format(new String[] { arena.getName(), message });
+        for (Player spectator : spectators.players()) {
+            spectator.sendMessage(spectatorMessage);
+        }
     }
 
     protected void resetPoolOnStart() {

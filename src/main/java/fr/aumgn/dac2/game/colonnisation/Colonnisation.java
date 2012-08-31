@@ -10,8 +10,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.list.PlayersIdArrayList;
-import fr.aumgn.bukkitutils.playerid.list.PlayersIdList;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.bukkitutils.timer.Timer;
@@ -30,7 +28,6 @@ public class Colonnisation extends AbstractGame {
 
     private final GameParty<ColonnPlayer> party;
     private final PlayersIdMap<ColonnPlayer> playersMap;
-    private final PlayersIdList spectators;
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -61,9 +58,6 @@ public class Colonnisation extends AbstractGame {
             playersMap.put(playerId, player);
         }
         party = new GameParty<ColonnPlayer>(this, ColonnPlayer.class, list);
-
-        spectators = new PlayersIdArrayList();
-        spectators.addAll(data.getSpectators());
 
         finished = false;
     }
@@ -172,10 +166,7 @@ public class Colonnisation extends AbstractGame {
         for (ColonnPlayer player : party.iterable()) {
             player.sendMessage(message);
         }
-
-        for (Player spectator : spectators.players()) {
-            spectator.sendMessage(message);
-        }
+        sendSpectators(message);
     }
 
     @Override

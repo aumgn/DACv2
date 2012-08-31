@@ -78,6 +78,7 @@ public class Training extends AbstractGame {
         for (TrainingPlayer player : party.iterable()) {
             player.sendMessage(message);
         }
+        sendSpectators(message);
     }
 
     @Override

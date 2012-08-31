@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.config;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.bukkit.Material;
@@ -15,6 +16,9 @@ public class DACConfig {
     private String language = Locale.getDefault().toString();
 
     private PoolReset poolReset = PoolReset.START;
+
+    private String spectatorsMessage = "{yellow}[{0}]{1}";
+    private transient MessageFormat spectatorsMessageFormat = null;
 
     private String timerFormat = "%02d:%02d";
     private int timeOut = 60;
@@ -37,6 +41,16 @@ public class DACConfig {
 
     public boolean getResetOnEnd() {
         return (poolReset.flag() & PoolReset.END.flag()) != 0;
+    }
+
+    public MessageFormat getSpectatorsMsg() {
+        if (spectatorsMessageFormat == null) {
+            spectatorsMessageFormat = new MessageFormat(
+                    Util.parseColorsMarkup(spectatorsMessage),
+                    getLocale());
+        }
+
+        return spectatorsMessageFormat;
     }
 
     public TimerConfig getTimerConfig() {

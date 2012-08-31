@@ -12,8 +12,6 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.list.PlayersIdArrayList;
-import fr.aumgn.bukkitutils.playerid.list.PlayersIdList;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
 import fr.aumgn.dac2.DAC;
@@ -30,7 +28,6 @@ public class ClassicGame extends AbstractGame {
 
     private final GameParty<ClassicGamePlayer> party;
     private final PlayersIdMap<ClassicGamePlayer> playersMap;
-    private final PlayersIdList spectators;
     private final ClassicGamePlayer[] ranking;
 
     private final Runnable turnTimedOut = new Runnable() {
@@ -62,8 +59,6 @@ public class ClassicGame extends AbstractGame {
         party = new GameParty<ClassicGamePlayer>(this, ClassicGamePlayer.class,
                 list);
 
-        spectators = new PlayersIdArrayList();
-        spectators.addAll(data.getSpectators());
         ranking = new ClassicGamePlayer[party.size() - 1];
     }
 
@@ -91,9 +86,7 @@ public class ClassicGame extends AbstractGame {
         for (ClassicGamePlayer player : party.iterable()) {
             player.sendMessage(message);
         }
-        for (Player spectator : spectators.players()) {
-            spectator.sendMessage(message);
-        }
+        sendSpectators(message);
     }
 
     @Override

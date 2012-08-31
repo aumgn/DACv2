@@ -1,6 +1,5 @@
 package fr.aumgn.dac2.stage.join;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,6 +13,8 @@ import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
 import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
+import fr.aumgn.bukkitutils.playerid.set.PlayersIdHashSet;
+import fr.aumgn.bukkitutils.playerid.set.PlayersIdSet;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
@@ -28,12 +29,14 @@ public class JoinStage implements Stage, Listener, GameStartData {
     private final Arena arena;
     private final Map<String, Color> colors;
     private final PlayersIdMap<PlayerData> players;
+    private final PlayersIdSet spectators;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colors = dac.getColors().toMap();
         this.players = new PlayersIdHashMap<PlayerData>();
+        this.spectators = new PlayersIdHashSet();
     }
 
     @Override
@@ -44,9 +47,9 @@ public class JoinStage implements Stage, Listener, GameStartData {
     @Override
     public void start() {
         PluginMessages messages = dac.getMessages();
-        Util.broadcast(messages.get("joinstage.start1", arena.getName()));
-                //, "dac.game.watch");
-        Util.broadcast(messages.get("joinstage.start2"));//, "dac.game.watch");
+        Util.broadcast("dac2.game.watch", 
+                messages.get("joinstage.start1", arena.getName()));
+        Util.broadcast("dac2.game.watch", messages.get("joinstage.start2"));
     }
 
     @Override
@@ -70,6 +73,12 @@ public class JoinStage implements Stage, Listener, GameStartData {
     public void sendMessage(String message) {
         for (Player player : players.playersSet()) {
             player.sendMessage(message);
+        }
+
+        String spectatorMessage = dac.getConfig().getSpectatorsMsg()
+                .format(new String[] { arena.getName(), message });
+        for (Player spectator : spectators.players()) {
+            spectator.sendMessage(spectatorMessage);
         }
     }
 
@@ -117,6 +126,21 @@ public class JoinStage implements Stage, Listener, GameStartData {
         }
     }
 
+    @Override
+    public boolean isSpectator(Player player) {
+        return spectators.contains(player);
+    }
+
+    @Override
+    public void addSpectator(Player player) {
+        spectators.add(player);
+    }
+
+    @Override
+    public void removeSpectator(Player player) {
+        spectators.remove(player);
+    }
+
     public int size() {
         return players.size();
     }
@@ -128,6 +152,6 @@ public class JoinStage implements Stage, Listener, GameStartData {
 
     @Override
     public Set<PlayerId> getSpectators() {
-        return Collections.<PlayerId>emptySet();
+        return spectators;
     }
 }

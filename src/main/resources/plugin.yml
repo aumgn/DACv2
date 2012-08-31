@@ -141,6 +141,17 @@ commands:
         permission: "dac2.stages.quickstart"
         aliases: ["dac2 qs"]
 
+    # Spectators Commands
+    "dac2 watch":
+        description: "Register as a spectator."
+        usage: "[arena,...]"
+        permission: "dac2.spectator.watch"
+        aliases: ["dac2 w"]
+    "dac2 unwatch":
+        description: "Unregister as a spectator."
+        usage: "[arena,...]"
+        permission: "dac2.spectator.unwatch"
+
 permissions:
     "dac2.*":
         default: op
@@ -150,6 +161,7 @@ permissions:
             - dac2.setup: true
             - dac2.select: true
             - dac2.stages: true
+            - dac2.spectators: true
 
     dac2.admin:
         children:
@@ -196,3 +208,8 @@ permissions:
             - dac2.stages.start.others: true
             - dac2.stages.quickstart: true
             - dac2.stages.quickstart.arena: true
+
+    dac2.spectators:
+        children:
+            - dac2.spectators.watch: true
+            - dac2.spectators.unwatch: true
