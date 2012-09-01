@@ -11,6 +11,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.aumgn.dac2.arena.Arena;
 
+/**
+ * Listener which provides common implementations of listeners
+ * for most game mode.
+ */
 public class GameListener implements Listener {
 
     private final Game game;

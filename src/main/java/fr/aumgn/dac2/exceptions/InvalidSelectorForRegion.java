@@ -4,6 +4,9 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.worldedit.WESelector;
 
+/**
+ * Thrown when trying to select a shape with an invalid worldedit selector.
+ */
 public class InvalidSelectorForRegion extends DACException {
 
     private static final long serialVersionUID = 2990085737849379453L;

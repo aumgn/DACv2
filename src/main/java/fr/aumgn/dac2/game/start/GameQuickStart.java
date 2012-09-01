@@ -20,11 +20,11 @@ import fr.aumgn.dac2.exceptions.TooManyPlayers;
 public class GameQuickStart implements GameStartData {
 
     private final Arena arena;
-    private final PlayersIdMap<PlayerData> playersData;
+    private final PlayersIdMap<PlayerStartData> playersData;
 
     public GameQuickStart(DAC dac, Arena arena) {
         this.arena = arena;
-        this.playersData = new PlayersIdHashMap<PlayerData>();
+        this.playersData = new PlayersIdHashMap<PlayerStartData>();
 
         StartRegion startRegion = arena.getStartRegion();
         Iterator<Color> colors = dac.getColors().iterator();
@@ -36,7 +36,7 @@ public class GameQuickStart implements GameStartData {
                 }
 
                 Color color = colors.next();
-                PlayerData playerData = new SimplePlayerData(color, player);
+                PlayerStartData playerData = new SimplePlayerStartData(color, player);
                 playersData.put(player, playerData);
             }
         }
@@ -48,7 +48,7 @@ public class GameQuickStart implements GameStartData {
     }
 
     @Override
-    public Map<PlayerId, ? extends PlayerData> getPlayersData() {
+    public Map<PlayerId, ? extends PlayerStartData> getPlayersData() {
         return playersData;
     }
 

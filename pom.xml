@@ -105,6 +105,38 @@
 				</configuration>
 			</plugin>
 
+			<!-- Javadoc plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<links>
+						<link>http://jd.bukkit.org/apidocs/</link>
+						<link>http://docs.sk89q.com/worldedit/apidocs/</link>
+					</links>
+					<linksource>true</linksource>
+					<groups>
+						<group>
+							<title>Core</title>
+							<packages>fr.aumgn.dac2:fr.aumgn.dac2.utils:fr.aumgn.dac2.config:fr.aumgn.dac2.exceptions</packages>
+						</group>
+						<group>
+							<title>Commands</title>
+							<packages>fr.aumgn.dac2.commands*</packages>
+						</group>
+						<group>
+							<title>Arenas</title>
+							<packages>fr.aumgn.dac2.shape*:fr.aumgn.dac2.arena*</packages>
+						</group>
+						<group>
+							<title>Stages</title>
+							<packages>fr.aumgn.dac2.stage*:fr.aumgn.dac2.game*</packages>
+						</group>
+					</groups>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

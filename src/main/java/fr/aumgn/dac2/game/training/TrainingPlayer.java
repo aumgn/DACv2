@@ -3,7 +3,7 @@ package fr.aumgn.dac2.game.training;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.game.GamePlayer;
-import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.game.start.PlayerStartData;
 
 public class TrainingPlayer extends GamePlayer {
 
@@ -11,7 +11,7 @@ public class TrainingPlayer extends GamePlayer {
     private int dacs;
     private int fails;
 
-    public TrainingPlayer(PlayerId playerId, PlayerData joinData) {
+    public TrainingPlayer(PlayerId playerId, PlayerStartData joinData) {
         super(playerId, joinData);
         this.successes = 0;
         this.dacs = 0;

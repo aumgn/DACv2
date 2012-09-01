@@ -9,6 +9,9 @@ import fr.aumgn.dac2.config.Colors;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.stage.Stages;
 
+/**
+ * Main class which offers acces to all components.
+ */
 public class DAC {
 
     private final DACPlugin plugin;
@@ -52,6 +55,15 @@ public class DAC {
         return messages;
     }
 
+    /*
+     * Reloads all datas.
+     *
+     * <ul>
+     *  <li>Config</li>
+     *  <li>Colors</li>
+     *  <li>Messages</li>
+     * </ul>
+     */
     public void reloadData() {
         config = plugin.reloadDACConfig();
         colors = new Colors(this);

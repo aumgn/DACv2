@@ -44,6 +44,16 @@ public class Arena {
         return worldId.equals(world.getUID());
     }
 
+    /**
+     * Checks if this arena is complete.
+     *
+     * An arena is considered complete if it has :
+     * <ul>
+     *   <li>A pool</li>
+     *   <li>A start region</li>
+     *   <li>A diving</li>
+     * </ul>
+     */
     public boolean isComplete() {
         return pool != null && startRegion != null && diving != null;
     }
@@ -52,6 +62,13 @@ public class Arena {
         return pool;
     }
 
+    /**
+     * Returns the pool if defined or throws an exception if not.
+     *
+     * @param dac the main DAC instance.
+     * @throws ArenaComponentUndefined
+     * @return the pool
+     */
     public Pool safeGetPool(DAC dac) {
         if (pool == null) {
             throw new ArenaComponentUndefined(dac.getMessages()
@@ -70,6 +87,14 @@ public class Arena {
         return startRegion;
     }
 
+    /**
+     * Returns the start region if defined or throws an exception if not.
+     *
+     * @param dac the main DAC instance.
+     * @throws ArenaComponentUndefined
+     * @return the start region
+     */
+
     public StartRegion safeGetStartRegion(DAC dac) {
         if (startRegion == null) {
             throw new ArenaComponentUndefined(dac.getMessages()
@@ -87,6 +112,13 @@ public class Arena {
         return diving;
     }
 
+    /**
+     * Returns the diving board if defined or throws an exception if not.
+     *
+     * @param dac the main DAC instance.
+     * @throws ArenaComponentUndefined
+     * @return the diving board
+     */
     public Diving safeGetDiving(DAC dac) {
         if (diving == null) {
             throw new ArenaComponentUndefined(dac.getMessages()
@@ -116,6 +148,16 @@ public class Arena {
         return autoSurrounding;
     }
 
+    /**
+     * Returns the surrounding region if defined or throws an exception if not.
+     *
+     * The surrounding region doesn't need to be manually defined.
+     * It is also considered defined if the pool and the diving are.
+     *
+     * @param dac the main DAC instance.
+     * @throws ArenaComponentUndefined
+     * @return the surrounding region
+     */
     public SurroundingRegion safeGetSurroundingRegion(DAC dac) {
         SurroundingRegion region = getSurroundingRegion();
         if (region == null) {
@@ -126,6 +168,14 @@ public class Arena {
         return region;
     }
 
+    /**
+     * Sets the surrrounding region.
+     *
+     * This will override the region wich is automatically defined
+     * using the pool and the diving.
+     * 
+     * @param surrounding the new manually defined surrounding region.
+     */
     public void setSurroundingRegion(SurroundingRegion surrounding) {
         this.surrounding = surrounding;
         this.autoSurrounding = null;

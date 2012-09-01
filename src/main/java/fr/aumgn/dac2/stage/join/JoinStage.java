@@ -20,7 +20,8 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.game.start.GameStartData;
-import fr.aumgn.dac2.game.start.SimplePlayerData;
+import fr.aumgn.dac2.game.start.PlayerStartData;
+import fr.aumgn.dac2.game.start.SimplePlayerStartData;
 import fr.aumgn.dac2.stage.Stage;
 
 public class JoinStage implements Stage, Listener, GameStartData {
@@ -28,14 +29,14 @@ public class JoinStage implements Stage, Listener, GameStartData {
     private final DAC dac;
     private final Arena arena;
     private final Map<String, Color> colors;
-    private final PlayersIdMap<PlayerData> players;
+    private final PlayersIdMap<PlayerStartData> players;
     private final PlayersIdSet spectators;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colors = dac.getColors().toMap();
-        this.players = new PlayersIdHashMap<PlayerData>();
+        this.players = new PlayersIdHashMap<PlayerStartData>();
         this.spectators = new PlayersIdHashSet();
     }
 
@@ -105,13 +106,13 @@ public class JoinStage implements Stage, Listener, GameStartData {
         String playerName = color.chat + player.getDisplayName();
         sendMessage(msgs.get("joinstage.join", playerName));
 
-        players.put(player, new SimplePlayerData(color, player));
+        players.put(player, new SimplePlayerStartData(color, player));
         colors.remove(color.name);
 
         player.sendMessage(msgs.get("joinstage.playerslist"));
-        for (Entry<PlayerId, PlayerData> playerIG : players.entrySet()) {
+        for (Entry<PlayerId, PlayerStartData> playerIG : players.entrySet()) {
             PlayerId playerId = playerIG.getKey();
-            PlayerData data = playerIG.getValue();
+            PlayerStartData data = playerIG.getValue();
 
             String name;
             if (playerId.isOnline()) {
@@ -146,7 +147,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
     }
 
     @Override
-    public Map<PlayerId, PlayerData> getPlayersData() {
+    public Map<PlayerId, PlayerStartData> getPlayersData() {
         return players;
     }
 

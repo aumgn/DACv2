@@ -16,7 +16,7 @@ import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
-import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
@@ -29,13 +29,13 @@ public class Training extends AbstractGame {
     public Training(DAC dac, GameStartData data) {
         super(dac, data);
 
-        Map<PlayerId, ? extends GameStartData.PlayerData> playersData =
+        Map<PlayerId, ? extends PlayerStartData> playersData =
                 data.getPlayersData();
         List<TrainingPlayer> list =
                 new ArrayList<TrainingPlayer>(playersData.size());
         playersMap = new PlayersIdHashMap<TrainingPlayer>();
 
-        for (Entry<PlayerId, ? extends PlayerData> entry :
+        for (Entry<PlayerId, ? extends PlayerStartData> entry :
                 playersData.entrySet()) {
             PlayerId playerId = entry.getKey();
             TrainingPlayer player =

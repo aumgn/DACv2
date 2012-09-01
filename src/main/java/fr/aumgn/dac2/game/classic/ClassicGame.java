@@ -18,7 +18,7 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
-import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
@@ -43,12 +43,12 @@ public class ClassicGame extends AbstractGame {
     public ClassicGame(DAC dac, GameStartData data) {
         super(dac, data);
 
-        Map<PlayerId, ? extends PlayerData> playersData = data.getPlayersData();
+        Map<PlayerId, ? extends PlayerStartData> playersData = data.getPlayersData();
         List<ClassicGamePlayer> list =
                 new ArrayList<ClassicGamePlayer>(playersData.size());
         playersMap = new PlayersIdHashMap<ClassicGamePlayer>();
 
-        for (Entry<PlayerId, ? extends PlayerData> entry :
+        for (Entry<PlayerId, ? extends PlayerStartData> entry :
                 playersData.entrySet()) {
             PlayerId playerId = entry.getKey();
             ClassicGamePlayer player = new ClassicGamePlayer(playerId,

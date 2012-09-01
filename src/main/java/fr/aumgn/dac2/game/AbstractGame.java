@@ -11,6 +11,9 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 
+/**
+ * Common implementations of most game mode.
+ */
 public abstract class AbstractGame implements Game {
 
     protected final DAC dac;
@@ -36,6 +39,12 @@ public abstract class AbstractGame implements Game {
         return new Listener[] { listener };
     }
 
+    /**
+     * Send a message which is recorded in a the main PluginMessages instance.
+     *
+     * @param key the message key
+     * @param arguments the mssage arguments
+     */
     protected void send(String key, Object... arguments) {
         sendMessage(dac.getMessages().get(key, arguments));
     }
@@ -59,6 +68,12 @@ public abstract class AbstractGame implements Game {
         spectators.remove(player);
     }
 
+    /**
+     * Sends a message to this game's spectators by prefixing the message
+     * with the arena's name as specified in the config.
+     *
+     * @param message
+     */
     protected void sendSpectators(String message) {
         String spectatorMessage = dac.getConfig().getSpectatorsMsg()
                 .format(new String[] { arena.getName(), message });
@@ -67,24 +82,40 @@ public abstract class AbstractGame implements Game {
         }
     }
 
+    /**
+     * Resets the pool if configured to do so on game start.
+     */
     protected void resetPoolOnStart() {
         if (dac.getConfig().getResetOnStart()) {
             arena.getPool().reset(arena.getWorld());
         }
     }
 
+    /**
+     * Resets the pool if configured to do so on game end.
+     */
     protected void resetPoolOnEnd() {
         if (dac.getConfig().getResetOnEnd()) {
             arena.getPool().reset(arena.getWorld());
         }
     }
 
+    /**
+     * Teleport the player if configured to do so on player's turn.
+     *
+     * @param player The player to teleport.
+     */
     protected void tpBeforeJump(GamePlayer player) {
         if (dac.getConfig().getTpBeforeJump()) {
             player.teleport(arena.getDiving().toLocation(arena.getWorld()));
         }
     }
 
+    /**
+     * Teleport the player if configured to do so after player's success.
+     *
+     * @param player The player to teleport.
+     */
     protected void tpAfterJumpSuccess(final GamePlayer player, Column column) {
         int delay = dac.getConfig().getTpAfterJumpSuccessDelay();
         if (delay == 0) {
@@ -99,6 +130,11 @@ public abstract class AbstractGame implements Game {
         }
     }
 
+    /**
+     * Teleport the player if configured to do so after player's failed jump.
+     *
+     * @param player The player to teleport.
+     */
     protected void tpAfterJumpFail(final GamePlayer player) {
         int delay = dac.getConfig().getTpAfterJumpFailDelay();
         if (delay == 0) {

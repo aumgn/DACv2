@@ -7,7 +7,7 @@ import org.bukkit.Material;
 
 import fr.aumgn.bukkitutils.timer.TimerConfig;
 import fr.aumgn.bukkitutils.util.Util;
-import fr.aumgn.dac2.shape.column.BasicPattern;
+import fr.aumgn.dac2.shape.column.UniformPattern;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.utils.DACUtil;
 
@@ -78,6 +78,6 @@ public class DACConfig {
     }
 
     public ColumnPattern getNeutralPattern() {
-        return new BasicPattern(neutralBlock, neutralData);
+        return new UniformPattern(neutralBlock, neutralData);
     }
 }

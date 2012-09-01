@@ -9,16 +9,15 @@ import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.dac2.config.Color;
-import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
 
-public class SimplePlayerData implements PlayerData {
+public class SimplePlayerStartData implements PlayerStartData {
 
     private final Color color;
     private final UUID worldId;
     private final Vector position;
     private final Direction direction;
 
-    public SimplePlayerData(Color color, Player player) {
+    public SimplePlayerStartData(Color color, Player player) {
         this.color = color;
         Location location = player.getLocation();
         this.worldId = location.getWorld().getUID();

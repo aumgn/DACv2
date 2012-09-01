@@ -13,10 +13,14 @@ import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.config.Color;
-import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.shape.column.ColorPattern;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 
+/**
+ * Stores common data associated to player and
+ * implements common behaviors.
+ */
 public class GamePlayer {
 
     public final PlayerId playerId;
@@ -27,7 +31,7 @@ public class GamePlayer {
 
     private int index;
 
-    public GamePlayer(PlayerId playerId, PlayerData joinData) {
+    public GamePlayer(PlayerId playerId, PlayerStartData joinData) {
         this.playerId = playerId;
         this.color = joinData.getColor();
         this.worldId = joinData.getWorldId();
@@ -109,7 +113,7 @@ public class GamePlayer {
         return index;
     }
 
-    public void setIndex(int index) {
+    void setIndex(int index) {
         this.index = index;
     }
 }

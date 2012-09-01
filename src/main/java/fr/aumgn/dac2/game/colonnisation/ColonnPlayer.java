@@ -2,7 +2,7 @@ package fr.aumgn.dac2.game.colonnisation;
 
 import fr.aumgn.bukkitutils.playerid.PlayerId;
 import fr.aumgn.dac2.game.GamePlayer;
-import fr.aumgn.dac2.game.start.GameStartData.PlayerData;
+import fr.aumgn.dac2.game.start.PlayerStartData;
 
 public class ColonnPlayer extends GamePlayer
         implements Comparable<ColonnPlayer> {
@@ -10,7 +10,7 @@ public class ColonnPlayer extends GamePlayer
     private int multiplier;
     private int score;
 
-    public ColonnPlayer(PlayerId playerId, PlayerData joinData) {
+    public ColonnPlayer(PlayerId playerId, PlayerStartData joinData) {
         super(playerId, joinData);
         this.multiplier = 1;
         this.score = 0;

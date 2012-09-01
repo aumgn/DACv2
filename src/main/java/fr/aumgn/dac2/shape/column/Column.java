@@ -12,6 +12,9 @@ import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.FlatShape;
 
+/**
+ * Represents a column of block in a FlatShape.
+ */
 public class Column implements Iterable<Vector> {
 
     private final double minY;

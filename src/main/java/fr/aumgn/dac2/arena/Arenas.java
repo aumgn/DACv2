@@ -29,7 +29,7 @@ public class Arenas {
         load(dac);
     }
 
-    public File getFolder(DACPlugin plugin) {
+    private File getFolder(DACPlugin plugin) {
         File folder = new File(plugin.getDataFolder(), DIRECTORY);
 
         if (folder.exists()) {
@@ -83,7 +83,7 @@ public class Arenas {
         saveArena(dac, dac.getPlugin().getGsonLoader(), arena);
     }
 
-    public void saveArena(DAC dac, GsonLoader loader, Arena arena) {
+    private void saveArena(DAC dac, GsonLoader loader, Arena arena) {
         String filename = filenameFor(dac, arena);
         try {
             loader.write(filename, arena);
@@ -106,6 +106,15 @@ public class Arenas {
         return arenas.get(name);
     }
 
+    /**
+     * Gets the arena in whose start region the player is in.
+     *
+     * If different arena defines start regions which overlap themselves,
+     * the result is undefined.
+     *
+     * @param player
+     * @return the arena
+     */
     public Arena get(Player player) {
         Vector pt = new Vector(player);
         for (Arena arena : arenas.values()) {
