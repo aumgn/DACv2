@@ -113,8 +113,14 @@
 				<configuration>
 					<links>
 						<link>http://jd.bukkit.org/apidocs/</link>
-						<link>http://docs.sk89q.com/worldedit/apidocs/</link>
+						<link>http://bukkitutils.aumgn.fr/apidocs/</link>
 					</links>
+					<offlineLinks>
+						<offlineLink>
+							<url>http://docs.sk89q.com/worldedit/apidocs/</url>
+							<location>${basedir}/../worldedit/target/site/apidocs</location>
+						</offlineLink>
+					</offlineLinks>
 					<linksource>true</linksource>
 					<groups>
 						<group>
