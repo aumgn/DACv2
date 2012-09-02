@@ -27,7 +27,7 @@
 <span class="sourceLineNo">019</span><a name="line.19"></a>
 <span class="sourceLineNo">020</span>    @Command(name = "watch", min = 1, max = 1)<a name="line.20"></a>
 <span class="sourceLineNo">021</span>    public void watch(Player sender, CommandArgs args) {<a name="line.21"></a>
-<span class="sourceLineNo">022</span>        List&lt;Stage&gt; stages = args.getList(0, Stage.class).value();<a name="line.22"></a>
+<span class="sourceLineNo">022</span>        List&lt;Stage&gt; stages = args.getList(0, Stage).value();<a name="line.22"></a>
 <span class="sourceLineNo">023</span><a name="line.23"></a>
 <span class="sourceLineNo">024</span>        for (Stage stage : stages) {<a name="line.24"></a>
 <span class="sourceLineNo">025</span>            String arenaName = stage.getArena().getName();<a name="line.25"></a>
@@ -47,7 +47,7 @@
 <span class="sourceLineNo">039</span><a name="line.39"></a>
 <span class="sourceLineNo">040</span>    @Command(name = "unwatch", min = 1, max = 1)<a name="line.40"></a>
 <span class="sourceLineNo">041</span>    public void unwatch(Player sender, CommandArgs args) {<a name="line.41"></a>
-<span class="sourceLineNo">042</span>        List&lt;Stage&gt; stages = args.getList(0, Stage.class).value();<a name="line.42"></a>
+<span class="sourceLineNo">042</span>        List&lt;Stage&gt; stages = args.getList(0, Stage).value();<a name="line.42"></a>
 <span class="sourceLineNo">043</span><a name="line.43"></a>
 <span class="sourceLineNo">044</span>        for (Stage stage : stages) {<a name="line.44"></a>
 <span class="sourceLineNo">045</span>            String arenaName = stage.getArena().getName();<a name="line.45"></a>

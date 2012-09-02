@@ -34,7 +34,7 @@
 <span class="sourceLineNo">026</span><a name="line.26"></a>
 <span class="sourceLineNo">027</span>    @Command(name = "pool", min = 1, max = 1, argsFlags = "s")<a name="line.27"></a>
 <span class="sourceLineNo">028</span>    public void pool(Player sender, CommandArgs args) {<a name="line.28"></a>
-<span class="sourceLineNo">029</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.29"></a>
+<span class="sourceLineNo">029</span>        Arena arena = args.get(0, Arena).value();<a name="line.29"></a>
 <span class="sourceLineNo">030</span>        WESelector selectorType = args.get('s', WESelector.class)<a name="line.30"></a>
 <span class="sourceLineNo">031</span>                .valueOr(WESelector.Default);<a name="line.31"></a>
 <span class="sourceLineNo">032</span><a name="line.32"></a>
@@ -44,7 +44,7 @@
 <span class="sourceLineNo">036</span><a name="line.36"></a>
 <span class="sourceLineNo">037</span>    @Command(name = "start", min = 1, max = 1, argsFlags = "s")<a name="line.37"></a>
 <span class="sourceLineNo">038</span>    public void start(Player sender, CommandArgs args) {<a name="line.38"></a>
-<span class="sourceLineNo">039</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.39"></a>
+<span class="sourceLineNo">039</span>        Arena arena = args.get(0, Arena).value();<a name="line.39"></a>
 <span class="sourceLineNo">040</span>        WESelector selectorType = args.get('s', WESelector.class)<a name="line.40"></a>
 <span class="sourceLineNo">041</span>                .valueOr(WESelector.Default);<a name="line.41"></a>
 <span class="sourceLineNo">042</span><a name="line.42"></a>
@@ -55,7 +55,7 @@
 <span class="sourceLineNo">047</span><a name="line.47"></a>
 <span class="sourceLineNo">048</span>    @Command(name = "surrounding", min = 1, max = 1, argsFlags = "s")<a name="line.48"></a>
 <span class="sourceLineNo">049</span>    public void surrounding(Player sender, CommandArgs args) {<a name="line.49"></a>
-<span class="sourceLineNo">050</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.50"></a>
+<span class="sourceLineNo">050</span>        Arena arena = args.get(0, Arena).value();<a name="line.50"></a>
 <span class="sourceLineNo">051</span>        WESelector selectorType = args.get('s', WESelector.class)<a name="line.51"></a>
 <span class="sourceLineNo">052</span>                .valueOr(WESelector.Default);<a name="line.52"></a>
 <span class="sourceLineNo">053</span><a name="line.53"></a>

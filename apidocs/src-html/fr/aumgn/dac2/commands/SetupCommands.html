@@ -39,7 +39,7 @@
 <span class="sourceLineNo">031</span><a name="line.31"></a>
 <span class="sourceLineNo">032</span>    @Command(name = "diving", min = 1, max = 1, argsFlags = "p")<a name="line.32"></a>
 <span class="sourceLineNo">033</span>    public void diving(CommandSender sender, CommandArgs args) {<a name="line.33"></a>
-<span class="sourceLineNo">034</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.34"></a>
+<span class="sourceLineNo">034</span>        Arena arena = args.get(0, Arena).value();<a name="line.34"></a>
 <span class="sourceLineNo">035</span>        Player player = args.getPlayer('p').valueOr(sender);<a name="line.35"></a>
 <span class="sourceLineNo">036</span>        arena.setDiving(new Diving(player.getLocation()));<a name="line.36"></a>
 <span class="sourceLineNo">037</span>        dac.getArenas().saveArena(dac, arena);<a name="line.37"></a>
@@ -48,7 +48,7 @@
 <span class="sourceLineNo">040</span><a name="line.40"></a>
 <span class="sourceLineNo">041</span>    @Command(name = "pool", min = 1, max = 3, argsFlags = "sp")<a name="line.41"></a>
 <span class="sourceLineNo">042</span>    public void pool(CommandSender sender, CommandArgs args) {<a name="line.42"></a>
-<span class="sourceLineNo">043</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.43"></a>
+<span class="sourceLineNo">043</span>        Arena arena = args.get(0, Arena).value();<a name="line.43"></a>
 <span class="sourceLineNo">044</span>        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);<a name="line.44"></a>
 <span class="sourceLineNo">045</span>        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);<a name="line.45"></a>
 <span class="sourceLineNo">046</span>        Player player = args.getPlayer('p').valueOr(sender);<a name="line.46"></a>
@@ -68,10 +68,10 @@
 <span class="sourceLineNo">060</span><a name="line.60"></a>
 <span class="sourceLineNo">061</span>    @Command(name = "start", min = 1, max = 3, argsFlags = "sp")<a name="line.61"></a>
 <span class="sourceLineNo">062</span>    public void start(CommandSender sender, CommandArgs args) {<a name="line.62"></a>
-<span class="sourceLineNo">063</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.63"></a>
-<span class="sourceLineNo">064</span>        Player player = args.getPlayer('p').valueOr(sender);<a name="line.64"></a>
-<span class="sourceLineNo">065</span>        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);<a name="line.65"></a>
-<span class="sourceLineNo">066</span>        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);<a name="line.66"></a>
+<span class="sourceLineNo">063</span>        Arena arena = args.get(0, Arena).value();<a name="line.63"></a>
+<span class="sourceLineNo">064</span>        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);<a name="line.64"></a>
+<span class="sourceLineNo">065</span>        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);<a name="line.65"></a>
+<span class="sourceLineNo">066</span>        Player player = args.getPlayer('p').valueOr(sender);<a name="line.66"></a>
 <span class="sourceLineNo">067</span>        ShapeFactory factory = args.get('s', ShapeFactory.class)<a name="line.67"></a>
 <span class="sourceLineNo">068</span>                .valueOr(ShapeFactory.Cuboid);<a name="line.68"></a>
 <span class="sourceLineNo">069</span><a name="line.69"></a>
@@ -84,7 +84,7 @@
 <span class="sourceLineNo">076</span><a name="line.76"></a>
 <span class="sourceLineNo">077</span>    @Command(name = "surrounding", min = 1, max = 3, argsFlags = "sp")<a name="line.77"></a>
 <span class="sourceLineNo">078</span>    public void surrounding(CommandSender sender, CommandArgs args) {<a name="line.78"></a>
-<span class="sourceLineNo">079</span>        Arena arena = args.get(0, Arena.class).value();<a name="line.79"></a>
+<span class="sourceLineNo">079</span>        Arena arena = args.get(0, Arena).value();<a name="line.79"></a>
 <span class="sourceLineNo">080</span>        Player player = args.getPlayer('p').valueOr(sender);<a name="line.80"></a>
 <span class="sourceLineNo">081</span>        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);<a name="line.81"></a>
 <span class="sourceLineNo">082</span>        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);<a name="line.82"></a>

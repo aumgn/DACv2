@@ -18,11 +18,11 @@
 <span class="sourceLineNo">010</span>import org.bukkit.event.Listener;<a name="line.10"></a>
 <span class="sourceLineNo">011</span><a name="line.11"></a>
 <span class="sourceLineNo">012</span>import fr.aumgn.bukkitutils.localization.PluginMessages;<a name="line.12"></a>
-<span class="sourceLineNo">013</span>import fr.aumgn.bukkitutils.playerid.PlayerId;<a name="line.13"></a>
-<span class="sourceLineNo">014</span>import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;<a name="line.14"></a>
-<span class="sourceLineNo">015</span>import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;<a name="line.15"></a>
-<span class="sourceLineNo">016</span>import fr.aumgn.bukkitutils.playerid.set.PlayersIdHashSet;<a name="line.16"></a>
-<span class="sourceLineNo">017</span>import fr.aumgn.bukkitutils.playerid.set.PlayersIdSet;<a name="line.17"></a>
+<span class="sourceLineNo">013</span>import fr.aumgn.bukkitutils.playerref.PlayerRef;<a name="line.13"></a>
+<span class="sourceLineNo">014</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;<a name="line.16"></a>
+<span class="sourceLineNo">017</span>import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;<a name="line.17"></a>
 <span class="sourceLineNo">018</span>import fr.aumgn.bukkitutils.util.Util;<a name="line.18"></a>
 <span class="sourceLineNo">019</span>import fr.aumgn.dac2.DAC;<a name="line.19"></a>
 <span class="sourceLineNo">020</span>import fr.aumgn.dac2.arena.Arena;<a name="line.20"></a>
@@ -37,15 +37,15 @@
 <span class="sourceLineNo">029</span>    private final DAC dac;<a name="line.29"></a>
 <span class="sourceLineNo">030</span>    private final Arena arena;<a name="line.30"></a>
 <span class="sourceLineNo">031</span>    private final Map&lt;String, Color&gt; colors;<a name="line.31"></a>
-<span class="sourceLineNo">032</span>    private final PlayersIdMap&lt;PlayerStartData&gt; players;<a name="line.32"></a>
-<span class="sourceLineNo">033</span>    private final PlayersIdSet spectators;<a name="line.33"></a>
+<span class="sourceLineNo">032</span>    private final PlayersRefMap&lt;PlayerStartData&gt; players;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>    private final PlayersRefSet spectators;<a name="line.33"></a>
 <span class="sourceLineNo">034</span><a name="line.34"></a>
 <span class="sourceLineNo">035</span>    public JoinStage(DAC dac, Arena arena) {<a name="line.35"></a>
 <span class="sourceLineNo">036</span>        this.dac = dac;<a name="line.36"></a>
 <span class="sourceLineNo">037</span>        this.arena = arena;<a name="line.37"></a>
 <span class="sourceLineNo">038</span>        this.colors = dac.getColors().toMap();<a name="line.38"></a>
-<span class="sourceLineNo">039</span>        this.players = new PlayersIdHashMap&lt;PlayerStartData&gt;();<a name="line.39"></a>
-<span class="sourceLineNo">040</span>        this.spectators = new PlayersIdHashSet();<a name="line.40"></a>
+<span class="sourceLineNo">039</span>        this.players = new PlayersRefHashMap&lt;PlayerStartData&gt;();<a name="line.39"></a>
+<span class="sourceLineNo">040</span>        this.spectators = new PlayersRefHashSet();<a name="line.40"></a>
 <span class="sourceLineNo">041</span>    }<a name="line.41"></a>
 <span class="sourceLineNo">042</span><a name="line.42"></a>
 <span class="sourceLineNo">043</span>    @Override<a name="line.43"></a>
@@ -118,17 +118,17 @@
 <span class="sourceLineNo">110</span>        colors.remove(color.name);<a name="line.110"></a>
 <span class="sourceLineNo">111</span><a name="line.111"></a>
 <span class="sourceLineNo">112</span>        player.sendMessage(msgs.get("joinstage.playerslist"));<a name="line.112"></a>
-<span class="sourceLineNo">113</span>        for (Entry&lt;PlayerId, PlayerStartData&gt; playerIG : players.entrySet()) {<a name="line.113"></a>
-<span class="sourceLineNo">114</span>            PlayerId playerId = playerIG.getKey();<a name="line.114"></a>
+<span class="sourceLineNo">113</span>        for (Entry&lt;PlayerRef, PlayerStartData&gt; playerIG : players.entrySet()) {<a name="line.113"></a>
+<span class="sourceLineNo">114</span>            PlayerRef playerRef = playerIG.getKey();<a name="line.114"></a>
 <span class="sourceLineNo">115</span>            PlayerStartData data = playerIG.getValue();<a name="line.115"></a>
 <span class="sourceLineNo">116</span><a name="line.116"></a>
 <span class="sourceLineNo">117</span>            String name;<a name="line.117"></a>
-<span class="sourceLineNo">118</span>            if (playerId.isOnline()) {<a name="line.118"></a>
+<span class="sourceLineNo">118</span>            if (playerRef.isOnline()) {<a name="line.118"></a>
 <span class="sourceLineNo">119</span>                name = data.getColor().chat<a name="line.119"></a>
 <span class="sourceLineNo">120</span>                        + playerIG.getKey().getPlayer().getDisplayName();<a name="line.120"></a>
 <span class="sourceLineNo">121</span>            } else {<a name="line.121"></a>
 <span class="sourceLineNo">122</span>                name = ChatColor.ITALIC.toString() + data.getColor().chat<a name="line.122"></a>
-<span class="sourceLineNo">123</span>                        + playerId.getName();<a name="line.123"></a>
+<span class="sourceLineNo">123</span>                        + playerRef.getName();<a name="line.123"></a>
 <span class="sourceLineNo">124</span>            }<a name="line.124"></a>
 <span class="sourceLineNo">125</span><a name="line.125"></a>
 <span class="sourceLineNo">126</span>            player.sendMessage(msgs.get("joinstage.playerentry", name));<a name="line.126"></a>
@@ -155,12 +155,12 @@
 <span class="sourceLineNo">147</span>    }<a name="line.147"></a>
 <span class="sourceLineNo">148</span><a name="line.148"></a>
 <span class="sourceLineNo">149</span>    @Override<a name="line.149"></a>
-<span class="sourceLineNo">150</span>    public Map&lt;PlayerId, PlayerStartData&gt; getPlayersData() {<a name="line.150"></a>
+<span class="sourceLineNo">150</span>    public Map&lt;PlayerRef, PlayerStartData&gt; getPlayersData() {<a name="line.150"></a>
 <span class="sourceLineNo">151</span>        return players;<a name="line.151"></a>
 <span class="sourceLineNo">152</span>    }<a name="line.152"></a>
 <span class="sourceLineNo">153</span><a name="line.153"></a>
 <span class="sourceLineNo">154</span>    @Override<a name="line.154"></a>
-<span class="sourceLineNo">155</span>    public Set&lt;PlayerId&gt; getSpectators() {<a name="line.155"></a>
+<span class="sourceLineNo">155</span>    public Set&lt;PlayerRef&gt; getSpectators() {<a name="line.155"></a>
 <span class="sourceLineNo">156</span>        return spectators;<a name="line.156"></a>
 <span class="sourceLineNo">157</span>    }<a name="line.157"></a>
 <span class="sourceLineNo">158</span>}<a name="line.158"></a>

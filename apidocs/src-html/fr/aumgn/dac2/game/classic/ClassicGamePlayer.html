@@ -9,7 +9,7 @@
 <pre><span class="sourceLineNo">001</span>package fr.aumgn.dac2.game.classic;<a name="line.1"></a>
 <span class="sourceLineNo">002</span><a name="line.2"></a>
 <span class="sourceLineNo">003</span>import fr.aumgn.bukkitutils.geom.Vector2D;<a name="line.3"></a>
-<span class="sourceLineNo">004</span>import fr.aumgn.bukkitutils.playerid.PlayerId;<a name="line.4"></a>
+<span class="sourceLineNo">004</span>import fr.aumgn.bukkitutils.playerref.PlayerRef;<a name="line.4"></a>
 <span class="sourceLineNo">005</span>import fr.aumgn.dac2.game.GamePlayer;<a name="line.5"></a>
 <span class="sourceLineNo">006</span>import fr.aumgn.dac2.game.start.PlayerStartData;<a name="line.6"></a>
 <span class="sourceLineNo">007</span><a name="line.7"></a>
@@ -18,7 +18,7 @@
 <span class="sourceLineNo">010</span>    private int lives;<a name="line.10"></a>
 <span class="sourceLineNo">011</span>    private Vector2D deathPosition;<a name="line.11"></a>
 <span class="sourceLineNo">012</span><a name="line.12"></a>
-<span class="sourceLineNo">013</span>    public ClassicGamePlayer(PlayerId playerId, PlayerStartData playerData) {<a name="line.13"></a>
+<span class="sourceLineNo">013</span>    public ClassicGamePlayer(PlayerRef playerId, PlayerStartData playerData) {<a name="line.13"></a>
 <span class="sourceLineNo">014</span>        super(playerId, playerData);<a name="line.14"></a>
 <span class="sourceLineNo">015</span>        this.lives = 0;<a name="line.15"></a>
 <span class="sourceLineNo">016</span>        this.deathPosition = null;<a name="line.16"></a>

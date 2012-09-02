@@ -16,9 +16,9 @@
 <span class="sourceLineNo">008</span>import org.bukkit.World;<a name="line.8"></a>
 <span class="sourceLineNo">009</span>import org.bukkit.entity.Player;<a name="line.9"></a>
 <span class="sourceLineNo">010</span><a name="line.10"></a>
-<span class="sourceLineNo">011</span>import fr.aumgn.bukkitutils.playerid.PlayerId;<a name="line.11"></a>
-<span class="sourceLineNo">012</span>import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;<a name="line.12"></a>
-<span class="sourceLineNo">013</span>import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;<a name="line.13"></a>
+<span class="sourceLineNo">011</span>import fr.aumgn.bukkitutils.playerref.PlayerRef;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;<a name="line.12"></a>
+<span class="sourceLineNo">013</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;<a name="line.13"></a>
 <span class="sourceLineNo">014</span>import fr.aumgn.dac2.DAC;<a name="line.14"></a>
 <span class="sourceLineNo">015</span>import fr.aumgn.dac2.arena.regions.Pool;<a name="line.15"></a>
 <span class="sourceLineNo">016</span>import fr.aumgn.dac2.game.AbstractGame;<a name="line.16"></a>
@@ -32,20 +32,20 @@
 <span class="sourceLineNo">024</span>public class Training extends AbstractGame {<a name="line.24"></a>
 <span class="sourceLineNo">025</span><a name="line.25"></a>
 <span class="sourceLineNo">026</span>    private GameParty&lt;TrainingPlayer&gt; party;<a name="line.26"></a>
-<span class="sourceLineNo">027</span>    private PlayersIdMap&lt;TrainingPlayer&gt; playersMap;<a name="line.27"></a>
+<span class="sourceLineNo">027</span>    private PlayersRefMap&lt;TrainingPlayer&gt; playersMap;<a name="line.27"></a>
 <span class="sourceLineNo">028</span><a name="line.28"></a>
 <span class="sourceLineNo">029</span>    public Training(DAC dac, GameStartData data) {<a name="line.29"></a>
 <span class="sourceLineNo">030</span>        super(dac, data);<a name="line.30"></a>
 <span class="sourceLineNo">031</span><a name="line.31"></a>
-<span class="sourceLineNo">032</span>        Map&lt;PlayerId, ? extends PlayerStartData&gt; playersData =<a name="line.32"></a>
+<span class="sourceLineNo">032</span>        Map&lt;PlayerRef, ? extends PlayerStartData&gt; playersData =<a name="line.32"></a>
 <span class="sourceLineNo">033</span>                data.getPlayersData();<a name="line.33"></a>
 <span class="sourceLineNo">034</span>        List&lt;TrainingPlayer&gt; list =<a name="line.34"></a>
 <span class="sourceLineNo">035</span>                new ArrayList&lt;TrainingPlayer&gt;(playersData.size());<a name="line.35"></a>
-<span class="sourceLineNo">036</span>        playersMap = new PlayersIdHashMap&lt;TrainingPlayer&gt;();<a name="line.36"></a>
+<span class="sourceLineNo">036</span>        playersMap = new PlayersRefHashMap&lt;TrainingPlayer&gt;();<a name="line.36"></a>
 <span class="sourceLineNo">037</span><a name="line.37"></a>
-<span class="sourceLineNo">038</span>        for (Entry&lt;PlayerId, ? extends PlayerStartData&gt; entry :<a name="line.38"></a>
+<span class="sourceLineNo">038</span>        for (Entry&lt;PlayerRef, ? extends PlayerStartData&gt; entry :<a name="line.38"></a>
 <span class="sourceLineNo">039</span>                playersData.entrySet()) {<a name="line.39"></a>
-<span class="sourceLineNo">040</span>            PlayerId playerId = entry.getKey();<a name="line.40"></a>
+<span class="sourceLineNo">040</span>            PlayerRef playerId = entry.getKey();<a name="line.40"></a>
 <span class="sourceLineNo">041</span>            TrainingPlayer player =<a name="line.41"></a>
 <span class="sourceLineNo">042</span>                    new TrainingPlayer(playerId, entry.getValue());<a name="line.42"></a>
 <span class="sourceLineNo">043</span>            list.add(player);<a name="line.43"></a>
