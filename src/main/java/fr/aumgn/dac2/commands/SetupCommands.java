@@ -31,7 +31,7 @@ public class SetupCommands extends DACCommands {
 
     @Command(name = "diving", min = 1, max = 1, argsFlags = "p")
     public void diving(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         Player player = args.getPlayer('p').valueOr(sender);
         arena.setDiving(new Diving(player.getLocation()));
         dac.getArenas().saveArena(dac, arena);
@@ -40,7 +40,7 @@ public class SetupCommands extends DACCommands {
 
     @Command(name = "pool", min = 1, max = 3, argsFlags = "sp")
     public void pool(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
         int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
         Player player = args.getPlayer('p').valueOr(sender);
@@ -60,10 +60,10 @@ public class SetupCommands extends DACCommands {
 
     @Command(name = "start", min = 1, max = 3, argsFlags = "sp")
     public void start(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
-        Player player = args.getPlayer('p').valueOr(sender);
+        Arena arena = args.get(0, Arena).value();
         int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
         int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
+        Player player = args.getPlayer('p').valueOr(sender);
         ShapeFactory factory = args.get('s', ShapeFactory.class)
                 .valueOr(ShapeFactory.Cuboid);
 
@@ -76,7 +76,7 @@ public class SetupCommands extends DACCommands {
 
     @Command(name = "surrounding", min = 1, max = 3, argsFlags = "sp")
     public void surrounding(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         Player player = args.getPlayer('p').valueOr(sender);
         int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
         int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);

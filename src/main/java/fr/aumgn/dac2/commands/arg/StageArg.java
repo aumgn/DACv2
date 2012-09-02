@@ -3,9 +3,7 @@ package fr.aumgn.dac2.commands.arg;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
@@ -13,22 +11,7 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.stage.Stage;
 
-public class StageArg extends CommandArg<Stage> {
-
-    public static class Factory extends CommandArgFactory<Stage> {
-
-        private final DAC dac;
-
-        public Factory(DAC dac) {
-            this.dac = dac;
-        }
-
-        @Override
-        public CommandArg<Stage> createCommandArg(CommandsMessages messages,
-                String string) {
-            return new StageArg(dac, messages, string);
-        }
-    }
+public class StageArg extends AsbtractSenderArg<Stage> {
 
     public static class NoStageForArena extends CommandError {
 
@@ -52,8 +35,8 @@ public class StageArg extends CommandArg<Stage> {
 
     private final DAC dac;
 
-    public StageArg(DAC dac, CommandsMessages messages, String string) {
-        super(messages, string);
+    public StageArg(DAC dac, String string) {
+        super(null, string);
         this.dac = dac;
     }
 

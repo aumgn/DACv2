@@ -32,7 +32,7 @@ public class ArenasCommands extends DACCommands {
     @Command(name = "delete", min = 1, max = 1)
     public void delete(CommandSender sender, CommandArgs args) {
         Arenas arenas = dac.getArenas();
-        List<Arena> arenasList = args.getList(0, Arena.class).value();
+        List<Arena> arenasList = args.getList(0, Arena).value();
 
         for (Arena arena : arenasList) {
             arenas.delete(dac, arena);
@@ -51,14 +51,14 @@ public class ArenasCommands extends DACCommands {
 
     @Command(name = "tparena", min = 1, max = 1)
     public void tparena(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         sender.teleport(arena.safeGetDiving(dac).toLocation(arena.getWorld()));
         sender.sendMessage(msg("tparena.success"));
     }
 
     @Command(name = "reset", min = 1, max = 1)
     public void reset(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         arena.safeGetPool(dac).reset(arena.getWorld());
         sender.sendMessage(msg("reset.success"));
     }

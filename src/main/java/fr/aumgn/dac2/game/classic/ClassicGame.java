@@ -11,9 +11,9 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
@@ -27,7 +27,7 @@ import fr.aumgn.dac2.shape.column.GlassyPattern;
 public class ClassicGame extends AbstractGame {
 
     private final GameParty<ClassicGamePlayer> party;
-    private final PlayersIdMap<ClassicGamePlayer> playersMap;
+    private final PlayersRefMap<ClassicGamePlayer> playersMap;
     private final ClassicGamePlayer[] ranking;
 
     private final Runnable turnTimedOut = new Runnable() {
@@ -43,14 +43,14 @@ public class ClassicGame extends AbstractGame {
     public ClassicGame(DAC dac, GameStartData data) {
         super(dac, data);
 
-        Map<PlayerId, ? extends PlayerStartData> playersData = data.getPlayersData();
+        Map<PlayerRef, ? extends PlayerStartData> playersData = data.getPlayersData();
         List<ClassicGamePlayer> list =
                 new ArrayList<ClassicGamePlayer>(playersData.size());
-        playersMap = new PlayersIdHashMap<ClassicGamePlayer>();
+        playersMap = new PlayersRefHashMap<ClassicGamePlayer>();
 
-        for (Entry<PlayerId, ? extends PlayerStartData> entry :
+        for (Entry<PlayerRef, ? extends PlayerStartData> entry :
                 playersData.entrySet()) {
-            PlayerId playerId = entry.getKey();
+            PlayerRef playerId = entry.getKey();
             ClassicGamePlayer player = new ClassicGamePlayer(playerId,
                     playersData.get(playerId));
             list.add(player);

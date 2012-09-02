@@ -1,6 +1,6 @@
 package fr.aumgn.dac2.game.colonnisation;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.game.GamePlayer;
 import fr.aumgn.dac2.game.start.PlayerStartData;
 
@@ -10,7 +10,7 @@ public class ColonnPlayer extends GamePlayer
     private int multiplier;
     private int score;
 
-    public ColonnPlayer(PlayerId playerId, PlayerStartData joinData) {
+    public ColonnPlayer(PlayerRef playerId, PlayerStartData joinData) {
         super(playerId, joinData);
         this.multiplier = 1;
         this.score = 0;

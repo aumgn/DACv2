@@ -8,9 +8,9 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.StartRegion;
@@ -20,11 +20,11 @@ import fr.aumgn.dac2.exceptions.TooManyPlayers;
 public class GameQuickStart implements GameStartData {
 
     private final Arena arena;
-    private final PlayersIdMap<PlayerStartData> playersData;
+    private final PlayersRefMap<PlayerStartData> playersData;
 
     public GameQuickStart(DAC dac, Arena arena) {
         this.arena = arena;
-        this.playersData = new PlayersIdHashMap<PlayerStartData>();
+        this.playersData = new PlayersRefHashMap<PlayerStartData>();
 
         StartRegion startRegion = arena.getStartRegion();
         Iterator<Color> colors = dac.getColors().iterator();
@@ -48,13 +48,13 @@ public class GameQuickStart implements GameStartData {
     }
 
     @Override
-    public Map<PlayerId, ? extends PlayerStartData> getPlayersData() {
+    public Map<PlayerRef, ? extends PlayerStartData> getPlayersData() {
         return playersData;
     }
 
     @Override
-    public Set<PlayerId> getSpectators() {
-        return Collections.<PlayerId>emptySet();
+    public Set<PlayerRef> getSpectators() {
+        return Collections.<PlayerRef>emptySet();
     }
 
     public int size() {

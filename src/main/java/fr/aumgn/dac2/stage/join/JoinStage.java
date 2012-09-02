@@ -10,11 +10,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
-import fr.aumgn.bukkitutils.playerid.set.PlayersIdHashSet;
-import fr.aumgn.bukkitutils.playerid.set.PlayersIdSet;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
+import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
+import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
@@ -29,15 +29,15 @@ public class JoinStage implements Stage, Listener, GameStartData {
     private final DAC dac;
     private final Arena arena;
     private final Map<String, Color> colors;
-    private final PlayersIdMap<PlayerStartData> players;
-    private final PlayersIdSet spectators;
+    private final PlayersRefMap<PlayerStartData> players;
+    private final PlayersRefSet spectators;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colors = dac.getColors().toMap();
-        this.players = new PlayersIdHashMap<PlayerStartData>();
-        this.spectators = new PlayersIdHashSet();
+        this.players = new PlayersRefHashMap<PlayerStartData>();
+        this.spectators = new PlayersRefHashSet();
     }
 
     @Override
@@ -110,17 +110,17 @@ public class JoinStage implements Stage, Listener, GameStartData {
         colors.remove(color.name);
 
         player.sendMessage(msgs.get("joinstage.playerslist"));
-        for (Entry<PlayerId, PlayerStartData> playerIG : players.entrySet()) {
-            PlayerId playerId = playerIG.getKey();
+        for (Entry<PlayerRef, PlayerStartData> playerIG : players.entrySet()) {
+            PlayerRef playerRef = playerIG.getKey();
             PlayerStartData data = playerIG.getValue();
 
             String name;
-            if (playerId.isOnline()) {
+            if (playerRef.isOnline()) {
                 name = data.getColor().chat
                         + playerIG.getKey().getPlayer().getDisplayName();
             } else {
                 name = ChatColor.ITALIC.toString() + data.getColor().chat
-                        + playerId.getName();
+                        + playerRef.getName();
             }
 
             player.sendMessage(msgs.get("joinstage.playerentry", name));
@@ -147,12 +147,12 @@ public class JoinStage implements Stage, Listener, GameStartData {
     }
 
     @Override
-    public Map<PlayerId, PlayerStartData> getPlayersData() {
+    public Map<PlayerRef, PlayerStartData> getPlayersData() {
         return players;
     }
 
     @Override
-    public Set<PlayerId> getSpectators() {
+    public Set<PlayerRef> getSpectators() {
         return spectators;
     }
 }

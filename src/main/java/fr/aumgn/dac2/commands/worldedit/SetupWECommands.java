@@ -33,7 +33,7 @@ public class SetupWECommands extends WorldEditCommands {
 
     @Command(name = "pool", min = 1, max = 1)
     public void pool(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         Region region = getRegion(sender);
         if (!(region instanceof FlatRegion)) {
             throw new PoolShapeNotFlat(dac, region);
@@ -48,7 +48,7 @@ public class SetupWECommands extends WorldEditCommands {
 
     @Command(name = "start", min = 1, max = 1)
     public void start(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         Region region = getRegion(sender);
 
         Shape shape = WEShapeUtils.getShape(dac, region);
@@ -60,7 +60,7 @@ public class SetupWECommands extends WorldEditCommands {
 
     @Command(name = "surrounding", min = 1, max = 1)
     public void surrounding(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         Region region = getRegion(sender);
 
         Shape shape = WEShapeUtils.getShape(dac, region);

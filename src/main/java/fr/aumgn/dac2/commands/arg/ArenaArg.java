@@ -3,31 +3,14 @@ package fr.aumgn.dac2.commands.arg;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 
-public class ArenaArg extends CommandArg<Arena> {
-
-    public static class Factory extends CommandArgFactory<Arena> {
-
-        private final DAC dac;
-
-        public Factory(DAC dac) {
-            this.dac = dac;
-        }
-
-        @Override
-        public CommandArg<Arena> createCommandArg(CommandsMessages messages,
-                String string) {
-            return new ArenaArg(dac, messages, string);
-        }
-    }
+public class ArenaArg extends AsbtractSenderArg<Arena> {
 
     public static class NoSuchArena extends CommandError {
         private static final long serialVersionUID = -4832133406864970323L;
@@ -48,8 +31,8 @@ public class ArenaArg extends CommandArg<Arena> {
 
     private final DAC dac;
 
-    public ArenaArg(DAC dac, CommandsMessages messages, String string) {
-        super(messages, string);
+    public ArenaArg(DAC dac, String string) {
+        super(null, string);
         this.dac = dac;
     }
 

@@ -24,7 +24,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "initialize", min = 0, max = 1)
     public void init(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class)
+        Arena arena = args.get(0, Arena)
                 .valueWithPermOr("dac.stages.init.arena", sender);
 
         JoinStage joinStage = new JoinStage(dac, arena);
@@ -41,7 +41,7 @@ public class StageCommands extends DACCommands {
             throw new CommandError(msg("join.alreadyingame"));
         }
 
-        Arena arena = args.get('a', Arena.class)
+        Arena arena = args.get('a', Arena)
                 .valueWithPermOr("dac2.stages.join.arena", sender);
         Stage stage = dac.getStages().get(arena);
 
@@ -54,7 +54,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "stop", min = 0, max = 1, argsFlags = "a")
     public void stop(CommandSender sender, CommandArgs args) {
-        Stage stage = args.get(0, Stage.class)
+        Stage stage = args.get(0, Stage)
                 .valueWithPermOr("dac2.stage.stop.others", sender);
 
         dac.getStages().forceStop(stage);
@@ -63,7 +63,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "start", min = 0, max = 1, argsFlags = "a")
     public void start(CommandSender sender, CommandArgs args) {
-        Stage stage = args.get('a', Stage.class)
+        Stage stage = args.get('a', Stage)
                 .valueWithPermOr("dac2.stage.start.others", sender);
         String gameMode = args.get(0, "classic");
 
@@ -84,7 +84,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "quickstart", min = 0, max = 1, argsFlags = "a")
     public void quickstart(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get('a', Arena.class)
+        Arena arena = args.get('a', Arena)
                 .valueWithPermOr("dac.stages.quickstart.arena", sender);
 
         String gameMode = args.get(0, "classic");
@@ -96,5 +96,4 @@ public class StageCommands extends DACCommands {
         Game game = factory.createGame(dac, quickStart);
         dac.getStages().start(game);
     }
-
 }

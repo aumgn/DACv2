@@ -2,7 +2,7 @@ package fr.aumgn.dac2.game.start;
 
 import java.util.Map;
 import java.util.Set;
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.arena.Arena;
 
 /**
@@ -13,7 +13,7 @@ public interface GameStartData {
 
     Arena getArena();
 
-    Map<PlayerId, ? extends PlayerStartData> getPlayersData();
+    Map<PlayerRef, ? extends PlayerStartData> getPlayersData();
 
-    Set<PlayerId> getSpectators();
+    Set<PlayerRef> getSpectators();
 }

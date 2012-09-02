@@ -26,7 +26,7 @@ public class SelectCommands extends WorldEditCommands {
 
     @Command(name = "pool", min = 1, max = 1, argsFlags = "s")
     public void pool(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         WESelector selectorType = args.get('s', WESelector.class)
                 .valueOr(WESelector.Default);
 
@@ -36,7 +36,7 @@ public class SelectCommands extends WorldEditCommands {
 
     @Command(name = "start", min = 1, max = 1, argsFlags = "s")
     public void start(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         WESelector selectorType = args.get('s', WESelector.class)
                 .valueOr(WESelector.Default);
 
@@ -47,7 +47,7 @@ public class SelectCommands extends WorldEditCommands {
 
     @Command(name = "surrounding", min = 1, max = 1, argsFlags = "s")
     public void surrounding(Player sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena.class).value();
+        Arena arena = args.get(0, Arena).value();
         WESelector selectorType = args.get('s', WESelector.class)
                 .valueOr(WESelector.Default);
 

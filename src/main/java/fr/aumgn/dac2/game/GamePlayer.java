@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.shape.column.ColorPattern;
@@ -23,7 +23,7 @@ import fr.aumgn.dac2.shape.column.ColumnPattern;
  */
 public class GamePlayer {
 
-    public final PlayerId playerId;
+    public final PlayerRef playerId;
     private final Color color;
     private final UUID worldId;
     private final Vector pos;
@@ -31,7 +31,7 @@ public class GamePlayer {
 
     private int index;
 
-    public GamePlayer(PlayerId playerId, PlayerStartData joinData) {
+    public GamePlayer(PlayerRef playerId, PlayerStartData joinData) {
         this.playerId = playerId;
         this.color = joinData.getColor();
         this.worldId = joinData.getWorldId();

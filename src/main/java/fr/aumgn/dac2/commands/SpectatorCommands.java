@@ -19,7 +19,7 @@ public class SpectatorCommands extends DACCommands {
 
     @Command(name = "watch", min = 1, max = 1)
     public void watch(Player sender, CommandArgs args) {
-        List<Stage> stages = args.getList(0, Stage.class).value();
+        List<Stage> stages = args.getList(0, Stage).value();
 
         for (Stage stage : stages) {
             String arenaName = stage.getArena().getName();
@@ -39,7 +39,7 @@ public class SpectatorCommands extends DACCommands {
 
     @Command(name = "unwatch", min = 1, max = 1)
     public void unwatch(Player sender, CommandArgs args) {
-        List<Stage> stages = args.getList(0, Stage.class).value();
+        List<Stage> stages = args.getList(0, Stage).value();
 
         for (Stage stage : stages) {
             String arenaName = stage.getArena().getName();

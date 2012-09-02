@@ -8,24 +8,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
-import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
 import fr.aumgn.dac2.commands.SetupCommands;
 import fr.aumgn.dac2.commands.SpectatorCommands;
 import fr.aumgn.dac2.commands.StageCommands;
-import fr.aumgn.dac2.commands.arg.ArenaArg;
-import fr.aumgn.dac2.commands.arg.StageArg;
 import fr.aumgn.dac2.commands.worldedit.DisabledWorldEditCommands;
 import fr.aumgn.dac2.commands.worldedit.SelectCommands;
 import fr.aumgn.dac2.commands.worldedit.SetupWECommands;
 import fr.aumgn.dac2.config.DACConfig;
-import fr.aumgn.dac2.stage.Stage;
 
 public class DACPlugin extends JavaPlugin {
 
@@ -37,8 +32,6 @@ public class DACPlugin extends JavaPlugin {
     public void onEnable() {
         dac = new DAC(this);
 
-        CommandArgFactory.register(Arena.class, new ArenaArg.Factory(dac));
-        CommandArgFactory.register(Stage.class, new StageArg.Factory(dac));
         CommandsRegistration registration = new CommandsRegistration(
                 this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));

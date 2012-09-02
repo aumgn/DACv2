@@ -9,9 +9,9 @@ import java.util.Map.Entry;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
@@ -27,7 +27,7 @@ import fr.aumgn.dac2.shape.column.GlassyPattern;
 public class Colonnisation extends AbstractGame {
 
     private final GameParty<ColonnPlayer> party;
-    private final PlayersIdMap<ColonnPlayer> playersMap;
+    private final PlayersRefMap<ColonnPlayer> playersMap;
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -43,15 +43,15 @@ public class Colonnisation extends AbstractGame {
     public Colonnisation(DAC dac, GameStartData data) {
         super(dac, data);
 
-        Map<PlayerId, ? extends PlayerStartData> playersData =
+        Map<PlayerRef, ? extends PlayerStartData> playersData =
                 data.getPlayersData();
         List<ColonnPlayer> list =
                 new ArrayList<ColonnPlayer>(playersData.size());
-        playersMap = new PlayersIdHashMap<ColonnPlayer>();
+        playersMap = new PlayersRefHashMap<ColonnPlayer>();
 
-        for (Entry<PlayerId, ? extends PlayerStartData> entry :
+        for (Entry<PlayerRef, ? extends PlayerStartData> entry :
                 playersData.entrySet()) {
-            PlayerId playerId = entry.getKey();
+            PlayerRef playerId = entry.getKey();
             ColonnPlayer player = new ColonnPlayer(playerId,
                     playersData.get(playerId));
             list.add(player);

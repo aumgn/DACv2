@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import fr.aumgn.bukkitutils.playerid.set.PlayersIdHashSet;
-import fr.aumgn.bukkitutils.playerid.set.PlayersIdSet;
+import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
+import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
@@ -19,13 +19,13 @@ public abstract class AbstractGame implements Game {
     protected final DAC dac;
     protected final Arena arena;
     protected final Listener listener;
-    protected final PlayersIdSet spectators;
+    protected final PlayersRefSet spectators;
 
     public AbstractGame(DAC dac, GameStartData data) {
         this.dac = dac;
         this.arena = data.getArena();
         this.listener = new GameListener(this);
-        this.spectators = new PlayersIdHashSet();
+        this.spectators = new PlayersRefHashSet();
         spectators.addAll(data.getSpectators());
     }
 

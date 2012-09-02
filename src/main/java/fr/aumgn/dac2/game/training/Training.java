@@ -8,9 +8,9 @@ import java.util.Map.Entry;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdHashMap;
-import fr.aumgn.bukkitutils.playerid.map.PlayersIdMap;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
@@ -24,20 +24,20 @@ import fr.aumgn.dac2.shape.column.GlassyPattern;
 public class Training extends AbstractGame {
 
     private GameParty<TrainingPlayer> party;
-    private PlayersIdMap<TrainingPlayer> playersMap;
+    private PlayersRefMap<TrainingPlayer> playersMap;
 
     public Training(DAC dac, GameStartData data) {
         super(dac, data);
 
-        Map<PlayerId, ? extends PlayerStartData> playersData =
+        Map<PlayerRef, ? extends PlayerStartData> playersData =
                 data.getPlayersData();
         List<TrainingPlayer> list =
                 new ArrayList<TrainingPlayer>(playersData.size());
-        playersMap = new PlayersIdHashMap<TrainingPlayer>();
+        playersMap = new PlayersRefHashMap<TrainingPlayer>();
 
-        for (Entry<PlayerId, ? extends PlayerStartData> entry :
+        for (Entry<PlayerRef, ? extends PlayerStartData> entry :
                 playersData.entrySet()) {
-            PlayerId playerId = entry.getKey();
+            PlayerRef playerId = entry.getKey();
             TrainingPlayer player =
                     new TrainingPlayer(playerId, entry.getValue());
             list.add(player);
