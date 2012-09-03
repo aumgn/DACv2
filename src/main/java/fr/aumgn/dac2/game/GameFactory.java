@@ -23,10 +23,6 @@ public abstract class GameFactory {
 
     /**
      * Registers a GameFactory with the given name & aliases.
-     *
-     * @param name the name
-     * @param factory the factory
-     * @param aliases the aliases.
      */
     public static void register(String name, GameFactory factory,
             String... aliases) {
@@ -44,11 +40,8 @@ public abstract class GameFactory {
 
     /**
      * Gets the game factory registered for the given alias.
-     *
-     * @param dac the main {@link DAC} instance
-     * @param alias the alias to look for.
+     * 
      * @throws UnknownGameType if the game factory can't be found.
-     * @return the factory in question
      */
     public static GameFactory getByAlias(DAC dac, String alias) {
         if (!byAliases.containsKey(alias)) {
@@ -60,8 +53,6 @@ public abstract class GameFactory {
     /**
      * The minimum required number of player to start
      * a new game for this factory.
-     *
-     * @return the minimum required number of player
      */
     public int getMinimumPlayers() {
         return 2;

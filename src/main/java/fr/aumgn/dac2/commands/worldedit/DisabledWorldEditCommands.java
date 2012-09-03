@@ -16,7 +16,7 @@ public class DisabledWorldEditCommands extends DACCommands {
     }
 
     @Command(name = "setwe", min = 0, max = -1)
-    public void set(CommandSender sender, CommandArgs args) {
+    public void setwe(CommandSender sender, CommandArgs args) {
         sender.sendMessage(msg("disabled"));
     }
 

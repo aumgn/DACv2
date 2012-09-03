@@ -52,7 +52,7 @@ public class Arenas {
 
     private String arenaNameFor(File file) {
         String name = file.getName();
-        int index = name.indexOf(".");
+        int index = name.lastIndexOf(".");
         return name.substring(0, index);
     }
 

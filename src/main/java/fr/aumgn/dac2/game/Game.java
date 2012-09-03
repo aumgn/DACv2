@@ -13,30 +13,21 @@ public interface Game extends Stage {
      * This is used by {@link GameListener} to check if events need to be
      * processed. So this method should be optimized as much as possible
      * because some events (like {@link PlayerMoveEvent}) are heavy.
-     *
-     * @param player The player.
-     * @return true if it's player turn, false otherwise.
      */
     boolean isPlayerTurn(Player player);
 
     /**
      * Callback called when a player succeed.
-     *
-     * @param player The player in question.
      */
     void onJumpSuccess(Player player);
 
     /**
      * Callback called when a player failed.
-     *
-     * @param player The player in question.
      */
     void onJumpFail(Player player);
 
     /**
      * Callback called when a player quit the server.
-     *
-     * @param player The player in question.
      */
     void onQuit(Player player);
 

@@ -8,9 +8,17 @@ import fr.aumgn.dac2.commands.arg.StageArg;
 
 public abstract class DACCommands implements Commands {
 
-    protected final DAC dac;
+    /**
+     * ArenaArg factory. Name is syntaxic sugar.
+     */
     protected final CommandArgFactory<ArenaArg> Arena;
+
+    /**
+     * StageArg factory. Name is syntaxic sugar.
+     */
     protected final CommandArgFactory<StageArg> Stage;
+
+    protected final DAC dac;
 
     public DACCommands(DAC dac) {
         this.dac = dac;

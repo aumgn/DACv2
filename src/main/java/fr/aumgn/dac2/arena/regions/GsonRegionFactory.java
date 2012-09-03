@@ -28,8 +28,7 @@ public class GsonRegionFactory implements TypeAdapterFactory {
             new HashMap<String, Class<? extends Shape>>();
 
     public static void registerShape(Class<? extends Shape> shapeClass) {
-        ShapeName annotation =
-                shapeClass.getAnnotation(ShapeName.class);
+        ShapeName annotation = shapeClass.getAnnotation(ShapeName.class);
         if (annotation == null) {
             return;
         }
@@ -98,7 +97,6 @@ public class GsonRegionFactory implements TypeAdapterFactory {
                 return;
             }
             String shapeName = annotation.value();
-
 
             writer.beginObject();
             writer.name("shape");

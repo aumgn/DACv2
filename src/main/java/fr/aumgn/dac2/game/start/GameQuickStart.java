@@ -1,16 +1,14 @@
 package fr.aumgn.dac2.game.start;
 
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
+import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
+import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.StartRegion;
@@ -48,13 +46,13 @@ public class GameQuickStart implements GameStartData {
     }
 
     @Override
-    public Map<PlayerRef, ? extends PlayerStartData> getPlayersData() {
+    public PlayersRefMap<? extends PlayerStartData> getPlayersData() {
         return playersData;
     }
 
     @Override
-    public Set<PlayerRef> getSpectators() {
-        return Collections.<PlayerRef>emptySet();
+    public PlayersRefSet getSpectators() {
+        return new PlayersRefHashSet();
     }
 
     public int size() {

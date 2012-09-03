@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 import com.google.common.collect.AbstractLinkedIterator;
 
@@ -75,10 +76,11 @@ public class Column implements Iterable<Vector> {
         };
     }
 
-    public void set(World world, Material block, short data) {
+    public void set(World world, Material material, short data) {
         for (Vector pt : this) {
-            pt.toBlock(world).setType(block);
-            pt.toBlock(world).setData((byte) data);
+            Block block = pt.toBlock(world);
+            block.setType(material);
+            block.setData((byte) data);
         }
     }
 

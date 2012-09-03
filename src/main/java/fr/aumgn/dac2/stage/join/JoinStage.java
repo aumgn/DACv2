@@ -3,7 +3,6 @@ package fr.aumgn.dac2.stage.join;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -35,7 +34,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
-        this.colors = dac.getColors().toMap();
+        this.colors = dac.getColors().asMap();
         this.players = new PlayersRefHashMap<PlayerStartData>();
         this.spectators = new PlayersRefHashSet();
     }
@@ -147,12 +146,12 @@ public class JoinStage implements Stage, Listener, GameStartData {
     }
 
     @Override
-    public Map<PlayerRef, PlayerStartData> getPlayersData() {
+    public PlayersRefMap<PlayerStartData> getPlayersData() {
         return players;
     }
 
     @Override
-    public Set<PlayerRef> getSpectators() {
+    public PlayersRefSet getSpectators() {
         return spectators;
     }
 }

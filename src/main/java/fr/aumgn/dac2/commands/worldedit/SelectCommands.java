@@ -58,9 +58,10 @@ public class SelectCommands extends WorldEditCommands {
 
     private void setSelection(Player sender, Arena arena,
             WESelector selectorType, Region region) {
-        Shape shape = region.getShape();
-        LocalWorld world = BukkitUtil.getLocalWorld(arena.getWorld());
         WorldEditPlugin worldEdit = getWorldEdit();
+        LocalWorld world = BukkitUtil.getLocalWorld(arena.getWorld());
+        Shape shape = region.getShape();
+
         RegionSelector sel = selectorType.create(dac, world, shape);
         LocalSession session = worldEdit.getSession(sender);
         session.setRegionSelector(world, sel);

@@ -40,10 +40,7 @@ public abstract class AbstractGame implements Game {
     }
 
     /**
-     * Send a message which is recorded in a the main PluginMessages instance.
-     *
-     * @param key the message key
-     * @param arguments the mssage arguments
+     * Send a message which is recorded in the main PluginMessages instance.
      */
     protected void send(String key, Object... arguments) {
         sendMessage(dac.getMessages().get(key, arguments));
@@ -69,10 +66,8 @@ public abstract class AbstractGame implements Game {
     }
 
     /**
-     * Sends a message to this game's spectators by prefixing the message
-     * with the arena's name as specified in the config.
-     *
-     * @param message
+     * Sends a message to this game's spectators by prefixing
+     * the message with the arena's name as specified in the config.
      */
     protected void sendSpectators(String message) {
         String spectatorMessage = dac.getConfig().getSpectatorsMsg()
@@ -102,8 +97,6 @@ public abstract class AbstractGame implements Game {
 
     /**
      * Teleport the player if configured to do so on player's turn.
-     *
-     * @param player The player to teleport.
      */
     protected void tpBeforeJump(GamePlayer player) {
         if (dac.getConfig().getTpBeforeJump()) {
@@ -113,8 +106,6 @@ public abstract class AbstractGame implements Game {
 
     /**
      * Teleport the player if configured to do so after player's success.
-     *
-     * @param player The player to teleport.
      */
     protected void tpAfterJumpSuccess(final GamePlayer player, Column column) {
         int delay = dac.getConfig().getTpAfterJumpSuccessDelay();
@@ -132,8 +123,6 @@ public abstract class AbstractGame implements Game {
 
     /**
      * Teleport the player if configured to do so after player's failed jump.
-     *
-     * @param player The player to teleport.
      */
     protected void tpAfterJumpFail(final GamePlayer player) {
         int delay = dac.getConfig().getTpAfterJumpFailDelay();

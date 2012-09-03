@@ -33,6 +33,7 @@ public class SetupCommands extends DACCommands {
     public void diving(CommandSender sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
         Player player = args.getPlayer('p').valueOr(sender);
+
         arena.setDiving(new Diving(player.getLocation()));
         dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.diving.success"));

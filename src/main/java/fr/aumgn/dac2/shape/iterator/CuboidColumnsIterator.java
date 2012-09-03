@@ -27,7 +27,7 @@ public class CuboidColumnsIterator extends AbstractIterator<Column> {
         this.shape = shape;
         x = min.getX();
         minZ = min.getZ();
-        z = minZ -1;
+        z = minZ - 1;
         maxX = max.getX();
         maxZ = max.getZ();
     }

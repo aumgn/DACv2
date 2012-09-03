@@ -44,7 +44,7 @@ public class Colors implements Iterable<Color> {
         return colors[Util.getRandom().nextInt(colors.length)];
     }
 
-    public Map<String, Color> toMap() {
+    public Map<String, Color> asMap() {
         Map<String, Color> map = new LinkedHashMap<String, Color>();
         for (Color color : colors) {
             map.put(color.name, color);
