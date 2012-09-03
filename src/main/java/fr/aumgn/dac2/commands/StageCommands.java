@@ -26,7 +26,8 @@ public class StageCommands extends DACCommands {
         super(dac);
     }
 
-    @Command(name = "initialize", min = 0, max = 1)
+    @Command(name = "initialize",
+            min = 0, max = 1, flags = "j", argsFlags = "j")
     public void init(CommandSender sender, CommandArgs args) {
         Arena arena = args.get(0, Arena)
                 .valueWithPermOr("dac.stages.init.arena", sender);
@@ -34,7 +35,14 @@ public class StageCommands extends DACCommands {
         JoinStage joinStage = new JoinStage(dac, arena);
         dac.getStages().start(joinStage);
 
-        if (!(sender instanceof Player)) {
+        if (sender instanceof Player) {
+            if (args.hasFlag('j')) {
+                joinStage.addPlayer((Player) sender, (Color) null);
+            } else if (args.hasArgFlag('j')) {
+                List<Color> colors = args.getList('j', Color).value();
+                joinStage.addPlayer((Player) sender, colors);
+            }
+        } else {
             sender.sendMessage(msg("init.success", arena.getName()));
         }
     }
