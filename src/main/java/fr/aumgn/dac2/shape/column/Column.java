@@ -76,6 +76,14 @@ public class Column implements Iterable<Vector> {
         };
     }
 
+    public void reset(World world) {
+        set(world, Material.STATIONARY_WATER);
+    }
+
+    public void set(World world, Material material) {
+        set(world, material, (short) 0);
+    }
+
     public void set(World world, Material material, short data) {
         for (Vector pt : this) {
             Block block = pt.toBlock(world);

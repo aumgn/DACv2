@@ -14,6 +14,7 @@ import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
+import fr.aumgn.dac2.commands.FillCommands;
 import fr.aumgn.dac2.commands.SetupCommands;
 import fr.aumgn.dac2.commands.SpectatorCommands;
 import fr.aumgn.dac2.commands.StageCommands;
@@ -44,6 +45,7 @@ public class DACPlugin extends JavaPlugin {
             registration.register(new DisabledWorldEditCommands(dac));
         }
         registration.register(new StageCommands(dac));
+        registration.register(new FillCommands(dac));
         registration.register(new SpectatorCommands(dac));
 
         getLogger().info("Enabled.");

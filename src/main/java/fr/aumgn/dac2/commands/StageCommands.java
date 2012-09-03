@@ -1,5 +1,8 @@
 package fr.aumgn.dac2.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -9,6 +12,7 @@ import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.game.GameFactory;
 import fr.aumgn.dac2.game.start.GameQuickStart;
@@ -49,7 +53,11 @@ public class StageCommands extends DACCommands {
             throw new CommandError(msg("join.notjoinable"));
         }
 
-        ((JoinStage) stage).addPlayer(sender, args.asList());
+        List<Color> colors = new ArrayList<Color>();
+        for (int i = 1; i < args.length(); i++) {
+            colors.add(args.get(i, Color).value());
+        }
+        ((JoinStage) stage).addPlayer(sender, colors);
     }
 
     @Command(name = "stop", min = 0, max = 1, argsFlags = "a")

@@ -3,6 +3,7 @@ package fr.aumgn.dac2.config;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,8 +41,32 @@ public class Colors implements Iterable<Color> {
         colors = colorsTmp;
     }
 
+    public boolean contains(String name) {
+        for (Color color : colors) {
+            if (color.name.equals(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Color get(String name) {
+        for (Color color : colors) {
+            if (color.name.equals(name)) {
+                return color;
+            }
+        }
+
+        return null;
+    }
+
     public Color random() {
         return colors[Util.getRandom().nextInt(colors.length)];
+    }
+
+    public List<Color> asList() {
+        return Arrays.asList(colors);
     }
 
     public Map<String, Color> asMap() {

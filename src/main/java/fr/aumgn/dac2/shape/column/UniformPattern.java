@@ -3,6 +3,8 @@ package fr.aumgn.dac2.shape.column;
 import org.bukkit.Material;
 import org.bukkit.World;
 
+import fr.aumgn.dac2.config.Color;
+
 /**
  * A column pattern which set all blocks uniformly.
  */
@@ -18,6 +20,10 @@ public class UniformPattern implements ColumnPattern {
     public UniformPattern(Material material, int data) {
         this.material = material;
         this.data = (byte) data;
+    }
+
+    public UniformPattern(Color color) {
+        this(color.block, color.data);
     }
 
     @Override

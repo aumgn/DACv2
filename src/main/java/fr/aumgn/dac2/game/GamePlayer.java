@@ -14,8 +14,8 @@ import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.game.start.PlayerStartData;
-import fr.aumgn.dac2.shape.column.ColorPattern;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
+import fr.aumgn.dac2.shape.column.UniformPattern;
 
 /**
  * Stores common data associated to player and
@@ -57,7 +57,7 @@ public class GamePlayer {
     }
 
     public ColumnPattern getColumnPattern() {
-        return new ColorPattern(color);
+        return new UniformPattern(color);
     }
 
     public void sendMessage(String message) {

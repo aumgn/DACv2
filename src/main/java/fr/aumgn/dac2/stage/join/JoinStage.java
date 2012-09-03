@@ -1,8 +1,9 @@
 package fr.aumgn.dac2.stage.join;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,14 +28,14 @@ public class JoinStage implements Stage, Listener, GameStartData {
 
     private final DAC dac;
     private final Arena arena;
-    private final Map<String, Color> colors;
+    private final Set<String> colorsTaken;
     private final PlayersRefMap<PlayerStartData> players;
     private final PlayersRefSet spectators;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
-        this.colors = dac.getColors().asMap();
+        this.colorsTaken = new HashSet<String>();
         this.players = new PlayersRefHashMap<PlayerStartData>();
         this.spectators = new PlayersRefHashSet();
     }
@@ -82,23 +83,21 @@ public class JoinStage implements Stage, Listener, GameStartData {
         }
     }
 
-    public void addPlayer(Player player, List<String> colorsName) {
-        Color color = null;
-        for (String rawColorName : colorsName) {
-            String colorName = rawColorName.toLowerCase();
-            if (colors.containsKey(colorName)) {
-                color = colors.get(colorName);
+    public void addPlayer(Player player, List<Color> colors) {
+        Color finalColor = null;
+        for (Color color : colors) {
+            if (!colorsTaken.contains(color.name)) {
+                finalColor = color;
                 break;
             }
         }
 
-        addPlayer(player, color);
+        addPlayer(player, finalColor);
     }
 
     public void addPlayer(Player player, Color color) {
-        if (color == null || !colors.containsValue(color)) {
-            // Get first color available
-            color = colors.values().iterator().next();
+        if (color == null || colorsTaken.contains(color.name)) {
+            color = getFirstColorAvailable();
         }
 
         PluginMessages msgs = dac.getMessages();
@@ -106,7 +105,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
         sendMessage(msgs.get("joinstage.join", playerName));
 
         players.put(player, new SimplePlayerStartData(color, player));
-        colors.remove(color.name);
+        colorsTaken.add(color.name);
 
         player.sendMessage(msgs.get("joinstage.playerslist"));
         for (Entry<PlayerRef, PlayerStartData> playerIG : players.entrySet()) {
@@ -124,6 +123,18 @@ public class JoinStage implements Stage, Listener, GameStartData {
 
             player.sendMessage(msgs.get("joinstage.playerentry", name));
         }
+    }
+
+    private Color getFirstColorAvailable() {
+        List<Color> colors = dac.getColors().asList();
+        for (Color color : colors) {
+            if (!colorsTaken.contains(color.name)) {
+                return color;
+            }
+        }
+
+        throw new Error("A unexpected error occured ! Please reoprt this to"
+                + " the plugin author.");
     }
 
     @Override

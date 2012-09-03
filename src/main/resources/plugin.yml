@@ -117,12 +117,12 @@ commands:
 
     # Stages Commands
     "dac2 initialize":
-        description: "Initialize a new game in the given arena"
+        description: "Initialize a new game in the given arena."
         usage: "[arena]"
         permission: "dac2.stages.init"
         aliases: ["dac2 init"]
     "dac2 join":
-        description: "Join a game"
+        description: "Join a game."
         usage: "[-a=<arena>]  [colors...]"
         permission: "dac2.stages.join"
         aliases: ["dac2 j"]
@@ -136,10 +136,34 @@ commands:
         permission: "dac2.stages.start"
         aliases: ["dac2 s"]
     "dac2 quickstart":
-        description: "Start the game skipping the join stage"
+        description: "Start the game skipping the join stage."
         usage: "[-a=arena] [gamemode]"
         permission: "dac2.stages.quickstart"
         aliases: ["dac2 qs"]
+
+    # Fill Commands
+    "dac2 fill":
+        description: "Fill main command."
+        usage: "<fully|randomly|dac|allbutone>"
+    "dac2 fill fully":
+        description: "Fill the pool"
+        usage: "<colors>..."
+        permission: "dac2.fill.fully"
+        aliases: ["dac2 fill f"]
+    "dac2 fill randomly":
+        description: "Fill the pool randomly."
+        usage: "[-p=percentage(default=50)] <colors>..."
+        permission: "dac2.fill.randomly"
+        aliases: ["dac2 fill rand"]
+    "dac2 fill dac":
+        description: "Fill the pool with `Dés à coudre`."
+        usage: "[-p=percentage(default=50)] <colors>..."
+        permission: "dac2.fill.dac"
+    "dac2 fill allbutone":
+        description: "Fill the pool except for one column."
+        usage: "[-p=percentage(default=50)] <colors>..."
+        permission: "dac2.fill.allbutone"
+        aliases: ["dac2 fill abo"]
 
     # Spectators Commands
     "dac2 watch":
@@ -161,6 +185,7 @@ permissions:
             - dac2.setup: true
             - dac2.select: true
             - dac2.stages: true
+            - dac2.fill: true
             - dac2.spectators: true
 
     dac2.admin:
@@ -208,6 +233,13 @@ permissions:
             - dac2.stages.start.others: true
             - dac2.stages.quickstart: true
             - dac2.stages.quickstart.arena: true
+
+    dac2.fill:
+        children:
+            - dac2.fill.fully: true
+            - dac2.fill.randomly: true
+            - dac2.fill.dac: true
+            - dac2.fill.allbutone: true
 
     dac2.spectators:
         children:

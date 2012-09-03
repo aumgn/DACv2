@@ -4,9 +4,15 @@ import fr.aumgn.bukkitutils.command.Commands;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.commands.arg.ArenaArg;
+import fr.aumgn.dac2.commands.arg.ColorArg;
 import fr.aumgn.dac2.commands.arg.StageArg;
 
 public abstract class DACCommands implements Commands {
+
+    /**
+     * ColorArg factory. Name is syntaxic sugar.
+     */
+    protected final CommandArgFactory<ColorArg> Color;
 
     /**
      * ArenaArg factory. Name is syntaxic sugar.
@@ -22,6 +28,12 @@ public abstract class DACCommands implements Commands {
 
     public DACCommands(DAC dac) {
         this.dac = dac;
+        this.Color = new CommandArgFactory<ColorArg>() {
+            @Override
+            public ColorArg createCommandArg(String string) {
+                return new ColorArg(DACCommands.this.dac, string);
+            }
+        };
         this.Arena = new CommandArgFactory<ArenaArg>() {
             @Override
             public ArenaArg createCommandArg(String string) {
