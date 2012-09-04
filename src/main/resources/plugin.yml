@@ -42,11 +42,6 @@ commands:
         description: "Teleport to the given arena's diving board."
         usage: "<arena>"
         permission: "dac2.arenas.tparena"
-    "dac2 reset":
-        description: "Reset the given arena's pool."
-        usage: "<arena>"
-        permission: "dac2.arenas.reset"
-        aliases: ["dac rs"]
 
     # Setup Commands
     "dac2 set":
@@ -61,17 +56,17 @@ commands:
         description: "Define the pool of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=arbitrary)] [radius] [height]"
         permission: "dac2.setup.pool"
-        aliases: ["dac2 set p"]
+        aliases: ["dac2 setp"]
     "dac2 set start":
         description: "Define the start region of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
         permission: "dac2.setup.start"
-        aliases: ["dac2 set s"]
+        aliases: ["dac2 sets"]
     "dac2 set surrounding":
         description: "Define the surrounding region of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
         permission: "dac2.setup.surrounding"
-        aliases: ["dac2 set s"]
+        aliases: ["dac2 setsu"]
 
     # WorlEdit Setup Commands
     "dac2 setwe":
@@ -81,17 +76,17 @@ commands:
         description: "Define the pool of the given arena."
         usage: "<arena>"
         permission: "dac2.setup.we.pool"
-        aliases: ["dac2 setwe p"]
+        aliases: ["dac2 setwp"]
     "dac2 setwe start":
         description: "Define the start region of the given arena."
         usage: "<arena>"
         permission: "dac2.setup.we.start"
-        aliases: ["dac2 setwe s"]
+        aliases: ["dac2 setws"]
     "dac2 setwe surrounding":
         description: "Define the surrounding region of the given arena."
         usage: "<arena>"
         permission: "dac2.setup.we.surrouding"
-        aliases: ["dac2 setwe su"]
+        aliases: ["dac2 setwsu"]
 
     # Select Commands
     "dac2 select":
@@ -144,25 +139,31 @@ commands:
     "dac2 fill":
         description: "Fill main command."
         usage: "<fully|randomly|dac|allbutone>"
+        aliases: ["dac2 reset"]
+    "dac2 fill reset":
+        description: "Reset the given arena's pool."
+        usage: "<arena>"
+        permission: "dac2.fill.reset"
     "dac2 fill fully":
         description: "Fill the pool"
         usage: "<colors>..."
         permission: "dac2.fill.fully"
-        aliases: ["dac2 fill f"]
+        aliases: ["dac2 fill f", "dac2 fillf"]
     "dac2 fill randomly":
         description: "Fill the pool randomly."
         usage: "[-p=percentage(default=50)] <colors>..."
         permission: "dac2.fill.randomly"
-        aliases: ["dac2 fill rand"]
+        aliases: ["dac2 fill rand", "dac2 fillr"]
     "dac2 fill dac":
         description: "Fill the pool with `Dés à coudre`."
         usage: "[-p=percentage(default=50)] <colors>..."
         permission: "dac2.fill.dac"
+        aliases: ["dac2 filld"]
     "dac2 fill allbutone":
         description: "Fill the pool except for one column."
         usage: "[-p=percentage(default=50)] <colors>..."
         permission: "dac2.fill.allbutone"
-        aliases: ["dac2 fill abo"]
+        aliases: ["dac2 fill abo", "dac2 filla"]
 
     # Spectators Commands
     "dac2 watch":
@@ -205,7 +206,6 @@ permissions:
             - dac2.arenas.delete: true
             - dac2.arenas.arenas: true
             - dac2.arenas.tparena: true
-            - dac2.arenas.reset: true
 
     dac2.setup:
         children:
@@ -242,6 +242,7 @@ permissions:
 
     dac2.fill:
         children:
+            - dac2.fill.reset: true
             - dac2.fill.fully: true
             - dac2.fill.randomly: true
             - dac2.fill.dac: true

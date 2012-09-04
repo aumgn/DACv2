@@ -55,11 +55,4 @@ public class ArenasCommands extends DACCommands {
         sender.teleport(arena.safeGetDiving(dac).toLocation(arena.getWorld()));
         sender.sendMessage(msg("tparena.success"));
     }
-
-    @Command(name = "reset", min = 1, max = 1)
-    public void reset(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get(0, Arena).value();
-        arena.safeGetPool(dac).reset(arena.getWorld());
-        sender.sendMessage(msg("reset.success"));
-    }
 }
