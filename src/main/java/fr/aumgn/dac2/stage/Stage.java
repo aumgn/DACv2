@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.stage;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -24,4 +25,6 @@ public interface Stage {
     void addSpectator(Player player);
 
     void removeSpectator(Player player);
+
+    void list(CommandSender sender);
 }

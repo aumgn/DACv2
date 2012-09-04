@@ -38,7 +38,6 @@ commands:
         description: "List all arenas."
         usage: ""
         permission: "dac.arenas.arenas"
-        aliases: ["dac2 list", "dac2 ls"]
     "dac2 tparena":
         description: "Teleport to the given arena's diving board."
         usage: "<arena>"
@@ -176,6 +175,13 @@ commands:
         usage: "[arena,...]"
         permission: "dac2.spectator.unwatch"
 
+    # Info Commands
+    "dac2 list":
+        description: "Show players list and stats"
+        aliases: ["dac2 ls"]
+        usage: "[arena]"
+        permission: "dac2.info.list"
+
 permissions:
     "dac2.*":
         default: op
@@ -245,3 +251,7 @@ permissions:
         children:
             - dac2.spectators.watch: true
             - dac2.spectators.unwatch: true
+
+    dac2.info:
+        children:
+            - dac2.info.list: true

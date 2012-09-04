@@ -1,14 +1,16 @@
 package fr.aumgn.dac2.game.colonnisation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
@@ -239,6 +241,18 @@ public class Colonnisation extends AbstractGame {
                 gamePlayer.getScore());
         if (!finished) {
             nextTurn();
+        }
+    }
+
+    @Override
+    public void list(CommandSender sender) {
+        PluginMessages messages = dac.getMessages();
+
+        sender.sendMessage(messages.get("colonnisation.playerslist"));
+        for (ColonnPlayer player : party.iterable()) {
+            sender.sendMessage(messages.get("colonnisation.playerentry", 
+                    player.getDisplayName(), player.getIndex(),
+                    player.getScore()));
         }
     }
 }

@@ -30,6 +30,18 @@ public class TrainingPlayer extends GamePlayer {
         fails++;
     }
 
+    public int getSuccesses() {
+        return successes;
+    }
+
+    public int getDacs() {
+        return dacs;       
+    }
+
+    public int getFails() {
+        return fails;
+    }
+
     public void sendStats(PluginMessages messages) {
         sendMessage(messages.get("training.stats.successes", successes));
         sendMessage(messages.get("training.stats.dacs", dacs));

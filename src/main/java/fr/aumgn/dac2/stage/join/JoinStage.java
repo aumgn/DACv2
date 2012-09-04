@@ -2,10 +2,9 @@ package fr.aumgn.dac2.stage.join;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -107,22 +106,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
         players.put(player, new SimplePlayerStartData(color, player));
         colorsTaken.add(color.name);
 
-        player.sendMessage(msgs.get("joinstage.playerslist"));
-        for (Entry<PlayerRef, PlayerStartData> playerIG : players.entrySet()) {
-            PlayerRef playerRef = playerIG.getKey();
-            PlayerStartData data = playerIG.getValue();
-
-            String name;
-            if (playerRef.isOnline()) {
-                name = data.getColor().chat
-                        + playerIG.getKey().getPlayer().getDisplayName();
-            } else {
-                name = ChatColor.ITALIC.toString() + data.getColor().chat
-                        + playerRef.getName();
-            }
-
-            player.sendMessage(msgs.get("joinstage.playerentry", name));
-        }
+        list(player);
     }
 
     private Color getFirstColorAvailable() {
@@ -164,5 +148,16 @@ public class JoinStage implements Stage, Listener, GameStartData {
     @Override
     public PlayersRefSet getSpectators() {
         return spectators;
+    }
+
+    @Override
+    public void list(CommandSender sender) {
+        PluginMessages messages = dac.getMessages();
+
+        sender.sendMessage(messages.get("joinstage.playerslist"));
+        for (PlayerRef player : players.keySet()) {
+            sender.sendMessage(messages.get("joinstage.playerentry", 
+                    player.getDisplayName()));
+        }
     }
 }

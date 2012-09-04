@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
@@ -129,5 +131,17 @@ public class Training extends AbstractGame {
         party.removePlayer(trainingPlayer);
         playersMap.remove(player);
         trainingPlayer.sendStats(dac.getMessages());
+    }
+
+    @Override
+    public void list(CommandSender sender) {
+        PluginMessages messages = dac.getMessages();
+
+        sender.sendMessage(messages.get("training.playerslist"));
+        for (TrainingPlayer player : party.iterable()) {
+            sender.sendMessage(messages.get("training.playerentry", 
+                    player.getDisplayName(), player.getIndex(), player.getSuccesses(),
+                    player.getDacs(), player.getFails()));
+        }
     }
 }

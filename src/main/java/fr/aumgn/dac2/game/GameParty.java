@@ -1,6 +1,7 @@
 package fr.aumgn.dac2.game;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -97,5 +98,9 @@ public class GameParty<T extends GamePlayer> {
         }
 
         players = newPlayers;
+    }
+
+    public List<T> asList() {
+        return Arrays.asList(players);
     }
 }

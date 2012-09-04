@@ -1,6 +1,6 @@
 package fr.aumgn.dac2.game.classic;
 
-import static fr.aumgn.dac2.utils.DACUtil.*;
+import static fr.aumgn.dac2.utils.DACUtil.PLAYER_MAX_HEALTH;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +8,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
+import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.PlayerStartData;
-import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
@@ -288,6 +290,18 @@ public class ClassicGame extends AbstractGame {
 
         if (force) {
             send("game.stopped");
+        }
+    }
+
+    @Override
+    public void list(CommandSender sender) {
+        PluginMessages messages = dac.getMessages();
+
+        sender.sendMessage(messages.get("game.playerslist"));
+        for (ClassicGamePlayer player : party.iterable()) {
+            sender.sendMessage(messages.get("game.playerentry", 
+                    player.getDisplayName(), player.getIndex(), 
+                    player.getLives()));
         }
     }
 }
