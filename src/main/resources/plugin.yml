@@ -139,11 +139,11 @@ commands:
     "dac2 fill":
         description: "Fill main command."
         usage: "<fully|randomly|dac|allbutone>"
-        aliases: ["dac2 reset"]
     "dac2 fill reset":
         description: "Reset the given arena's pool."
         usage: "<arena>"
         permission: "dac2.fill.reset"
+        aliases: ["dac2 reset"]
     "dac2 fill fully":
         description: "Fill the pool"
         usage: "<colors>..."
@@ -179,9 +179,9 @@ commands:
     # Info Commands
     "dac2 list":
         description: "Show players list and stats"
-        aliases: ["dac2 ls"]
         usage: "[arena]"
         permission: "dac2.info.list"
+        aliases: ["dac2 ls"]
 
 permissions:
     "dac2.*":

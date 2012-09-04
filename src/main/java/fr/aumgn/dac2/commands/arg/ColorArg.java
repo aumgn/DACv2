@@ -19,7 +19,7 @@ public class ColorArg extends AbstractCommandArg<Color> {
     private final DAC dac;
 
     public ColorArg(DAC dac, String string) {
-        super(null, string);
+        super(string);
         this.dac = dac;
     }
 

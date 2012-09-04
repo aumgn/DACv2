@@ -32,7 +32,7 @@ public class ArenaArg extends AsbtractSenderArg<Arena> {
     private final DAC dac;
 
     public ArenaArg(DAC dac, String string) {
-        super(null, string);
+        super(string);
         this.dac = dac;
     }
 
@@ -58,5 +58,10 @@ public class ArenaArg extends AsbtractSenderArg<Arena> {
         }
 
         return arena;
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return dac.getCmdMessages().get("arena.arg.otherpermissionmissing");
     }
 }

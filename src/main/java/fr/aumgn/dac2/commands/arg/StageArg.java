@@ -36,7 +36,7 @@ public class StageArg extends AsbtractSenderArg<Stage> {
     private final DAC dac;
 
     public StageArg(DAC dac, String string) {
-        super(null, string);
+        super(string);
         this.dac = dac;
     }
 
@@ -68,5 +68,10 @@ public class StageArg extends AsbtractSenderArg<Stage> {
         }
 
         return stage;
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return dac.getCmdMessages().get("stage.arg.otherpermissionmissing");
     }
 }
