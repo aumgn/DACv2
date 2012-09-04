@@ -178,10 +178,14 @@ commands:
 
     # Info Commands
     "dac2 list":
-        description: "Show players list and stats"
+        description: "Show players list and stats."
         usage: "[arena]"
         permission: "dac2.info.list"
         aliases: ["dac2 ls"]
+    "dac2 colors":
+        description: "Show all available colors."
+        usage: ""
+        permission: "dac2.info.colors"
 
 permissions:
     "dac2.*":
@@ -256,3 +260,4 @@ permissions:
     dac2.info:
         children:
             - dac2.info.list: true
+            - dac2.info.colors: true
