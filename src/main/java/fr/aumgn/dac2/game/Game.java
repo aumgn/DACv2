@@ -27,11 +27,6 @@ public interface Game extends Stage {
     void onJumpFail(Player player);
 
     /**
-     * Callback called when a player quit the server.
-     */
-    void onQuit(Player player);
-
-    /**
      * Callback called when a new turn starts.
      * (ie. all players have jumped once since the last one)
      */

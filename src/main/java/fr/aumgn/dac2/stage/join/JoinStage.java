@@ -166,4 +166,15 @@ public class JoinStage implements Stage, Listener, GameStartData {
                     player.getDisplayName()));
         }
     }
+
+    @Override
+    public void onQuit(Player player) {
+        PlayerStartData data = players.remove(player);
+        colorsTaken.remove(data.getColor().name);
+
+        String message = dac.getMessages().get("joinstage.quit",
+                data.getColor().chat + player.getDisplayName());
+        sendMessage(message);
+        player.sendMessage(message);
+    }
 }

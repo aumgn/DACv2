@@ -27,4 +27,6 @@ public interface Stage {
     void removeSpectator(Player player);
 
     void list(CommandSender sender);
+
+    void onQuit(Player sender);
 }

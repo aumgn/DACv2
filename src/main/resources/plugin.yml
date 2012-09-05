@@ -134,6 +134,15 @@ commands:
         usage: "[-a=arena] [gamemode]"
         permission: "dac2.stages.quickstart"
         aliases: ["dac2 qs"]
+    "dac2 kick":
+        description: "Kick a player."
+        usage: "<player>"
+        permission: "dac2.stages.kick"
+    "dac2 quit":
+        description: "Quit the stage."
+        usage: ""
+        permission: "dac2.stages.quit"
+        aliases: ["dac2 q"]
 
     # Fill Commands
     "dac2 fill":

@@ -112,4 +112,27 @@ public class StageCommands extends DACCommands {
         Game game = factory.createGame(dac, quickStart);
         dac.getStages().start(game);
     }
+
+    @Command(name = "kick", min = 1, max = 1)
+    public void kick(CommandSender sender, CommandArgs args) {
+        Player player = args.getPlayer(0).value();
+        Stage stage = dac.getStages().get(player);
+        if (stage == null) {
+            throw new CommandError(msg("quit.notingame"));
+        }
+
+        stage.onQuit(player);
+        sender.sendMessage(msg("kick.success", player.getDisplayName(),
+                stage.getArena().getName()));
+    }
+
+    @Command(name = "quit")
+    public void quit(Player sender) {
+        Stage stage = dac.getStages().get(sender);
+        if (stage == null) {
+            throw new CommandError(msg("quit.notingame"));
+        }
+
+        stage.onQuit(sender);
+    }
 }
