@@ -39,8 +39,8 @@ public class StageCommands extends DACCommands {
             if (args.hasFlag('j')) {
                 joinStage.addPlayer((Player) sender, (Color) null);
             } else if (args.hasArgFlag('j')) {
-                List<Color> colors = args.getList('j', Color).value();
-                joinStage.addPlayer((Player) sender, colors);
+                Color color = args.get('j', Color).value();
+                joinStage.addPlayer((Player) sender, color);
             }
         } else {
             sender.sendMessage(msg("init.success", arena.getName()));
