@@ -65,6 +65,10 @@ public class Colors implements Iterable<Color> {
         return colors[Util.getRandom().nextInt(colors.length)];
     }
 
+    public int size() {
+        return colors.length;
+    }
+
     public List<Color> asList() {
         return Arrays.asList(colors);
     }

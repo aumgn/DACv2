@@ -18,6 +18,7 @@ import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.config.Color;
+import fr.aumgn.dac2.exceptions.TooManyPlayers;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.game.start.SimplePlayerStartData;
@@ -95,6 +96,11 @@ public class JoinStage implements Stage, Listener, GameStartData {
     }
 
     public void addPlayer(Player player, Color color) {
+        if (players.size() >= dac.getColors().size()) {
+            throw new TooManyPlayers(dac.getMessages()
+                    .get("joinstage.toomanyplayers"));
+        }
+
         if (color == null || colorsTaken.contains(color.name)) {
             color = getFirstColorAvailable();
         }
