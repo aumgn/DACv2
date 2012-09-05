@@ -3,6 +3,7 @@ package fr.aumgn.dac2.game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
@@ -47,10 +48,6 @@ public abstract class AbstractGame implements Game {
     }
 
     @Override
-    public void onNewTurn() {
-    }
-
-    @Override
     public boolean isSpectator(Player player) {
         return spectators.contains(player);
     }
@@ -64,6 +61,29 @@ public abstract class AbstractGame implements Game {
     public void removeSpectator(Player player) {
         spectators.remove(player);
     }
+
+    @Override
+    public void onNewTurn() {
+    }
+
+    /**
+     * Check if it's the given player turn.
+     *
+     * This is used by {@link GameListener} to check if events need to be
+     * processed. So this method should be optimized as much as possible
+     * because some events (like {@link PlayerMoveEvent}) are heavy.
+     */
+    public abstract boolean isPlayerTurn(Player player);
+
+    /**
+     * Callback called when a player succeed.
+     */
+    public abstract void onJumpSuccess(Player player);
+
+    /**
+     * Callback called when a player failed.
+     */
+    public abstract void onJumpFail(Player player);
 
     /**
      * Sends a message to this game's spectators by prefixing
