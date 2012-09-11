@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="fr">
 <head>
 <title>Source code</title>
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
@@ -8,25 +8,25 @@
 <div class="sourceContainer">
 <pre><span class="sourceLineNo">001</span>package fr.aumgn.dac2.stage.join;<a name="line.1"></a>
 <span class="sourceLineNo">002</span><a name="line.2"></a>
-<span class="sourceLineNo">003</span>import java.util.List;<a name="line.3"></a>
-<span class="sourceLineNo">004</span>import java.util.Map;<a name="line.4"></a>
-<span class="sourceLineNo">005</span>import java.util.Map.Entry;<a name="line.5"></a>
-<span class="sourceLineNo">006</span>import java.util.Set;<a name="line.6"></a>
-<span class="sourceLineNo">007</span><a name="line.7"></a>
-<span class="sourceLineNo">008</span>import org.bukkit.ChatColor;<a name="line.8"></a>
-<span class="sourceLineNo">009</span>import org.bukkit.entity.Player;<a name="line.9"></a>
-<span class="sourceLineNo">010</span>import org.bukkit.event.Listener;<a name="line.10"></a>
-<span class="sourceLineNo">011</span><a name="line.11"></a>
-<span class="sourceLineNo">012</span>import fr.aumgn.bukkitutils.localization.PluginMessages;<a name="line.12"></a>
-<span class="sourceLineNo">013</span>import fr.aumgn.bukkitutils.playerref.PlayerRef;<a name="line.13"></a>
-<span class="sourceLineNo">014</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;<a name="line.14"></a>
-<span class="sourceLineNo">015</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;<a name="line.15"></a>
-<span class="sourceLineNo">016</span>import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;<a name="line.16"></a>
-<span class="sourceLineNo">017</span>import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;<a name="line.17"></a>
-<span class="sourceLineNo">018</span>import fr.aumgn.bukkitutils.util.Util;<a name="line.18"></a>
-<span class="sourceLineNo">019</span>import fr.aumgn.dac2.DAC;<a name="line.19"></a>
-<span class="sourceLineNo">020</span>import fr.aumgn.dac2.arena.Arena;<a name="line.20"></a>
-<span class="sourceLineNo">021</span>import fr.aumgn.dac2.config.Color;<a name="line.21"></a>
+<span class="sourceLineNo">003</span>import java.util.HashSet;<a name="line.3"></a>
+<span class="sourceLineNo">004</span>import java.util.List;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.util.Set;<a name="line.5"></a>
+<span class="sourceLineNo">006</span><a name="line.6"></a>
+<span class="sourceLineNo">007</span>import org.bukkit.command.CommandSender;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import org.bukkit.entity.Player;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import org.bukkit.event.Listener;<a name="line.9"></a>
+<span class="sourceLineNo">010</span><a name="line.10"></a>
+<span class="sourceLineNo">011</span>import fr.aumgn.bukkitutils.localization.PluginMessages;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>import fr.aumgn.bukkitutils.playerref.PlayerRef;<a name="line.12"></a>
+<span class="sourceLineNo">013</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;<a name="line.13"></a>
+<span class="sourceLineNo">014</span>import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;<a name="line.16"></a>
+<span class="sourceLineNo">017</span>import fr.aumgn.bukkitutils.util.Util;<a name="line.17"></a>
+<span class="sourceLineNo">018</span>import fr.aumgn.dac2.DAC;<a name="line.18"></a>
+<span class="sourceLineNo">019</span>import fr.aumgn.dac2.arena.Arena;<a name="line.19"></a>
+<span class="sourceLineNo">020</span>import fr.aumgn.dac2.config.Color;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import fr.aumgn.dac2.exceptions.TooManyPlayers;<a name="line.21"></a>
 <span class="sourceLineNo">022</span>import fr.aumgn.dac2.game.start.GameStartData;<a name="line.22"></a>
 <span class="sourceLineNo">023</span>import fr.aumgn.dac2.game.start.PlayerStartData;<a name="line.23"></a>
 <span class="sourceLineNo">024</span>import fr.aumgn.dac2.game.start.SimplePlayerStartData;<a name="line.24"></a>
@@ -36,14 +36,14 @@
 <span class="sourceLineNo">028</span><a name="line.28"></a>
 <span class="sourceLineNo">029</span>    private final DAC dac;<a name="line.29"></a>
 <span class="sourceLineNo">030</span>    private final Arena arena;<a name="line.30"></a>
-<span class="sourceLineNo">031</span>    private final Map&lt;String, Color&gt; colors;<a name="line.31"></a>
+<span class="sourceLineNo">031</span>    private final Set&lt;String&gt; colorsTaken;<a name="line.31"></a>
 <span class="sourceLineNo">032</span>    private final PlayersRefMap&lt;PlayerStartData&gt; players;<a name="line.32"></a>
 <span class="sourceLineNo">033</span>    private final PlayersRefSet spectators;<a name="line.33"></a>
 <span class="sourceLineNo">034</span><a name="line.34"></a>
 <span class="sourceLineNo">035</span>    public JoinStage(DAC dac, Arena arena) {<a name="line.35"></a>
 <span class="sourceLineNo">036</span>        this.dac = dac;<a name="line.36"></a>
 <span class="sourceLineNo">037</span>        this.arena = arena;<a name="line.37"></a>
-<span class="sourceLineNo">038</span>        this.colors = dac.getColors().toMap();<a name="line.38"></a>
+<span class="sourceLineNo">038</span>        this.colorsTaken = new HashSet&lt;String&gt;();<a name="line.38"></a>
 <span class="sourceLineNo">039</span>        this.players = new PlayersRefHashMap&lt;PlayerStartData&gt;();<a name="line.39"></a>
 <span class="sourceLineNo">040</span>        this.spectators = new PlayersRefHashSet();<a name="line.40"></a>
 <span class="sourceLineNo">041</span>    }<a name="line.41"></a>
@@ -91,48 +91,48 @@
 <span class="sourceLineNo">083</span>        }<a name="line.83"></a>
 <span class="sourceLineNo">084</span>    }<a name="line.84"></a>
 <span class="sourceLineNo">085</span><a name="line.85"></a>
-<span class="sourceLineNo">086</span>    public void addPlayer(Player player, List&lt;String&gt; colorsName) {<a name="line.86"></a>
-<span class="sourceLineNo">087</span>        Color color = null;<a name="line.87"></a>
-<span class="sourceLineNo">088</span>        for (String rawColorName : colorsName) {<a name="line.88"></a>
-<span class="sourceLineNo">089</span>            String colorName = rawColorName.toLowerCase();<a name="line.89"></a>
-<span class="sourceLineNo">090</span>            if (colors.containsKey(colorName)) {<a name="line.90"></a>
-<span class="sourceLineNo">091</span>                color = colors.get(colorName);<a name="line.91"></a>
-<span class="sourceLineNo">092</span>                break;<a name="line.92"></a>
-<span class="sourceLineNo">093</span>            }<a name="line.93"></a>
-<span class="sourceLineNo">094</span>        }<a name="line.94"></a>
-<span class="sourceLineNo">095</span><a name="line.95"></a>
-<span class="sourceLineNo">096</span>        addPlayer(player, color);<a name="line.96"></a>
-<span class="sourceLineNo">097</span>    }<a name="line.97"></a>
-<span class="sourceLineNo">098</span><a name="line.98"></a>
-<span class="sourceLineNo">099</span>    public void addPlayer(Player player, Color color) {<a name="line.99"></a>
-<span class="sourceLineNo">100</span>        if (color == null || !colors.containsValue(color)) {<a name="line.100"></a>
-<span class="sourceLineNo">101</span>            // Get first color available<a name="line.101"></a>
-<span class="sourceLineNo">102</span>            color = colors.values().iterator().next();<a name="line.102"></a>
-<span class="sourceLineNo">103</span>        }<a name="line.103"></a>
-<span class="sourceLineNo">104</span><a name="line.104"></a>
-<span class="sourceLineNo">105</span>        PluginMessages msgs = dac.getMessages();<a name="line.105"></a>
-<span class="sourceLineNo">106</span>        String playerName = color.chat + player.getDisplayName();<a name="line.106"></a>
-<span class="sourceLineNo">107</span>        sendMessage(msgs.get("joinstage.join", playerName));<a name="line.107"></a>
-<span class="sourceLineNo">108</span><a name="line.108"></a>
-<span class="sourceLineNo">109</span>        players.put(player, new SimplePlayerStartData(color, player));<a name="line.109"></a>
-<span class="sourceLineNo">110</span>        colors.remove(color.name);<a name="line.110"></a>
+<span class="sourceLineNo">086</span>    public void addPlayer(Player player, List&lt;Color&gt; colors) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        Color finalColor = null;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>        for (Color color : colors) {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>            if (!colorsTaken.contains(color.name)) {<a name="line.89"></a>
+<span class="sourceLineNo">090</span>                finalColor = color;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>                break;<a name="line.91"></a>
+<span class="sourceLineNo">092</span>            }<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        }<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>        addPlayer(player, finalColor);<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    }<a name="line.96"></a>
+<span class="sourceLineNo">097</span><a name="line.97"></a>
+<span class="sourceLineNo">098</span>    public void addPlayer(Player player, Color color) {<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        if (players.size() &gt;= dac.getColors().size()) {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>            throw new TooManyPlayers(dac.getMessages()<a name="line.100"></a>
+<span class="sourceLineNo">101</span>                    .get("joinstage.toomanyplayers"));<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        }<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>        if (color == null || colorsTaken.contains(color.name)) {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>            color = getFirstColorAvailable();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>        }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>        PluginMessages msgs = dac.getMessages();<a name="line.108"></a>
+<span class="sourceLineNo">109</span>        String playerName = color.chat + player.getDisplayName();<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        sendMessage(msgs.get("joinstage.join", playerName));<a name="line.110"></a>
 <span class="sourceLineNo">111</span><a name="line.111"></a>
-<span class="sourceLineNo">112</span>        player.sendMessage(msgs.get("joinstage.playerslist"));<a name="line.112"></a>
-<span class="sourceLineNo">113</span>        for (Entry&lt;PlayerRef, PlayerStartData&gt; playerIG : players.entrySet()) {<a name="line.113"></a>
-<span class="sourceLineNo">114</span>            PlayerRef playerRef = playerIG.getKey();<a name="line.114"></a>
-<span class="sourceLineNo">115</span>            PlayerStartData data = playerIG.getValue();<a name="line.115"></a>
-<span class="sourceLineNo">116</span><a name="line.116"></a>
-<span class="sourceLineNo">117</span>            String name;<a name="line.117"></a>
-<span class="sourceLineNo">118</span>            if (playerRef.isOnline()) {<a name="line.118"></a>
-<span class="sourceLineNo">119</span>                name = data.getColor().chat<a name="line.119"></a>
-<span class="sourceLineNo">120</span>                        + playerIG.getKey().getPlayer().getDisplayName();<a name="line.120"></a>
-<span class="sourceLineNo">121</span>            } else {<a name="line.121"></a>
-<span class="sourceLineNo">122</span>                name = ChatColor.ITALIC.toString() + data.getColor().chat<a name="line.122"></a>
-<span class="sourceLineNo">123</span>                        + playerRef.getName();<a name="line.123"></a>
-<span class="sourceLineNo">124</span>            }<a name="line.124"></a>
+<span class="sourceLineNo">112</span>        players.put(player, new SimplePlayerStartData(color, player));<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        colorsTaken.add(color.name);<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>        list(player);<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    }<a name="line.116"></a>
+<span class="sourceLineNo">117</span><a name="line.117"></a>
+<span class="sourceLineNo">118</span>    private Color getFirstColorAvailable() {<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        List&lt;Color&gt; colors = dac.getColors().asList();<a name="line.119"></a>
+<span class="sourceLineNo">120</span>        for (Color color : colors) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>            if (!colorsTaken.contains(color.name)) {<a name="line.121"></a>
+<span class="sourceLineNo">122</span>                return color;<a name="line.122"></a>
+<span class="sourceLineNo">123</span>            }<a name="line.123"></a>
+<span class="sourceLineNo">124</span>        }<a name="line.124"></a>
 <span class="sourceLineNo">125</span><a name="line.125"></a>
-<span class="sourceLineNo">126</span>            player.sendMessage(msgs.get("joinstage.playerentry", name));<a name="line.126"></a>
-<span class="sourceLineNo">127</span>        }<a name="line.127"></a>
+<span class="sourceLineNo">126</span>        throw new Error("A unexpected error occured ! Please reoprt this to"<a name="line.126"></a>
+<span class="sourceLineNo">127</span>                + " the plugin author.");<a name="line.127"></a>
 <span class="sourceLineNo">128</span>    }<a name="line.128"></a>
 <span class="sourceLineNo">129</span><a name="line.129"></a>
 <span class="sourceLineNo">130</span>    @Override<a name="line.130"></a>
@@ -155,15 +155,37 @@
 <span class="sourceLineNo">147</span>    }<a name="line.147"></a>
 <span class="sourceLineNo">148</span><a name="line.148"></a>
 <span class="sourceLineNo">149</span>    @Override<a name="line.149"></a>
-<span class="sourceLineNo">150</span>    public Map&lt;PlayerRef, PlayerStartData&gt; getPlayersData() {<a name="line.150"></a>
+<span class="sourceLineNo">150</span>    public PlayersRefMap&lt;PlayerStartData&gt; getPlayersData() {<a name="line.150"></a>
 <span class="sourceLineNo">151</span>        return players;<a name="line.151"></a>
 <span class="sourceLineNo">152</span>    }<a name="line.152"></a>
 <span class="sourceLineNo">153</span><a name="line.153"></a>
 <span class="sourceLineNo">154</span>    @Override<a name="line.154"></a>
-<span class="sourceLineNo">155</span>    public Set&lt;PlayerRef&gt; getSpectators() {<a name="line.155"></a>
+<span class="sourceLineNo">155</span>    public PlayersRefSet getSpectators() {<a name="line.155"></a>
 <span class="sourceLineNo">156</span>        return spectators;<a name="line.156"></a>
 <span class="sourceLineNo">157</span>    }<a name="line.157"></a>
-<span class="sourceLineNo">158</span>}<a name="line.158"></a>
+<span class="sourceLineNo">158</span><a name="line.158"></a>
+<span class="sourceLineNo">159</span>    @Override<a name="line.159"></a>
+<span class="sourceLineNo">160</span>    public void list(CommandSender sender) {<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        PluginMessages messages = dac.getMessages();<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span>        sender.sendMessage(messages.get("joinstage.playerslist"));<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        for (PlayerRef player : players.keySet()) {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>            sender.sendMessage(messages.get("joinstage.playerentry", <a name="line.165"></a>
+<span class="sourceLineNo">166</span>                    player.getDisplayName()));<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        }<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    }<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>    @Override<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    public void onQuit(Player player) {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>        PlayerStartData data = players.remove(player);<a name="line.172"></a>
+<span class="sourceLineNo">173</span>        colorsTaken.remove(data.getColor().name);<a name="line.173"></a>
+<span class="sourceLineNo">174</span><a name="line.174"></a>
+<span class="sourceLineNo">175</span>        String message = dac.getMessages().get("joinstage.quit",<a name="line.175"></a>
+<span class="sourceLineNo">176</span>                data.getColor().chat + player.getDisplayName());<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        sendMessage(message);<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        player.sendMessage(message);<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    }<a name="line.179"></a>
+<span class="sourceLineNo">180</span>}<a name="line.180"></a>
 
 
 
