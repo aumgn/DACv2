@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="DACv2 : DAC Bukkit Plugin reloaded" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/stylesheet.css">
+
+    <title>DACv2</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/aumgn/DACv2">View on GitHub</a>
+
+        <a href="/">
+	   <h1 id="project_title">DACv2</h1>
+	</a>
+        <h2 id="project_tagline">DAC Bukkit Plugin reloaded</h2>
+
+        <section id="downloads">
+          <a class="zip_download_link" href="https://github.com/aumgn/DACv2/zipball/master">
+	    Download this project source as a .zip file
+	  </a>
+          <a class="tar_download_link" href="http://ln2.fr/dac">
+	    Download this project as a .jar plugin
+	  </a>
+        </section>
+      </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+	<h1>Lancer une partie</h1>
+
+<p>Il y a deux moyens de démarrer une partie. La méthode classique qui était celle de l'ancien plugin et la méthode "quickstart".</p>
+
+<h2>Démarrer une partie de manière classique :</h2>
+
+<p>Cette méthode contrairement à la seconde permet notamment au joueur de choisir la couleur de leur laine.
+Pour démarrer une partie avec cette méthode, il suffit de l'initier :</p>
+
+<pre><code>/dac init [-j[=&lt;couleur&gt;]] [arène]
+</code></pre>
+
+<p>Vous pouvez omettre l'arène dans laquelle vous voulez débuter la partie si vous vous trouvez dans sa zone de départ.</p>
+
+<p>Ensuite les joueurs désirant participer n'ont qu'à se placer dans la zone de départ et à s'enregistrer en utilisant la commande :</p>
+
+<pre><code>/dac join [couleur] ...
+</code></pre>
+
+<p>Le joueur peut préciser plusieurs couleurs. La première couleur disponible lui sera attribué.</p>
+
+<p>Une fois tous les joueurs enregistré, il n'y a plus qu'à démarrer la partie avec :</p>
+
+<pre><code>/dac start [mode de jeu]
+</code></pre>
+
+<p>Si le mode de jeu n'est pas précisé, la partie débutera en mode de jeu classique.
+Vous pouvez trouver la liste des modes de jeu sur la page <a href="/modes.html">Modes de jeu</a>.</p>
+
+<h2>Démarrer une partie de manière rapide :</h2>
+
+<p>Afin de démarrer une partie avec cette méthode, il n'y a qu'une commande à connaitre :</p>
+
+<pre><code>/dac quikstart [mode de jeu]
+</code></pre>
+
+<p>Cette commande débute la partie avec tout les joueurs se trouvant dans la zone de départ en leur assignant des couleurs automatiquement.
+Autrement son fonctionnement est exactement le même que celui de de "/dac start".</p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+	<div>
+          <p class="copyright">DACv2 créé & maintenu par <a href="https://github.com/aumgn">aumgn</a></p>
+          <p>Publié via <a href="http://pages.github.com">GitHub Pages</a></p>
+	</div>
+      </footer>
+    </div>
+
+  </body>
+
+</html>

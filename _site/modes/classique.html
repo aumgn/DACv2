@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="DACv2 : DAC Bukkit Plugin reloaded" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/stylesheet.css">
+
+    <title>DACv2</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/aumgn/DACv2">View on GitHub</a>
+
+        <a href="/">
+	   <h1 id="project_title">DACv2</h1>
+	</a>
+        <h2 id="project_tagline">DAC Bukkit Plugin reloaded</h2>
+
+        <section id="downloads">
+          <a class="zip_download_link" href="https://github.com/aumgn/DACv2/zipball/master">
+	    Download this project source as a .zip file
+	  </a>
+          <a class="tar_download_link" href="http://ln2.fr/dac">
+	    Download this project as a .jar plugin
+	  </a>
+        </section>
+      </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+	<h1>Mode de jeu classique</h1>
+
+<p>Le mode de jeu classique est le mode de jeu le plus connu, celui qui a popularisé le Dé à coudre.</p>
+
+<h2>Principe</h2>
+
+<p>Chaque joueur, à tour de rôle, saute. S'il manque son saut (en tombant sur une colonne de laine ou sur un bord du bassin) il est éliminé. La partie se déroule ainsi jusqu'à ce qu'il ne reste plus qu'un joueur qui est déclaré vainqueur.</p>
+
+<h2>Dé à coudre</h2>
+
+<p>Si un joueur réussit un saut entre quatre colonnes de laines (ce qu'on nomme "réussir un dé à coudre") il gagne une vie qui lui permet de manquer un saut sans en être éliminé. Les vies peuvent se cumuler indéfiniment.</p>
+
+<h2>Confirmation</h2>
+
+<p>Lorsque durant un tour les premiers joueurs manquent tous leur saut, le dernier joueur du tour n'est pas proclamer automatiquement vainqueur, il doit réaliser un saut de confirmation avant cela. S'il manque ce saut, tous les joueurs éliminés durant ce tour réintègrent la partie.</p>
+
+<h2>Bassin remplis (non implémenté !)</h2>
+
+<p>Si la partie dure suffisamment longtemps pour que le bassin soit entièrement remplis. Le gagnant est le joueur qui possède le plus de vie. Si plusieurs joueurs ont le nombre maximale de vie, le jeu passe alors en mode Mort subite. A chaque tour le bassin est remplis entièrement à l'exception d'une colonne. Le déroulement est ensuite similaire à une partie normale sans le décompte des vies.</p>
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+	<div>
+          <p class="copyright">DACv2 créé & maintenu par <a href="https://github.com/aumgn">aumgn</a></p>
+          <p>Publié via <a href="http://pages.github.com">GitHub Pages</a></p>
+	</div>
+      </footer>
+    </div>
+
+  </body>
+
+</html>
