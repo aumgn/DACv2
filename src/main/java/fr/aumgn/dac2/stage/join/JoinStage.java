@@ -48,9 +48,10 @@ public class JoinStage implements Stage, Listener, GameStartData {
     @Override
     public void start() {
         PluginMessages messages = dac.getMessages();
-        Util.broadcast("dac2.game.watch", 
+        Util.broadcast("dac2.spectator.watch", 
                 messages.get("joinstage.start1", arena.getName()));
-        Util.broadcast("dac2.game.watch", messages.get("joinstage.start2"));
+        Util.broadcast("dac2.spectator.watch",
+                messages.get("joinstage.start2"));
     }
 
     @Override
