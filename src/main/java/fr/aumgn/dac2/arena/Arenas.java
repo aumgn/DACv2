@@ -15,6 +15,7 @@ import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.DACPlugin;
+import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.exceptions.ArenaDeleteException;
 import fr.aumgn.dac2.exceptions.ArenaSaveException;
 import fr.aumgn.dac2.exceptions.ArenasFolderException;
@@ -118,7 +119,8 @@ public class Arenas {
     public Arena get(Player player) {
         Vector pt = new Vector(player);
         for (Arena arena : arenas.values()) {
-            if (arena.getStartRegion().contains(pt)) {
+            StartRegion startRegion = arena.getStartRegion();
+            if (startRegion != null && startRegion.contains(pt)) {
                 return arena;
             }
         }
