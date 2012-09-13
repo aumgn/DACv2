@@ -3,12 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.aumgn</groupId>
 	<artifactId>dac2</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.8.0</version>
 	<name>DACv2</name>
 	<url>http://github.com/aumgn/DACv2</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.skip>true</maven.test.skip>
 		<BUILD_NUMBER>Custom</BUILD_NUMBER>
 	</properties>
 
@@ -47,22 +48,22 @@
 	</dependencies>
 
 	<build>
+
 		<defaultGoal>clean install</defaultGoal>
-		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 		<finalName>${project.name}-${project.version}</finalName>
 
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>
 				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources</directory>
+				<directory>src/main/resources</directory>
 				<includes>
 					<include>plugin.yml</include>
 				</includes>
 			</resource>
 			<resource>
 				<targetPath>fr/aumgn/dac2</targetPath>
-				<directory>${basedir}/src/main/resources/</directory>
+				<directory>src/main/resources/</directory>
 				<includes>
 					<include>*.properties</include>
 				</includes>
@@ -70,7 +71,7 @@
 			<resource>
 				<targetPath>.</targetPath>
 				<filtering>false</filtering>
-				<directory>${basedir}</directory>
+				<directory>.</directory>
 				<includes>
 					<include>LICENSE</include>
 				</includes>
