@@ -5,11 +5,22 @@ title: Title
 
 ## Description
 
-DACv2, est un plugin pour le jeu Minecraft francais du dé a coudre. Il permet de rendre les parties plus funs, en enlevant tous ce qui les rends moins fluides, comme placer les colonnes de laines, monter en haut du plongeoir ou encore vider le bassin à la fin.
+DACv2, est un plugin pour le jeu Minecraft francais du dé a coudre. Il permet
+de rendre les parties plus funs, en enlevant tous ce qui les rends moins fluides,
+comme placer les colonnes de laines,
+monter en haut du plongeoir ou encore vider le bassin à la fin.
 
-Ce plugin est une réécriture complète de la première version (logiquement appelé DAC). Les dernières versions et quelques mauvais choix de design avait amenés à un code peu clair et bug-prone.
+Ce plugin est une réécriture complète de la première version (logiquement
+appelé DAC). Les dernières versions et quelques mauvais choix de design avait
+amenés à un code peu clair et bug-prone.
 
 ## Téléchargement
+
+La toute dernière version stable est toujours disponible via ce raccourci
+ [http://ln2.fr/dac](http://ln2.fr/dac).
+
+La version standalone correspondante est disponible via
+[http://ln2.fr/dacs](http://ln2.fr/dacs).
 
 Vous pourrez trouver les diffèrentes versions du plugin en suivant ce
 [lien](http://maven.aumgn.fr/fr/aumgn/dac2/).
@@ -36,7 +47,8 @@ mentionner l'auteur original.
 
 ### Sources
 
-Les sources peuvent être trouvé sur [github](https://github.com/aumgn/DACv2).
+Les sources peuvent être trouvé sur
+[github](https://github.com/aumgn/DACv2).
 
 ### Documentation
 
@@ -46,7 +58,9 @@ des sources.
 
 ### Contributions
 
-Les contributions sont bien entendu acceptées et même appreciées. Une pull request avec une description succinte des changements est plus que suffisante.
+Les contributions sont bien entendu acceptées et même appreciées.
+Une pull request avec une description succinte des changements est
+plus que suffisante.
 
 Le code suit a peu de détails près les conventions Oracle.
 Quelques petits points à noter :
@@ -55,3 +69,9 @@ Quelques petits points à noter :
 * Pas de nouvelle ligne en fin de classe.
 * Une nouvelle ligne à la fin du fichier.
 * Pas de commentaires ou de javadocs superflus.
+
+### BukkitUtils
+
+Ce plugin repose sur une librarie créer pour faciliter le développement
+de plugin Bukkit. Vous pourrez trouver plus d'information la concernant ici :
+[BukkitUtils](http://bukkitutils.aumgn.fr).
