@@ -25,9 +25,9 @@ import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.worldedit.WEShapeUtils;
 
 @NestedCommands({"dac2", "setwe"})
-public class SetupWECommands extends WorldEditCommands {
+public class SetWECommands extends WorldEditCommands {
 
-    public SetupWECommands(DAC dac) {
+    public SetWECommands(DAC dac) {
         super(dac);
     }
 

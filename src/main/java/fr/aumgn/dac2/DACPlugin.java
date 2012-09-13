@@ -16,12 +16,13 @@ import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
 import fr.aumgn.dac2.commands.FillCommands;
 import fr.aumgn.dac2.commands.InfoCommands;
-import fr.aumgn.dac2.commands.SetupCommands;
+import fr.aumgn.dac2.commands.PlayerCommands;
+import fr.aumgn.dac2.commands.SetCommands;
 import fr.aumgn.dac2.commands.SpectatorCommands;
 import fr.aumgn.dac2.commands.StageCommands;
 import fr.aumgn.dac2.commands.worldedit.DisabledWorldEditCommands;
 import fr.aumgn.dac2.commands.worldedit.SelectCommands;
-import fr.aumgn.dac2.commands.worldedit.SetupWECommands;
+import fr.aumgn.dac2.commands.worldedit.SetWECommands;
 import fr.aumgn.dac2.config.DACConfig;
 
 public class DACPlugin extends JavaPlugin {
@@ -38,15 +39,16 @@ public class DACPlugin extends JavaPlugin {
                 this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));
         registration.register(new ArenasCommands(dac));
-        registration.register(new SetupCommands(dac));
+        registration.register(new SetCommands(dac));
         if (isWorldEditEnabled()) {
-            registration.register(new SetupWECommands(dac));
+            registration.register(new SetWECommands(dac));
             registration.register(new SelectCommands(dac));
         } else {
             registration.register(new DisabledWorldEditCommands(dac));
         }
         registration.register(new StageCommands(dac));
         registration.register(new FillCommands(dac));
+        registration.register(new PlayerCommands(dac));
         registration.register(new SpectatorCommands(dac));
         registration.register(new InfoCommands(dac));
 

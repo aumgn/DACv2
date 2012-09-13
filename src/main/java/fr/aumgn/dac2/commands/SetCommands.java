@@ -20,12 +20,12 @@ import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.ShapeFactory;
 
 @NestedCommands({"dac2", "set"})
-public class SetupCommands extends DACCommands {
+public class SetCommands extends DACCommands {
 
     private static final int DEFAULT_RADIUS = 5;
     private static final int DEFAULT_HEIGHT = 3;
 
-    public SetupCommands(DAC dac) {
+    public SetCommands(DAC dac) {
         super(dac);
     }
 

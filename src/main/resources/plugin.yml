@@ -43,49 +43,49 @@ commands:
         usage: "<arena>"
         permission: "dac2.arenas.tparena"
 
-    # Setup Commands
+    # Set Commands
     "dac2 set":
         description: "Set main commands"
         usage: "<diving|pool|start|surrounding> <arena>"
     "dac2 set diving":
         description: "Define the diving of the given arena."
         usage: "<arena> [-p=<player>]"
-        permission: "dac2.setup.diving"
+        permission: "dac2.set.diving"
         aliases: ["dac2 set d"]
     "dac2 set pool":
         description: "Define the pool of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=arbitrary)] [radius] [height]"
-        permission: "dac2.setup.pool"
+        permission: "dac2.set.pool"
         aliases: ["dac2 setp"]
     "dac2 set start":
         description: "Define the start region of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
-        permission: "dac2.setup.start"
+        permission: "dac2.set.start"
         aliases: ["dac2 sets"]
     "dac2 set surrounding":
         description: "Define the surrounding region of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
-        permission: "dac2.setup.surrounding"
+        permission: "dac2.set.surrounding"
         aliases: ["dac2 setsu"]
 
-    # WorlEdit Setup Commands
+    # WorlEdit Set Commands
     "dac2 setwe":
         description: "WorldEdit set main command"
         usage: "<pool|start|surrounding> <arena>"
     "dac2 setwe pool":
         description: "Define the pool of the given arena."
         usage: "<arena>"
-        permission: "dac2.setup.we.pool"
+        permission: "dac2.set.we.pool"
         aliases: ["dac2 setwp"]
     "dac2 setwe start":
         description: "Define the start region of the given arena."
         usage: "<arena>"
-        permission: "dac2.setup.we.start"
+        permission: "dac2.set.we.start"
         aliases: ["dac2 setws"]
     "dac2 setwe surrounding":
         description: "Define the surrounding region of the given arena."
         usage: "<arena>"
-        permission: "dac2.setup.we.surrouding"
+        permission: "dac2.set.we.surrouding"
         aliases: ["dac2 setwsu"]
 
     # Select Commands
@@ -109,40 +109,30 @@ commands:
         permission: "dac2.arenas.select.surrounding"
         aliases: ["dac2 sel su"]
 
-    # Stages Commands
+    # Stage Commands
     "dac2 initialize":
         description: "Initialize a new game in the given arena."
         usage: "[arena]"
-        permission: "dac2.stages.init"
+        permission: "dac2.stage.init"
         aliases: ["dac2 init"]
-    "dac2 join":
-        description: "Join a game."
-        usage: "[-a=<arena>]  [colors...]"
-        permission: "dac2.stages.join"
-        aliases: ["dac2 j"]
     "dac2 stop":
         description: "Stop a game."
         usage: "[arena]"
-        permission: "dac2.stages.stop"
+        permission: "dac2.stage.stop"
     "dac2 start":
         description: "Start the game."
         usage: "[-a=arena] [gamemode]"
-        permission: "dac2.stages.start"
+        permission: "dac2.stage.start"
         aliases: ["dac2 s"]
     "dac2 quickstart":
         description: "Start the game skipping the join stage."
         usage: "[-a=arena] [gamemode]"
-        permission: "dac2.stages.quickstart"
+        permission: "dac2.stage.quickstart"
         aliases: ["dac2 qs"]
     "dac2 kick":
         description: "Kick a player."
         usage: "<player>"
-        permission: "dac2.stages.kick"
-    "dac2 quit":
-        description: "Quit the stage."
-        usage: ""
-        permission: "dac2.stages.quit"
-        aliases: ["dac2 q"]
+        permission: "dac2.stage.kick"
 
     # Fill Commands
     "dac2 fill":
@@ -174,7 +164,19 @@ commands:
         permission: "dac2.fill.allbutone"
         aliases: ["dac2 fill abo", "dac2 filla"]
 
-    # Spectators Commands
+    # Player Commands
+    "dac2 join":
+        description: "Join a game."
+        usage: "[-a=<arena>]  [colors...]"
+        permission: "dac2.player.join"
+        aliases: ["dac2 j"]
+    "dac2 quit":
+        description: "Quit the stage."
+        usage: ""
+        permission: "dac2.player.quit"
+        aliases: ["dac2 q"]
+
+    # Spectator Commands
     "dac2 watch":
         description: "Register as a spectator."
         usage: "[arena,...]"
@@ -197,76 +199,112 @@ commands:
         permission: "dac2.info.colors"
 
 permissions:
+
+    # Basic permissions setup
     "dac2.*":
-        default: op
         children:
-            - dac2.admin: true
-            - dac2.arenas: true
-            - dac2.setup: true
-            - dac2.select: true
-            - dac2.stages: true
-            - dac2.fill: true
-            - dac2.spectators: true
+            dac2.admin: true
+            dac2.arenas: true
+            dac2.setup: true
+            dac2.select: true
+            dac2.stages: true
+            dac2.fill: true
+            dac2.spectators: true
 
     dac2.admin:
         children:
-            - dac2.admin.version: true
-            - dac2.admin.reload: true
+            dac2.admin.version: true
+            dac2.admin.reload: true
 
     dac2.arenas:
         children:
-            - dac2.arenas.define: true
-            - dac2.arenas.delete: true
-            - dac2.arenas.arenas: true
-            - dac2.arenas.tparena: true
+            dac2.arenas.define: true
+            dac2.arenas.delete: true
+            dac2.arenas.arenas: true
+            dac2.arenas.tparena: true
 
-    dac2.setup:
+    dac2.set:
         children:
-            - dac2.setup.diving: true
-            - dac2.setup.pool: true
-            - dac2.setup.start: true
-            - dac2.setup.surrounding: true
-            - dac2.setup.we: true
+            dac2.set.diving: true
+            dac2.set.pool: true
+            dac2.set.start: true
+            dac2.set.surrounding: true
+            dac2.set.we: true
 
-    dac2.setup.we:
+    dac2.set.we:
         children:
-            - dac2.setup.we.pool: true
-            - dac2.setup.we.start: true
-            - dac2.setup.we.surrouding: true
+            dac2.set.we.pool: true
+            dac2.set.we.start: true
+            dac2.set.we.surrouding: true
 
     dac2.select:
         children:
-            - dac2.arenas.select.pool: true
-            - dac2.arenas.select.start: true
-            - dac2.arenas.select.surrounding: true
+            dac2.arenas.select.pool: true
+            dac2.arenas.select.start: true
+            dac2.arenas.select.surrounding: true
 
-    dac2.stages:
+    dac2.stage:
         children:
-            - dac2.stages.init: true
-            - dac2.stages.init.arena: true
-            - dac2.stages.join: true
-            - dac2.stages.join.arena: true
-            - dac2.stages.stop: true
-            - dac2.stages.stop.others: true
-            - dac2.stages.start: true
-            - dac2.stages.start.others: true
-            - dac2.stages.quickstart: true
-            - dac2.stages.quickstart.arena: true
+            dac2.stage.init: true
+            dac2.stage.init.arena: true
+            dac2.stage.stop: true
+            dac2.stage.stop.others: true
+            dac2.stage.start: true
+            dac2.stage.start.others: true
+            dac2.stage.quickstart: true
+            dac2.stage.quickstart.arena: true
+            dac2.stage.kick: true
+            dac2.stage.join.arena: true
 
     dac2.fill:
         children:
-            - dac2.fill.reset: true
-            - dac2.fill.fully: true
-            - dac2.fill.randomly: true
-            - dac2.fill.dac: true
-            - dac2.fill.allbutone: true
+            dac2.fill.reset: true
+            dac2.fill.fully: true
+            dac2.fill.randomly: true
+            dac2.fill.dac: true
+            dac2.fill.allbutone: true
 
-    dac2.spectators:
+    dac2.player:
         children:
-            - dac2.spectators.watch: true
-            - dac2.spectators.unwatch: true
+            dac2.player.join: true
+            dac2.player.quit: true
+
+    dac2.spectator:
+        children:
+            dac2.spectator.watch: true
+            dac2.spectator.unwatch: true
 
     dac2.info:
         children:
-            - dac2.info.list: true
-            - dac2.info.colors: true
+            dac2.info.list: true
+            dac2.info.colors: true
+
+    # Default permissions
+    dac2.setup:
+        default: op
+        children:
+            dac2.admin: true
+            dac2.arenas: true
+            dac2.set: true
+            dac2.set.we: true
+            dac2.select: true
+
+    dac2.manage:
+        default: op
+        children:
+            dac2.stage: true
+            dac2.fill: true
+
+    dac2.play:
+        default: true
+        children:
+            dac2.stage.init: true
+            dac2.stage.start: true
+            dac2.stage.quickstart: true
+            dac2.player: true
+
+    dac2.watch:
+        default: true
+        children:
+            dac2.spectator: true
+            dac2.info: true
