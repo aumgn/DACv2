@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.aumgn</groupId>
 	<artifactId>dac2</artifactId>
-	<version>0.8.0</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>DACv2</name>
 	<url>http://github.com/aumgn/DACv2</url>
 
