@@ -71,7 +71,7 @@ public class ClassicGame extends AbstractGame {
         send("game.start");
         send("game.playerslist");
         for (ClassicGamePlayer player : party.iterable()) {
-            send("game.playerentry", player.getIndex() + 1, player.getDisplayName());
+            send("game.start.playerentry", player.getIndex() + 1, player.getDisplayName());
         }
         send("game.enjoy");
 
@@ -300,7 +300,7 @@ public class ClassicGame extends AbstractGame {
         sender.sendMessage(messages.get("game.playerslist"));
         for (ClassicGamePlayer player : party.iterable()) {
             sender.sendMessage(messages.get("game.playerentry", 
-                    player.getDisplayName(), player.getIndex(), 
+                    player.getIndex(), player.getDisplayName(), 
                     player.getLives()));
         }
     }

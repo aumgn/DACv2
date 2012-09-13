@@ -75,7 +75,7 @@ public class Colonnisation extends AbstractGame {
         send("colonnisation.start");
         send("colonnisation.playerslist");
         for (ColonnPlayer player : party.iterable()) {
-            send("colonnisation.playerentry", player.getIndex() + 1,
+            send("colonnisation.start.playerentry", player.getIndex() + 1,
                     player.getDisplayName());
         }
         send("colonnisation.setup.turns", setupTurns);
@@ -251,7 +251,7 @@ public class Colonnisation extends AbstractGame {
         sender.sendMessage(messages.get("colonnisation.playerslist"));
         for (ColonnPlayer player : party.iterable()) {
             sender.sendMessage(messages.get("colonnisation.playerentry", 
-                    player.getDisplayName(), player.getIndex(),
+                    player.getIndex(), player.getDisplayName(),
                     player.getScore()));
         }
     }

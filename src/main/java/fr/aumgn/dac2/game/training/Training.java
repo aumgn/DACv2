@@ -140,8 +140,9 @@ public class Training extends AbstractGame {
         sender.sendMessage(messages.get("training.playerslist"));
         for (TrainingPlayer player : party.iterable()) {
             sender.sendMessage(messages.get("training.playerentry", 
-                    player.getDisplayName(), player.getIndex(), player.getSuccesses(),
-                    player.getDacs(), player.getFails()));
+                    player.getIndex(), player.getDisplayName(),
+                    player.getSuccesses(), player.getDacs(),
+                    player.getFails()));
         }
     }
 }
