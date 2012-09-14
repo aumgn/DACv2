@@ -15,30 +15,36 @@ commands:
 
     # Admin Commands
     "dac2 version":
+        category: "Admin"
         description: "Show current version."
         usage: ""
         permission: "dac2.admin.version"
     "dac2 reload":
+        category: "Admin"
         description: "Reload all data (config, messages, ...)"
         usage: ""
         permission: "dac2.admin.reload"
 
     # Arenas Commands
     "dac2 define":
+        category: "Arena"
         description: "Create an arena with the given name and world."
         usage: "<name> [world]"
         permission: "dac2.arenas.define"
         aliases: ["dac2 def"]
     "dac2 delete":
+        category: "Arena"
         description: "Remove given arena."
         usage: "<arena>"
         permission: "dac2.arenas.delete"
         aliases: ["dac2 del", "dac2 remove", "dac2 rm"]
     "dac2 arenas":
+        category: "Arena"
         description: "List all arenas."
         usage: ""
         permission: "dac.arenas.arenas"
     "dac2 tparena":
+        category: "Arena"
         description: "Teleport to the given arena's diving board."
         usage: "<arena>"
         permission: "dac2.arenas.tparena"
@@ -48,21 +54,25 @@ commands:
         description: "Set main commands"
         usage: "<diving|pool|start|surrounding> <arena>"
     "dac2 set diving":
+        category: "Set"
         description: "Define the diving of the given arena."
         usage: "<arena> [-p=<player>]"
         permission: "dac2.set.diving"
         aliases: ["dac2 set d"]
     "dac2 set pool":
+        category: "Set"
         description: "Define the pool of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=arbitrary)] [radius] [height]"
         permission: "dac2.set.pool"
         aliases: ["dac2 setp"]
     "dac2 set start":
+        category: "Set"
         description: "Define the start region of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
         permission: "dac2.set.start"
         aliases: ["dac2 sets"]
     "dac2 set surrounding":
+        category: "Set"
         description: "Define the surrounding region of the given arena."
         usage: "<arena> [-p=<player>] [-s=shape(default=cuboid)] [radius] [height]"
         permission: "dac2.set.surrounding"
@@ -73,16 +83,19 @@ commands:
         description: "WorldEdit set main command"
         usage: "<pool|start|surrounding> <arena>"
     "dac2 setwe pool":
+        category: ["WorldEdit", "Set"]
         description: "Define the pool of the given arena."
         usage: "<arena>"
         permission: "dac2.set.we.pool"
         aliases: ["dac2 setwp"]
     "dac2 setwe start":
+        category: ["WorldEdit", "Set"]
         description: "Define the start region of the given arena."
         usage: "<arena>"
         permission: "dac2.set.we.start"
         aliases: ["dac2 setws"]
     "dac2 setwe surrounding":
+        category: ["WorldEdit", "Set"]
         description: "Define the surrounding region of the given arena."
         usage: "<arena>"
         permission: "dac2.set.we.surrouding"
@@ -94,16 +107,19 @@ commands:
         usage: "<pool|start|surrounding> <arena>"
         aliases: ["dac2 sel"]
     "dac2 select pool":
+        category: ["WorldEdit", "Select"]
         description: "Select the pool of the given arena."
         usage: "[-s=<selector>] <arena>"
         permission: "dac2.arenas.select.pool"
         aliases: ["dac2 sel p"]
     "dac2 select start":
+        category: ["WorldEdit", "Select"]
         description: "Select the start region of the given arena."
         usage: "[-s=<selector>] <arena>"
         permission: "dac2.arenas.select.start"
         aliases: ["dac2 sel s"]
     "dac2 select surrounding":
+        category: ["WorldEdit", "Select"]
         description: "Select the surrounding region of the given arena."
         usage: "[-s=<selector>] <arena>"
         permission: "dac2.arenas.select.surrounding"
@@ -111,54 +127,65 @@ commands:
 
     # Stage Commands
     "dac2 initialize":
+        category: "Stage"
         description: "Initialize a new game in the given arena."
         usage: "[arena]"
         permission: "dac2.stage.init"
         aliases: ["dac2 init"]
     "dac2 stop":
+        category: "Stage"
         description: "Stop a game."
         usage: "[arena]"
         permission: "dac2.stage.stop"
     "dac2 start":
+        category: "Stage"
         description: "Start the game."
         usage: "[-a=arena] [gamemode]"
         permission: "dac2.stage.start"
         aliases: ["dac2 s"]
     "dac2 quickstart":
+        category: "Stage"
         description: "Start the game skipping the join stage."
         usage: "[-a=arena] [gamemode]"
         permission: "dac2.stage.quickstart"
         aliases: ["dac2 qs"]
     "dac2 kick":
+        category: "Stage"
         description: "Kick a player."
         usage: "<player>"
         permission: "dac2.stage.kick"
 
     # Fill Commands
     "dac2 fill":
+        category: "Fill"
         description: "Fill main command."
         usage: "<fully|randomly|dac|allbutone>"
     "dac2 fill reset":
+        category: "Fill"
         description: "Reset the given arena's pool."
         usage: "<arena>"
         permission: "dac2.fill.reset"
         aliases: ["dac2 reset"]
     "dac2 fill fully":
+        category: "Fill"
         description: "Fill the pool"
         usage: "<colors>..."
         permission: "dac2.fill.fully"
         aliases: ["dac2 fill f", "dac2 fillf"]
     "dac2 fill randomly":
+        category: "Fill"
         description: "Fill the pool randomly."
         usage: "[-p=percentage(default=50)] <colors>..."
         permission: "dac2.fill.randomly"
         aliases: ["dac2 fill rand", "dac2 fillr"]
     "dac2 fill dac":
+        category: "Fill"
         description: "Fill the pool with `Dés à coudre`."
         usage: "[-p=percentage(default=50)] <colors>..."
         permission: "dac2.fill.dac"
         aliases: ["dac2 filld"]
     "dac2 fill allbutone":
+        category: "Fill"
         description: "Fill the pool except for one column."
         usage: "[-p=percentage(default=50)] <colors>..."
         permission: "dac2.fill.allbutone"
@@ -166,11 +193,13 @@ commands:
 
     # Player Commands
     "dac2 join":
+        category: "Player"
         description: "Join a game."
         usage: "[-a=<arena>]  [colors...]"
         permission: "dac2.player.join"
         aliases: ["dac2 j"]
     "dac2 quit":
+        category: "Player"
         description: "Quit the stage."
         usage: ""
         permission: "dac2.player.quit"
@@ -178,22 +207,26 @@ commands:
 
     # Spectator Commands
     "dac2 watch":
+        category: "Spectator"
         description: "Register as a spectator."
         usage: "[arena,...]"
         permission: "dac2.spectator.watch"
         aliases: ["dac2 w"]
     "dac2 unwatch":
+        category: "Spectator"
         description: "Unregister as a spectator."
         usage: "[arena,...]"
         permission: "dac2.spectator.unwatch"
 
     # Info Commands
     "dac2 list":
+        category: "Informations"
         description: "Show players list and stats."
         usage: "[arena]"
         permission: "dac2.info.list"
         aliases: ["dac2 ls"]
     "dac2 colors":
+        category: "Informations"
         description: "Show all available colors."
         usage: ""
         permission: "dac2.info.colors"
