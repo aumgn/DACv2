@@ -83,7 +83,7 @@
 <span class="sourceLineNo">075</span>        send("colonnisation.start");<a name="line.75"></a>
 <span class="sourceLineNo">076</span>        send("colonnisation.playerslist");<a name="line.76"></a>
 <span class="sourceLineNo">077</span>        for (ColonnPlayer player : party.iterable()) {<a name="line.77"></a>
-<span class="sourceLineNo">078</span>            send("colonnisation.playerentry", player.getIndex() + 1,<a name="line.78"></a>
+<span class="sourceLineNo">078</span>            send("colonnisation.start.playerentry", player.getIndex() + 1,<a name="line.78"></a>
 <span class="sourceLineNo">079</span>                    player.getDisplayName());<a name="line.79"></a>
 <span class="sourceLineNo">080</span>        }<a name="line.80"></a>
 <span class="sourceLineNo">081</span>        send("colonnisation.setup.turns", setupTurns);<a name="line.81"></a>
@@ -259,7 +259,7 @@
 <span class="sourceLineNo">251</span>        sender.sendMessage(messages.get("colonnisation.playerslist"));<a name="line.251"></a>
 <span class="sourceLineNo">252</span>        for (ColonnPlayer player : party.iterable()) {<a name="line.252"></a>
 <span class="sourceLineNo">253</span>            sender.sendMessage(messages.get("colonnisation.playerentry", <a name="line.253"></a>
-<span class="sourceLineNo">254</span>                    player.getDisplayName(), player.getIndex(),<a name="line.254"></a>
+<span class="sourceLineNo">254</span>                    player.getIndex(), player.getDisplayName(),<a name="line.254"></a>
 <span class="sourceLineNo">255</span>                    player.getScore()));<a name="line.255"></a>
 <span class="sourceLineNo">256</span>        }<a name="line.256"></a>
 <span class="sourceLineNo">257</span>    }<a name="line.257"></a>
