@@ -53,8 +53,9 @@ Les sources peuvent être trouvé sur
 ### Documentation
 
 La documentation (javadoc) du plugin est disponible [ici](/apidocs).
-Notez, qu'elle n'est peut être pas à jour avec la dernière version
-des sources.
+Elle correspond à la dernière version stable du public (non SNAPSHOT).
+La documentation correspondante à la dernière version SNAPSHOT peut
+être trouvé [ici](/apidocs-dev)
 
 ### Contributions
 
