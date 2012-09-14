@@ -1,0 +1,769 @@
+---
+layout: layout
+---
+<h1>Commands</h1>
+
+<p>
+  Note : All these commands are available with the shorter
+  form "/dac &lt;subcommand&gt;" too.
+</p>
+
+
+
+  <h2>Admin</h2>
+
+  <table class="category admin">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 version
+            
+	  </td>
+          <td class="permission">dac2.admin.version</td>
+          <td class="usage">/dac2 version </td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Show current version.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 reload
+            
+	  </td>
+          <td class="permission">dac2.admin.reload</td>
+          <td class="usage">/dac2 reload </td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Reload all data (config, messages, ...)
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Arena</h2>
+
+  <table class="category arena">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 define
+            
+              
+                <p>dac2 def</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.arenas.define</td>
+          <td class="usage">/dac2 define &lt;name&gt; [world]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Create an arena with the given name and world.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 delete
+            
+              
+                <p>dac2 del</p>
+              
+                <p>dac2 remove</p>
+              
+                <p>dac2 rm</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.arenas.delete</td>
+          <td class="usage">/dac2 delete &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Remove given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 arenas
+            
+	  </td>
+          <td class="permission">dac.arenas.arenas</td>
+          <td class="usage">/dac2 arenas </td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    List all arenas.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 tparena
+            
+	  </td>
+          <td class="permission">dac2.arenas.tparena</td>
+          <td class="usage">/dac2 tparena &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Teleport to the given arena's diving board.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Set</h2>
+
+  <table class="category set">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 set diving
+            
+              
+                <p>dac2 set d</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.diving</td>
+          <td class="usage">/dac2 set diving &lt;arena&gt; [-p=&lt;player&gt;]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the diving of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 set pool
+            
+              
+                <p>dac2 setp</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.pool</td>
+          <td class="usage">/dac2 set pool &lt;arena&gt; [-p=&lt;player&gt;] [-s=shape(default=arbitrary)] [radius] [height]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the pool of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 set start
+            
+              
+                <p>dac2 sets</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.start</td>
+          <td class="usage">/dac2 set start &lt;arena&gt; [-p=&lt;player&gt;] [-s=shape(default=cuboid)] [radius] [height]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the start region of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 set surrounding
+            
+              
+                <p>dac2 setsu</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.surrounding</td>
+          <td class="usage">/dac2 set surrounding &lt;arena&gt; [-p=&lt;player&gt;] [-s=shape(default=cuboid)] [radius] [height]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the surrounding region of the given arena.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>WorldEdit Set</h2>
+
+  <table class="category worldedit-set">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 setwe pool
+            
+              
+                <p>dac2 setwp</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.we.pool</td>
+          <td class="usage">/dac2 setwe pool &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the pool of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 setwe start
+            
+              
+                <p>dac2 setws</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.we.start</td>
+          <td class="usage">/dac2 setwe start &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the start region of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 setwe surrounding
+            
+              
+                <p>dac2 setwsu</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.set.we.surrouding</td>
+          <td class="usage">/dac2 setwe surrounding &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Define the surrounding region of the given arena.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>WorldEdit Select</h2>
+
+  <table class="category worldedit-select">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 select pool
+            
+              
+                <p>dac2 sel p</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.arenas.select.pool</td>
+          <td class="usage">/dac2 select pool [-s=&lt;selector&gt;] &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Select the pool of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 select start
+            
+              
+                <p>dac2 sel s</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.arenas.select.start</td>
+          <td class="usage">/dac2 select start [-s=&lt;selector&gt;] &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Select the start region of the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 select surrounding
+            
+              
+                <p>dac2 sel su</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.arenas.select.surrounding</td>
+          <td class="usage">/dac2 select surrounding [-s=&lt;selector&gt;] &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Select the surrounding region of the given arena.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Stage</h2>
+
+  <table class="category stage">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 initialize
+            
+              
+                <p>dac2 init</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.stage.init</td>
+          <td class="usage">/dac2 initialize [arena]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Initialize a new game in the given arena.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 stop
+            
+	  </td>
+          <td class="permission">dac2.stage.stop</td>
+          <td class="usage">/dac2 stop [arena]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Stop a game.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 start
+            
+              
+                <p>dac2 s</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.stage.start</td>
+          <td class="usage">/dac2 start [-a=arena] [gamemode]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Start the game.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 quickstart
+            
+              
+                <p>dac2 qs</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.stage.quickstart</td>
+          <td class="usage">/dac2 quickstart [-a=arena] [gamemode]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Start the game skipping the join stage.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 kick
+            
+	  </td>
+          <td class="permission">dac2.stage.kick</td>
+          <td class="usage">/dac2 kick &lt;player&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Kick a player.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Fill</h2>
+
+  <table class="category fill">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 fill
+            
+	  </td>
+          <td class="permission"></td>
+          <td class="usage">/dac2 fill &lt;fully|randomly|dac|allbutone&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Fill main command.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 fill reset
+            
+              
+                <p>dac2 reset</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.fill.reset</td>
+          <td class="usage">/dac2 fill reset &lt;arena&gt;</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Reset the given arena's pool.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 fill fully
+            
+              
+                <p>dac2 fill f</p>
+              
+                <p>dac2 fillf</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.fill.fully</td>
+          <td class="usage">/dac2 fill fully &lt;colors&gt;...</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Fill the pool
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 fill randomly
+            
+              
+                <p>dac2 fill rand</p>
+              
+                <p>dac2 fillr</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.fill.randomly</td>
+          <td class="usage">/dac2 fill randomly [-p=percentage(default=50)] &lt;colors&gt;...</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Fill the pool randomly.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 fill dac
+            
+              
+                <p>dac2 filld</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.fill.dac</td>
+          <td class="usage">/dac2 fill dac [-p=percentage(default=50)] &lt;colors&gt;...</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Fill the pool with `Dés à coudre`.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 fill allbutone
+            
+              
+                <p>dac2 fill abo</p>
+              
+                <p>dac2 filla</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.fill.allbutone</td>
+          <td class="usage">/dac2 fill allbutone [-p=percentage(default=50)] &lt;colors&gt;...</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Fill the pool except for one column.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Player</h2>
+
+  <table class="category player">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 join
+            
+              
+                <p>dac2 j</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.player.join</td>
+          <td class="usage">/dac2 join [-a=&lt;arena&gt;]  [colors...]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Join a game.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 quit
+            
+              
+                <p>dac2 q</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.player.quit</td>
+          <td class="usage">/dac2 quit </td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Quit the stage.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Spectator</h2>
+
+  <table class="category spectator">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 watch
+            
+              
+                <p>dac2 w</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.spectator.watch</td>
+          <td class="usage">/dac2 watch [arena,...]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Register as a spectator.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 unwatch
+            
+	  </td>
+          <td class="permission">dac2.spectator.unwatch</td>
+          <td class="usage">/dac2 unwatch [arena,...]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Unregister as a spectator.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+
+
+  <h2>Informations</h2>
+
+  <table class="category informations">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 list
+            
+              
+                <p>dac2 ls</p>
+              
+            
+	  </td>
+          <td class="permission">dac2.info.list</td>
+          <td class="usage">/dac2 list [arena]</td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Show players list and stats.
+	  </td>
+        </tr>
+      
+        <tr class="command">
+          <td class="name">
+	    dac2 colors
+            
+	  </td>
+          <td class="permission">dac2.info.colors</td>
+          <td class="usage">/dac2 colors </td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    Show all available colors.
+	  </td>
+        </tr>
+      
+    </tbody>
+
+  </table>
+

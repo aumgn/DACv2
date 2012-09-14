@@ -272,7 +272,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 640px;
+  max-width: 940px;
   padding: 20px 10px;
   margin: 0 auto;
 }
@@ -378,58 +378,33 @@ Full-Width Styles
   float: right;
 }
 
+table.category {
+    width: 100%;
+}
 
+table.category .name {
+    width: 20%;
+}
 
-/*******************************************************************************
-Small Device Styles
-*******************************************************************************/
+table.category .permission {
+    width: 20%;
+}
 
-@media screen and (max-width: 480px) {
-  body {
-    font-size:14px;
-  }
+table.category .usage {
+    width: 60%;
+}
 
-  #downloads {
-    display: none;
-  }
+table.category td.name {
+    border-left: 2px solid;
+}
 
-  .inner {
-    min-width: 320px;
-    max-width: 480px;
-  }
+table.category td.usage {
+    border-right: 2px solid;
+}
 
-  #project_title {
-  font-size: 32px;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  h2 {
-    font-size: 24px;
-  }
-
-  h3 {
-    font-size: 21px;
-  }
-
-  h4 {
-    font-size: 18px;
-  }
-
-  h5 {
-    font-size: 14px;
-  }
-
-  h6 {
-    font-size: 12px;
-  }
-
-  code, pre {
-    min-width: 320px;
-    max-width: 480px;
-    font-size: 11px;
-  }
-
+table.category td.description {
+    border-left: 2px solid; 
+    border-right: 2px solid;
+    border-bottom: 2px solid;
+    background-color: rgb(249, 249, 249);
 }

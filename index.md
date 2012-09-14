@@ -37,6 +37,10 @@ Vous pourrez trouver les diffèrentes versions du plugin en suivant ce
 * [Lancer une partie](/partie.html)
 * [Modes de jeu](/modes.html)
 
+### Reference
+
+* [Commandes (en anglais)](/commands.html)
+
 ## Développeur
 
 ### License
@@ -53,8 +57,9 @@ Les sources peuvent être trouvé sur
 ### Documentation
 
 La documentation (javadoc) du plugin est disponible [ici](/apidocs).
-Notez, qu'elle n'est peut être pas à jour avec la dernière version
-des sources.
+Elle correspond à la dernière version stable du plugin (non SNAPSHOT).
+La documentation correspondante à la dernière version SNAPSHOT peut
+être trouvé [ici](/apidocs-dev)
 
 ### Contributions
 

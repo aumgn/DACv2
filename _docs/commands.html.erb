@@ -1,0 +1,48 @@
+---
+layout: layout
+---
+<h1>Commands</h1>
+
+<p>
+  Note : All these commands are available with the shorter
+  form "/dac &lt;subcommand&gt;" too.
+</p>
+
+<% for category in categories %>
+
+  <h2><%= category.name %></h2>
+
+  <table class="category <%= category.class_name %>">
+    
+    <thead>
+      <tr>
+	<th class="name">Nom</th>
+	<th class="permission">Permission</th>
+	<th class="usage">Utilisation</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% for command in category.commands %>
+        <tr class="command">
+          <td class="name">
+	    <%= command.name %>
+            <% if command.has_aliases? %>
+              <% for _alias in command.aliases %>
+                <p><%= _alias %></p>
+              <% end %>
+            <% end %>
+	  </td>
+          <td class="permission"><%= command.permission %></td>
+          <td class="usage"><%= command.usage %></td>
+        </tr>
+        <tr class="description-row">
+          <td class="description" colspan="3">
+	    <%= command.description %>
+	  </td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+<% end %>
