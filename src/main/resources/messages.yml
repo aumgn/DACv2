@@ -18,8 +18,20 @@ command:
         in-game: "Une partie est déjà en cours dans cette arène."
         max-reached: "Il y a déjà %1$d joueurs dans la partie"
     kick:
-        not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         no-player-found: "Aucun joueur trouvé avec ce nom."
+        success: "%1$s joueur(s) kické(s)."
+    modes:
+        unknown: "Aucune arène ne porte ce nom"
+        list: "Modes de jeu disponibles :"
+        mode: " - %1$s"
+        add-success: "Mode de jeu ajouté"
+        remove-success: "Mode de jeu supprimé"
+    options:
+        unknown: "Aucune arène ne porte ce nom"
+        list: "Options assignées :"
+        option: " - %1$s : %2$s"
+        add-success: "Option modifiée"
+        remove-success: "Option supprimée"
     lives:
         not-in-game: "Cette commande ne peut être utilisée que durant une partie de DAC."
         unknown-player: "Aucun joueur dans la partie en cours ne porte ce nom."
@@ -27,10 +39,11 @@ command:
         not-in-game: "Vous n'êtes pas dans une partie en cours."
     reload:
         success: "Configuration mise à jour."
-    reset:
+    fill:
         unknown: "Cette arène n'existe pas."
         in-game: "Cette commande ne peut pas être utilisée durant une partie."
-        success: "Bassin réinitialisé."
+        unknown-strategy: "Méthode de remplissage inconnue"
+        success: "Bassin rempli."
     select:
         unknown: "Arène inconnue."
         success-pool: "La zone du bassin a été sélectionnée."
@@ -46,9 +59,19 @@ command:
         incomplete-selection: "La sélection WorldEdit est incomplète"
     start:
         not-in-game: "Vous devez avoir rejoint une partie avec \"dac join\" avant de la débuter."
+        unknown-mode: "Mode de jeu inconnu"
+        unavailable-mode: "Ce mode de jeu n'est pas disponible dans cette arene."
         min-not-reached: "Au moins deux joueurs doivent avoir rejoint la partie pour pouvoir la débuter."
     stop:
         no-game-to-stop: "Il n'y a aucune partie en cours."
+    watch:
+        not-in-arena: "Vous ne vous trouvez pas dans une arene, specifier son nom si besoin."
+        unknown: "Arène %1$s inconnue."
+        not-in-game: "Il n'y a pas de partie dans l'arène %1$s."
+        already-watching: "<yellow>Vous êtiez déjà spectateur de la partie dans l'arène <white>%1$s."
+        success: "Vous êtes maintenant spectateur de %1$s."
+    unwatch:
+        success: "Vous n'êtes maintenant plus spectateur de %1$s."
 
 join:
     new-game: "<blue>Une nouvelle partie de Dé à coudre dans l'arène de <white>%1$s <blue>a été débutée."
@@ -57,7 +80,7 @@ join:
     player-list: "  %1$s"
     player-join: "%1$s <blue>a rejoint la partie."
     player-quit: "%1$s <blue>a quitté la partie."
-    stopped: "<blue>La partie a été arretée."
+    stopped: "<blue>La partie a été avortée."
     
 game:
     start: "<blue>La partie commence !"
@@ -65,20 +88,38 @@ game:
     player-list: "<gray>%1$s<blue>. %2$s"
     enjoy: "<blue>Enjoy !"
     player-turn: "<blue>C'est au tour de %1$s<blue>."
+    player-turn2: "<blue>C'est votre tour."
     turn-timed-out: "<red>%1$s n'as pas sauté assez rapidement."
     confirmation: "%1$s <green>a confirmé."
+    confirmation2: "<green>Vous avez confirmé."
     dac-confirmation: "%1$s <gold>a confirmé avec un Dé à coudre."
     dac-confirmation2: "<gold>Quelle classe !"
+    dac-confirmation3: "<gold>Vous avez confirmé avec un Dé à coudre"
     dac: "%1$s <gold>a reussi un dé à coudre."
-    lives-after-dac: "<gold>Il/Elle a maintenant %1$s vie(s)."
+    dac2: "<gold>Vous avez reussi un dé à coudre."
+    lives-after-dac: "<gold>Il/Elle a maintenant %2$s vie(s)."
+    lives-after-dac2: "<gold>Vous avez maintenant %1$s vie(s)."
     jump-success: "%1$s <green>a réussi son saut."
+    jump-success2: "<green>Vous avez réussi votre saut."
     jump-fail: "%1$s <red>a manqué son saut."
+    jump-fail2: "<red>Vous avez manqué votre saut."
     confirmation-fail: "<red>Il/elle n'a donc pas pu confirmer sa victoire."
-    lives-after-fail: "<red>Il/elle a donc perdu une vie (%1$s restante(s))."
+    confirmation-fail2: "<red>Vous n'avez donc pas pu confirmer votre victoire."
+    lives-after-fail: "<red>Il/elle a donc perdu une vie (%2$s restante(s))."
+    lives-after-fail2: "<red>Vous avez donc perdu une vie (%1$s restante(s))."
     player-quit: "%1$s <blue>a quitté la partie."
     must-confirmate: "%1$s <red>doit confirmer."
+    must-confirmate2: "<red>Vous devez confirmer."
     finished: "<blue>La partie est terminée."
     winner: "<green>Gagnant : %1$s"
     rank: "<gray>%1$s<blue>. %2$s"
     stopped: "<blue>La partie a été arretée."
     display-lives: "%1$s : <gray>%2$s"
+    sudden-death: "<gold>C'est maintenant la mort subite."
+    player-eliminated: "%1$s <red>est éliminé(e)."
+    player-eliminated2: "<red>Vous êtes éliminé(e)."
+    
+stats:
+    success: "<green>Reussi : %1$s"
+    dac: "<gold>Dés à coudre : %1$s"
+    fail: "<red>Manqués : %1$s"

@@ -3,113 +3,183 @@ version: ${project.version}
 author: aumgn
 website: aumgn.fr
 
-main: fr.aumgn.dac.DACPlugin
+main: fr.aumgn.dac.plugin.DACPlugin
 depend: [WorldEdit]
 
 commands:
     dac:
-        usage: "Utilisation: /<command> join | start | stop | reset | quit | lives | goto"
-    dac-reload:
-        description: 'Recharge la configuration du plugin.'
-        usage: "Utilisation: /<command>"
-        permission: 'dac.cmd.reload'
-    dac-define:
-        description: 'Defini une nouvelle arene de jeu dans le monde actuel.'
-        usage: "Utilisation: /<command> <arene>"
-        permission: 'dac.cmd.define'
-        aliases: ["dac-def"]
-    dac-delete:
-        description: 'Supprime une arene'
-        usage: "Utilisation: /<command> <arene>"
-        permission: 'dac.cmd.delete'
-        aliases: ["dac-remove", "dac-del", "dac-rm"]
-    dac-arenas:
-        description: 'Liste les arenes'
-        usage: '/<command>'
-        permission: 'dac.cmd.arenas'
-    dac-set:
-        description: 'Assigne une zone ou un emplacement.'
-        usage: 'Utilisation: /<command> <arene> pool|start|diving'
-        permission: 'dac.cmd.set'
-    dac-select:
-        description: 'Charge la zone en tant que selection WorldEdit.'
-        usage: 'Utilisation: /<command> <arene> pool|start'
-        permission: 'dac.cmd.select'
-        aliases: ["dac-sel"]
-    dac-stop:
-        description: 'Arrete la partie en cours si partie il y a.'
-        usage: 'Utilisation: /<command>'
-        permission: 'dac.cmd.stop'
-    dac-kick:
-        description: 'Kick un joueur.'
-        usage: 'Utilisation: /<command> player'
-        permission: 'dac.cmd.kick'
-    dac-reset:
+        usage: "join | start | quit | watch | unwatch | fill | reset | lives | goto | colors"
+    # Admin Commands
+    "dac reload":
+        description: "Recharge la configuration du plugin."
+        usage: ""
+        permission: "dac.cmd.reload"
+    # Arenas Commands
+    "dac define":
+        description: "Defini une nouvelle arene de jeu dans le monde actuel."
+        usage: "<arene>"
+        permission: "dac.cmd.define"
+        aliases: ["dac def"]
+    "dac delete":
+        description: "Supprime une arène."
+        usage: "<arene>"
+        permission: "dac.cmd.delete"
+        aliases: ["dac remove", "dac del", "dac rm"]
+    "dac arenas":
+        description: "Liste les arènes."
+        usage: ""
+        permission: "dac.cmd.arenas"
+    "dac select":
+        description: "Charge la zone en tant que selection WorldEdit."
+        usage: "<arene> pool|start"
+        permission: "dac.cmd.select"
+        aliases: ["dac sel"]
+    # Setup Commands
+    "dac set":
+        usage: "pool | start | diving <arene>"
+    "dac set pool":
+        description: "Assigne le bassin de l'arène."
+        usage: "<arene>"
+        permission: "dac.cmd.set"
+    "dac set start":
+        description: "Assigne la zone de départ de l'arène."
+        usage: "<arene>"
+        permission: "dac.cmd.set"
+    "dac set diving":
+        description: "Assigne le plongeoir de l'arène."
+        usage: "<arene>"
+        permission: "dac.cmd.set"
+    # Modes Commands
+    "dac modes":
+        usage: "list | add | remove"
+    "dac modes list":
+        description: "Liste les modes de jeu disponibles ou assignés à une arène."
+        usage: "[arene]"
+        permission: "dac.cmd.modes"
+    "dac modes add":
+        description: "Ajoute un mode de jeu a l'arène."
+        usage: "<arene>"
+        permission: "dac.cmd.modes"
+    "dac modes remove":
+        description: "Supprime un mode de jeu de l'arène."
+        usage: "<arene>"
+        permission: "dac.cmd.modes"
+        aliases: ["dac modes rm"]
+    # Options Commands 
+    "dac options":
+        usage: "list | set | remove"
+    "dac options list":
+        description: "Liste les options assignées à une arène."
+        usage: "<arene>"
+        permission: "dac.cmd.options"
+    "dac options set":
+        description: "Assigne les options à l'arène."
+        usage: "<arene> nom-option:valeur [...]"
+        permission: "dac.cmd.options"
+    "dac options remove":
+        description: "Supprime les options de l'arène."
+        usage: "<arene> nom-option [...]"
+        permission: "dac.cmd.options"
+    # Game Commands
+    "dac start": 
+        description: "Débute une nouvelle partie avec les joueurs présents dans la zone de départ."
+        usage: "[mode]"
+        permission: "dac.cmd.start"
+        aliases: ["dac s"]
+    "dac stop":
+        description: "Arréte la partie en cours si partie il y a."
+        usage: ""
+        permission: "dac.cmd.stop"
+    "dac kick":
+        description: "Kick un joueur."
+        usage: "<player>"
+        permission: "dac.cmd.kick"
+    # Pool Commands
+    "dac fill":
+        description: "Remplis le bassin selon la méthode démandée."
+        usage: "<arene> <methode> [arguments]"
+        permission: "dac.cmd.fill"
+    "dac reset":
         description: "Remplis le bassin d'eau"
-        usage: 'Utilisation: /<command> <arene>'
-        permission: 'dac.cmd.reset'
-        aliases: ["dac-r"]
-    dac-join:
-        description: "Permets de rejoindre une nouvelle partie ou d'en creer une nouvelle."
-        usage: 'Utilisation: /<command> [<color> [<color2> [...]]]'
-        permission: 'dac.cmd.join'
-        aliases: ["dac-j"]
-    dac-start: 
-        description: 'Debute une nouvelle partie avec les joueurs presents dans la zone de depart.'
-        usage: 'Utilisation: /<command>'
-        permission: 'dac.cmd.start'
-        aliases: ["dac-s"]
-    dac-quit:
-        description: "Quitter la partie en cours"
-        usage: 'Utilisation: /<command>'
-        permission: 'dac.cmd.quit'
-        aliases: ["dac-q"]
-    dac-list:
-        description: 'Affiche le nombre de vies du joueur selectionne ou de tous les joueurs'
-        usage: 'Utilisation: /<command> [<joueur>]'
-        permission: 'dac.cmd.lives'
-        aliases: ["dac-players", "dac-lives"]
-    dac-goto:
-        description: 'Teleporte le joueur sur le plongeoir ou a sa position de depart'
-        usage: 'Utilisation: /<command> diving|start'
-        permission: 'dac.cmd.goto'
-        aliases: ["dac-teleport", "dac-g", "dac-tp"]
-    dac-colors:
+        usage: "<arene>"
+        permission: "dac.cmd.reset"
+        aliases: ["dac r"]
+    # Player Commands
+    "dac join":
+        description: "Permets de rejoindre une nouvelle partie ou d'en créer une nouvelle."
+        usage: "[<color> [<color2> [...]]]"
+        permission: "dac.cmd.join"
+        aliases: ["dac j"]
+    "dac quit":
+        description: "Quitte la partie en cours."
+        usage: ""
+        permission: "dac.cmd.quit"
+        aliases: ["dac q"]
+    "dac goto":
+        description: "Téléporte le joueur sur le plongeoir ou à sa position de départ."
+        usage: "diving|start"
+        permission: "dac.cmd.goto"
+        aliases: ["dac teleport", "dac g", "dac tp"]
+    # Info Commands
+    "dac list":
+        description: "Affiche le nombre de vies du joueur séléctionné ou de tous les joueurs."
+        usage: "[joueur]"
+        permission: "dac.cmd.lives"
+        aliases: ["dac players", "dac lives"]
+    "dac colors":
         description: "Liste l'ensemble des couleurs disponibles"
-        usage: 'Utilisation: /<command>'
-        permission: 'dac.cmd.colors'
-        
+        usage: ""
+        permission: "dac.cmd.colors"
+    # Spectator Commands
+    "dac watch":
+        description: "Permets de s'enregistrer en tant que spectateur d'une ou plusieurs partie(s)."
+        usage: "[arene1[ arene2[ ...]]]"
+        permission: "dac.cmd.watch"
+    "dac unwatch":
+        description: "Permets de se retirer des spectateurs d'une ou plusieurs partie(s)."
+        usage: "[arene1[ arene2[ ...]]]"
+        permission: "dac.cmd.unwatch"
+
 permissions:
-    dac.game.play:
-        description: 'Permets de jouer.'
+    dac.game.watch:
+        description: "Permets de s'enregistrer en tant que spectateur d'une partie."
         default: true
         children:
+            dac.cmd.watch: true
+            dac.cmd.unwatch: true
+    dac.game.play:
+        description: "Permets de jouer."
+        default: true
+        children:
+            dac.game.watch: true
             dac.cmd.join: true
             dac.cmd.start: true
+            dac.cmd.fill: true
             dac.cmd.reset: true
             dac.cmd.quit: true
             dac.cmd.lives: true
             dac.cmd.goto: true
             dac.cmd.colors: true
-    dac.game.reset:
-        description: "Permets de remettre a zéro le bassin in-game"
+    dac.game.fill:
+        description: "Permets de remplir le bassin in-game"
         default: op
     dac.game.manage:
         description: "Permets de gerer le deroulement d'une partie et de jouer."
         default: op
         children:
             dac.game.play : true
-            dac.game.reset: true
+            dac.game.fill: true
             dac.cmd.kick: true
             dac.cmd.stop: true
     dac.config:
-        description: "Permets de mettre en place les zones du jeu."
+        description: "Permets de mettre en place les zones de jeu."
         default: op
         children:
             dac.cmd.reload: true
             dac.cmd.define: true
             dac.cmd.delete: true
             dac.cmd.arenas: true
+            dac.cmd.modes: true
             dac.cmd.set: true
-            dac.cmd.select: true            
-
+            dac.cmd.select: true
+            dac.cmd.options: true
