@@ -121,7 +121,9 @@ public class Training extends AbstractGame {
         send("training.jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();
 
-        tpAfterJumpFail(trainingPlayer);
+        if (party.size() != 1) {
+            tpAfterJumpFail(trainingPlayer);
+        }
         nextTurn();
     }
 
@@ -139,7 +141,7 @@ public class Training extends AbstractGame {
 
         sender.sendMessage(messages.get("training.playerslist"));
         for (TrainingPlayer player : party.iterable()) {
-            sender.sendMessage(messages.get("training.playerentry", 
+            sender.sendMessage(messages.get("training.playerentry",
                     player.getIndex(), player.getDisplayName(),
                     player.getSuccesses(), player.getDacs(),
                     player.getFails()));
