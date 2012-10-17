@@ -121,7 +121,9 @@ public class Training extends AbstractGame {
         send("training.jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();
 
-        tpAfterJumpFail(trainingPlayer);
+        if(party.size() != 1) {
+            tpAfterJumpFail(trainingPlayer);
+        }
         nextTurn();
     }
 
