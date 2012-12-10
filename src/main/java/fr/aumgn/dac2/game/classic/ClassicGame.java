@@ -272,6 +272,7 @@ public class ClassicGame extends AbstractGame {
     }
 
     public void onPlayerWin(ClassicGamePlayer player) {
+        p.getInventory().addItem(new ItemStack(Material.DIAMOND));
         send("game.finished");
         send("game.winner", player.getDisplayName());
         for (int i = 0; i < ranking.length; i++) {
