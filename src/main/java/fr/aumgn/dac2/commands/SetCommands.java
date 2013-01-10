@@ -72,7 +72,7 @@ public class SetCommands extends DACCommands {
                 centerFrom(player), radius, height);
         arena.setStartRegion(new StartRegion(shape));
         dac.getArenas().saveArena(dac, arena);
-        sender.sendMessage(msg("set.diving.success"));
+        sender.sendMessage(msg("set.start.success"));
     }
 
     @Command(name = "surrounding", min = 1, max = 3, argsFlags = "sp")
@@ -88,7 +88,7 @@ public class SetCommands extends DACCommands {
                 centerFrom(player), radius, height);
         arena.setSurroundingRegion(new SurroundingRegion(shape));
         dac.getArenas().saveArena(dac, arena);
-        sender.sendMessage(msg("set.diving.success"));
+        sender.sendMessage(msg("set.surrounding.success"));
     }
 
     private Vector centerFrom(Player player) {
