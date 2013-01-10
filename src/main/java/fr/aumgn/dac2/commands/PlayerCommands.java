@@ -32,7 +32,10 @@ public class PlayerCommands extends DACCommands {
                 .valueWithPermOr("dac2.stages.join.arena", sender);
         Stage stage = dac.getStages().get(arena);
 
-        if (!(stage instanceof JoinStage)) {
+        if (stage == null && sender.hasPermission("dac2.stage.init")) {
+            stage = new JoinStage(dac, arena);
+            dac.getStages().start(stage);
+        } else if (!(stage instanceof JoinStage)) {
             throw new CommandError(msg("join.notjoinable"));
         }
 
