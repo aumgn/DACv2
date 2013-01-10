@@ -10,7 +10,7 @@ import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.stage.Stages;
 
 /**
- * Main class which offers acces to all components.
+ * Main class which offers access to all components.
  */
 public class DAC {
 
