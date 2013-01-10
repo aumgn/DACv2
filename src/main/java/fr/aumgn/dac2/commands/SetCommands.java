@@ -1,6 +1,5 @@
 package fr.aumgn.dac2.commands;
 
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -42,14 +41,8 @@ public class SetCommands extends DACCommands {
     @Command(name = "pool", min = 1, max = 3, argsFlags = "sp")
     public void pool(CommandSender sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
-        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
-        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
-        Player player = args.getPlayer('p').valueOr(sender);
-        ShapeFactory factory = args.get('s', ShapeFactory.class)
-                .valueOr(ShapeFactory.Arbitrary);
+        Shape shape = shapeFor(sender, args, ShapeFactory.Arbitrary);
 
-        Shape shape = factory.create(dac, player.getWorld(),
-                centerFrom(player), radius, height);
         if (!(shape instanceof FlatShape)) {
             throw new PoolShapeNotFlat(dac, shape);
         }
@@ -62,14 +55,8 @@ public class SetCommands extends DACCommands {
     @Command(name = "start", min = 1, max = 3, argsFlags = "sp")
     public void start(CommandSender sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
-        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
-        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
-        Player player = args.getPlayer('p').valueOr(sender);
-        ShapeFactory factory = args.get('s', ShapeFactory.class)
-                .valueOr(ShapeFactory.Cuboid);
+        Shape shape = shapeFor(sender, args, ShapeFactory.Cuboid);
 
-        Shape shape = factory.create(dac, player.getWorld(),
-                centerFrom(player), radius, height);
         arena.setStartRegion(new StartRegion(shape));
         dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.start.success"));
@@ -78,21 +65,22 @@ public class SetCommands extends DACCommands {
     @Command(name = "surrounding", min = 1, max = 3, argsFlags = "sp")
     public void surrounding(CommandSender sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
-        Player player = args.getPlayer('p').valueOr(sender);
-        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
-        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
-        ShapeFactory factory = args.get('s', ShapeFactory.class)
-                .valueOr(ShapeFactory.Cuboid);
+        Shape shape = shapeFor(sender, args, ShapeFactory.Cuboid);
 
-        Shape shape = factory.create(dac, player.getWorld(),
-                centerFrom(player), radius, height);
         arena.setSurroundingRegion(new SurroundingRegion(shape));
         dac.getArenas().saveArena(dac, arena);
         sender.sendMessage(msg("set.surrounding.success"));
     }
 
-    private Vector centerFrom(Player player) {
-        Location loc = player.getLocation();
-        return new Vector(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+    private Shape shapeFor(CommandSender sender, CommandArgs args,
+            ShapeFactory defaultShape) {
+        Player player = args.getPlayer('p').valueOr(sender);
+        Vector center = new Vector(player);
+        int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
+        int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
+        ShapeFactory factory = args.get('s', ShapeFactory.class)
+                .valueOr(defaultShape);
+
+        return factory.create(dac, player.getWorld(), center, radius, height);
     }
 }
