@@ -9,7 +9,6 @@ import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
-import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.game.GameFactory;
 import fr.aumgn.dac2.game.start.GameQuickStart;
@@ -23,8 +22,7 @@ public class StageCommands extends DACCommands {
         super(dac);
     }
 
-    @Command(name = "initialize",
-            min = 0, max = 1, flags = "j", argsFlags = "j")
+    @Command(name = "initialize", min = 0, max = 1)
     public void init(CommandSender sender, CommandArgs args) {
         Arena arena = args.get(0, Arena)
                 .valueWithPermOr("dac.stages.init.arena", sender);
@@ -32,14 +30,7 @@ public class StageCommands extends DACCommands {
         JoinStage joinStage = new JoinStage(dac, arena);
         dac.getStages().start(joinStage);
 
-        if (sender instanceof Player) {
-            if (args.hasFlag('j')) {
-                joinStage.addPlayer((Player) sender, (Color) null);
-            } else if (args.hasArgFlag('j')) {
-                Color color = args.get('j', Color).value();
-                joinStage.addPlayer((Player) sender, color);
-            }
-        } else {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(msg("init.success", arena.getName()));
         }
     }
