@@ -133,6 +133,10 @@ public class Training extends AbstractGame {
         party.removePlayer(trainingPlayer);
         playersMap.remove(player);
         trainingPlayer.sendStats(dac.getMessages());
+
+        if (party.size() == 0) {
+            stop(true);
+        }
     }
 
     @Override
