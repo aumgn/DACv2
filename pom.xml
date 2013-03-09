@@ -145,6 +145,15 @@
 			</plugin>
 
 		</plugins>
+
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
+
 	</build>
 
 	<profiles>
@@ -190,5 +199,12 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<distributionManagement>
+		<repository>
+			<id>aumgn-repo</id>
+			<url>ftp://maven.aumgn.fr</url>
+		</repository>
+	</distributionManagement>
 
 </project>
