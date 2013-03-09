@@ -40,7 +40,7 @@ public class PlayerCommands extends DACCommands {
         }
 
         List<Color> colors = new ArrayList<Color>();
-        for (int i = 1; i < args.length(); i++) {
+        for (int i = 0; i < args.length(); i++) {
             colors.add(args.get(i, Color).value());
         }
         ((JoinStage) stage).addPlayer(sender, colors);

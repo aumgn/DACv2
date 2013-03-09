@@ -2,6 +2,7 @@ package fr.aumgn.dac2.stage.join;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.bukkit.command.CommandSender;
@@ -92,6 +93,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
                 break;
             }
         }
+        System.out.println(finalColor.name);
 
         addPlayer(player, finalColor);
     }
@@ -124,7 +126,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
             }
         }
 
-        throw new Error("A unexpected error occured ! Please reoprt this to"
+        throw new Error("A unexpected error occured ! Please report this to"
                 + " the plugin author.");
     }
 
@@ -162,9 +164,11 @@ public class JoinStage implements Stage, Listener, GameStartData {
         PluginMessages messages = dac.getMessages();
 
         sender.sendMessage(messages.get("joinstage.playerslist"));
-        for (PlayerRef player : players.keySet()) {
-            sender.sendMessage(messages.get("joinstage.playerentry", 
-                    player.getDisplayName()));
+        for (Entry<PlayerRef, PlayerStartData> entry : players.entrySet()) {
+            PlayerRef player = entry.getKey();
+            PlayerStartData data = entry.getValue();
+            sender.sendMessage(messages.get("joinstage.playerentry",
+                    data.getColor().chat + player.getDisplayName()));
         }
     }
 
