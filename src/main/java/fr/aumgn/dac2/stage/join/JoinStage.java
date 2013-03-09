@@ -93,7 +93,6 @@ public class JoinStage implements Stage, Listener, GameStartData {
                 break;
             }
         }
-        System.out.println(finalColor.name);
 
         addPlayer(player, finalColor);
     }
