@@ -209,6 +209,7 @@ public class ClassicGame extends AbstractGame {
                     removePlayer(deadPlayer);
                 }
                 if (finished) {
+                    tpAfterJumpSuccess(gamePlayer, column);
                     return;
                 }
             }
