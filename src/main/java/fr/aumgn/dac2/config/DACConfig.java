@@ -17,7 +17,7 @@ public class DACConfig {
 
     private PoolReset poolReset = PoolReset.START;
 
-    private String spectatorsMessage = "{yellow}[{0}]{1}";
+    private String spectatorsMessage = "{yellow}[{0}] {1}";
     private transient MessageFormat spectatorsMessageFormat = null;
 
     private String timerFormat = "%02d:%02d";
