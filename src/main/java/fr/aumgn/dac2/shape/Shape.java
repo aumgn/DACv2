@@ -8,4 +8,8 @@ import fr.aumgn.bukkitutils.geom.Vector;
 public interface Shape {
 
     boolean contains(Vector pt);
+
+    Vector getMin();
+
+    Vector getMax();
 }

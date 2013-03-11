@@ -19,6 +19,16 @@ public class CuboidShape implements FlatShape {
     }
 
     @Override
+    public Vector getMin() {
+        return min;
+    }
+
+    @Override
+    public Vector getMax() {
+        return max;
+    }
+
+    @Override
     public boolean contains(Vector pt) {
         return pt.isInside(min, max);
     }
@@ -56,13 +66,5 @@ public class CuboidShape implements FlatShape {
     @Override
     public Iterator<Column> iterator() {
         return new CuboidColumnsIterator(this);
-    }
-
-    public Vector getMin() {
-        return min;
-    }
-
-    public Vector getMax() {
-        return max;
     }
 }

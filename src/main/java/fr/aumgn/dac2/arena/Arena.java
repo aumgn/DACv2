@@ -1,10 +1,14 @@
 package fr.aumgn.dac2.arena;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
@@ -179,5 +183,39 @@ public class Arena {
     public void setSurroundingRegion(SurroundingRegion surrounding) {
         this.surrounding = surrounding;
         this.autoSurrounding = null;
+    }
+
+    public Set<Player> getPlayersInRadius(int radius) {
+        Vector startMin = startRegion.getShape().getMin();
+        Vector startMax = startRegion.getShape().getMax();
+        Vector poolMin  = pool.getShape().getMin();
+        Vector poolMax  = pool.getShape().getMax();
+        Vector divingVec = diving.getPosition();
+
+        Vector min = new Vector(
+                Math.min(startMin.getX(),
+                        Math.min(poolMin.getX(), divingVec.getX())),
+                Math.min(startMin.getY(),
+                        Math.min(poolMin.getY(), divingVec.getY())),
+                Math.min(startMin.getZ(),
+                        Math.min(poolMin.getZ(), divingVec.getZ())))
+        .subtract(radius);
+
+        Vector max = new Vector(
+                Math.max(startMax.getX(),
+                        Math.max(poolMax.getX(), divingVec.getX())),
+                Math.max(startMax.getY(),
+                        Math.max(poolMax.getY(), divingVec.getY())),
+                Math.max(startMax.getZ(),
+                        Math.max(poolMax.getZ(), divingVec.getZ())))
+        .add(radius);
+
+        Set<Player> players = new HashSet<Player>();
+        for (Player player : getWorld().getPlayers()) {
+            if (new Vector(player).isInside(min, max)) {
+                players.add(player);
+            }
+        }
+        return players;
     }
 }

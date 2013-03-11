@@ -33,6 +33,16 @@ public class ArbitraryFlatShape implements FlatShape {
     }
 
     @Override
+    public Vector getMin() {
+        return min2D.to3D(minY);
+    }
+
+    @Override
+    public Vector getMax() {
+        return max2D.to3D(maxY);
+    }
+
+    @Override
     public Iterator<Column> iterator() {
         final Iterator<Vector2D> it = points.iterator();
         return new Iterator<Column>() {
@@ -67,23 +77,21 @@ public class ArbitraryFlatShape implements FlatShape {
 
     @Override
     public Vector2D getMin2D() {
-        if (min2D == null) {
-            calculateMinMax2D();
-        }
-
+        calculateMinMax2D();
         return min2D;
     }
 
     @Override
     public Vector2D getMax2D() {
-        if (max2D == null) {
-            calculateMinMax2D();
-        }
-
+        calculateMinMax2D();
         return max2D;
     }
 
     private void calculateMinMax2D() {
+        if (min2D != null) {
+            return;
+        }
+
         double minX = Double.MAX_VALUE;
         double minZ = Double.MAX_VALUE;
         double maxX = -Double.MAX_VALUE;
@@ -110,10 +118,7 @@ public class ArbitraryFlatShape implements FlatShape {
 
     @Override
     public boolean contains2D(Vector2D pt) {
-        if (min2D == null) {
-            calculateMinMax2D();
-        }
-
+        calculateMinMax2D();
         return pt.isInside(min2D, max2D) && points.contains(pt);
     }
 

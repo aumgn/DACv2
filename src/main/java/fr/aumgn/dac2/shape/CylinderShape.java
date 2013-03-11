@@ -29,6 +29,16 @@ public class CylinderShape implements FlatShape {
     }
 
     @Override
+    public Vector getMin() {
+        return getMin2D().to3D(minY);
+    }
+
+    @Override
+    public Vector getMax() {
+        return getMax2D().to3D(maxY);
+    }
+
+    @Override
     public double getMinY() {
         return minY;
     }

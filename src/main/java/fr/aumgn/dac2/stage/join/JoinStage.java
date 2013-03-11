@@ -19,6 +19,7 @@ import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.config.Color;
+import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.exceptions.TooManyPlayers;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.PlayerStartData;
@@ -48,11 +49,26 @@ public class JoinStage implements Stage, Listener, GameStartData {
 
     @Override
     public void start() {
+        DACConfig config = dac.getConfig();
         PluginMessages messages = dac.getMessages();
-        Util.broadcast("dac2.spectator.watch", 
-                messages.get("joinstage.start1", arena.getName()));
-        Util.broadcast("dac2.spectator.watch",
-                messages.get("joinstage.start2"));
+        if (!config.initMessageHasRadius()) {
+            Util.broadcast("dac2.spectator.watch",
+                    messages.get("joinstage.start1", arena.getName()));
+            Util.broadcast("dac2.spectator.watch",
+                    messages.get("joinstage.start2"));
+            return;
+        }
+
+        int radius = config.getInitMessageRadius();
+        for (Player player : arena.getPlayersInRadius(radius)) {
+            if (!player.hasPermission("dac2.spectator.watch")) {
+                continue;
+            }
+
+            player.sendMessage(messages.get("joinstage.start1",
+                    arena.getName()));
+            player.sendMessage(messages.get("joinstage.start2"));
+        }
     }
 
     @Override

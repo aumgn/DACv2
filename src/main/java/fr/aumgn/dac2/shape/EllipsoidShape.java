@@ -18,6 +18,16 @@ public class EllipsoidShape implements Shape {
         return pt.subtract(center).divide(radius).lengthSq() <= 1;
     }
 
+    @Override
+    public Vector getMin() {
+        return center.subtract(radius.subtract(0.5));
+    }
+
+    @Override
+    public Vector getMax() {
+        return center.add(radius.subtract(0.5));
+    }
+
     public Vector getCenter() {
         return center;
     }

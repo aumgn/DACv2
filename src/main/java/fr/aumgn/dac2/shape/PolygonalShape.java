@@ -32,6 +32,18 @@ public class PolygonalShape implements FlatShape {
     }
 
     @Override
+    public Vector getMin() {
+        calculateMinMax2D();
+        return min2D.to3D(minY);
+    }
+
+    @Override
+    public Vector getMax() {
+        calculateMinMax2D();
+        return max2D.to3D(maxY);
+    }
+
+    @Override
     public double getMinY() {
         return minY;
     }
@@ -43,23 +55,21 @@ public class PolygonalShape implements FlatShape {
 
     @Override
     public Vector2D getMin2D() {
-        if (min2D == null) {
-            calculateMinMax2D();
-        }
-
+        calculateMinMax2D();
         return min2D;
     }
 
     @Override
     public Vector2D getMax2D() {
-        if (max2D == null) {
-            calculateMinMax2D();
-        }
-
+        calculateMinMax2D();
         return max2D;
     }
 
     private void calculateMinMax2D() {
+        if (min2D != null) {
+            return;
+        }
+
         double minX = Double.MAX_VALUE;
         double minZ = Double.MAX_VALUE;
         double maxX = -Double.MAX_VALUE;
@@ -94,9 +104,7 @@ public class PolygonalShape implements FlatShape {
             return false;
         }
 
-        if (min2D == null) {
-            calculateMinMax2D();
-        }
+        calculateMinMax2D();
         if (!pt.isInside(min2D, max2D)) {
             return false;
         }

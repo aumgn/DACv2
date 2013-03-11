@@ -15,6 +15,8 @@ public class DACConfig {
 
     private String language = Locale.getDefault().toString();
 
+    private int initMessageRadius = -1;
+
     private PoolReset poolReset = PoolReset.START;
 
     private String spectatorsMessage = "{yellow}[{0}] {1}";
@@ -33,6 +35,14 @@ public class DACConfig {
 
     public Locale getLocale() {
         return Util.parseLocale(language);
+    }
+
+    public boolean initMessageHasRadius() {
+        return initMessageRadius >= 0;
+    }
+
+    public int getInitMessageRadius() {
+        return initMessageRadius;
     }
 
     public boolean getResetOnStart() {
