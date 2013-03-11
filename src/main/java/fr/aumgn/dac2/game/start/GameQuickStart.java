@@ -1,12 +1,12 @@
 package fr.aumgn.dac2.game.start;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.DAC;
@@ -14,15 +14,16 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.exceptions.TooManyPlayers;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 public class GameQuickStart implements GameStartData {
 
     private final Arena arena;
-    private final PlayersRefMap<PlayerStartData> playersData;
+    private final Set<StagePlayer> players;
 
     public GameQuickStart(DAC dac, Arena arena) {
         this.arena = arena;
-        this.playersData = new PlayersRefHashMap<PlayerStartData>();
+        this.players = new HashSet<StagePlayer>();
 
         StartRegion startRegion = arena.getStartRegion();
         Iterator<Color> colors = dac.getColors().iterator();
@@ -34,8 +35,9 @@ public class GameQuickStart implements GameStartData {
                 }
 
                 Color color = colors.next();
-                PlayerStartData playerData = new SimplePlayerStartData(color, player);
-                playersData.put(player, playerData);
+                StartStagePlayer stagePlayer =
+                        new StartStagePlayer(color, player);
+                players.add(stagePlayer);
             }
         }
     }
@@ -46,8 +48,8 @@ public class GameQuickStart implements GameStartData {
     }
 
     @Override
-    public PlayersRefMap<? extends PlayerStartData> getPlayersData() {
-        return playersData;
+    public Set<StagePlayer> getPlayers() {
+        return players;
     }
 
     @Override
@@ -56,6 +58,6 @@ public class GameQuickStart implements GameStartData {
     }
 
     public int size() {
-        return playersData.size();
+        return players.size();
     }
 }

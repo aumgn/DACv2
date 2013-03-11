@@ -2,7 +2,7 @@ package fr.aumgn.dac2.stage.join;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
+
 import java.util.Set;
 
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
@@ -22,23 +21,23 @@ import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.exceptions.TooManyPlayers;
 import fr.aumgn.dac2.game.start.GameStartData;
-import fr.aumgn.dac2.game.start.PlayerStartData;
-import fr.aumgn.dac2.game.start.SimplePlayerStartData;
+import fr.aumgn.dac2.game.start.StartStagePlayer;
 import fr.aumgn.dac2.stage.Stage;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 public class JoinStage implements Stage, Listener, GameStartData {
 
     private final DAC dac;
     private final Arena arena;
     private final Set<String> colorsTaken;
-    private final PlayersRefMap<PlayerStartData> players;
+    private final PlayersRefMap<StagePlayer> players;
     private final PlayersRefSet spectators;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colorsTaken = new HashSet<String>();
-        this.players = new PlayersRefHashMap<PlayerStartData>();
+        this.players = new PlayersRefHashMap<StagePlayer>();
         this.spectators = new PlayersRefHashSet();
     }
 
@@ -127,7 +126,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
         String playerName = color.chat + player.getDisplayName();
         sendMessage(msgs.get("joinstage.join", playerName));
 
-        players.put(player, new SimplePlayerStartData(color, player));
+        players.put(player, new StartStagePlayer(color, player));
         colorsTaken.add(color.name);
 
         list(player);
@@ -165,8 +164,8 @@ public class JoinStage implements Stage, Listener, GameStartData {
     }
 
     @Override
-    public PlayersRefMap<PlayerStartData> getPlayersData() {
-        return players;
+    public Set<StagePlayer> getPlayers() {
+        return new HashSet<StagePlayer>(players.values());
     }
 
     @Override
@@ -179,21 +178,19 @@ public class JoinStage implements Stage, Listener, GameStartData {
         PluginMessages messages = dac.getMessages();
 
         sender.sendMessage(messages.get("joinstage.playerslist"));
-        for (Entry<PlayerRef, PlayerStartData> entry : players.entrySet()) {
-            PlayerRef player = entry.getKey();
-            PlayerStartData data = entry.getValue();
+        for (StagePlayer player : players.values()) {
             sender.sendMessage(messages.get("joinstage.playerentry",
-                    data.getColor().chat + player.getDisplayName()));
+                    player.getDisplayName()));
         }
     }
 
     @Override
     public void onQuit(Player player) {
-        PlayerStartData data = players.remove(player);
+        StagePlayer data = players.remove(player);
         colorsTaken.remove(data.getColor().name);
 
         String message = dac.getMessages().get("joinstage.quit",
-                data.getColor().chat + player.getDisplayName());
+                player.getDisplayName());
         sendMessage(message);
         player.sendMessage(message);
     }

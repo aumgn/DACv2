@@ -1,8 +1,10 @@
 package fr.aumgn.dac2.game.start;
 
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
+import java.util.Set;
+
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 /**
  * Defines methods for all data necessary to start a new Game.
@@ -12,7 +14,7 @@ public interface GameStartData {
 
     Arena getArena();
 
-    PlayersRefMap<? extends PlayerStartData> getPlayersData();
+    Set<? extends StagePlayer> getPlayers();
 
     PlayersRefSet getSpectators();
 }

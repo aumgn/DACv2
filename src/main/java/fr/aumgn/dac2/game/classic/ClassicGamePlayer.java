@@ -1,17 +1,16 @@
 package fr.aumgn.dac2.game.classic;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.game.GamePlayer;
-import fr.aumgn.dac2.game.start.PlayerStartData;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 public class ClassicGamePlayer extends GamePlayer {
 
     private int lives;
     private Vector2D deathPosition;
 
-    public ClassicGamePlayer(PlayerRef playerId, PlayerStartData playerData) {
-        super(playerId, playerData);
+    public ClassicGamePlayer(StagePlayer player) {
+        super(player);
         this.lives = 0;
         this.deathPosition = null;
     }

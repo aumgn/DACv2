@@ -1,9 +1,5 @@
 package fr.aumgn.dac2.game;
 
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -11,68 +7,40 @@ import org.bukkit.entity.Player;
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
-import fr.aumgn.dac2.config.Color;
-import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.UniformPattern;
+import fr.aumgn.dac2.stage.SimpleStagePlayer;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 /**
  * Stores common data associated to player and
  * implements common behaviors.
  */
-public class GamePlayer {
+public class GamePlayer extends SimpleStagePlayer {
 
-    public final PlayerRef playerId;
-    private final Color color;
-    private final UUID worldId;
-    private final Vector pos;
-    private final Direction dir;
+    public GamePlayer(StagePlayer player) {
+        super(player);
+    }
 
     private int index;
 
-    public GamePlayer(PlayerRef playerId, PlayerStartData joinData) {
-        this.playerId = playerId;
-        this.color = joinData.getColor();
-        this.worldId = joinData.getWorldId();
-        this.pos = joinData.getPosition();
-        this.dir = joinData.getDirection();
-        this.index = -1;
-    }
-
-    public String getDisplayName() {
-        String name;
-        Player player = playerId.getPlayer();
-        if (player == null) {
-            name = ChatColor.ITALIC + playerId.getName();
-        } else {
-            name = player.getDisplayName();
-        }
-
-        return color.chat + name + ChatColor.RESET;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
     public ColumnPattern getColumnPattern() {
-        return new UniformPattern(color);
+        return new UniformPattern(getColor());
     }
 
     public void sendMessage(String message) {
-        Player player = playerId.getPlayer();
+        Player player = getRef().getPlayer();
         if (player != null) {
             player.sendMessage(message);
         }
     }
 
     public boolean isOnline() {
-        return playerId.isOnline();
+        return getRef().isOnline();
     }
 
     public void teleport(World world, Vector pos) {
-        Player player = playerId.getPlayer();
+        Player player = getRef().getPlayer();
         if (player == null) {
             return;
         }
@@ -85,7 +53,7 @@ public class GamePlayer {
     }
 
     public void teleport(Location location) {
-        Player player = playerId.getPlayer();
+        Player player = getRef().getPlayer();
         if (player != null) {
             player.setFallDistance(0f);
             player.teleport(location);
@@ -102,11 +70,11 @@ public class GamePlayer {
     }
 
     public void tpToStart() {
-        teleport(pos.toLocation(Bukkit.getWorld(worldId), dir));
+        teleport(getStartPosition().toLocation());
     }
 
     public Runnable delayedTpToStart() {
-        return delayedTeleport(pos.toLocation(Bukkit.getWorld(worldId), dir));
+        return delayedTeleport(getStartPosition().toLocation());
     }
 
     public int getIndex() {

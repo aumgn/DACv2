@@ -3,15 +3,13 @@ package fr.aumgn.dac2.game.colonnisation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.timer.Timer;
@@ -21,10 +19,10 @@ import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
-import fr.aumgn.dac2.game.start.PlayerStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 public class Colonnisation extends AbstractGame {
 
@@ -45,19 +43,14 @@ public class Colonnisation extends AbstractGame {
     public Colonnisation(DAC dac, GameStartData data) {
         super(dac, data);
 
-        Map<PlayerRef, ? extends PlayerStartData> playersData =
-                data.getPlayersData();
-        List<ColonnPlayer> list =
-                new ArrayList<ColonnPlayer>(playersData.size());
+        Set<? extends StagePlayer> players = data.getPlayers();
+        List<ColonnPlayer> list = new ArrayList<ColonnPlayer>(players.size());
         playersMap = new PlayersRefHashMap<ColonnPlayer>();
 
-        for (Entry<PlayerRef, ? extends PlayerStartData> entry :
-                playersData.entrySet()) {
-            PlayerRef playerId = entry.getKey();
-            ColonnPlayer player = new ColonnPlayer(playerId,
-                    playersData.get(playerId));
+        for (StagePlayer stagePlayer : players) {
+            ColonnPlayer player = new ColonnPlayer(stagePlayer);
             list.add(player);
-            playersMap.put(playerId, player);
+            playersMap.put(stagePlayer.getRef(), player);
         }
         party = new GameParty<ColonnPlayer>(this, ColonnPlayer.class, list);
 
@@ -124,8 +117,8 @@ public class Colonnisation extends AbstractGame {
 
     private void removePlayer(ColonnPlayer player) {
         party.removePlayer(player);
-        playersMap.remove(player.playerId);
-        spectators.add(player.playerId);
+        playersMap.remove(player.getRef());
+        spectators.add(player.getRef());
         if (party.size() < 2) {
             dac.getStages().stop(this);
         }
