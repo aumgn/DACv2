@@ -9,6 +9,7 @@ import fr.aumgn.dac2.exceptions.UnknownGameType;
 import fr.aumgn.dac2.game.classic.ClassicGame;
 import fr.aumgn.dac2.game.colonnisation.Colonnisation;
 import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.game.training.Training;
 
 /**
@@ -92,5 +93,13 @@ public abstract class GameFactory {
                 return new Colonnisation(dac, data);
             }
         }, "col", "c");
+
+        GameFactory.register("suddendeath", new GameFactory() {
+
+            @Override
+            public Game createGame(DAC dac, GameStartData data) {
+                return new SuddenDeath(dac, data);
+            }
+        }, "sd");
     }
 }

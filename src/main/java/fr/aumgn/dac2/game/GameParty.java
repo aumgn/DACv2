@@ -17,11 +17,11 @@ public class GameParty<T extends GamePlayer> {
     private int turn;
 
     public GameParty(Game game, Class<T> clazz, List<T> list) {
-        this.clazz = (Class<T>) clazz;
+        this.clazz = clazz;
         this.game = game;
         players = newArray(list.size());
 
-        LinkedList<T> roulette = new LinkedList<T>(list);
+        List<T> roulette = new LinkedList<T>(list);
         Random rand = Util.getRandom();
         for (int i = 0; i< players.length; i++) {
             int j = rand.nextInt(roulette.size());

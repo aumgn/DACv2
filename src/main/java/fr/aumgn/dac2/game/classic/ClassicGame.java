@@ -66,7 +66,8 @@ public class ClassicGame extends AbstractGame {
         send("game.start");
         send("game.playerslist");
         for (ClassicGamePlayer player : party.iterable()) {
-            send("game.start.playerentry", player.getIndex() + 1, player.getDisplayName());
+            send("game.start.playerentry", player.getIndex() + 1,
+                    player.getDisplayName());
         }
         send("game.enjoy");
 

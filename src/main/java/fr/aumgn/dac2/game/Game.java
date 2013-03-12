@@ -6,7 +6,7 @@ public interface Game extends Stage {
 
     /**
      * Callback called when a new turn starts.
-     * (ie. all players have jumped once since the last one)
+     * (ie. all players have jumped once)
      */
     void onNewTurn();
 }
