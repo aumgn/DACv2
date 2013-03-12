@@ -3,6 +3,7 @@ package fr.aumgn.dac2.game.classic;
 import static fr.aumgn.dac2.utils.DACUtil.PLAYER_MAX_HEALTH;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,7 @@ import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
@@ -221,7 +223,11 @@ public class ClassicGame extends AbstractGame {
         }
 
         tpAfterJumpSuccess(gamePlayer, column);
-        nextTurn();
+        if (arena.getPool().isFilled(world)) {
+            onPoolFilled();
+        } else {
+            nextTurn();
+        }
     }
 
     @Override
@@ -262,6 +268,31 @@ public class ClassicGame extends AbstractGame {
         ClassicGamePlayer gamePlayer = playersMap.get(player);
         send("game.player.quit", gamePlayer.getDisplayName());
         removePlayer(gamePlayer);
+    }
+
+    public void onPoolFilled() {
+        int maxLives = -1;
+        Set<ClassicGamePlayer> players = new HashSet<ClassicGamePlayer>();
+        for (ClassicGamePlayer player : party.iterable()) {
+            if (player.getLives() < maxLives) {
+                onPlayerLoss(player);
+                continue;
+            } else if (player.getLives() > maxLives) {
+                maxLives = player.getLives();
+                for (ClassicGamePlayer looser : players) {
+                    onPlayerLoss(looser);
+                }
+                players.clear();
+            }
+
+            players.add(player);
+        }
+
+        if (!finished) {
+            ToSuddenDeath data = new ToSuddenDeath(arena, players, spectators);
+            SuddenDeath suddenDeath = new SuddenDeath(dac, data);
+            dac.getStages().switchTo(suddenDeath);
+        }
     }
 
     public void onPlayerLoss(ClassicGamePlayer player) {

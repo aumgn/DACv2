@@ -46,7 +46,14 @@ public class SuddenDeath extends AbstractGame {
     @Override
     public void start() {
         resetPool();
+
         send("suddendeath.start");
+        send("suddendeath.playerslist");
+        for (SuddenDeathPlayer player : party.iterable()) {
+            send("suddendeath.start.playerentry", player.getIndex() + 1,
+                    player.getDisplayName());
+        }
+
         nextTurn();
     }
 
