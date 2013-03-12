@@ -1,5 +1,7 @@
 package fr.aumgn.dac2.game.suddendeath;
 
+import java.util.Locale;
+
 import fr.aumgn.dac2.game.GamePlayer;
 import fr.aumgn.dac2.stage.StagePlayer;
 
@@ -7,20 +9,16 @@ public class SuddenDeathPlayer extends GamePlayer {
 
     public enum Status {
 
-        Idle,
+        Awaiting,
         Failed,
         Success;
-
-        public String localizationKey() {
-            return name().toLowerCase();
-        }
     }
 
     private Status status;
 
     public SuddenDeathPlayer(StagePlayer player) {
         super(player);
-        status = Status.Idle;
+        status = Status.Awaiting;
     }
 
     public boolean hasSucceeded() {
@@ -28,7 +26,7 @@ public class SuddenDeathPlayer extends GamePlayer {
     }
 
     public void resetStatus() {
-        status = Status.Idle;
+        status = Status.Awaiting;
     }
 
     public void setSuccess() {
@@ -37,5 +35,9 @@ public class SuddenDeathPlayer extends GamePlayer {
 
     public void setFail() {
         status = Status.Failed;
+    }
+
+    public String getLocalizationKeyForStatus() {
+        return status.name().toLowerCase(Locale.US);
     }
 }

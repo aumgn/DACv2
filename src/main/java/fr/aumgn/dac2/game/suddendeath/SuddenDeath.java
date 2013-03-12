@@ -175,8 +175,10 @@ public class SuddenDeath extends AbstractGame {
 
         sender.sendMessage(messages.get("suddendeath.playerslist"));
         for (SuddenDeathPlayer player : party.iterable()) {
-            sender.sendMessage(messages.get("suddendeath.playerentry",
-                    player.getIndex(), player.getDisplayName()));
+            String key = "suddendeath.playerentry" + "."
+                    + player.getLocalizationKeyForStatus();
+            sender.sendMessage(messages.get(key, player.getIndex(),
+                    player.getDisplayName()));
         }
     }
 }
