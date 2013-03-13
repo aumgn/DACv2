@@ -75,12 +75,14 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
             return;
         }
 
-        tpBeforeJump(player);
         send("suddendeath.playerturn", player.getDisplayName());
+        tpBeforeJump(player);
+        startTurnTimer();
     }
 
     @Override
     public void stop(boolean force) {
+        cancelTurnTimer();
         resetPoolOnEnd();
     }
 
@@ -89,18 +91,19 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
         SuddenDeathPlayer sdPlayer = party.get(player);
         Column column = arena.getPool().getColumn(player);
 
+        send("suddendeath.jump.success", sdPlayer.getDisplayName());
         sdPlayer.setSuccess();
         tpAfterJumpSuccess(sdPlayer, column);
-        send("suddendeath.jump.success", sdPlayer.getDisplayName());
         nextTurn();
     }
 
     @Override
     public void onJumpFail(Player player) {
         SuddenDeathPlayer sdPlayer = party.get(player);
+
+        send("suddendeath.jump.fail", sdPlayer.getDisplayName());
         sdPlayer.setFail();
         tpAfterJumpFail(sdPlayer);
-        send("suddendeath.jump.fail", sdPlayer.getDisplayName());
         nextTurn();
     }
 
@@ -120,9 +123,9 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     public void eliminatePlayersWhoFailed() {
         for (SuddenDeathPlayer player : party.iterable().clone()) {
             if (!player.hasSucceeded()) {
+                send("suddendeath.elimination", player.getDisplayName());
                 party.remove(player);
                 spectators.add(player.getRef());
-                send("suddendeath.elimination", player.getDisplayName());
             }
         }
     }
@@ -133,7 +136,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
         sender.sendMessage(messages.get("suddendeath.playerslist"));
         for (SuddenDeathPlayer player : party.iterable()) {
-            String key = "suddendeath.playerentry" + "."
+            String key = "suddendeath.playerentry."
                     + player.getLocalizationKeyForStatus();
             sender.sendMessage(messages.get(key, player.getIndex(),
                     player.getDisplayName()));

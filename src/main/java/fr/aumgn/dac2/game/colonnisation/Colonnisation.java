@@ -7,11 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
-import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
@@ -19,15 +17,7 @@ import fr.aumgn.dac2.shape.column.GlassyPattern;
 
 public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
-    private final Runnable turnTimedOut = new Runnable() {
-        @Override
-        public void run() {
-            turnTimedOut();
-        }
-    };
-
     private boolean finished;
-    private Timer timer;
     private int setupTurns;
 
     public Colonnisation(DAC dac, GameStartData data) {
@@ -75,17 +65,13 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
             return;
         }
 
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new GameTimer(dac, this, turnTimedOut);
-        timer.start();
-
         send("colonnisation.playerturn", player.getDisplayName());
         tpBeforeJump(player);
+        startTurnTimer();
     }
 
-    private void turnTimedOut() {
+    @Override
+    protected void turnTimedOut() {
         ColonnPlayer player = party.getCurrent();
         removePlayer(player);
         if (!finished) {
@@ -103,11 +89,9 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
     @Override
     public void stop(boolean force) {
+        cancelTurnTimer();
         finished = true;
         resetPoolOnEnd();
-        if (timer != null) {
-            timer.cancel();
-        }
 
         if (force) {
             send("colonnisation.stopped");

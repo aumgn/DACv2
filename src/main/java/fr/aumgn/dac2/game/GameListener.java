@@ -60,6 +60,7 @@ public class GameListener implements Listener {
             return;
         }
 
+        game.cancelTurnTimer();
         game.onJumpFail(player);
         event.setCancelled(true);
     }
@@ -71,6 +72,7 @@ public class GameListener implements Listener {
             return;
         }
 
+        game.cancelTurnTimer();
         game.onQuit(player);
     }
 }

@@ -74,7 +74,7 @@ public class GameParty<T extends GamePlayer> {
     /**
      * Returns the internal array used to store the players.
      * This array is accessible for performance reason
-     * (and because Java doesn't permit polymorphic management of arrays)
+     * (and because Java doesn't allow clean polymorphic management of arrays)
      * and should preferably not be used to modify the array in any way.
      */
     public T[] iterable() {

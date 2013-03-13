@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
+import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
@@ -23,14 +24,34 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
     protected final GameParty<T> party;
     protected final PlayersRefSet spectators;
 
+    private final Runnable turnTimedOutRunnable;
+    private Timer turnTimer;
+
     public AbstractGame(DAC dac, GameStartData data,
             GamePlayer.Factory<T> factory) {
+        this(dac, data, factory, true);
+    }
+
+    public AbstractGame(DAC dac, GameStartData data,
+            GamePlayer.Factory<T> factory, boolean useTimer) {
         this.dac = dac;
         this.arena = data.getArena();
         this.listener = new GameListener(this);
         this.party = new GameParty<T>(this, data.getPlayers(), factory);
         this.spectators = new PlayersRefHashSet();
         spectators.addAll(data.getSpectators());
+
+        if (useTimer) {
+            this.turnTimedOutRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    turnTimedOut();
+                }
+            };
+        } else {
+            this.turnTimedOutRunnable = null;
+        }
+        this.turnTimer = null;
     }
 
     @Override
@@ -103,6 +124,24 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
      */
     public boolean isPlayerTurn(Player player) {
         return party.isTurn(player);
+    }
+
+    public void startTurnTimer() {
+        if (turnTimedOutRunnable == null) {
+            return;
+        }
+
+        turnTimer = new GameTimer(dac, this, turnTimedOutRunnable);
+        turnTimer.start();
+    }
+
+    public void cancelTurnTimer() {
+        if (turnTimer != null) {
+            turnTimer.cancel();
+        }
+    }
+
+    protected void turnTimedOut() {
     }
 
     /**

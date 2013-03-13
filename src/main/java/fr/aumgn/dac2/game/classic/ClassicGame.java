@@ -13,7 +13,6 @@ import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.AbstractGame;
-import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.shape.column.Column;
@@ -22,22 +21,13 @@ import fr.aumgn.dac2.shape.column.GlassyPattern;
 
 public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
-    private final Runnable turnTimedOut = new Runnable() {
-        @Override
-        public void run() {
-            turnTimedOut();
-        }
-    };
-
     private final ClassicGamePlayer[] ranking;
     private boolean finished;
-    private GameTimer timer;
 
     public ClassicGame(DAC dac, GameStartData data) {
         super(dac, data, new ClassicGamePlayer.Factory());
         ranking = new ClassicGamePlayer[party.size() - 1];
         finished = false;
-        timer = new GameTimer(dac, this, turnTimedOut);
     }
 
     @Override
@@ -70,9 +60,6 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
             return;
         }
 
-        timer.cancel();
-        timer = new GameTimer(dac, this, turnTimedOut);
-
         if (!player.isOnline()) {
             send("game.playerturn.notconnected", player.getDisplayName());
             removePlayer(player);
@@ -92,7 +79,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
                 send("game.playerturn", player.getDisplayName());
             }
             tpBeforeJump(player);
-            timer.start();
+            startTurnTimer();
         }
     }
 
@@ -111,7 +98,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
         return remaining == 1;
     }
 
-    private void turnTimedOut() {
+    @Override
+    protected void turnTimedOut() {
         ClassicGamePlayer player = party.getCurrent();
         send("game.turn.timedout", player.getDisplayName());
         removePlayer(player);
@@ -266,10 +254,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
     }
 
     public void stop(boolean force) {
-        if (timer != null) {
-            timer.cancel();
-        }
-
+        cancelTurnTimer();
         finished = true;
         resetPoolOnEnd();
 

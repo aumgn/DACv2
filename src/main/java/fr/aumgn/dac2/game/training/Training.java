@@ -19,7 +19,7 @@ public class Training extends AbstractGame<TrainingPlayer> {
     private GameParty<TrainingPlayer> party;
 
     public Training(DAC dac, GameStartData data) {
-        super(dac, data, new TrainingPlayer.Factory());
+        super(dac, data, new TrainingPlayer.Factory(), false);
     }
 
     @Override
