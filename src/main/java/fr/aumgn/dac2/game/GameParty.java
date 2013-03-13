@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.OfflinePlayer;
+
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
+import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.util.Util;
 
 public class GameParty<T extends GamePlayer> {
@@ -13,21 +17,27 @@ public class GameParty<T extends GamePlayer> {
     // Come on..
     private final Class<T> clazz;
     private final Game game;
-    private T[] players;
+
+    private T[] array;
+    private final PlayersRefMap<T> map;
+
     private int turn;
 
     public GameParty(Game game, Class<T> clazz, List<T> list) {
         this.clazz = clazz;
         this.game = game;
-        players = newArray(list.size());
+        this.array = newArray(list.size());
+        this.map = new PlayersRefHashMap<T>();
 
         List<T> roulette = new LinkedList<T>(list);
         Random rand = Util.getRandom();
-        for (int i = 0; i< players.length; i++) {
+        for (int i = 0; i< array.length; i++) {
             int j = rand.nextInt(roulette.size());
             T player = roulette.remove(j);
-            players[i] = player;
+            array[i] = player;
             player.setIndex(i);
+
+            map.put(player.getRef(), player);
         }
 
         turn = -1;
@@ -38,16 +48,24 @@ public class GameParty<T extends GamePlayer> {
         return (T[]) Array.newInstance(clazz, size);
     }
 
+    public boolean contains(OfflinePlayer player) {
+        return map.containsKey(player);
+    }
+
+    public T get(OfflinePlayer player) {
+        return map.get(player);
+    }
+
     public boolean isTurn(T player) {
         return player.getIndex() == turn;
     }
 
     public boolean isLastTurn() {
-        return turn == players.length - 1;
+        return turn == array.length - 1;
     }
 
     public T getCurrent() {
-        return players[turn];
+        return array[turn];
     }
 
     /**
@@ -57,50 +75,52 @@ public class GameParty<T extends GamePlayer> {
      * and should preferably not be used to modify the array in any way.
      */
     public T[] iterable() {
-        return players;
+        return array;
     }
 
     public int size() {
-        return players.length;
+        return array.length;
     }
 
     public T nextTurn() {
         incrementTurn();
-        return players[turn];
+        return array[turn];
     }
 
     private void incrementTurn() {
         turn++;
-        if (turn >= players.length) {
+        if (turn >= array.length) {
             turn = 0;
             game.onNewTurn();
         }
     }
 
-    public void removePlayer(T player) {
+    public void remove(T player) {
         int index = player.getIndex();
 
-        T[] newPlayers = newArray(players.length - 1);
-        System.arraycopy(players, 0, newPlayers, 0, index);
-        System.arraycopy(players, index + 1, newPlayers,
-                index, players.length - index - 1);
+        T[] newPlayers = newArray(array.length - 1);
+        System.arraycopy(array, 0, newPlayers, 0, index);
+        System.arraycopy(array, index + 1, newPlayers,
+                index, array.length - index - 1);
 
-        for (int i = index + 1; i < players.length; i++) {
-            players[i].setIndex(i - 1);
+        for (int i = index + 1; i < array.length; i++) {
+            array[i].setIndex(i - 1);
         }
 
         if (index <= turn) {
             if (turn == 0) {
-                turn = players.length - 2;
+                turn = array.length - 2;
             } else {
                 turn--;
             }
         }
 
-        players = newPlayers;
+        array = newPlayers;
+
+        map.remove(player.getRef());
     }
 
     public List<T> asList() {
-        return Arrays.asList(players);
+        return Arrays.asList(array);
     }
 }

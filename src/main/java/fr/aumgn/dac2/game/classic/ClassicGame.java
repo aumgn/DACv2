@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
@@ -29,7 +27,6 @@ import fr.aumgn.dac2.stage.StagePlayer;
 public class ClassicGame extends AbstractGame {
 
     private final GameParty<ClassicGamePlayer> party;
-    private final PlayersRefMap<ClassicGamePlayer> playersMap;
     private final ClassicGamePlayer[] ranking;
 
     private final Runnable turnTimedOut = new Runnable() {
@@ -48,12 +45,10 @@ public class ClassicGame extends AbstractGame {
         Set<? extends StagePlayer> players = data.getPlayers();
         List<ClassicGamePlayer> list =
                 new ArrayList<ClassicGamePlayer>(players.size());
-        playersMap = new PlayersRefHashMap<ClassicGamePlayer>();
 
         for (StagePlayer stagePlayer : players) {
             ClassicGamePlayer player = new ClassicGamePlayer(stagePlayer);
             list.add(player);
-            playersMap.put(player.getRef(), player);
         }
         party = new GameParty<ClassicGamePlayer>(this, ClassicGamePlayer.class,
                 list);
@@ -78,7 +73,7 @@ public class ClassicGame extends AbstractGame {
 
     @Override
     public boolean contains(Player player) {
-        return playersMap.containsKey(player);
+        return party.contains(player);
     }
 
     @Override
@@ -158,13 +153,12 @@ public class ClassicGame extends AbstractGame {
 
     @Override
     public boolean isPlayerTurn(Player player) {
-        ClassicGamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = party.get(player);
         return gamePlayer != null && party.isTurn(gamePlayer);
     }
 
     private void removePlayer(ClassicGamePlayer player) {
-        party.removePlayer(player);
-        playersMap.remove(player.getRef());
+        party.remove(player);
         addToRanking(player);
         spectators.add(player.getRef());
 
@@ -184,7 +178,7 @@ public class ClassicGame extends AbstractGame {
 
     @Override
     public void onJumpSuccess(Player player) {
-        ClassicGamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = party.get(player);
         World world = arena.getWorld();
 
         Column column = arena.getPool().getColumn(player);
@@ -242,7 +236,7 @@ public class ClassicGame extends AbstractGame {
         }
 
         Vector2D pos = new Vector2D(player.getLocation().getBlock());
-        ClassicGamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = party.get(player);
 
         send("game.jump.fail", gamePlayer.getDisplayName());
         if (isConfirmationTurn()) {
@@ -265,7 +259,7 @@ public class ClassicGame extends AbstractGame {
 
     @Override
     public void onQuit(Player player) {
-        ClassicGamePlayer gamePlayer = playersMap.get(player);
+        ClassicGamePlayer gamePlayer = party.get(player);
         send("game.player.quit", gamePlayer.getDisplayName());
         removePlayer(gamePlayer);
     }

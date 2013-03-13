@@ -8,8 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.PoolFilling;
 import fr.aumgn.dac2.arena.regions.PoolFilling.AllButOne;
@@ -22,7 +20,6 @@ import fr.aumgn.dac2.stage.StagePlayer;
 public class SuddenDeath extends AbstractGame {
 
     private GameParty<SuddenDeathPlayer> party;
-    private PlayersRefMap<SuddenDeathPlayer> playersMap;
     private boolean finished;
 
     public SuddenDeath(DAC dac, GameStartData data) {
@@ -32,12 +29,10 @@ public class SuddenDeath extends AbstractGame {
         Set<? extends StagePlayer> players = data.getPlayers();
         List<SuddenDeathPlayer> list =
                 new ArrayList<SuddenDeathPlayer>(players.size());
-        playersMap = new PlayersRefHashMap<SuddenDeathPlayer>();
 
         for (StagePlayer stagePlayer : players) {
             SuddenDeathPlayer player = new SuddenDeathPlayer(stagePlayer);
             list.add(player);
-            playersMap.put(player.getRef(), player);
         }
         party = new GameParty<SuddenDeathPlayer>(this, SuddenDeathPlayer.class,
                 list);
@@ -107,7 +102,7 @@ public class SuddenDeath extends AbstractGame {
 
     @Override
     public boolean contains(Player player) {
-        return playersMap.containsKey(player);
+        return party.contains(player);
     }
 
     @Override
@@ -120,13 +115,13 @@ public class SuddenDeath extends AbstractGame {
 
     @Override
     public boolean isPlayerTurn(Player player) {
-        SuddenDeathPlayer sdPlayer = playersMap.get(player);
+        SuddenDeathPlayer sdPlayer = party.get(player);
         return sdPlayer != null && party.isTurn(sdPlayer);
     }
 
     @Override
     public void onJumpSuccess(Player player) {
-        SuddenDeathPlayer sdPlayer = playersMap.get(player);
+        SuddenDeathPlayer sdPlayer = party.get(player);
         Column column = arena.getPool().getColumn(player);
 
         sdPlayer.setSuccess();
@@ -137,7 +132,7 @@ public class SuddenDeath extends AbstractGame {
 
     @Override
     public void onJumpFail(Player player) {
-        SuddenDeathPlayer sdPlayer = playersMap.get(player);
+        SuddenDeathPlayer sdPlayer = party.get(player);
         sdPlayer.setFail();
         tpAfterJumpFail(sdPlayer);
         send("suddendeath.jump.fail", sdPlayer.getDisplayName());
@@ -146,9 +141,8 @@ public class SuddenDeath extends AbstractGame {
 
     @Override
     public void onQuit(Player player) {
-        SuddenDeathPlayer sdPlayer = playersMap.get(player);
-        party.removePlayer(sdPlayer);
-        playersMap.remove(player);
+        SuddenDeathPlayer sdPlayer = party.get(player);
+        party.remove(sdPlayer);
     }
 
     public void onPlayerWin(SuddenDeathPlayer player) {
@@ -161,8 +155,7 @@ public class SuddenDeath extends AbstractGame {
     public void eliminatePlayersWhoFailed() {
         for (SuddenDeathPlayer player : party.iterable().clone()) {
             if (!player.hasSucceeded()) {
-                party.removePlayer(player);
-                playersMap.remove(player.getRef());
+                party.remove(player);
                 spectators.add(player.getRef());
                 send("suddendeath.elimination", player.getDisplayName());
             }

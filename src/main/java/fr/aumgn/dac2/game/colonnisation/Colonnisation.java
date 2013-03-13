@@ -10,8 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
@@ -27,7 +25,6 @@ import fr.aumgn.dac2.stage.StagePlayer;
 public class Colonnisation extends AbstractGame {
 
     private final GameParty<ColonnPlayer> party;
-    private final PlayersRefMap<ColonnPlayer> playersMap;
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -45,12 +42,10 @@ public class Colonnisation extends AbstractGame {
 
         Set<? extends StagePlayer> players = data.getPlayers();
         List<ColonnPlayer> list = new ArrayList<ColonnPlayer>(players.size());
-        playersMap = new PlayersRefHashMap<ColonnPlayer>();
 
         for (StagePlayer stagePlayer : players) {
             ColonnPlayer player = new ColonnPlayer(stagePlayer);
             list.add(player);
-            playersMap.put(stagePlayer.getRef(), player);
         }
         party = new GameParty<ColonnPlayer>(this, ColonnPlayer.class, list);
 
@@ -116,8 +111,7 @@ public class Colonnisation extends AbstractGame {
     }
 
     private void removePlayer(ColonnPlayer player) {
-        party.removePlayer(player);
-        playersMap.remove(player.getRef());
+        party.remove(player);
         spectators.add(player.getRef());
         if (party.size() < 2) {
             dac.getStages().stop(this);
@@ -153,7 +147,7 @@ public class Colonnisation extends AbstractGame {
 
     @Override
     public boolean contains(Player player) {
-        return playersMap.containsKey(player);
+        return party.contains(player);
     }
 
     @Override
@@ -166,13 +160,13 @@ public class Colonnisation extends AbstractGame {
 
     @Override
     public boolean isPlayerTurn(Player player) {
-        ColonnPlayer gamePlayer = playersMap.get(player);
+        ColonnPlayer gamePlayer = party.get(player);
         return gamePlayer != null && party.isTurn(gamePlayer);
     }
 
     @Override
     public void onJumpSuccess(Player player) {
-        ColonnPlayer gamePlayer = playersMap.get(player);
+        ColonnPlayer gamePlayer = party.get(player);
         World world = arena.getWorld();
         Pool pool = arena.getPool();
 
@@ -214,7 +208,7 @@ public class Colonnisation extends AbstractGame {
 
     @Override
     public void onJumpFail(Player player) {
-        ColonnPlayer gamePlayer = playersMap.get(player);
+        ColonnPlayer gamePlayer = party.get(player);
 
         send("colonnisation.jump.fail", gamePlayer.getDisplayName());
         if (gamePlayer.getMultiplier() > 1) {
@@ -228,7 +222,7 @@ public class Colonnisation extends AbstractGame {
 
     @Override
     public void onQuit(Player player) {
-        ColonnPlayer gamePlayer = playersMap.get(player);
+        ColonnPlayer gamePlayer = party.get(player);
         removePlayer(gamePlayer);
         send("colonnisation.player.quit", gamePlayer.getDisplayName(),
                 gamePlayer.getScore());

@@ -9,8 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
@@ -24,7 +22,6 @@ import fr.aumgn.dac2.stage.StagePlayer;
 public class Training extends AbstractGame {
 
     private GameParty<TrainingPlayer> party;
-    private PlayersRefMap<TrainingPlayer> playersMap;
 
     public Training(DAC dac, GameStartData data) {
         super(dac, data);
@@ -32,12 +29,10 @@ public class Training extends AbstractGame {
         Set<? extends StagePlayer> players = data.getPlayers();
         List<TrainingPlayer> list =
                 new ArrayList<TrainingPlayer>(players.size());
-        playersMap = new PlayersRefHashMap<TrainingPlayer>();
 
         for (StagePlayer stagePlayer : players) {
             TrainingPlayer player = new TrainingPlayer(stagePlayer);
             list.add(player);
-            playersMap.put(player.getRef(), player);
         }
         party = new GameParty<TrainingPlayer>(this, TrainingPlayer.class,
                 list);
@@ -66,7 +61,7 @@ public class Training extends AbstractGame {
 
     @Override
     public boolean contains(Player player) {
-        return playersMap.containsKey(player);
+        return party.contains(player);
     }
 
     @Override
@@ -79,13 +74,13 @@ public class Training extends AbstractGame {
 
     @Override
     public boolean isPlayerTurn(Player player) {
-        TrainingPlayer trainingPlayer = playersMap.get(player);
+        TrainingPlayer trainingPlayer = party.get(player);
         return trainingPlayer != null && party.isTurn(trainingPlayer);
     }
 
     @Override
     public void onJumpSuccess(Player player) {
-        TrainingPlayer trainingPlayer = playersMap.get(player);
+        TrainingPlayer trainingPlayer = party.get(player);
         World world = arena.getWorld();
         Pool pool = arena.getPool();
 
@@ -111,7 +106,7 @@ public class Training extends AbstractGame {
 
     @Override
     public void onJumpFail(Player player) {
-        TrainingPlayer trainingPlayer = playersMap.get(player);
+        TrainingPlayer trainingPlayer = party.get(player);
         send("training.jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();
 
@@ -123,9 +118,8 @@ public class Training extends AbstractGame {
 
     @Override
     public void onQuit(Player player) {
-        TrainingPlayer trainingPlayer = playersMap.get(player);
-        party.removePlayer(trainingPlayer);
-        playersMap.remove(player);
+        TrainingPlayer trainingPlayer = party.get(player);
+        party.remove(trainingPlayer);
         trainingPlayer.sendStats(dac.getMessages());
 
         if (party.size() == 0) {
