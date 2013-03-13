@@ -8,6 +8,7 @@ import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.dac2.DAC;
+import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.Stage;
 
 @NestedCommands("dac2")
@@ -22,8 +23,9 @@ public class SpectatorCommands extends DACCommands {
         List<Stage> stages = args.getList(0, Stage).value();
 
         for (Stage stage : stages) {
+            Spectators spectators = stage.getSpectators();
             String arenaName = stage.getArena().getName();
-            if (stage.isSpectator(sender)) {
+            if (spectators .contains(sender)) {
                 sender.sendMessage(msg("watch.alreadywatching", arenaName));
                 continue;
             }
@@ -32,7 +34,7 @@ public class SpectatorCommands extends DACCommands {
                 continue;
             }
 
-            stage.addSpectator(sender);
+            spectators.add(sender);
             sender.sendMessage(msg("watch.success", arenaName));
         }
     }
@@ -42,13 +44,14 @@ public class SpectatorCommands extends DACCommands {
         List<Stage> stages = args.getList(0, Stage).value();
 
         for (Stage stage : stages) {
+            Spectators spectators = stage.getSpectators();
             String arenaName = stage.getArena().getName();
-            if (!stage.isSpectator(sender)) {
+            if (!stage.getSpectators().contains(sender)) {
                 sender.sendMessage(msg("unwatch.notwatching", arenaName));
                 continue;
             }
 
-            stage.removeSpectator(sender);
+            spectators.remove(sender);
             sender.sendMessage(msg("unwatch.success", arenaName));
         }
     }

@@ -20,11 +20,7 @@ public interface Stage {
 
     void sendMessage(String message);
 
-    boolean isSpectator(Player player);
-
-    void addSpectator(Player player);
-
-    void removeSpectator(Player player);
+    Spectators getSpectators();
 
     void list(CommandSender sender);
 

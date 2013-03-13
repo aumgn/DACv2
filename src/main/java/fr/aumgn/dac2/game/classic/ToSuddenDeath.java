@@ -2,19 +2,19 @@ package fr.aumgn.dac2.game.classic;
 
 import java.util.Set;
 
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.StagePlayer;
 
 public class ToSuddenDeath implements GameStartData {
 
     private final Arena arena;
     private final Set<ClassicGamePlayer> players;
-    private final PlayersRefSet spectators;
+    private final Spectators spectators;
 
     public ToSuddenDeath(Arena arena, Set<ClassicGamePlayer> players,
-            PlayersRefSet spectators) {
+            Spectators spectators) {
         this.arena = arena;
         this.players = players;
         this.spectators = spectators;
@@ -31,7 +31,7 @@ public class ToSuddenDeath implements GameStartData {
     }
 
     @Override
-    public PlayersRefSet getSpectators() {
+    public Spectators getSpectators() {
         return spectators;
     }
 }

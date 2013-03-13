@@ -7,13 +7,12 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.exceptions.TooManyPlayers;
+import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.StagePlayer;
 
 public class GameQuickStart implements GameStartData {
@@ -53,8 +52,8 @@ public class GameQuickStart implements GameStartData {
     }
 
     @Override
-    public PlayersRefSet getSpectators() {
-        return new PlayersRefHashSet();
+    public Spectators getSpectators() {
+        return new Spectators();
     }
 
     public int size() {

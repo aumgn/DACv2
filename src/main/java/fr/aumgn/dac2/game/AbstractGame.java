@@ -5,13 +5,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
+import fr.aumgn.dac2.stage.Spectators;
 
 /**
  * Common base implementation of most game mode.
@@ -22,7 +21,7 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
     protected final Arena arena;
     protected final Listener listener;
     protected final GameParty<T> party;
-    protected final PlayersRefSet spectators;
+    protected final Spectators spectators;
 
     private final Runnable turnTimedOutRunnable;
     private Timer turnTimer;
@@ -38,8 +37,7 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
         this.arena = data.getArena();
         this.listener = new GameListener(this);
         this.party = new GameParty<T>(this, data.getPlayers(), factory);
-        this.spectators = new PlayersRefHashSet();
-        spectators.addAll(data.getSpectators());
+        this.spectators = new Spectators(data.getSpectators());
 
         if (useTimer) {
             this.turnTimedOutRunnable = new Runnable() {
@@ -81,34 +79,12 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
         for (GamePlayer player : party.iterable()) {
             player.sendMessage(message);
         }
-        sendSpectators(message);
-    }
-
-    /**
-     * Sends a message to this game's spectators by prefixing
-     * the message with the arena's name as specified in the config.
-     */
-    protected void sendSpectators(String message) {
-        String spectatorMessage = dac.getConfig().getSpectatorsMsg()
-                .format(new String[] { arena.getName(), message });
-        for (Player spectator : spectators.players()) {
-            spectator.sendMessage(spectatorMessage);
-        }
+        spectators.send(dac, arena, message);
     }
 
     @Override
-    public boolean isSpectator(Player player) {
-        return spectators.contains(player);
-    }
-
-    @Override
-    public void addSpectator(Player player) {
-        spectators.add(player);
-    }
-
-    @Override
-    public void removeSpectator(Player player) {
-        spectators.remove(player);
+    public Spectators getSpectators() {
+        return spectators;
     }
 
     @Override

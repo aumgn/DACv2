@@ -2,8 +2,8 @@ package fr.aumgn.dac2.game.start;
 
 import java.util.Set;
 
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.StagePlayer;
 
 /**
@@ -16,5 +16,5 @@ public interface GameStartData {
 
     Set<? extends StagePlayer> getPlayers();
 
-    PlayersRefSet getSpectators();
+    Spectators getSpectators();
 }
