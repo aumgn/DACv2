@@ -18,7 +18,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     private boolean finished;
 
     public SuddenDeath(DAC dac, GameStartData data) {
-        super(dac, data, new SuddenDeathPlayer.Factory());
+        super(dac, data, "suddendeath", new SuddenDeathPlayer.Factory());
         finished = false;
     }
 
@@ -26,10 +26,10 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     public void start() {
         resetPool();
 
-        send("suddendeath.start");
-        send("suddendeath.playerslist");
+        send("start");
+        send("playerslist");
         for (SuddenDeathPlayer player : party.iterable()) {
-            send("suddendeath.start.playerentry", player.getIndex() + 1,
+            send("start.playerentry", player.getIndex() + 1,
                     player.getDisplayName());
         }
 
@@ -54,7 +54,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
         }
 
         if (remaining == 0) {
-            send("suddendeath.allfailed");
+            send("allfailed");
         } else if (remaining == 1) {
             onPlayerWin(winner);
             return;
@@ -75,7 +75,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
             return;
         }
 
-        send("suddendeath.playerturn", player.getDisplayName());
+        send("playerturn", player.getDisplayName());
         tpBeforeJump(player);
         startTurnTimer();
     }
@@ -91,7 +91,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
         SuddenDeathPlayer sdPlayer = party.get(player);
         Column column = arena.getPool().getColumn(player);
 
-        send("suddendeath.jump.success", sdPlayer.getDisplayName());
+        send("jump.success", sdPlayer.getDisplayName());
         sdPlayer.setSuccess();
         tpAfterJumpSuccess(sdPlayer, column);
         nextTurn();
@@ -101,7 +101,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     public void onJumpFail(Player player) {
         SuddenDeathPlayer sdPlayer = party.get(player);
 
-        send("suddendeath.jump.fail", sdPlayer.getDisplayName());
+        send("jump.fail", sdPlayer.getDisplayName());
         sdPlayer.setFail();
         tpAfterJumpFail(sdPlayer);
         nextTurn();
@@ -114,7 +114,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     }
 
     public void onPlayerWin(SuddenDeathPlayer player) {
-        send("suddendeath.winner", player.getDisplayName());
+        send("winner", player.getDisplayName());
         finished = true;
         dac.getStages().stop(this);
         resetPoolOnEnd();
@@ -123,7 +123,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     public void eliminatePlayersWhoFailed() {
         for (SuddenDeathPlayer player : party.iterable().clone()) {
             if (!player.hasSucceeded()) {
-                send("suddendeath.elimination", player.getDisplayName());
+                send("elimination", player.getDisplayName());
                 party.remove(player);
                 spectators.add(player.getRef());
             }

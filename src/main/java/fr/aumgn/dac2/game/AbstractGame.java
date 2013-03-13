@@ -17,25 +17,29 @@ import fr.aumgn.dac2.stage.Spectators;
  */
 public abstract class AbstractGame<T extends GamePlayer> implements Game {
 
+    private static final String DEFAULT_L18N_NAMESPACE = "game.";
+
     protected final DAC dac;
     protected final Arena arena;
     protected final Listener listener;
+    private final String l18nNamespace;
     protected final GameParty<T> party;
     protected final Spectators spectators;
 
     private final Runnable turnTimedOutRunnable;
     private Timer turnTimer;
 
-    public AbstractGame(DAC dac, GameStartData data,
+    public AbstractGame(DAC dac, GameStartData data, String l18nNamespace,
             GamePlayer.Factory<T> factory) {
-        this(dac, data, factory, true);
+        this(dac, data, l18nNamespace, factory, true);
     }
 
-    public AbstractGame(DAC dac, GameStartData data,
+    public AbstractGame(DAC dac, GameStartData data, String l18nNamespace,
             GamePlayer.Factory<T> factory, boolean useTimer) {
         this.dac = dac;
         this.arena = data.getArena();
         this.listener = new GameListener(this);
+        this.l18nNamespace = l18nNamespace + ".";
         this.party = new GameParty<T>(this, data.getPlayers(), factory);
         this.spectators = new Spectators(data.getSpectators());
 
@@ -71,7 +75,8 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
      * Send a message which is recorded in the main PluginMessages instance.
      */
     protected void send(String key, Object... arguments) {
-        sendMessage(dac.getMessages().get(key, arguments));
+        String[] keys = { l18nNamespace + key, DEFAULT_L18N_NAMESPACE + key };
+        sendMessage(dac.getMessages().get(keys, arguments));
     }
 
     @Override

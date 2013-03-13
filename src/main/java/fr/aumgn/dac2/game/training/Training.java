@@ -19,20 +19,20 @@ public class Training extends AbstractGame<TrainingPlayer> {
     private GameParty<TrainingPlayer> party;
 
     public Training(DAC dac, GameStartData data) {
-        super(dac, data, new TrainingPlayer.Factory(), false);
+        super(dac, data, "training", new TrainingPlayer.Factory(), false);
     }
 
     @Override
     public void start() {
         resetPoolOnStart();
-        send("training.start");
+        send("start");
         nextTurn();
     }
 
     private void nextTurn() {
         TrainingPlayer player = party.nextTurn();
         tpBeforeJump(player);
-        send("training.playerturn", player.getDisplayName());
+        send("playerturn", player.getDisplayName());
     }
 
     @Override
@@ -53,11 +53,11 @@ public class Training extends AbstractGame<TrainingPlayer> {
         ColumnPattern pattern = trainingPlayer.getColumnPattern();
 
         if (column.isADAC(world)) {
-            send("training.jump.dac", trainingPlayer.getDisplayName());
+            send("jump.dac", trainingPlayer.getDisplayName());
             trainingPlayer.incrementDacs();
             pattern = new GlassyPattern(pattern);
         } else {
-            send("training.jump.success", trainingPlayer.getDisplayName());
+            send("jump.success", trainingPlayer.getDisplayName());
             trainingPlayer.incrementSuccesses();
         }
 
@@ -72,7 +72,7 @@ public class Training extends AbstractGame<TrainingPlayer> {
     @Override
     public void onJumpFail(Player player) {
         TrainingPlayer trainingPlayer = party.get(player);
-        send("training.jump.fail", trainingPlayer.getDisplayName());
+        send("jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();
 
         if (party.size() != 1) {

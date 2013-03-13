@@ -21,7 +21,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     private int setupTurns;
 
     public Colonnisation(DAC dac, GameStartData data) {
-        super(dac, data, new ColonnPlayer.Factory());
+        super(dac, data, "colonnisation", new ColonnPlayer.Factory());
         finished = false;
     }
 
@@ -33,13 +33,13 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         double setupColumns = size * dac.getConfig().getColonnisationRatio();
         setupTurns = (int) Math.ceil(setupColumns / party.size());
 
-        send("colonnisation.start");
-        send("colonnisation.playerslist");
+        send("start");
+        send("playerslist");
         for (ColonnPlayer player : party.iterable()) {
-            send("colonnisation.start.playerentry", player.getIndex() + 1,
+            send("start.playerentry", player.getIndex() + 1,
                     player.getDisplayName());
         }
-        send("colonnisation.setup.turns", setupTurns);
+        send("setup.turns", setupTurns);
         nextTurn();
     }
 
@@ -47,8 +47,8 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     public void onNewTurn() {
         setupTurns--;
         if (setupTurns == 0) {
-            send("colonnisation.setup.finished");
-            send("colonnisation.enjoy");
+            send("setup.finished");
+            send("enjoy");
         }
     }
 
@@ -56,7 +56,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         ColonnPlayer player = party.nextTurn();
 
         if (!player.isOnline()) {
-            send("colonnisation.playerturn.notconnected",
+            send("playerturn.notconnected",
                     player.getDisplayName());
             removePlayer(player);
             if (!finished) {
@@ -65,7 +65,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
             return;
         }
 
-        send("colonnisation.playerturn", player.getDisplayName());
+        send("playerturn", player.getDisplayName());
         tpBeforeJump(player);
         startTurnTimer();
     }
@@ -94,20 +94,20 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         resetPoolOnEnd();
 
         if (force) {
-            send("colonnisation.stopped");
+            send("stopped");
         } else {
-            send("colonnisation.finished");
+            send("finished");
         }
 
         ColonnPlayer[] ranking = party.iterable().clone();
         Arrays.sort(ranking);
 
         int index = ranking.length - 1;
-        send("colonnisation.winner", ranking[index].getDisplayName(),
+        send("winner", ranking[index].getDisplayName(),
                 ranking[index].getScore());
         index--;
         for (; index >= 0; index--) {
-            send("colonnisation.ranking", ranking.length - index,
+            send("rank", ranking.length - index,
                     ranking[index].getDisplayName(),
                     ranking[index].getScore());
         }
@@ -123,7 +123,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         ColumnPattern pattern;
         if (setupTurns > 0) {
             pattern = dac.getConfig().getNeutralPattern();
-            send("colonnisation.setup.success", gamePlayer.getDisplayName());
+            send("setup.success", gamePlayer.getDisplayName());
         } else {
             pattern = gamePlayer.getColumnPattern();
             boolean isADAC = column.isADAC(world);
@@ -139,10 +139,10 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
             gamePlayer.addPoints(points);
 
             if (isADAC) {
-                send("colonnisation.multiplier.increment",
+                send("multiplier.increment",
                         gamePlayer.getMultiplier());
             }
-            send("colonnisation.jump.success", gamePlayer.getDisplayName(),
+            send("jump.success", gamePlayer.getDisplayName(),
                     points, gamePlayer.getScore());
         }
 
@@ -159,10 +159,10 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     public void onJumpFail(Player player) {
         ColonnPlayer gamePlayer = party.get(player);
 
-        send("colonnisation.jump.fail", gamePlayer.getDisplayName());
+        send("jump.fail", gamePlayer.getDisplayName());
         if (gamePlayer.getMultiplier() > 1) {
             gamePlayer.resetMultiplier();
-            send("colonnisation.multiplier.reset");
+            send("multiplier.reset");
         }
 
         tpAfterJumpFail(gamePlayer);
@@ -173,7 +173,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     public void onQuit(Player player) {
         ColonnPlayer gamePlayer = party.get(player);
         removePlayer(gamePlayer);
-        send("colonnisation.player.quit", gamePlayer.getDisplayName(),
+        send("player.quit", gamePlayer.getDisplayName(),
                 gamePlayer.getScore());
         if (!finished) {
             nextTurn();
