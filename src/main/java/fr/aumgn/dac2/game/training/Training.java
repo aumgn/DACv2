@@ -1,9 +1,5 @@
 package fr.aumgn.dac2.game.training;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -17,25 +13,13 @@ import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
-import fr.aumgn.dac2.stage.StagePlayer;
 
-public class Training extends AbstractGame {
+public class Training extends AbstractGame<TrainingPlayer> {
 
     private GameParty<TrainingPlayer> party;
 
     public Training(DAC dac, GameStartData data) {
-        super(dac, data);
-
-        Set<? extends StagePlayer> players = data.getPlayers();
-        List<TrainingPlayer> list =
-                new ArrayList<TrainingPlayer>(players.size());
-
-        for (StagePlayer stagePlayer : players) {
-            TrainingPlayer player = new TrainingPlayer(stagePlayer);
-            list.add(player);
-        }
-        party = new GameParty<TrainingPlayer>(this, TrainingPlayer.class,
-                list);
+        super(dac, data, new TrainingPlayer.Factory());
     }
 
     @Override
@@ -57,25 +41,6 @@ public class Training extends AbstractGame {
         for (TrainingPlayer player : party.iterable()) {
             player.sendStats(dac.getMessages());
         }
-    }
-
-    @Override
-    public boolean contains(Player player) {
-        return party.contains(player);
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        for (TrainingPlayer player : party.iterable()) {
-            player.sendMessage(message);
-        }
-        sendSpectators(message);
-    }
-
-    @Override
-    public boolean isPlayerTurn(Player player) {
-        TrainingPlayer trainingPlayer = party.get(player);
-        return trainingPlayer != null && party.isTurn(trainingPlayer);
     }
 
     @Override

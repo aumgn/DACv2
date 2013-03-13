@@ -2,9 +2,7 @@ package fr.aumgn.dac2.game.classic;
 
 import static fr.aumgn.dac2.utils.DACUtil.PLAYER_MAX_HEALTH;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.bukkit.World;
@@ -15,19 +13,14 @@ import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.game.AbstractGame;
-import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
-import fr.aumgn.dac2.stage.StagePlayer;
 
-public class ClassicGame extends AbstractGame {
-
-    private final GameParty<ClassicGamePlayer> party;
-    private final ClassicGamePlayer[] ranking;
+public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -36,24 +29,15 @@ public class ClassicGame extends AbstractGame {
         }
     };
 
+    private final ClassicGamePlayer[] ranking;
     private boolean finished;
     private GameTimer timer;
 
     public ClassicGame(DAC dac, GameStartData data) {
-        super(dac, data);
-
-        Set<? extends StagePlayer> players = data.getPlayers();
-        List<ClassicGamePlayer> list =
-                new ArrayList<ClassicGamePlayer>(players.size());
-
-        for (StagePlayer stagePlayer : players) {
-            ClassicGamePlayer player = new ClassicGamePlayer(stagePlayer);
-            list.add(player);
-        }
-        party = new GameParty<ClassicGamePlayer>(this, ClassicGamePlayer.class,
-                list);
-
+        super(dac, data, new ClassicGamePlayer.Factory());
         ranking = new ClassicGamePlayer[party.size() - 1];
+        finished = false;
+        timer = new GameTimer(dac, this, turnTimedOut);
     }
 
     @Override
@@ -72,19 +56,6 @@ public class ClassicGame extends AbstractGame {
     }
 
     @Override
-    public boolean contains(Player player) {
-        return party.contains(player);
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        for (ClassicGamePlayer player : party.iterable()) {
-            player.sendMessage(message);
-        }
-        sendSpectators(message);
-    }
-
-    @Override
     public void onNewTurn() {
         for (ClassicGamePlayer player : party.iterable().clone()) {
             if (player.isDead()) {
@@ -99,9 +70,7 @@ public class ClassicGame extends AbstractGame {
             return;
         }
 
-        if (timer != null) {
-            timer.cancel();
-        }
+        timer.cancel();
         timer = new GameTimer(dac, this, turnTimedOut);
 
         if (!player.isOnline()) {
@@ -149,12 +118,6 @@ public class ClassicGame extends AbstractGame {
         if (!finished) {
             nextTurn();
         }
-    }
-
-    @Override
-    public boolean isPlayerTurn(Player player) {
-        ClassicGamePlayer gamePlayer = party.get(player);
-        return gamePlayer != null && party.isTurn(gamePlayer);
     }
 
     private void removePlayer(ClassicGamePlayer player) {
@@ -321,8 +284,8 @@ public class ClassicGame extends AbstractGame {
 
         sender.sendMessage(messages.get("game.playerslist"));
         for (ClassicGamePlayer player : party.iterable()) {
-            sender.sendMessage(messages.get("game.playerentry", 
-                    player.getIndex(), player.getDisplayName(), 
+            sender.sendMessage(messages.get("game.playerentry",
+                    player.getIndex(), player.getDisplayName(),
                     player.getLives()));
         }
     }

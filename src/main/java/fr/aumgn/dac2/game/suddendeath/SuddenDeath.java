@@ -1,9 +1,5 @@
 package fr.aumgn.dac2.game.suddendeath;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -15,27 +11,15 @@ import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
-import fr.aumgn.dac2.stage.StagePlayer;
 
-public class SuddenDeath extends AbstractGame {
+public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
     private GameParty<SuddenDeathPlayer> party;
     private boolean finished;
 
     public SuddenDeath(DAC dac, GameStartData data) {
-        super(dac, data);
+        super(dac, data, new SuddenDeathPlayer.Factory());
         finished = false;
-
-        Set<? extends StagePlayer> players = data.getPlayers();
-        List<SuddenDeathPlayer> list =
-                new ArrayList<SuddenDeathPlayer>(players.size());
-
-        for (StagePlayer stagePlayer : players) {
-            SuddenDeathPlayer player = new SuddenDeathPlayer(stagePlayer);
-            list.add(player);
-        }
-        party = new GameParty<SuddenDeathPlayer>(this, SuddenDeathPlayer.class,
-                list);
     }
 
     @Override
@@ -98,25 +82,6 @@ public class SuddenDeath extends AbstractGame {
     @Override
     public void stop(boolean force) {
         resetPoolOnEnd();
-    }
-
-    @Override
-    public boolean contains(Player player) {
-        return party.contains(player);
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        for (SuddenDeathPlayer player : party.iterable()) {
-            player.sendMessage(message);
-        }
-        sendSpectators(message);
-    }
-
-    @Override
-    public boolean isPlayerTurn(Player player) {
-        SuddenDeathPlayer sdPlayer = party.get(player);
-        return sdPlayer != null && party.isTurn(sdPlayer);
     }
 
     @Override

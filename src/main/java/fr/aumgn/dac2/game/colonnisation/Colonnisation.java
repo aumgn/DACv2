@@ -1,9 +1,6 @@
 package fr.aumgn.dac2.game.colonnisation;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -14,17 +11,13 @@ import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
-import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.GameTimer;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
-import fr.aumgn.dac2.stage.StagePlayer;
 
-public class Colonnisation extends AbstractGame {
-
-    private final GameParty<ColonnPlayer> party;
+public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
     private final Runnable turnTimedOut = new Runnable() {
         @Override
@@ -38,17 +31,7 @@ public class Colonnisation extends AbstractGame {
     private int setupTurns;
 
     public Colonnisation(DAC dac, GameStartData data) {
-        super(dac, data);
-
-        Set<? extends StagePlayer> players = data.getPlayers();
-        List<ColonnPlayer> list = new ArrayList<ColonnPlayer>(players.size());
-
-        for (StagePlayer stagePlayer : players) {
-            ColonnPlayer player = new ColonnPlayer(stagePlayer);
-            list.add(player);
-        }
-        party = new GameParty<ColonnPlayer>(this, ColonnPlayer.class, list);
-
+        super(dac, data, new ColonnPlayer.Factory());
         finished = false;
     }
 
@@ -141,27 +124,9 @@ public class Colonnisation extends AbstractGame {
         index--;
         for (; index >= 0; index--) {
             send("colonnisation.ranking", ranking.length - index,
-                    ranking[index].getDisplayName(), ranking[index].getScore());
+                    ranking[index].getDisplayName(),
+                    ranking[index].getScore());
         }
-    }
-
-    @Override
-    public boolean contains(Player player) {
-        return party.contains(player);
-    }
-
-    @Override
-    public void sendMessage(String message) {
-        for (ColonnPlayer player : party.iterable()) {
-            player.sendMessage(message);
-        }
-        sendSpectators(message);
-    }
-
-    @Override
-    public boolean isPlayerTurn(Player player) {
-        ColonnPlayer gamePlayer = party.get(player);
-        return gamePlayer != null && party.isTurn(gamePlayer);
     }
 
     @Override
@@ -237,7 +202,7 @@ public class Colonnisation extends AbstractGame {
 
         sender.sendMessage(messages.get("colonnisation.playerslist"));
         for (ColonnPlayer player : party.iterable()) {
-            sender.sendMessage(messages.get("colonnisation.playerentry", 
+            sender.sendMessage(messages.get("colonnisation.playerentry",
                     player.getIndex(), player.getDisplayName(),
                     player.getScore()));
         }

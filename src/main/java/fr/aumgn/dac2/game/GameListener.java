@@ -17,10 +17,10 @@ import fr.aumgn.dac2.arena.Arena;
  */
 public class GameListener implements Listener {
 
-    private final AbstractGame game;
+    private final AbstractGame<?> game;
     private final Arena arena;
 
-    public GameListener(AbstractGame game) {
+    public GameListener(AbstractGame<?> game) {
         this.game = game;
         this.arena = game.getArena();
     }

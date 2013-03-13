@@ -18,11 +18,19 @@ import fr.aumgn.dac2.stage.StagePlayer;
  */
 public class GamePlayer extends SimpleStagePlayer {
 
-    public GamePlayer(StagePlayer player) {
-        super(player);
+    public static interface Factory<T extends GamePlayer> {
+
+        public Class<T> getSubclass();
+
+        public T create(StagePlayer player, int index);
     }
 
     private int index;
+
+    public GamePlayer(StagePlayer player, int index) {
+        super(player);
+        this.index = index;
+    }
 
     public ColumnPattern getColumnPattern() {
         return new UniformPattern(getColor());
@@ -81,7 +89,7 @@ public class GamePlayer extends SimpleStagePlayer {
         return index;
     }
 
-    void setIndex(int index) {
+    void updateIndex(int index) {
         this.index = index;
     }
 }

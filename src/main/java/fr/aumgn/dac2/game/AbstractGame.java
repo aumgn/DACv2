@@ -13,19 +13,22 @@ import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 
 /**
- * Common implementations of most game mode.
+ * Common base implementation of most game mode.
  */
-public abstract class AbstractGame implements Game {
+public abstract class AbstractGame<T extends GamePlayer> implements Game {
 
     protected final DAC dac;
     protected final Arena arena;
     protected final Listener listener;
+    protected final GameParty<T> party;
     protected final PlayersRefSet spectators;
 
-    public AbstractGame(DAC dac, GameStartData data) {
+    public AbstractGame(DAC dac, GameStartData data,
+            GamePlayer.Factory<T> factory) {
         this.dac = dac;
         this.arena = data.getArena();
         this.listener = new GameListener(this);
+        this.party = new GameParty<T>(this, data.getPlayers(), factory);
         this.spectators = new PlayersRefHashSet();
         spectators.addAll(data.getSpectators());
     }
@@ -40,11 +43,36 @@ public abstract class AbstractGame implements Game {
         return new Listener[] { listener };
     }
 
+    @Override
+    public boolean contains(Player player) {
+        return party.contains(player);
+    }
+
     /**
      * Send a message which is recorded in the main PluginMessages instance.
      */
     protected void send(String key, Object... arguments) {
         sendMessage(dac.getMessages().get(key, arguments));
+    }
+
+    @Override
+    public void sendMessage(String message) {
+        for (GamePlayer player : party.iterable()) {
+            player.sendMessage(message);
+        }
+        sendSpectators(message);
+    }
+
+    /**
+     * Sends a message to this game's spectators by prefixing
+     * the message with the arena's name as specified in the config.
+     */
+    protected void sendSpectators(String message) {
+        String spectatorMessage = dac.getConfig().getSpectatorsMsg()
+                .format(new String[] { arena.getName(), message });
+        for (Player spectator : spectators.players()) {
+            spectator.sendMessage(spectatorMessage);
+        }
     }
 
     @Override
@@ -73,7 +101,9 @@ public abstract class AbstractGame implements Game {
      * processed. So this method should be optimized as much as possible
      * because some events (like {@link PlayerMoveEvent}) are heavy.
      */
-    public abstract boolean isPlayerTurn(Player player);
+    public boolean isPlayerTurn(Player player) {
+        return party.isTurn(player);
+    }
 
     /**
      * Callback called when a player succeed.
@@ -84,18 +114,6 @@ public abstract class AbstractGame implements Game {
      * Callback called when a player failed.
      */
     public abstract void onJumpFail(Player player);
-
-    /**
-     * Sends a message to this game's spectators by prefixing
-     * the message with the arena's name as specified in the config.
-     */
-    protected void sendSpectators(String message) {
-        String spectatorMessage = dac.getConfig().getSpectatorsMsg()
-                .format(new String[] { arena.getName(), message });
-        for (Player spectator : spectators.players()) {
-            spectator.sendMessage(spectatorMessage);
-        }
-    }
 
     /**
      * Resets the pool if configured to do so on game start.

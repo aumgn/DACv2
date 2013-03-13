@@ -6,12 +6,26 @@ import fr.aumgn.dac2.stage.StagePlayer;
 
 public class TrainingPlayer extends GamePlayer {
 
+    public static class Factory
+            implements GamePlayer.Factory<TrainingPlayer> {
+
+        @Override
+        public Class<TrainingPlayer> getSubclass() {
+            return TrainingPlayer.class;
+        }
+
+        @Override
+        public TrainingPlayer create(StagePlayer player, int index) {
+            return new TrainingPlayer(player, index);
+        }
+    }
+
     private int successes;
     private int dacs;
     private int fails;
 
-    public TrainingPlayer(StagePlayer player) {
-        super(player);
+    public TrainingPlayer(StagePlayer player, int index) {
+        super(player, index);
         this.successes = 0;
         this.dacs = 0;
         this.fails = 0;

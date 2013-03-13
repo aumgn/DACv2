@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.OfflinePlayer;
 
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.util.Util;
+import fr.aumgn.dac2.stage.StagePlayer;
 
 public class GameParty<T extends GamePlayer> {
 
@@ -23,19 +25,19 @@ public class GameParty<T extends GamePlayer> {
 
     private int turn;
 
-    public GameParty(Game game, Class<T> clazz, List<T> list) {
-        this.clazz = clazz;
+    public GameParty(Game game, Set<? extends StagePlayer> players,
+            GamePlayer.Factory<T> playerFactory) {
+        this.clazz = playerFactory.getSubclass();
         this.game = game;
-        this.array = newArray(list.size());
+        this.array = newArray(players.size());
         this.map = new PlayersRefHashMap<T>();
 
-        List<T> roulette = new LinkedList<T>(list);
+        List<StagePlayer> roulette = new LinkedList<StagePlayer>(players);
         Random rand = Util.getRandom();
         for (int i = 0; i< array.length; i++) {
             int j = rand.nextInt(roulette.size());
-            T player = roulette.remove(j);
+            T player = playerFactory.create(roulette.remove(j), i);
             array[i] = player;
-            player.setIndex(i);
 
             map.put(player.getRef(), player);
         }
@@ -56,8 +58,9 @@ public class GameParty<T extends GamePlayer> {
         return map.get(player);
     }
 
-    public boolean isTurn(T player) {
-        return player.getIndex() == turn;
+    public boolean isTurn(OfflinePlayer player) {
+        T gamePlayer = get(player);
+        return gamePlayer != null && gamePlayer.getIndex() == turn;
     }
 
     public boolean isLastTurn() {
@@ -104,7 +107,7 @@ public class GameParty<T extends GamePlayer> {
                 index, array.length - index - 1);
 
         for (int i = index + 1; i < array.length; i++) {
-            array[i].setIndex(i - 1);
+            array[i].updateIndex(i - 1);
         }
 
         if (index <= turn) {
