@@ -55,6 +55,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     private void nextTurn() {
         ColonnPlayer player = party.nextTurn();
 
+        cancelTurnTimer();
         if (!player.isOnline()) {
             send("playerturn.notconnected",
                     player.getDisplayName());

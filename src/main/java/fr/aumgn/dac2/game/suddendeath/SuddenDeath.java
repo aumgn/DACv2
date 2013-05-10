@@ -73,6 +73,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
             return;
         }
 
+        cancelTurnTimer();
         send("playerturn", player.getDisplayName());
         tpBeforeJump(player);
         startTurnTimer();

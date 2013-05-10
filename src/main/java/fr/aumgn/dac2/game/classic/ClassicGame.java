@@ -60,6 +60,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
             return;
         }
 
+        cancelTurnTimer();
         if (!player.isOnline()) {
             send("playerturn.notconnected", player.getDisplayName());
             removePlayer(player);
