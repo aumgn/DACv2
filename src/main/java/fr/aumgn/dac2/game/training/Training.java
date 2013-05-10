@@ -8,15 +8,12 @@ import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.game.AbstractGame;
-import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
 
 public class Training extends AbstractGame<TrainingPlayer> {
-
-    private GameParty<TrainingPlayer> party;
 
     public Training(DAC dac, GameStartData data) {
         super(dac, data, "training", new TrainingPlayer.Factory(), false);

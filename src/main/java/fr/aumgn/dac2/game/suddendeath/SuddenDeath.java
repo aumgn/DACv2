@@ -8,13 +8,11 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.PoolFilling;
 import fr.aumgn.dac2.arena.regions.PoolFilling.AllButOne;
 import fr.aumgn.dac2.game.AbstractGame;
-import fr.aumgn.dac2.game.GameParty;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 
 public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
-    private GameParty<SuddenDeathPlayer> party;
     private boolean finished;
 
     public SuddenDeath(DAC dac, GameStartData data) {
