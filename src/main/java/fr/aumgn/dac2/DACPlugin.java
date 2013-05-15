@@ -11,6 +11,7 @@ import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
+import fr.aumgn.bukkitutils.gson.typeadapter.EnumTypeAdapterFactory;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
 import fr.aumgn.dac2.commands.AdminCommands;
 import fr.aumgn.dac2.commands.ArenasCommands;
@@ -66,6 +67,7 @@ public class DACPlugin extends JavaPlugin {
 
     public GsonLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
+            .registerTypeAdapterFactory(new EnumTypeAdapterFactory())
             .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
             .registerTypeAdapterFactory(new GsonRegionFactory())
             .setVersion(GSON_VERSION)
