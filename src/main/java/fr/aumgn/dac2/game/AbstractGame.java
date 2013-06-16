@@ -1,6 +1,7 @@
 package fr.aumgn.dac2.game;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -134,6 +135,17 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
      * Callback called when a player failed.
      */
     public abstract void onJumpFail(Player player);
+
+    protected void autoGameMode() {
+        if (dac.getConfig().getAutoGameMode()) {
+            for (T gamePlayer : party.iterable()) {
+                Player player = gamePlayer.getRef().getPlayer();
+                if (player != null) {
+                    player.setGameMode(GameMode.SURVIVAL);
+                }
+            }
+        }
+    }
 
     /**
      * Resets the pool if configured to do so on game start.

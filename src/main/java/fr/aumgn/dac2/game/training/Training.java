@@ -21,6 +21,7 @@ public class Training extends AbstractGame<TrainingPlayer> {
 
     @Override
     public void start() {
+        autoGameMode();
         resetPoolOnStart();
         send("start");
         nextTurn();

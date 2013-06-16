@@ -22,6 +22,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
     @Override
     public void start() {
+        autoGameMode();
         resetPool();
 
         send("start");

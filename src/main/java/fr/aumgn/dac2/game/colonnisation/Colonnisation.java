@@ -27,6 +27,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
     @Override
     public void start() {
+        autoGameMode();
         resetPoolOnStart();
 
         double size = arena.getPool().size2D();

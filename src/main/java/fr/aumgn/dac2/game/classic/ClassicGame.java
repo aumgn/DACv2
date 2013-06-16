@@ -32,6 +32,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
     @Override
     public void start() {
+        autoGameMode();
         resetPoolOnStart();
 
         send("start");

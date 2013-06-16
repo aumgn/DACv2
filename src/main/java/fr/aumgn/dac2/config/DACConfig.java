@@ -25,6 +25,7 @@ public class DACConfig {
     private String timerFormat = "%02d:%02d";
     private int timeOut = 60;
 
+    private boolean autoGameMode = false;
     private boolean tpBeforeJump = true;
     private int tpAfterJumpSuccessDelay = 0;
     private int tpAfterJumpFailDelay = 3;
@@ -69,6 +70,10 @@ public class DACConfig {
 
     public int getTimeOut() {
         return timeOut;
+    }
+
+    public boolean getAutoGameMode() {
+        return autoGameMode;
     }
 
     public boolean getTpBeforeJump() {
