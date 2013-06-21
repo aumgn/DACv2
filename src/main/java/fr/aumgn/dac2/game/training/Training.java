@@ -46,11 +46,12 @@ public class Training extends AbstractGame<TrainingPlayer> {
         TrainingPlayer trainingPlayer = party.get(player);
         World world = arena.getWorld();
         Pool pool = arena.getPool();
-
         Column column = pool.getColumn(player);
         ColumnPattern pattern = trainingPlayer.getColumnPattern();
+        boolean isADAC = column.isADAC(world);
+        callJumpSuccessEvent(trainingPlayer, column, isADAC);
 
-        if (column.isADAC(world)) {
+        if (isADAC) {
             send("jump.dac", trainingPlayer.getDisplayName());
             trainingPlayer.incrementDacs();
             pattern = new GlassyPattern(pattern);
@@ -70,6 +71,8 @@ public class Training extends AbstractGame<TrainingPlayer> {
     @Override
     public void onJumpFail(Player player) {
         TrainingPlayer trainingPlayer = party.get(player);
+        callJumpFailEvent(trainingPlayer);
+
         send("jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();
 
@@ -82,6 +85,7 @@ public class Training extends AbstractGame<TrainingPlayer> {
     @Override
     public void onQuit(Player player) {
         TrainingPlayer trainingPlayer = party.get(player);
+        callPlayerQuitEvent(trainingPlayer);
         party.remove(trainingPlayer);
         trainingPlayer.sendStats(dac.getMessages());
 

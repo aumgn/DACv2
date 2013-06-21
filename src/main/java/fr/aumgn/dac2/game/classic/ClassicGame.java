@@ -136,6 +136,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
         Column column = arena.getPool().getColumn(player);
         boolean isADAC = column.isADAC(world);
+        callJumpSuccessEvent(gamePlayer, column, isADAC);
+
         ColumnPattern pattern = gamePlayer.getColumnPattern();
         if (isADAC) {
             pattern = new GlassyPattern(pattern);
@@ -179,7 +181,11 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
     @Override
     public void onJumpFail(Player player) {
-        int health = player.getHealth(); 
+        ClassicGamePlayer gamePlayer = party.get(player);
+        Vector2D position = new Vector2D(player);
+        callJumpFailEvent(gamePlayer);
+
+        int health = player.getHealth();
         if (health == PLAYER_MAX_HEALTH) {
             player.damage(1);
             player.setHealth(PLAYER_MAX_HEALTH);
@@ -188,8 +194,6 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
             player.damage(1);
         }
 
-        Vector2D pos = new Vector2D(player.getLocation().getBlock());
-        ClassicGamePlayer gamePlayer = party.get(player);
 
         send("jump.fail", gamePlayer.getDisplayName());
         if (isConfirmationTurn()) {
@@ -200,7 +204,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
                 }
             }
         } else {
-            gamePlayer.onFail(pos);
+            gamePlayer.onFail(position);
             if (!gamePlayer.isDead()) {
                 send("livesafterfail", gamePlayer.getLives());
             }
@@ -213,6 +217,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
     @Override
     public void onQuit(Player player) {
         ClassicGamePlayer gamePlayer = party.get(player);
+        callPlayerQuitEvent(gamePlayer);
         send("player.quit", gamePlayer.getDisplayName());
         removePlayer(gamePlayer);
     }
@@ -238,15 +243,17 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
         if (!finished) {
             ToSuddenDeath data = new ToSuddenDeath(arena, players, spectators);
             SuddenDeath suddenDeath = new SuddenDeath(dac, data);
-            dac.getStages().switchTo(suddenDeath);
+            dac.getStages().silentlySwitchTo(suddenDeath);
         }
     }
 
     public void onPlayerLoss(ClassicGamePlayer player) {
+        callPlayerEliminatedEvent(player);
         removePlayer(player);
     }
 
     public void onPlayerWin(ClassicGamePlayer player) {
+        callPlayerWinEvent(player);
         send("finished");
         send("winner", player.getDisplayName());
         for (int i = 0; i < ranking.length; i++) {

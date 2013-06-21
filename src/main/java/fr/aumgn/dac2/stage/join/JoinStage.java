@@ -17,6 +17,7 @@ import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.config.DACConfig;
+import fr.aumgn.dac2.event.player.DACPlayerJoinEvent;
 import fr.aumgn.dac2.exceptions.TooManyPlayers;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.start.StartStagePlayer;
@@ -117,11 +118,15 @@ public class JoinStage implements Stage, Listener, GameStartData {
             color = getFirstColorAvailable();
         }
 
+        StartStagePlayer stagePlayer = new StartStagePlayer(color, player);
+        DACPlayerJoinEvent event = new DACPlayerJoinEvent(this, stagePlayer);
+        Util.callEvent(event);
+
         PluginMessages msgs = dac.getMessages();
         String playerName = color.chat + player.getDisplayName();
         sendMessage(msgs.get("joinstage.join", playerName));
 
-        players.put(player, new StartStagePlayer(color, player));
+        players.put(player, stagePlayer);
         colorsTaken.add(color.name);
 
         list(player);

@@ -7,8 +7,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.aumgn.bukkitutils.timer.Timer;
+import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.event.player.DACJumpDACEvent;
+import fr.aumgn.dac2.event.player.DACJumpFailEvent;
+import fr.aumgn.dac2.event.player.DACJumpSuccessEvent;
+import fr.aumgn.dac2.event.player.DACPlayerEliminatedEvent;
+import fr.aumgn.dac2.event.player.DACPlayerQuitEvent;
+import fr.aumgn.dac2.event.player.DACPlayerWinEvent;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.stage.Spectators;
@@ -202,5 +209,41 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
             Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
                     player.delayedTpToStart(), delay);
         }
+    }
+
+    protected DACJumpSuccessEvent callJumpSuccessEvent(T player, Column column,
+            boolean dac) {
+        DACJumpSuccessEvent event;
+        if (dac) {
+            event = new DACJumpDACEvent(this, player, column);
+        } else {
+            event = new DACJumpSuccessEvent(this, player, column);
+        }
+        Util.callEvent(event);
+        return event;
+    }
+
+    protected DACJumpFailEvent callJumpFailEvent(T player) {
+        DACJumpFailEvent event = new DACJumpFailEvent(this, player);
+        Util.callEvent(event);
+        return event;
+    }
+
+    protected DACPlayerQuitEvent callPlayerQuitEvent(T player) {
+        DACPlayerQuitEvent event = new DACPlayerQuitEvent(this, player);
+        Util.callEvent(event);
+        return event;
+    }
+
+    protected DACPlayerEliminatedEvent callPlayerEliminatedEvent(T player) {
+        DACPlayerEliminatedEvent event = new DACPlayerEliminatedEvent(this, player);
+        Util.callEvent(event);
+        return event;
+    }
+
+    protected DACPlayerWinEvent callPlayerWinEvent(T player) {
+        DACPlayerWinEvent event = new DACPlayerWinEvent(this, player);
+        Util.callEvent(event);
+        return event;
     }
 }

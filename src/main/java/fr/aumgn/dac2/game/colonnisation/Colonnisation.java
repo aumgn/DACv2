@@ -7,8 +7,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.localization.PluginMessages;
+import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
+import fr.aumgn.dac2.event.player.DACJumpFailEvent;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
@@ -91,6 +93,10 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
     @Override
     public void stop(boolean force) {
+        ColonnPlayer[] ranking = party.iterable().clone();
+        Arrays.sort(ranking);
+        callPlayerWinEvent(ranking[0]);
+
         cancelTurnTimer();
         finished = true;
         resetPoolOnEnd();
@@ -100,9 +106,6 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         } else {
             send("finished");
         }
-
-        ColonnPlayer[] ranking = party.iterable().clone();
-        Arrays.sort(ranking);
 
         int index = ranking.length - 1;
         send("winner", ranking[index].getDisplayName(),
@@ -120,15 +123,17 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         ColonnPlayer gamePlayer = party.get(player);
         World world = arena.getWorld();
         Pool pool = arena.getPool();
-
         Column column = pool.getColumn(player);
         ColumnPattern pattern;
-        if (setupTurns > 0) {
+        boolean isADAC = column.isADAC(world);
+        boolean isSetupTurn = setupTurns > 0;
+        callJumpSuccessEvent(gamePlayer, column, !isSetupTurn && isADAC);
+
+        if (isSetupTurn) {
             pattern = dac.getConfig().getNeutralPattern();
             send("setup.success", gamePlayer.getDisplayName());
         } else {
             pattern = gamePlayer.getColumnPattern();
-            boolean isADAC = column.isADAC(world);
             if (isADAC) {
                 gamePlayer.incrementMultiplier();
                 pattern = new GlassyPattern(pattern);
@@ -160,6 +165,8 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     @Override
     public void onJumpFail(Player player) {
         ColonnPlayer gamePlayer = party.get(player);
+        DACJumpFailEvent event = new DACJumpFailEvent(this, gamePlayer);
+        Util.callEvent(event);
 
         send("jump.fail", gamePlayer.getDisplayName());
         if (gamePlayer.getMultiplier() > 1) {
@@ -174,6 +181,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     @Override
     public void onQuit(Player player) {
         ColonnPlayer gamePlayer = party.get(player);
+        callPlayerQuitEvent(gamePlayer);
         removePlayer(gamePlayer);
         send("player.quit", gamePlayer.getDisplayName(),
                 gamePlayer.getScore());

@@ -6,7 +6,7 @@ import fr.aumgn.dac2.event.DACStagePlayerEvent;
 import fr.aumgn.dac2.stage.join.JoinStage;
 import fr.aumgn.dac2.stage.StagePlayer;
 
-public abstract class DACPlayerJoinEvent extends DACStagePlayerEvent {
+public class DACPlayerJoinEvent extends DACStagePlayerEvent {
 
     private static final HandlerList handlers = new HandlerList();
 

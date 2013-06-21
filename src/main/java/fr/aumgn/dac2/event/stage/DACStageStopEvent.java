@@ -9,8 +9,15 @@ public class DACStageStopEvent extends DACStageEvent {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public DACStageStopEvent(Stage stage) {
+    private final boolean force;
+
+    public DACStageStopEvent(Stage stage, boolean force) {
         super(stage);
+        this.force = force;
+    }
+
+    public boolean isForce() {
+        return force;
     }
 
     @Override

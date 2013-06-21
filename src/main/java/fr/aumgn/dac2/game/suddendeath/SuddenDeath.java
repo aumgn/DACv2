@@ -90,6 +90,8 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     public void onJumpSuccess(Player player) {
         SuddenDeathPlayer sdPlayer = party.get(player);
         Column column = arena.getPool().getColumn(player);
+        boolean isADAC = column.isADAC(arena.getWorld());
+        callJumpSuccessEvent(sdPlayer, column, isADAC);
 
         send("jump.success", sdPlayer.getDisplayName());
         sdPlayer.setSuccess();
@@ -100,6 +102,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     @Override
     public void onJumpFail(Player player) {
         SuddenDeathPlayer sdPlayer = party.get(player);
+        callJumpFailEvent(sdPlayer);
 
         send("jump.fail", sdPlayer.getDisplayName());
         sdPlayer.setFail();
@@ -110,10 +113,12 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     @Override
     public void onQuit(Player player) {
         SuddenDeathPlayer sdPlayer = party.get(player);
+        callPlayerQuitEvent(sdPlayer);
         party.remove(sdPlayer);
     }
 
     public void onPlayerWin(SuddenDeathPlayer player) {
+        callPlayerWinEvent(player);
         send("winner", player.getDisplayName());
         finished = true;
         dac.getStages().stop(this);
@@ -123,6 +128,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     public void eliminatePlayersWhoFailed() {
         for (SuddenDeathPlayer player : party.iterable().clone()) {
             if (!player.hasSucceeded()) {
+                callPlayerEliminatedEvent(player);
                 send("elimination", player.getDisplayName());
                 party.remove(player);
                 spectators.add(player.getRef());
