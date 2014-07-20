@@ -16,14 +16,9 @@ amenés à un code peu clair et bug-prone.
 
 ## Téléchargement
 
-La toute dernière version stable est toujours disponible via ce raccourci
- [http://ln2.fr/dac](http://ln2.fr/dac).
+Version stable : [standalone](/downloads/dac2-0.8.0-standalone.jar) [classique](/downloads/dac2-0.8.0.jar).
 
-La version standalone correspondante est disponible via
-[http://ln2.fr/dacs](http://ln2.fr/dacs).
-
-Vous pourrez trouver les diffèrentes versions du plugin en suivant ce
-[lien](http://maven.aumgn.fr/fr/aumgn/dac2/).
+Version développement : [standalone](/downloads/dac2-1.0.0-SNAPSHOT-standalone.jar) [classique](/downloads/dac2-1.0.0-SNAPSHOT.jar).
 
 ## Utilisation
 
@@ -77,6 +72,7 @@ Quelques petits points à noter :
 
 ### BukkitUtils
 
-Ce plugin repose sur une librarie créer pour faciliter le développement
-de plugin Bukkit. Vous pourrez trouver plus d'information la concernant ici :
-[BukkitUtils](http://bukkitutils.aumgn.fr).
+Ce plugin repose sur la librarie "BukkitUtils", créer pour faciliter le développement
+de plugin Bukkit.
+[Version 1.0.3-SNAPSHOT pour la version stable](/downloads/bukkitutils-1.0.3-SNAPSHOT.jar)
+[Version 1.0.4-SNAPSHOT pour la version développement](/downloads/bukkitutils-1.0.4-SNAPSHOT.jar)
