@@ -46,8 +46,7 @@ mentionner l'auteur original.
 
 ### Sources
 
-Les sources peuvent être trouvé sur
-[github](https://github.com/aumgn/DACv2).
+Les sources peuvent être trouvé sur [github](https://github.com/aumgn/DACv2).
 
 ### Documentation
 
@@ -74,5 +73,7 @@ Quelques petits points à noter :
 
 Ce plugin repose sur la librarie "BukkitUtils", créer pour faciliter le développement
 de plugin Bukkit.
+
 [Version 1.0.3-SNAPSHOT pour la version stable](/downloads/bukkitutils-1.0.3-SNAPSHOT.jar)
+
 [Version 1.0.4-SNAPSHOT pour la version développement](/downloads/bukkitutils-1.0.4-SNAPSHOT.jar)

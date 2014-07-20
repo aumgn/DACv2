@@ -2,12 +2,16 @@
 layout: layout
 ---
 
-Installation
+Téléchargement
 ======================
 
-Toutes les versions du plugin peuvent être trouvés sur mon dépôt à l'adresse suivante : [http://maven.aumgn.fr/fr/aumgn/dac2/](http://maven.aumgn.fr/fr/aumgn/dac2/).
+Version stable : [standalone](/downloads/dac2-0.8.0-standalone.jar) [classique](/downloads/dac2-0.8.0.jar).
 
-Les versions qui se situent dans un dossier se terminant par SNAPSHOT sont des versions de développement, compilé automatiquement, et ne sont pas nécessairement testé ni stable (à utiliser avec précaution donc).
+Version développement : [standalone](/downloads/dac2-1.0.0-SNAPSHOT-standalone.jar) [classique](/downloads/dac2-1.0.0-SNAPSHOT.jar).
+
+
+Version classique et standalone
+======================
 
 Chaque version est disponible sous deux formes, un première classique et une seconde dites "standalone".
 La différence et que la version "standalone" ne nécessite pas l'installation de la librarie BukkitUtils comme expliqué plus bas car elle l'intègre déjà.
@@ -17,7 +21,12 @@ BukkitUtils
 
 Pour fonctionner DACv2 nécessite la librairie BukkitUtils. Cette librairie est déjà intégré dans les versions "standalone".
 
-Dans le cas de la version classique, il faut l'installer manuellement. Pour cela, vous pouvez également la télécharger sur le dépôt à l'adresse suivante : [http://maven.aumgn.fr/fr/aumgn/bukkitutils/](http://maven.aumgn.fr/fr/aumgn/bukkitutils/).
+Dans le cas de la version classique, il faut l'installer manuellement. Pour cela, vous pouvez également la télécharger :
+
+[Version 1.0.3-SNAPSHOT pour la version stable](/downloads/bukkitutils-1.0.3-SNAPSHOT.jar)
+
+[Version 1.0.4-SNAPSHOT pour la version développement](/downloads/bukkitutils-1.0.4-SNAPSHOT.jar)
+
 Pour l'installer il suffit de la placer dans un dossier "lib" se situant à la racine du serveur sous le nom exact de "BukkitUtils.jar".
 
 WorldEdit
