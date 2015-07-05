@@ -54,8 +54,7 @@ public class GameListener implements Listener {
             return;
         }
 
-        if (!(arena.isIn(player.getWorld()) && arena.getSurroundingRegion()
-                .contains(player))) {
+        if (!(arena.isIn(player.getWorld()) && arena.getSurroundingRegion().contains(player))) {
             return;
         }
 

@@ -1,7 +1,6 @@
 package fr.aumgn.dac2.shape.column;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.config.Color;
 import org.bukkit.World;
@@ -17,13 +16,12 @@ public class RandomPattern implements ColumnPattern {
     }
 
     public static RandomPattern fromColors(List<Color> colors) {
-        return new RandomPattern(Lists.transform(colors,
-                new Function<Color, ColumnPattern>() {
-                    @Override
-                    public ColumnPattern apply(Color color) {
-                        return new UniformPattern(color);
-                    }
-                }));
+        ImmutableList.Builder<ColumnPattern> patternsBuilder = ImmutableList.builder();
+        for (Color color : colors) {
+            patternsBuilder.add(new UniformPattern(color));
+        }
+
+        return new RandomPattern(patternsBuilder.build());
     }
 
     @Override

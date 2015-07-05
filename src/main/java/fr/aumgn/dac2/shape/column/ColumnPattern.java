@@ -7,5 +7,5 @@ import org.bukkit.World;
  */
 public interface ColumnPattern {
 
-    public void apply(World world, Column column);
+    void apply(World world, Column column);
 }

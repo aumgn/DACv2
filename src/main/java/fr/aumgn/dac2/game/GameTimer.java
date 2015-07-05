@@ -7,15 +7,8 @@ public class GameTimer extends Timer {
 
     private final Game game;
 
-    public GameTimer(DAC dac, Game game) {
-        super(dac.getPlugin(), dac.getConfig().getTimerConfig(),
-                dac.getConfig().getTimeOut());
-        this.game = game;
-    }
-
     public GameTimer(DAC dac, Game game, Runnable runnable) {
-        super(dac.getPlugin(), dac.getConfig().getTimerConfig(),
-                dac.getConfig().getTimeOut(), runnable);
+        super(dac.getPlugin(), dac.getConfig().getTimerConfig(), dac.getConfig().getTimeOut(), runnable);
         this.game = game;
     }
 

@@ -40,8 +40,7 @@ public class ColonnPlayer extends GamePlayer
         multiplier = 1;
     }
 
-    public static class Factory
-            implements GamePlayer.Factory<ColonnPlayer> {
+    public static class Factory implements GamePlayer.Factory<ColonnPlayer> {
 
         @Override
         public Class<ColonnPlayer> getSubclass() {

@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game.classic;
 
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
@@ -114,7 +115,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
     private void removePlayer(ClassicGamePlayer player) {
         party.remove(player);
         addToRanking(player);
-        spectators.add(player.getRef());
+        spectators.add(player.getPlayerID());
 
         if (party.size() == 1) {
             onPlayerWin(party.getCurrent());
@@ -137,7 +138,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
         Column column = arena.getPool().getColumn(player);
         boolean isADAC = column.isADAC(world);
-        callJumpSuccessEvent(gamePlayer, column, isADAC);
+        callJumpSuccessEvent(gamePlayer, new Vector(player), column, isADAC);
 
         ColumnPattern pattern = gamePlayer.getColumnPattern();
         if (isADAC) {
@@ -188,7 +189,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
     public void onJumpFail(Player player) {
         ClassicGamePlayer gamePlayer = party.get(player);
         Vector2D position = new Vector2D(player);
-        callJumpFailEvent(gamePlayer);
+        callJumpFailEvent(gamePlayer, new Vector(player));
 
         double health = player.getHealth();
         if (health == PLAYER_MAX_HEALTH) {

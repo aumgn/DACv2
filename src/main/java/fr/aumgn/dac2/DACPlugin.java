@@ -27,8 +27,7 @@ public class DACPlugin extends JavaPlugin {
     public void onEnable() {
         dac = new DAC(this);
 
-        CommandsRegistration registration = new CommandsRegistration(
-                this, dac.getConfig().getLocale());
+        CommandsRegistration registration = new CommandsRegistration(this, dac.getConfig().getLocale());
         registration.register(new AdminCommands(dac));
         registration.register(new ArenasCommands(dac));
         registration.register(new SetCommands(dac));
@@ -75,8 +74,7 @@ public class DACPlugin extends JavaPlugin {
             return loader.loadOrCreate("config.json", DACConfig.class);
         }
         catch (GsonLoadException exc) {
-            getLogger().warning(
-                    "Unable to load configuration file.");
+            getLogger().warning("Unable to load configuration file.");
             getLogger().warning("Using default values instead.");
             return new DACConfig();
         }

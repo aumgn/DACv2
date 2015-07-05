@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game;
 
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.timer.Timer;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
@@ -30,8 +31,7 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
     private final Runnable turnTimedOutRunnable;
     private Timer turnTimer;
 
-    public AbstractGame(DAC dac, GameStartData data, String l18nNamespace,
-                        GamePlayer.Factory<T> factory) {
+    public AbstractGame(DAC dac, GameStartData data, String l18nNamespace, GamePlayer.Factory<T> factory) {
         this(dac, data, l18nNamespace, factory, true);
     }
 
@@ -44,17 +44,14 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
         this.party = new GameParty<T>(this, data.getPlayers(), factory);
         this.spectators = new Spectators(data.getSpectators());
 
-        if (useTimer) {
-            this.turnTimedOutRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    turnTimedOut();
-                }
-            };
+        this.turnTimedOutRunnable = useTimer
+                ? new Runnable() {
+            @Override
+            public void run() {
+                turnTimedOut();
+            }
         }
-        else {
-            this.turnTimedOutRunnable = null;
-        }
+                : null;
         this.turnTimer = null;
     }
 
@@ -140,7 +137,7 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
     protected void autoGameMode() {
         if (dac.getConfig().getAutoGameMode()) {
             for (T gamePlayer : party.iterable()) {
-                Player player = gamePlayer.getRef().getPlayer();
+                Player player = Bukkit.getPlayer(gamePlayer.getPlayerID());
                 if (player != null) {
                     player.setGameMode(GameMode.SURVIVAL);
                 }
@@ -201,26 +198,24 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
             player.tpToStart();
         }
         else if (delay > 0) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
-                    player.delayedTpToStart(), delay);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(), player.delayedTpToStart(), delay);
         }
     }
 
-    protected DACJumpSuccessEvent callJumpSuccessEvent(T player, Column column,
-                                                       boolean dac) {
+    protected DACJumpSuccessEvent callJumpSuccessEvent(T player, Vector position, Column column, boolean dac) {
         DACJumpSuccessEvent event;
         if (dac) {
-            event = new DACJumpDACEvent(this, player, column);
+            event = new DACJumpDACEvent(this, player, position, column);
         }
         else {
-            event = new DACJumpSuccessEvent(this, player, column);
+            event = new DACJumpSuccessEvent(this, player, position, column);
         }
         Util.callEvent(event);
         return event;
     }
 
-    protected DACJumpFailEvent callJumpFailEvent(T player) {
-        DACJumpFailEvent event = new DACJumpFailEvent(this, player);
+    protected DACJumpFailEvent callJumpFailEvent(T player, Vector position) {
+        DACJumpFailEvent event = new DACJumpFailEvent(this, player, position);
         Util.callEvent(event);
         return event;
     }

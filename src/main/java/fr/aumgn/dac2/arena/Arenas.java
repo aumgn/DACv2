@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.arena;
 
+import com.google.common.collect.ImmutableList;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
@@ -30,21 +31,18 @@ public class Arenas {
 
         if (folder.exists()) {
             if (!folder.isDirectory()) {
-                throw new ArenasFolderException(
-                        folder.getPath() + " is not a directory.");
+                throw new ArenasFolderException(folder.getPath() + " is not a directory.");
             }
         }
         else if (!folder.mkdirs()) {
-            throw new ArenasFolderException(
-                    "Unable to create " + folder.getPath() + " directory.");
+            throw new ArenasFolderException("Unable to create " + folder.getPath() + " directory.");
         }
 
         return folder;
     }
 
     private String filenameFor(DAC dac, Arena arena) {
-        return getFolder(dac.getPlugin()).getName() + File.separator
-                + arena.getName() + ".json";
+        return getFolder(dac.getPlugin()).getName() + File.separator + arena.getName() + ".json";
     }
 
     private String arenaNameFor(File file) {
@@ -65,7 +63,8 @@ public class Arenas {
                     Arena arena = loader.load(file, Arena.class);
                     String nameFromFile = arenaNameFor(file);
                     if (!nameFromFile.equals(arena.getName())) {
-                        dac.getLogger().severe("Filename `" + nameFromFile
+                        dac.getLogger().severe(
+                                "Filename `" + nameFromFile
                                 + "` does not match arena's name `"
                                 + arena.getName() + "`. Skipping it.");
                         continue;
@@ -73,8 +72,7 @@ public class Arenas {
                     arenas.put(arena.getName(), arena);
                 }
                 catch (GsonLoadException exc) {
-                    dac.getLogger().severe(
-                            "Unable to read " + file.getName() + " arena's file.");
+                    dac.getLogger().severe("Unable to read " + file.getName() + " arena's file.");
                 }
             }
         }
@@ -137,14 +135,12 @@ public class Arenas {
         String filename = filenameFor(dac, arena);
         File file = new File(dac.getPlugin().getDataFolder(), filename);
         if (!file.delete()) {
-            throw new ArenaDeleteException("Unable to delete " + filename
-                    + " arena's file.");
+            throw new ArenaDeleteException("Unable to delete " + filename + " arena's file.");
         }
     }
 
     public List<Arena> all() {
-        return Collections.unmodifiableList(new ArrayList<Arena>(
-                arenas.values()));
+        return ImmutableList.copyOf(arenas.values());
     }
 
     public int length() {

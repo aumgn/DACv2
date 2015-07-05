@@ -11,9 +11,9 @@ public abstract class DACJumpEvent extends DACGamePlayerEvent {
     private static final HandlerList handlers = new HandlerList();
     private final Vector position;
 
-    public DACJumpEvent(Game game, GamePlayer player) {
+    public DACJumpEvent(Game game, GamePlayer player, Vector position) {
         super(game, player);
-        this.position = new Vector(player.getRef().getPlayer());
+        this.position = position;
     }
 
     public static HandlerList getHandlerList() {

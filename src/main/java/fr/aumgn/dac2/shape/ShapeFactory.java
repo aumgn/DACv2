@@ -9,8 +9,7 @@ public enum ShapeFactory {
 
     Cuboid {
         @Override
-        public Shape create(DAC dac, World world, Vector center,
-                            int radius, int height) {
+        public Shape create(DAC dac, World world, Vector center, int radius, int height) {
             return new CuboidShape(center.subtract(radius, 0, radius),
                     center.add(radius, height - 1, radius));
         }
@@ -18,19 +17,16 @@ public enum ShapeFactory {
 
     Cylinder {
         @Override
-        public Shape create(DAC dac, World world, Vector center,
-                            int radius, int height) {
+        public Shape create(DAC dac, World world, Vector center, int radius, int height) {
             Vector2D radiusVec = new Vector2D(radius, radius);
             int y = center.getBlockY();
-            return new CylinderShape(center.to2D(), radiusVec, y,
-                    y + height - 1);
+            return new CylinderShape(center.to2D(), radiusVec, y, y + height - 1);
         }
     },
 
     Sphere {
         @Override
-        public Shape create(DAC dac, World world, Vector center,
-                            int radius, int height) {
+        public Shape create(DAC dac, World world, Vector center, int radius, int height) {
             Vector radiusVec = new Vector(radius, radius, radius);
             return new EllipsoidShape(center, radiusVec);
         }
@@ -38,14 +34,11 @@ public enum ShapeFactory {
 
     Arbitrary {
         @Override
-        public Shape create(DAC dac, World world, Vector center,
-                            int radius, int height) {
-            ArbitraryFlatShapeVisitor visitor =
-                    new ArbitraryFlatShapeVisitor(dac, world, center);
+        public Shape create(DAC dac, World world, Vector center, int radius, int height) {
+            ArbitraryFlatShapeVisitor visitor = new ArbitraryFlatShapeVisitor(dac, world, center);
             return visitor.visit();
         }
     };
 
-    public abstract Shape create(DAC dac, World world, Vector center,
-                                 int radius, int height);
+    public abstract Shape create(DAC dac, World world, Vector center, int radius, int height);
 }

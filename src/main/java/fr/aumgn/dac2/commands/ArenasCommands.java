@@ -43,8 +43,7 @@ public class ArenasCommands extends DACCommands {
     public void arenas(CommandSender sender) {
         sender.sendMessage(msg("arenas.header"));
         for (Arena arena : dac.getArenas().all()) {
-            sender.sendMessage(msg("arenas.arena", arena.getName(),
-                    arena.getWorld().getName()));
+            sender.sendMessage(msg("arenas.arena", arena.getName(), arena.getWorld().getName()));
         }
     }
 

@@ -1,8 +1,7 @@
 package fr.aumgn.dac2.stage.join;
 
+import com.google.common.collect.Maps;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
@@ -19,23 +18,23 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static fr.aumgn.dac2.utils.DACUtil.onlinePlayersIterable;
 
 public class JoinStage implements Stage, Listener, GameStartData {
 
     private final DAC dac;
     private final Arena arena;
     private final Set<String> colorsTaken;
-    private final PlayersRefMap<StagePlayer> players;
+    private final Map<UUID, StagePlayer> players;
     private final Spectators spectators;
 
     public JoinStage(DAC dac, Arena arena) {
         this.dac = dac;
         this.arena = arena;
         this.colorsTaken = new HashSet<String>();
-        this.players = new PlayersRefHashMap<StagePlayer>();
+        this.players = Maps.newHashMap();
         this.spectators = new Spectators();
     }
 
@@ -87,7 +86,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
 
     @Override
     public void sendMessage(String message) {
-        for (Player player : players.playersSet()) {
+        for (Player player : onlinePlayersIterable(players.keySet())) {
             player.sendMessage(message);
         }
 
@@ -124,7 +123,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
         String playerName = color.chat + player.getDisplayName();
         sendMessage(msgs.get("joinstage.join", playerName));
 
-        players.put(player, stagePlayer);
+        players.put(player.getUniqueId(), stagePlayer);
         colorsTaken.add(color.name);
 
         list(player);
@@ -162,8 +161,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
 
         sender.sendMessage(messages.get("joinstage.playerslist"));
         for (StagePlayer player : players.values()) {
-            sender.sendMessage(messages.get("joinstage.playerentry",
-                    player.getDisplayName()));
+            sender.sendMessage(messages.get("joinstage.playerentry", player.getDisplayName()));
         }
     }
 
@@ -172,8 +170,7 @@ public class JoinStage implements Stage, Listener, GameStartData {
         StagePlayer data = players.remove(player);
         colorsTaken.remove(data.getColor().name);
 
-        String message = dac.getMessages().get("joinstage.quit",
-                player.getDisplayName());
+        String message = dac.getMessages().get("joinstage.quit", player.getDisplayName());
         sendMessage(message);
         player.sendMessage(message);
     }

@@ -13,8 +13,7 @@ public class ToSuddenDeath implements GameStartData {
     private final Set<ClassicGamePlayer> players;
     private final Spectators spectators;
 
-    public ToSuddenDeath(Arena arena, Set<ClassicGamePlayer> players,
-                         Spectators spectators) {
+    public ToSuddenDeath(Arena arena, Set<ClassicGamePlayer> players, Spectators spectators) {
         this.arena = arena;
         this.players = players;
         this.spectators = spectators;

@@ -55,8 +55,6 @@ public class StageArg extends AsbtractSenderArg<Stage> {
 
     public static class NoStageForArena extends CommandError {
 
-        private static final long serialVersionUID = 8898579114644791040L;
-
         public NoStageForArena(DAC dac, Arena arena) {
             super(dac.getCmdMessages()
                     .get("stage.arg.nostageforarena", arena.getName()));
@@ -64,8 +62,6 @@ public class StageArg extends AsbtractSenderArg<Stage> {
     }
 
     public static class NoStageForPlayer extends CommandError {
-
-        private static final long serialVersionUID = 2665340229475254801L;
 
         public NoStageForPlayer(DAC dac) {
             super(dac.getCmdMessages()

@@ -77,8 +77,7 @@ public class SetCommands extends DACCommands {
         Vector center = new Vector(player);
         int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);
         int height = args.getInteger(2).valueOr(DEFAULT_HEIGHT);
-        ShapeFactory factory = args.get('s', ShapeFactory.class)
-                .valueOr(defaultShape);
+        ShapeFactory factory = args.get('s', ShapeFactory.class).valueOr(defaultShape);
 
         return factory.create(dac, player.getWorld(), center, radius, height);
     }

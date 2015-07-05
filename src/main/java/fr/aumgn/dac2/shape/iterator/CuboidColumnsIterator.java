@@ -23,11 +23,11 @@ public class CuboidColumnsIterator extends AbstractIterator<Column> {
         Validate.isTrue(min.getZ() <= max.getZ());
 
         this.shape = shape;
-        x = min.getX();
-        minZ = min.getZ();
-        z = minZ - 1;
-        maxX = max.getX();
-        maxZ = max.getZ();
+        this.x = min.getX();
+        this.minZ = min.getZ();
+        this.z = minZ - 1;
+        this.maxX = max.getX();
+        this.maxZ = max.getZ();
     }
 
     @Override

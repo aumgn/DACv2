@@ -52,8 +52,7 @@ public class FillCommands extends DACCommands {
         sender.sendMessage(msg("fill.allbutone.success"));
     }
 
-    private void fillCommand(CommandSender sender, CommandArgs args,
-                             PoolFilling strategy) {
+    private void fillCommand(CommandSender sender, CommandArgs args, PoolFilling strategy) {
         Arena arena = args.get(0, Arena).value();
         List<Color> colors;
         if (args.length() == 1) {

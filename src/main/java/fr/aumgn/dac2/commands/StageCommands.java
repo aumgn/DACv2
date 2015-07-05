@@ -36,8 +36,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "stop", min = 0, max = 1, argsFlags = "a")
     public void stop(CommandSender sender, CommandArgs args) {
-        Stage stage = args.get(0, Stage)
-                .valueWithPermOr("dac2.stage.stop.others", sender);
+        Stage stage = args.get(0, Stage).valueWithPermOr("dac2.stage.stop.others", sender);
 
         dac.getStages().forceStop(stage);
         sender.sendMessage(msg("stop.success", stage.getArena().getName()));
@@ -45,8 +44,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "start", min = 0, max = 1, argsFlags = "a")
     public void start(CommandSender sender, CommandArgs args) {
-        Stage stage = args.get('a', Stage)
-                .valueWithPermOr("dac2.stage.start.others", sender);
+        Stage stage = args.get('a', Stage).valueWithPermOr("dac2.stage.start.others", sender);
         String gameMode = args.get(0, "classic");
 
         if (stage == null) {
@@ -67,8 +65,7 @@ public class StageCommands extends DACCommands {
 
     @Command(name = "quickstart", min = 0, max = 1, argsFlags = "a")
     public void quickstart(CommandSender sender, CommandArgs args) {
-        Arena arena = args.get('a', Arena)
-                .valueWithPermOr("dac.stages.quickstart.arena", sender);
+        Arena arena = args.get('a', Arena).valueWithPermOr("dac.stages.quickstart.arena", sender);
 
         String gameMode = args.get(0, "classic");
         GameQuickStart quickStart = new GameQuickStart(dac, arena);
@@ -89,7 +86,6 @@ public class StageCommands extends DACCommands {
         }
 
         stage.onQuit(player);
-        sender.sendMessage(msg("kick.success", player.getDisplayName(),
-                stage.getArena().getName()));
+        sender.sendMessage(msg("kick.success", player.getDisplayName(), stage.getArena().getName()));
     }
 }

@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game.training;
 
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
@@ -48,7 +49,7 @@ public class Training extends AbstractGame<TrainingPlayer> {
         Column column = pool.getColumn(player);
         ColumnPattern pattern = trainingPlayer.getColumnPattern();
         boolean isADAC = column.isADAC(world);
-        callJumpSuccessEvent(trainingPlayer, column, isADAC);
+        callJumpSuccessEvent(trainingPlayer, new Vector(player), column, isADAC);
 
         if (isADAC) {
             send("jump.dac", trainingPlayer.getDisplayName());
@@ -71,7 +72,7 @@ public class Training extends AbstractGame<TrainingPlayer> {
     @Override
     public void onJumpFail(Player player) {
         TrainingPlayer trainingPlayer = party.get(player);
-        callJumpFailEvent(trainingPlayer);
+        callJumpFailEvent(trainingPlayer, new Vector(player));
 
         send("jump.fail", trainingPlayer.getDisplayName());
         trainingPlayer.incrementFails();

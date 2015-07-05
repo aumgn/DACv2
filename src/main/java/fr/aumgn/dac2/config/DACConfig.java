@@ -54,13 +54,9 @@ public class DACConfig {
     }
 
     public MessageFormat getSpectatorsMsg() {
-        if (spectatorsMessageFormat == null) {
-            spectatorsMessageFormat = new MessageFormat(
-                    Util.parseColorsMarkup(spectatorsMessage),
-                    getLocale());
-        }
-
-        return spectatorsMessageFormat;
+        return spectatorsMessageFormat == null
+                ? spectatorsMessageFormat = new MessageFormat(Util.parseColorsMarkup(spectatorsMessage), getLocale())
+                : spectatorsMessageFormat;
     }
 
     public TimerConfig getTimerConfig() {

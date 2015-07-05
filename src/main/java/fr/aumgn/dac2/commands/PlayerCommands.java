@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.commands;
 
+import com.google.common.collect.Lists;
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -11,7 +12,6 @@ import fr.aumgn.dac2.stage.Stage;
 import fr.aumgn.dac2.stage.join.JoinStage;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @NestedCommands("dac2")
@@ -27,8 +27,7 @@ public class PlayerCommands extends DACCommands {
             throw new CommandError(msg("join.alreadyingame"));
         }
 
-        Arena arena = args.get('a', Arena)
-                .valueWithPermOr("dac2.stages.join.arena", sender);
+        Arena arena = args.get('a', Arena).valueWithPermOr("dac2.stages.join.arena", sender);
         Stage stage = dac.getStages().get(arena);
 
         if (stage == null && sender.hasPermission("dac2.stage.init")) {
@@ -39,7 +38,7 @@ public class PlayerCommands extends DACCommands {
             throw new CommandError(msg("join.notjoinable"));
         }
 
-        List<Color> colors = new ArrayList<Color>();
+        List<Color> colors = Lists.newArrayList();
         for (int i = 0; i < args.length(); i++) {
             colors.add(args.get(i, Color).value());
         }

@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game.colonnisation;
 
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
@@ -38,8 +39,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         send("start");
         send("playerslist");
         for (ColonnPlayer player : party.iterable()) {
-            send("start.playerentry", player.getIndex() + 1,
-                    player.getDisplayName());
+            send("start.playerentry", player.getIndex() + 1, player.getDisplayName());
         }
         send("setup.turns", setupTurns);
         nextTurn();
@@ -59,8 +59,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
         cancelTurnTimer();
         if (!player.isOnline()) {
-            send("playerturn.notconnected",
-                    player.getDisplayName());
+            send("playerturn.notconnected", player.getDisplayName());
             removePlayer(player);
             if (!finished) {
                 nextTurn();
@@ -84,7 +83,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
     private void removePlayer(ColonnPlayer player) {
         party.remove(player);
-        spectators.add(player.getRef());
+        spectators.add(player.getPlayerID());
         if (party.size() < 2) {
             dac.getStages().stop(this);
         }
@@ -127,7 +126,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         ColumnPattern pattern;
         boolean isADAC = column.isADAC(world);
         boolean isSetupTurn = setupTurns > 0;
-        callJumpSuccessEvent(gamePlayer, column, !isSetupTurn && isADAC);
+        callJumpSuccessEvent(gamePlayer, new Vector(player), column, !isSetupTurn && isADAC);
 
         if (isSetupTurn) {
             pattern = dac.getConfig().getNeutralPattern();
@@ -167,7 +166,7 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
     @Override
     public void onJumpFail(Player player) {
         ColonnPlayer gamePlayer = party.get(player);
-        DACJumpFailEvent event = new DACJumpFailEvent(this, gamePlayer);
+        DACJumpFailEvent event = new DACJumpFailEvent(this, gamePlayer, new Vector(player));
         Util.callEvent(event);
 
         send("jump.fail", gamePlayer.getDisplayName());

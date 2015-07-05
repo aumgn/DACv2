@@ -42,8 +42,7 @@ public class WEShapeUtils {
         }
         else if (region instanceof EllipsoidRegion) {
             EllipsoidRegion ellipsoid = (EllipsoidRegion) region;
-            return new EllipsoidShape(worldedit2bukkit(ellipsoid.getCenter()),
-                    worldedit2bukkit(ellipsoid.getRadius()));
+            return new EllipsoidShape(worldedit2bukkit(ellipsoid.getCenter()), worldedit2bukkit(ellipsoid.getRadius()));
         }
         else {
             throw new WERegionNotSupported(dac, region.getClass());

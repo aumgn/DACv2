@@ -7,6 +7,7 @@ import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.UniformPattern;
 import fr.aumgn.dac2.stage.SimpleStagePlayer;
 import fr.aumgn.dac2.stage.StagePlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -28,19 +29,23 @@ public class GamePlayer extends SimpleStagePlayer {
         return new UniformPattern(getColor());
     }
 
+    private Player player() {
+        return Bukkit.getPlayer(getPlayerID());
+    }
+
     public void sendMessage(String message) {
-        Player player = getRef().getPlayer();
+        Player player = player();
         if (player != null) {
             player.sendMessage(message);
         }
     }
 
     public boolean isOnline() {
-        return getRef().isOnline();
+        return player() != null;
     }
 
     public void teleport(World world, Vector pos) {
-        Player player = getRef().getPlayer();
+        Player player = player();
         if (player == null) {
             return;
         }
@@ -53,7 +58,7 @@ public class GamePlayer extends SimpleStagePlayer {
     }
 
     public void teleport(Location location) {
-        Player player = getRef().getPlayer();
+        Player player = player();
         if (player != null) {
             player.setFallDistance(0f);
             player.teleport(location);

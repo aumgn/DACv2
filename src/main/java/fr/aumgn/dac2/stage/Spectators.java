@@ -1,19 +1,22 @@
 package fr.aumgn.dac2.stage;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
-import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
+import com.google.common.collect.Sets;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.Set;
+import java.util.UUID;
+
+import static fr.aumgn.dac2.utils.DACUtil.onlinePlayersIterable;
+
 public class Spectators {
 
-    private final PlayersRefSet set;
+    private final Set<UUID> set;
 
     public Spectators() {
-        this.set = new PlayersRefHashSet();
+        this.set = Sets.newHashSet();
     }
 
     public Spectators(Spectators other) {
@@ -21,28 +24,28 @@ public class Spectators {
         set.addAll(other.set);
     }
 
-    public boolean contains(PlayerRef player) {
+    public boolean contains(UUID player) {
         return set.contains(player);
     }
 
     public boolean contains(OfflinePlayer player) {
-        return set.contains(player);
+        return set.contains(player.getUniqueId());
     }
 
-    public boolean add(PlayerRef player) {
+    public boolean add(UUID player) {
         return set.add(player);
     }
 
     public boolean add(OfflinePlayer player) {
-        return set.add(player);
+        return set.add(player.getUniqueId());
     }
 
-    public boolean remove(PlayerRef player) {
+    public boolean remove(UUID player) {
         return set.remove(player);
     }
 
     public boolean remove(OfflinePlayer player) {
-        return set.remove(player);
+        return set.remove(player.getUniqueId());
     }
 
     /**
@@ -52,7 +55,7 @@ public class Spectators {
     public void send(DAC dac, Arena arena, String message) {
         String spectatorMessage = dac.getConfig().getSpectatorsMsg()
                 .format(new String[] { arena.getName(), message });
-        for (Player spectator : set.players()) {
+        for (Player spectator : onlinePlayersIterable(set)) {
             spectator.sendMessage(spectatorMessage);
         }
     }

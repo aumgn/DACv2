@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game.suddendeath;
 
+import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.PoolFilling;
@@ -27,8 +28,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
         send("start");
         send("playerslist");
         for (SuddenDeathPlayer player : party.iterable()) {
-            send("start.playerentry", player.getIndex() + 1,
-                    player.getDisplayName());
+            send("start.playerentry", player.getIndex() + 1, player.getDisplayName());
         }
 
         nextTurn();
@@ -36,8 +36,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
     private void resetPool() {
         AllButOne filling = new PoolFilling.AllButOne();
-        filling.fill(arena.getWorld(), arena.getPool(),
-                dac.getConfig().getNeutralPattern());
+        filling.fill(arena.getWorld(), arena.getPool(), dac.getConfig().getNeutralPattern());
     }
 
     @Override
@@ -92,7 +91,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
         SuddenDeathPlayer sdPlayer = party.get(player);
         Column column = arena.getPool().getColumn(player);
         boolean isADAC = column.isADAC(arena.getWorld());
-        callJumpSuccessEvent(sdPlayer, column, isADAC);
+        callJumpSuccessEvent(sdPlayer, new Vector(player), column, isADAC);
 
         send("jump.success", sdPlayer.getDisplayName());
         sdPlayer.setSuccess();
@@ -103,7 +102,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
     @Override
     public void onJumpFail(Player player) {
         SuddenDeathPlayer sdPlayer = party.get(player);
-        callJumpFailEvent(sdPlayer);
+        callJumpFailEvent(sdPlayer, new Vector(player));
 
         send("jump.fail", sdPlayer.getDisplayName());
         sdPlayer.setFail();
@@ -132,7 +131,7 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
                 callPlayerEliminatedEvent(player);
                 send("elimination", player.getDisplayName());
                 party.remove(player);
-                spectators.add(player.getRef());
+                spectators.add(player.getPlayerID());
             }
         }
     }
@@ -143,10 +142,8 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
         sender.sendMessage(messages.get("suddendeath.playerslist"));
         for (SuddenDeathPlayer player : party.iterable()) {
-            String key = "suddendeath.playerentry."
-                    + player.getLocalizationKeyForStatus();
-            sender.sendMessage(messages.get(key, player.getIndex(),
-                    player.getDisplayName()));
+            String key = "suddendeath.playerentry." + player.getLocalizationKeyForStatus();
+            sender.sendMessage(messages.get(key, player.getIndex(), player.getDisplayName()));
         }
     }
 }

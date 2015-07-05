@@ -38,8 +38,7 @@ public class ClassicGamePlayer extends GamePlayer {
         }
     }
 
-    public static class Factory
-            implements GamePlayer.Factory<ClassicGamePlayer> {
+    public static class Factory implements GamePlayer.Factory<ClassicGamePlayer> {
 
         @Override
         public Class<ClassicGamePlayer> getSubclass() {

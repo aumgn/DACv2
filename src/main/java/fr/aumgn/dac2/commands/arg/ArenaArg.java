@@ -29,8 +29,7 @@ public class ArenaArg extends AsbtractSenderArg<Arena> {
     @Override
     protected Arena defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            throw new CommandUsageError(dac.getCmdMessages()
-                    .get("arena.arg.needed"));
+            throw new CommandUsageError(dac.getCmdMessages().get("arena.arg.needed"));
         }
 
         Arena arena = dac.getArenas().get((Player) sender);
@@ -47,7 +46,6 @@ public class ArenaArg extends AsbtractSenderArg<Arena> {
     }
 
     public static class NoSuchArena extends CommandError {
-        private static final long serialVersionUID = -4832133406864970323L;
 
         public NoSuchArena(DAC dac, String name) {
             super(dac.getCmdMessages().get("arena.arg.notfound", name));
@@ -55,8 +53,6 @@ public class ArenaArg extends AsbtractSenderArg<Arena> {
     }
 
     public static class NotInArena extends CommandError {
-
-        private static final long serialVersionUID = 6112644121244362679L;
 
         public NotInArena(DAC dac) {
             super(dac.getCmdMessages().get("arena.arg.notinarena"));

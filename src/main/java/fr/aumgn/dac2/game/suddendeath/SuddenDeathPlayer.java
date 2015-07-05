@@ -39,8 +39,7 @@ public class SuddenDeathPlayer extends GamePlayer {
         Awaiting, Failed, Success;
     }
 
-    public static class Factory
-            implements GamePlayer.Factory<SuddenDeathPlayer> {
+    public static class Factory implements GamePlayer.Factory<SuddenDeathPlayer> {
 
         @Override
         public Class<SuddenDeathPlayer> getSubclass() {

@@ -1,7 +1,6 @@
 package fr.aumgn.dac2.game;
 
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
-import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
+import com.google.common.collect.Maps;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.stage.StagePlayer;
 import org.bukkit.OfflinePlayer;
@@ -14,7 +13,7 @@ public class GameParty<T extends GamePlayer> {
     // Come on..
     private final Class<T> clazz;
     private final Game game;
-    private final PlayersRefMap<T> map;
+    private final Map<UUID, T> map;
     private T[] array;
     private int turn;
 
@@ -23,7 +22,7 @@ public class GameParty<T extends GamePlayer> {
         this.clazz = playerFactory.getSubclass();
         this.game = game;
         this.array = newArray(players.size());
-        this.map = new PlayersRefHashMap<T>();
+        this.map = Maps.newHashMap();
 
         List<StagePlayer> roulette = new LinkedList<StagePlayer>(players);
         Random rand = Util.getRandom();
@@ -32,7 +31,7 @@ public class GameParty<T extends GamePlayer> {
             T player = playerFactory.create(roulette.remove(j), i);
             array[i] = player;
 
-            map.put(player.getRef(), player);
+            map.put(player.getPlayerID(), player);
         }
 
         turn = -1;
@@ -114,7 +113,7 @@ public class GameParty<T extends GamePlayer> {
 
         array = newPlayers;
 
-        map.remove(player.getRef());
+        map.remove(player.getPlayerID());
     }
 
     public List<T> asList() {

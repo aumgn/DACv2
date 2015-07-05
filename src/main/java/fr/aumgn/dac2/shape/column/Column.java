@@ -48,15 +48,11 @@ public class Column implements Iterable<Vector> {
     }
 
     public boolean isADAC(World world) {
-        boolean water;
         Vector pt = pt2D.to3D(maxY);
-
-        water = isWater(world, pt.subtractX(1));
-        water |= isWater(world, pt.addX(1));
-        water |= isWater(world, pt.subtractZ(1));
-        water |= isWater(world, pt.addZ(1));
-
-        return !water;
+        return !isWater(world, pt.subtractX(1))
+                && !isWater(world, pt.addX(1))
+                && !isWater(world, pt.subtractZ(1))
+                && !isWater(world, pt.addZ(1));
     }
 
     private boolean isWater(World world, Vector pos) {

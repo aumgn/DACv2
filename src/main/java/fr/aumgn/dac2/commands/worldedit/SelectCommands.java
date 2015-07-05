@@ -25,8 +25,7 @@ public class SelectCommands extends WorldEditCommands {
     @Command(name = "pool", min = 1, max = 1, argsFlags = "s")
     public void pool(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
-        WESelector selectorType = args.get('s', WESelector.class)
-                .valueOr(WESelector.Default);
+        WESelector selectorType = args.get('s', WESelector.class).valueOr(WESelector.Default);
 
         setSelection(sender, arena, selectorType, arena.safeGetPool(dac));
         sender.sendMessage(msg("select.pool.success"));
@@ -35,22 +34,18 @@ public class SelectCommands extends WorldEditCommands {
     @Command(name = "start", min = 1, max = 1, argsFlags = "s")
     public void start(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
-        WESelector selectorType = args.get('s', WESelector.class)
-                .valueOr(WESelector.Default);
+        WESelector selectorType = args.get('s', WESelector.class).valueOr(WESelector.Default);
 
-        setSelection(sender, arena, selectorType,
-                arena.safeGetStartRegion(dac));
+        setSelection(sender, arena, selectorType, arena.safeGetStartRegion(dac));
         sender.sendMessage(msg("select.start.success"));
     }
 
     @Command(name = "surrounding", min = 1, max = 1, argsFlags = "s")
     public void surrounding(Player sender, CommandArgs args) {
         Arena arena = args.get(0, Arena).value();
-        WESelector selectorType = args.get('s', WESelector.class)
-                .valueOr(WESelector.Default);
+        WESelector selectorType = args.get('s', WESelector.class).valueOr(WESelector.Default);
 
-        setSelection(sender, arena, selectorType,
-                arena.safeGetSurroundingRegion(dac));
+        setSelection(sender, arena, selectorType, arena.safeGetSurroundingRegion(dac));
         sender.sendMessage(msg("select.surrounding.success"));
     }
 

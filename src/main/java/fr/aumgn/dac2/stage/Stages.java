@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.stage;
 
+import com.google.common.collect.Lists;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
@@ -12,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Stages {
@@ -22,7 +22,7 @@ public class Stages {
 
     public Stages(DAC dac) {
         this.dac = dac;
-        this.stages = new ArrayList<Stage>(dac.getArenas().length());
+        this.stages = Lists.newArrayListWithCapacity(dac.getArenas().length());
     }
 
     public Stage get(Arena arena) {
@@ -116,8 +116,7 @@ public class Stages {
 
     private void registerListeners(Stage stage) {
         for (Listener listener : stage.getListeners()) {
-            Bukkit.getPluginManager()
-                    .registerEvents(listener, dac.getPlugin());
+            Bukkit.getPluginManager().registerEvents(listener, dac.getPlugin());
         }
     }
 

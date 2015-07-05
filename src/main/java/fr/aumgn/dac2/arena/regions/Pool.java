@@ -43,8 +43,7 @@ public class Pool extends Region {
 
     public Column getColumn(Player player) {
         Location location = player.getLocation();
-        return new Column(shape, new Vector2D(location.getBlockX(),
-                location.getBlockZ()));
+        return new Column(shape, new Vector2D(location.getBlockX(), location.getBlockZ()));
     }
 
     public void reset(World world) {

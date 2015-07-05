@@ -74,8 +74,7 @@ public interface PoolFilling {
 
             for (Column column : pool.getShape()) {
                 Vector2D pt = column.getPos();
-                if (((pt.getBlockX() & 1) == (pt.getBlockZ() & 1))
-                        == sameParity) {
+                if (((pt.getBlockX() & 1) == (pt.getBlockZ() & 1)) == sameParity) {
                     column.reset(world);
                 }
                 else {
@@ -101,8 +100,7 @@ public interface PoolFilling {
             int maxX = shape.getMax2D().getBlockX();
             int maxZ = shape.getMax2D().getBlockZ();
             do {
-                except = new Vector2D(rand.nextInt(minX, maxX),
-                        rand.nextInt(minZ, maxZ));
+                except = new Vector2D(rand.nextInt(minX, maxX), rand.nextInt(minZ, maxZ));
             } while (!shape.contains2D(except));
 
             for (Column column : shape) {

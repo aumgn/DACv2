@@ -26,8 +26,6 @@ public class ColorArg extends AbstractCommandArg<Color> {
 
     public static class NotAColor extends DACException {
 
-        private static final long serialVersionUID = 9107450200980690121L;
-
         public NotAColor(DAC dac, String token) {
             super(dac.getCmdMessages().get("color.arg.notacolor", token));
         }

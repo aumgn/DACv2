@@ -1,12 +1,13 @@
 package fr.aumgn.dac2.stage;
 
 import fr.aumgn.bukkitutils.geom.Position;
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.config.Color;
+
+import java.util.UUID;
 
 public interface StagePlayer {
 
-    PlayerRef getRef();
+    UUID getPlayerID();
 
     Color getColor();
 

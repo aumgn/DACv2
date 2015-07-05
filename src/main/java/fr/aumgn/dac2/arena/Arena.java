@@ -79,8 +79,7 @@ public class Arena {
      */
     public Pool safeGetPool(DAC dac) {
         if (pool == null) {
-            throw new ArenaComponentUndefined(dac.getMessages()
-                    .get("arena.pool.notdefined"));
+            throw new ArenaComponentUndefined(dac.getMessages().get("arena.pool.notdefined"));
         }
 
         return pool;
@@ -104,8 +103,7 @@ public class Arena {
 
     public StartRegion safeGetStartRegion(DAC dac) {
         if (startRegion == null) {
-            throw new ArenaComponentUndefined(dac.getMessages()
-                    .get("arena.start.notdefined"));
+            throw new ArenaComponentUndefined(dac.getMessages().get("arena.start.notdefined"));
         }
 
         return startRegion;
@@ -129,8 +127,7 @@ public class Arena {
      */
     public Diving safeGetDiving(DAC dac) {
         if (diving == null) {
-            throw new ArenaComponentUndefined(dac.getMessages()
-                    .get("arena.diving.notdefined"));
+            throw new ArenaComponentUndefined(dac.getMessages().get("arena.diving.notdefined"));
         }
 
         return diving;
@@ -177,8 +174,7 @@ public class Arena {
     public SurroundingRegion safeGetSurroundingRegion(DAC dac) {
         SurroundingRegion region = getSurroundingRegion();
         if (region == null) {
-            throw new ArenaComponentUndefined(dac.getMessages()
-                    .get("arena.surrounding.notdefined"));
+            throw new ArenaComponentUndefined(dac.getMessages().get("arena.surrounding.notdefined"));
         }
 
         return region;
@@ -192,26 +188,21 @@ public class Arena {
         Vector divingVec = diving.getPosition();
 
         Vector min = new Vector(
-                Math.min(startMin.getX(),
-                        Math.min(poolMin.getX(), divingVec.getX())),
-                Math.min(startMin.getY(),
-                        Math.min(poolMin.getY(), divingVec.getY())),
-                Math.min(startMin.getZ(),
-                        Math.min(poolMin.getZ(), divingVec.getZ())))
+                Math.min(startMin.getX(), Math.min(poolMin.getX(), divingVec.getX())),
+                Math.min(startMin.getY(), Math.min(poolMin.getY(), divingVec.getY())),
+                Math.min(startMin.getZ(), Math.min(poolMin.getZ(), divingVec.getZ())))
                 .subtract(radius);
 
         Vector max = new Vector(
-                Math.max(startMax.getX(),
-                        Math.max(poolMax.getX(), divingVec.getX())),
-                Math.max(startMax.getY(),
-                        Math.max(poolMax.getY(), divingVec.getY())),
-                Math.max(startMax.getZ(),
-                        Math.max(poolMax.getZ(), divingVec.getZ())))
+                Math.max(startMax.getX(), Math.max(poolMax.getX(), divingVec.getX())),
+                Math.max(startMax.getY(), Math.max(poolMax.getY(), divingVec.getY())),
+                Math.max(startMax.getZ(), Math.max(poolMax.getZ(), divingVec.getZ())))
                 .add(radius);
 
         Set<Player> players = new HashSet<Player>();
         for (Player player : getWorld().getPlayers()) {
-            if (new Vector(player).isInside(min, max)) {
+            Vector position = new Vector(player);
+            if (position.isInside(min, max)) {
                 players.add(player);
             }
         }

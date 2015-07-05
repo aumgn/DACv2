@@ -68,8 +68,7 @@ public class DAC {
         config = plugin.reloadDACConfig();
         colors = new Colors(this);
 
-        Localization localization =
-                new Localization(plugin, config.getLocale());
+        Localization localization = new Localization(plugin, config.getLocale());
         cmdMessages = localization.get("commands");
         messages = localization.get("messages");
     }

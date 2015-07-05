@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game;
 
+import com.google.common.collect.Maps;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.UnknownGameType;
 import fr.aumgn.dac2.game.classic.ClassicGame;
@@ -8,7 +9,6 @@ import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.game.training.Training;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,10 +16,8 @@ import java.util.Map;
  */
 public abstract class GameFactory {
 
-    private static Map<String, GameFactory> factories =
-            new HashMap<String, GameFactory>();
-    private static Map<String, GameFactory> byAliases =
-            new HashMap<String, GameFactory>();
+    private static Map<String, GameFactory> factories = Maps.newHashMap();
+    private static Map<String, GameFactory> byAliases = Maps.newHashMap();
 
     static {
         GameFactory.register("classic", new GameFactory() {
@@ -63,8 +61,7 @@ public abstract class GameFactory {
     /**
      * Registers a GameFactory with the given name & aliases.
      */
-    public static void register(String name, GameFactory factory,
-                                String... aliases) {
+    public static void register(String name, GameFactory factory, String... aliases) {
         factories.put(name, factory);
 
         byAliases.put(name, factory);

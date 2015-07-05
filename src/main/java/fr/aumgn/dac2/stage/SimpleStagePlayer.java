@@ -1,32 +1,34 @@
 package fr.aumgn.dac2.stage;
 
 import fr.aumgn.bukkitutils.geom.Position;
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.config.Color;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
+
+import static fr.aumgn.dac2.utils.DACUtil.playerDisplayName;
 
 public abstract class SimpleStagePlayer implements StagePlayer {
 
-    private final PlayerRef ref;
+    private final UUID playerID;
     private final Color color;
     private final Position position;
 
     protected SimpleStagePlayer(Color color, Player player) {
-        this.ref = PlayerRef.get(player);
+        this.playerID = player.getUniqueId();
         this.color = color;
         this.position = new Position(player.getLocation());
     }
 
     protected SimpleStagePlayer(StagePlayer player) {
-        this.ref = player.getRef();
+        this.playerID = player.getPlayerID();
         this.color = player.getColor();
         this.position = player.getStartPosition();
     }
 
     @Override
-    public PlayerRef getRef() {
-        return ref;
+    public UUID getPlayerID() {
+        return playerID;
     }
 
     @Override
@@ -41,8 +43,6 @@ public abstract class SimpleStagePlayer implements StagePlayer {
 
     @Override
     public String getDisplayName() {
-        String rawName = ref.getDisplayName();
-        rawName = ChatColor.stripColor(rawName);
-        return color.chat + rawName;
+        return playerDisplayName(playerID);
     }
 }

@@ -28,13 +28,11 @@ public class GameQuickStart implements GameStartData {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (startRegion.contains(player)) {
                 if (!colors.hasNext()) {
-                    throw new TooManyPlayers(dac.getMessages()
-                            .get("quickstart.toomanyplayers"));
+                    throw new TooManyPlayers(dac.getMessages().get("quickstart.toomanyplayers"));
                 }
 
                 Color color = colors.next();
-                StartStagePlayer stagePlayer =
-                        new StartStagePlayer(color, player);
+                StartStagePlayer stagePlayer = new StartStagePlayer(color, player);
                 players.add(stagePlayer);
             }
         }
