@@ -51,9 +51,9 @@ public class GsonRegionFactory implements TypeAdapterFactory {
             return (TypeAdapter<T>) new RegionTypeAdapter(gson, ctor)
                     .nullSafe();
         }
-        catch (SecurityException _) {
+        catch (SecurityException exc) {
         }
-        catch (NoSuchMethodException _) {
+        catch (NoSuchMethodException exc) {
         }
 
         return null;
@@ -93,13 +93,13 @@ public class GsonRegionFactory implements TypeAdapterFactory {
             try {
                 return ctor.newInstance(shape);
             }
-            catch (IllegalArgumentException _) {
+            catch (IllegalArgumentException exc) {
             }
-            catch (InstantiationException _) {
+            catch (InstantiationException exc) {
             }
-            catch (IllegalAccessException _) {
+            catch (IllegalAccessException exc) {
             }
-            catch (InvocationTargetException _) {
+            catch (InvocationTargetException exc) {
             }
 
             return null;

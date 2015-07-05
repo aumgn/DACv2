@@ -30,7 +30,7 @@ public class Pool extends Region {
 
     public int size2D() {
         int size = 0;
-        for (@SuppressWarnings("unused") Column _ : shape) {
+        for (Column column : shape) {
             size++;
         }
 

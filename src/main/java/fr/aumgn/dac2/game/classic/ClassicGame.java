@@ -190,7 +190,7 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
         Vector2D position = new Vector2D(player);
         callJumpFailEvent(gamePlayer);
 
-        int health = player.getHealth();
+        double health = player.getHealth();
         if (health == PLAYER_MAX_HEALTH) {
             player.damage(1);
             player.setHealth(PLAYER_MAX_HEALTH);

@@ -23,13 +23,13 @@ public class Colors implements Iterable<Color> {
                 colorsTmp = getDefaults(dac.getConfig().getLocale());
             }
         }
-        catch (GsonLoadException _) {
+        catch (GsonLoadException exc) {
             colorsTmp = getDefaults(dac.getConfig().getLocale());
             try {
                 dac.getPlugin().getGsonLoader()
                         .write("colors.json", colorsTmp);
             }
-            catch (GsonLoadException __) {
+            catch (GsonLoadException exc2) {
                 dac.getLogger().info("Unable to write default color.json.");
             }
         }

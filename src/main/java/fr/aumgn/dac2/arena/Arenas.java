@@ -89,7 +89,7 @@ public class Arenas {
         try {
             loader.write(filename, arena);
         }
-        catch (GsonLoadException _) {
+        catch (GsonLoadException exc) {
             throw new ArenaSaveException("Unable to save " + filename + ".");
         }
     }
@@ -113,9 +113,6 @@ public class Arenas {
      * <p/>
      * If different arena defines start regions which overlap themselves,
      * the result is undefined.
-     *
-     * @param player
-     * @return the arena
      */
     public Arena get(Player player) {
         Vector pt = new Vector(player);

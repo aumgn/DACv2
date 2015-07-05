@@ -1,8 +1,6 @@
 package fr.aumgn.dac2.commands.worldedit;
 
 import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.LocalWorld;
-import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.regions.FlatRegion;
 import com.sk89q.worldedit.regions.Region;
@@ -21,6 +19,8 @@ import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.worldedit.WEShapeUtils;
 import org.bukkit.entity.Player;
+
+import static fr.aumgn.dac2.shape.worldedit.WEShapeUtils.bukkit2worldedit;
 
 @NestedCommands({ "dac2", "setwe" })
 public class SetWECommands extends WorldEditCommands {
@@ -70,9 +70,7 @@ public class SetWECommands extends WorldEditCommands {
 
     private Region getRegion(Player player) {
         WorldEditPlugin worldEdit = getWorldEdit();
-        LocalWorld world = BukkitUtil.getLocalWorld(player.getWorld());
-        RegionSelector selector = worldEdit.getSession(player)
-                .getRegionSelector(world);
+        RegionSelector selector = worldEdit.getSession(player).getRegionSelector(bukkit2worldedit(player.getWorld()));
         try {
             return selector.getRegion();
         }
