@@ -1,11 +1,10 @@
 package fr.aumgn.dac2.stage;
 
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Position;
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.dac2.config.Color;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public abstract class SimpleStagePlayer implements StagePlayer {
 

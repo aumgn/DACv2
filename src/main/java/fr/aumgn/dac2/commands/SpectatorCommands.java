@@ -1,15 +1,14 @@
 package fr.aumgn.dac2.commands;
 
-import java.util.List;
-
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.Stage;
+import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @NestedCommands("dac2")
 public class SpectatorCommands extends DACCommands {
@@ -25,7 +24,7 @@ public class SpectatorCommands extends DACCommands {
         for (Stage stage : stages) {
             Spectators spectators = stage.getSpectators();
             String arenaName = stage.getArena().getName();
-            if (spectators .contains(sender)) {
+            if (spectators.contains(sender)) {
                 sender.sendMessage(msg("watch.alreadywatching", arenaName));
                 continue;
             }

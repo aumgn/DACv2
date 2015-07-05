@@ -1,9 +1,8 @@
 package fr.aumgn.dac2.event.stage;
 
-import org.bukkit.event.HandlerList;
-
 import fr.aumgn.dac2.event.DACStageEvent;
 import fr.aumgn.dac2.stage.Stage;
+import org.bukkit.event.HandlerList;
 
 public class DACStageStartEvent extends DACStageEvent {
 
@@ -13,12 +12,12 @@ public class DACStageStartEvent extends DACStageEvent {
         super(stage);
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

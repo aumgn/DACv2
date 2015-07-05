@@ -1,32 +1,27 @@
 package fr.aumgn.dac2.shape.worldedit;
 
-import java.util.List;
-
 import com.sk89q.worldedit.BlockVector2D;
-import com.sk89q.worldedit.regions.CylinderRegion;
-import com.sk89q.worldedit.regions.EllipsoidRegion;
-import com.sk89q.worldedit.regions.Polygonal2DRegion;
-import com.sk89q.worldedit.regions.Region;
-import com.sk89q.worldedit.regions.CuboidRegion;
-
+import com.sk89q.worldedit.regions.*;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.WERegionNotSupported;
-import fr.aumgn.dac2.shape.CuboidShape;
-import fr.aumgn.dac2.shape.CylinderShape;
-import fr.aumgn.dac2.shape.EllipsoidShape;
-import fr.aumgn.dac2.shape.PolygonalShape;
-import fr.aumgn.dac2.shape.Shape;
+import fr.aumgn.dac2.shape.*;
+
+import java.util.List;
 
 public class WEShapeUtils {
+
+    private WEShapeUtils() {
+    }
 
     public static Shape getShape(DAC dac, Region region) {
         if (region instanceof CuboidRegion) {
             CuboidRegion cuboid = (CuboidRegion) region;
             return new CuboidShape(we2bu(cuboid.getMinimumPoint()),
                     we2bu(cuboid.getMaximumPoint()));
-        } else if (region instanceof Polygonal2DRegion) {
+        }
+        else if (region instanceof Polygonal2DRegion) {
             Polygonal2DRegion poly = (Polygonal2DRegion) region;
             List<BlockVector2D> wePoints = poly.getPoints();
             Vector2D[] points = new Vector2D[wePoints.size()];
@@ -37,16 +32,19 @@ public class WEShapeUtils {
             }
             return new PolygonalShape(poly.getMinimumY(), poly.getMaximumY(),
                     points);
-        } else if (region instanceof CylinderRegion) {
+        }
+        else if (region instanceof CylinderRegion) {
             CylinderRegion cyl = (CylinderRegion) region;
             return new CylinderShape(we2bu(cyl.getCenter().toVector2D()),
                     we2bu(cyl.getRadius()), cyl.getMinimumY(),
                     cyl.getMaximumY());
-        } else if (region instanceof EllipsoidRegion) {
+        }
+        else if (region instanceof EllipsoidRegion) {
             EllipsoidRegion ellipsoid = (EllipsoidRegion) region;
             return new EllipsoidShape(we2bu(ellipsoid.getCenter()),
                     we2bu(ellipsoid.getRadius()));
-        } else {
+        }
+        else {
             throw new WERegionNotSupported(dac, region.getClass());
         }
     }
@@ -70,8 +68,5 @@ public class WEShapeUtils {
 
     public static BlockVector2D bu2blockwe(Vector2D pt) {
         return new BlockVector2D(pt.getX(), pt.getZ());
-    }
-
-    private WEShapeUtils() {
     }
 }

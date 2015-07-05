@@ -1,9 +1,8 @@
 package fr.aumgn.dac2.shape.column;
 
+import fr.aumgn.dac2.config.Color;
 import org.bukkit.Material;
 import org.bukkit.World;
-
-import fr.aumgn.dac2.config.Color;
 
 /**
  * A column pattern which set all blocks uniformly.

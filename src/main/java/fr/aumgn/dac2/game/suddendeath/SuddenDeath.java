@@ -1,8 +1,5 @@
 package fr.aumgn.dac2.game.suddendeath;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.PoolFilling;
@@ -10,6 +7,8 @@ import fr.aumgn.dac2.arena.regions.PoolFilling.AllButOne;
 import fr.aumgn.dac2.game.AbstractGame;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
@@ -54,10 +53,12 @@ public class SuddenDeath extends AbstractGame<SuddenDeathPlayer> {
 
         if (remaining == 0) {
             send("allfailed");
-        } else if (remaining == 1) {
+        }
+        else if (remaining == 1) {
             onPlayerWin(winner);
             return;
-        } else {
+        }
+        else {
             eliminatePlayersWhoFailed();
         }
 

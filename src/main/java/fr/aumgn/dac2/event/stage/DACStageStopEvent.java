@@ -1,9 +1,8 @@
 package fr.aumgn.dac2.event.stage;
 
-import org.bukkit.event.HandlerList;
-
 import fr.aumgn.dac2.event.DACStageEvent;
 import fr.aumgn.dac2.stage.Stage;
+import org.bukkit.event.HandlerList;
 
 public class DACStageStopEvent extends DACStageEvent {
 
@@ -16,16 +15,16 @@ public class DACStageStopEvent extends DACStageEvent {
         this.force = force;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public boolean isForce() {
         return force;
     }
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

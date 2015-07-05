@@ -1,13 +1,10 @@
 package fr.aumgn.dac2.commands.worldedit;
 
-import org.bukkit.entity.Player;
-
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.regions.RegionSelector;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -16,6 +13,7 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.Region;
 import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.worldedit.WESelector;
+import org.bukkit.entity.Player;
 
 @NestedCommands({ "dac2", "select" })
 public class SelectCommands extends WorldEditCommands {
@@ -57,7 +55,7 @@ public class SelectCommands extends WorldEditCommands {
     }
 
     private void setSelection(Player sender, Arena arena,
-            WESelector selectorType, Region region) {
+                              WESelector selectorType, Region region) {
         WorldEditPlugin worldEdit = getWorldEdit();
         LocalWorld world = BukkitUtil.getLocalWorld(arena.getWorld());
         Shape shape = region.getShape();

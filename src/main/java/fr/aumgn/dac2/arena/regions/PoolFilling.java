@@ -1,20 +1,21 @@
 package fr.aumgn.dac2.arena.regions;
 
-import org.bukkit.World;
-
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.util.Random;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
+import org.bukkit.World;
 
 public interface PoolFilling {
+
+    void fill(World world, Pool pool, ColumnPattern pattern);
 
     /**
      * Resets the pool.
      */
-    public class Reset implements PoolFilling {
+    class Reset implements PoolFilling {
 
         @Override
         public void fill(World world, Pool pool, ColumnPattern pattern) {
@@ -27,7 +28,7 @@ public interface PoolFilling {
     /**
      * Replaces all columns.
      */
-    public class Fully implements PoolFilling {
+    class Fully implements PoolFilling {
 
         @Override
         public void fill(World world, Pool pool, ColumnPattern pattern) {
@@ -40,7 +41,7 @@ public interface PoolFilling {
     /**
      * Replaces some columns randomly.
      */
-    public class Randomly implements PoolFilling {
+    class Randomly implements PoolFilling {
 
         private final double ratio;
 
@@ -54,7 +55,8 @@ public interface PoolFilling {
             for (Column column : pool.getShape()) {
                 if (rand.nextDouble() < ratio) {
                     column.set(world, pattern);
-                } else {
+                }
+                else {
                     column.reset(world);
                 }
             }
@@ -64,7 +66,7 @@ public interface PoolFilling {
     /**
      * Replaces one column over two.
      */
-    public class DeACoudre implements PoolFilling {
+    class DeACoudre implements PoolFilling {
 
         @Override
         public void fill(World world, Pool pool, ColumnPattern pattern) {
@@ -75,7 +77,8 @@ public interface PoolFilling {
                 if (((pt.getBlockX() & 1) == (pt.getBlockZ() & 1))
                         == sameParity) {
                     column.reset(world);
-                } else {
+                }
+                else {
                     column.set(world, pattern);
                 }
             }
@@ -83,9 +86,9 @@ public interface PoolFilling {
     }
 
     /**
-     * Replaces all columns (except a random one). 
+     * Replaces all columns (except a random one).
      */
-    public static class AllButOne implements PoolFilling {
+    class AllButOne implements PoolFilling {
 
         @Override
         public void fill(World world, Pool pool, ColumnPattern pattern) {
@@ -105,12 +108,11 @@ public interface PoolFilling {
             for (Column column : shape) {
                 if (column.getPos().equals(except)) {
                     column.reset(world);
-                } else {
+                }
+                else {
                     column.set(world, pattern);
                 }
             }
         }
     }
-
-    void fill(World world, Pool pool, ColumnPattern pattern);
 }

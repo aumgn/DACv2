@@ -1,5 +1,6 @@
 package fr.aumgn.dac2.game;
 
+import fr.aumgn.dac2.arena.Arena;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -8,8 +9,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import fr.aumgn.dac2.arena.Arena;
 
 /**
  * Listener which provides common implementations of listeners

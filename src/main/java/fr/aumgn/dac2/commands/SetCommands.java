@@ -1,8 +1,5 @@
 package fr.aumgn.dac2.commands;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -17,8 +14,10 @@ import fr.aumgn.dac2.exceptions.PoolShapeNotFlat;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.ShapeFactory;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-@NestedCommands({"dac2", "set"})
+@NestedCommands({ "dac2", "set" })
 public class SetCommands extends DACCommands {
 
     private static final int DEFAULT_RADIUS = 5;
@@ -73,7 +72,7 @@ public class SetCommands extends DACCommands {
     }
 
     private Shape shapeFor(CommandSender sender, CommandArgs args,
-            ShapeFactory defaultShape) {
+                           ShapeFactory defaultShape) {
         Player player = args.getPlayer('p').valueOr(sender);
         Vector center = new Vector(player);
         int radius = args.getInteger(1).valueOr(DEFAULT_RADIUS);

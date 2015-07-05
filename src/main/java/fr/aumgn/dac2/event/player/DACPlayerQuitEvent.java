@@ -1,10 +1,9 @@
 package fr.aumgn.dac2.event.player;
 
-import org.bukkit.event.HandlerList;
-
 import fr.aumgn.dac2.event.DACStagePlayerEvent;
 import fr.aumgn.dac2.stage.Stage;
 import fr.aumgn.dac2.stage.StagePlayer;
+import org.bukkit.event.HandlerList;
 
 public class DACPlayerQuitEvent extends DACStagePlayerEvent {
 
@@ -14,12 +13,12 @@ public class DACPlayerQuitEvent extends DACStagePlayerEvent {
         super(stage, player);
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 }

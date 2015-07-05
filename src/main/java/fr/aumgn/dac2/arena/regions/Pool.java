@@ -1,14 +1,13 @@
 package fr.aumgn.dac2.arena.regions;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.Shape;
 import fr.aumgn.dac2.shape.column.Column;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 public class Pool extends Region {
 
@@ -31,7 +30,7 @@ public class Pool extends Region {
 
     public int size2D() {
         int size = 0;
-        for (@SuppressWarnings("unused") Column _: shape) {
+        for (@SuppressWarnings("unused") Column _ : shape) {
             size++;
         }
 

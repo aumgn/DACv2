@@ -1,11 +1,11 @@
 package fr.aumgn.dac2.shape;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.column.Column;
+
+import java.util.Iterator;
+import java.util.Set;
 
 @ShapeName("arbitrary")
 public class ArbitraryFlatShape implements FlatShape {

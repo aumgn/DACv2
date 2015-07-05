@@ -1,12 +1,5 @@
 package fr.aumgn.dac2.game.start;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.StartRegion;
@@ -14,6 +7,12 @@ import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.exceptions.TooManyPlayers;
 import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.StagePlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class GameQuickStart implements GameStartData {
 

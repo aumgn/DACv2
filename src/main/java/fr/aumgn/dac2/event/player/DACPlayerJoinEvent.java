@@ -1,10 +1,9 @@
 package fr.aumgn.dac2.event.player;
 
-import org.bukkit.event.HandlerList;
-
 import fr.aumgn.dac2.event.DACStagePlayerEvent;
-import fr.aumgn.dac2.stage.join.JoinStage;
 import fr.aumgn.dac2.stage.StagePlayer;
+import fr.aumgn.dac2.stage.join.JoinStage;
+import org.bukkit.event.HandlerList;
 
 public class DACPlayerJoinEvent extends DACStagePlayerEvent {
 
@@ -14,16 +13,16 @@ public class DACPlayerJoinEvent extends DACStagePlayerEvent {
         super(stage, player);
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public JoinStage getStage() {
         return (JoinStage) super.getStage();
     }
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

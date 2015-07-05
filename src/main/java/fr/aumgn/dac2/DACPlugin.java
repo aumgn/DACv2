@@ -1,30 +1,21 @@
 package fr.aumgn.dac2;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
 import fr.aumgn.bukkitutils.gson.typeadapter.EnumTypeAdapterFactory;
 import fr.aumgn.dac2.arena.regions.GsonRegionFactory;
-import fr.aumgn.dac2.commands.AdminCommands;
-import fr.aumgn.dac2.commands.ArenasCommands;
-import fr.aumgn.dac2.commands.FillCommands;
-import fr.aumgn.dac2.commands.InfoCommands;
-import fr.aumgn.dac2.commands.PlayerCommands;
-import fr.aumgn.dac2.commands.SetCommands;
-import fr.aumgn.dac2.commands.SpectatorCommands;
-import fr.aumgn.dac2.commands.StageCommands;
+import fr.aumgn.dac2.commands.*;
 import fr.aumgn.dac2.commands.worldedit.DisabledWorldEditCommands;
 import fr.aumgn.dac2.commands.worldedit.SelectCommands;
 import fr.aumgn.dac2.commands.worldedit.SetWECommands;
 import fr.aumgn.dac2.config.DACConfig;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class DACPlugin extends JavaPlugin {
 
@@ -44,7 +35,8 @@ public class DACPlugin extends JavaPlugin {
         if (isWorldEditEnabled()) {
             registration.register(new SetWECommands(dac));
             registration.register(new SelectCommands(dac));
-        } else {
+        }
+        else {
             registration.register(new DisabledWorldEditCommands(dac));
         }
         registration.register(new StageCommands(dac));
@@ -67,13 +59,13 @@ public class DACPlugin extends JavaPlugin {
 
     public GsonLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
-            .registerTypeAdapterFactory(new EnumTypeAdapterFactory())
-            .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
-            .registerTypeAdapterFactory(new GsonRegionFactory())
-            .setVersion(GSON_VERSION)
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
-            .setPrettyPrinting()
-            .create();
+                .registerTypeAdapterFactory(new EnumTypeAdapterFactory())
+                .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
+                .registerTypeAdapterFactory(new GsonRegionFactory())
+                .setVersion(GSON_VERSION)
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+                .setPrettyPrinting()
+                .create();
         return new GsonLoader(gson, this);
     }
 
@@ -81,11 +73,12 @@ public class DACPlugin extends JavaPlugin {
         try {
             GsonLoader loader = getGsonLoader();
             return loader.loadOrCreate("config.json", DACConfig.class);
-         } catch (GsonLoadException exc) {
-             getLogger().warning(
-                     "Unable to load configuration file.");
-             getLogger().warning("Using default values instead.");
-             return new DACConfig();
-         }
+        }
+        catch (GsonLoadException exc) {
+            getLogger().warning(
+                    "Unable to load configuration file.");
+            getLogger().warning("Using default values instead.");
+            return new DACConfig();
+        }
     }
 }

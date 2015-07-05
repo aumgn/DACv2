@@ -1,8 +1,5 @@
 package fr.aumgn.dac2.commands;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -14,6 +11,8 @@ import fr.aumgn.dac2.game.GameFactory;
 import fr.aumgn.dac2.game.start.GameQuickStart;
 import fr.aumgn.dac2.stage.Stage;
 import fr.aumgn.dac2.stage.join.JoinStage;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 @NestedCommands("dac2")
 public class StageCommands extends DACCommands {
@@ -52,7 +51,8 @@ public class StageCommands extends DACCommands {
 
         if (stage == null) {
             throw new CommandError(msg("start.notajoinstage"));
-        } else if (!(stage instanceof JoinStage)) {
+        }
+        else if (!(stage instanceof JoinStage)) {
             throw new CommandError(msg("start.alreadystarted"));
         }
 

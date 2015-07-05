@@ -1,10 +1,10 @@
 package fr.aumgn.dac2.game.start;
 
-import java.util.Set;
-
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.StagePlayer;
+
+import java.util.Set;
 
 /**
  * Defines methods for all data necessary to start a new Game.

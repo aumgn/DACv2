@@ -1,18 +1,17 @@
 package fr.aumgn.dac2.shape;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.TooLargeArbitraryShape;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ArbitraryFlatShapeVisitor {
 

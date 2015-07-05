@@ -1,13 +1,12 @@
 package fr.aumgn.dac2.stage;
 
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 public class Spectators {
 

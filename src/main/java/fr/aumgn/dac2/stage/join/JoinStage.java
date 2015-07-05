@@ -1,14 +1,5 @@
 package fr.aumgn.dac2.stage.join;
 
-import java.util.HashSet;
-import java.util.List;
-
-import java.util.Set;
-
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
@@ -24,6 +15,13 @@ import fr.aumgn.dac2.game.start.StartStagePlayer;
 import fr.aumgn.dac2.stage.Spectators;
 import fr.aumgn.dac2.stage.Stage;
 import fr.aumgn.dac2.stage.StagePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class JoinStage implements Stage, Listener, GameStartData {
 

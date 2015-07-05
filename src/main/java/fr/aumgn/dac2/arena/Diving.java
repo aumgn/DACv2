@@ -1,11 +1,10 @@
 package fr.aumgn.dac2.arena;
 
-import org.bukkit.Location;
-import org.bukkit.World;
-
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 public class Diving {
 

@@ -1,12 +1,11 @@
 package fr.aumgn.dac2.commands.worldedit;
 
-import org.bukkit.command.CommandSender;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.commands.DACCommands;
+import org.bukkit.command.CommandSender;
 
 @NestedCommands("dac2")
 public class DisabledWorldEditCommands extends DACCommands {

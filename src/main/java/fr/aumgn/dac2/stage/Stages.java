@@ -1,13 +1,5 @@
 package fr.aumgn.dac2.stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.Arena;
@@ -15,6 +7,13 @@ import fr.aumgn.dac2.event.stage.DACStageStartEvent;
 import fr.aumgn.dac2.event.stage.DACStageStopEvent;
 import fr.aumgn.dac2.exceptions.IncompleteArena;
 import fr.aumgn.dac2.exceptions.StageAlreadyRunning;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Stages {
 
@@ -93,7 +92,8 @@ public class Stages {
         Stage oldStage = get(stage.getArena());
         if (oldStage == null) {
             stages.add(stage);
-        } else {
+        }
+        else {
             if (!silent) {
                 DACStageStopEvent event = new DACStageStopEvent(stage, false);
                 Util.callEvent(event);

@@ -6,20 +6,6 @@ import fr.aumgn.dac2.stage.StagePlayer;
 public class ColonnPlayer extends GamePlayer
         implements Comparable<ColonnPlayer> {
 
-    public static class Factory
-            implements GamePlayer.Factory<ColonnPlayer> {
-
-        @Override
-        public Class<ColonnPlayer> getSubclass() {
-            return ColonnPlayer.class;
-        }
-
-        @Override
-        public ColonnPlayer create(StagePlayer player, int index) {
-            return new ColonnPlayer(player, index);
-        }
-    }
-
     private int multiplier;
     private int score;
 
@@ -52,5 +38,19 @@ public class ColonnPlayer extends GamePlayer
 
     public void resetMultiplier() {
         multiplier = 1;
+    }
+
+    public static class Factory
+            implements GamePlayer.Factory<ColonnPlayer> {
+
+        @Override
+        public Class<ColonnPlayer> getSubclass() {
+            return ColonnPlayer.class;
+        }
+
+        @Override
+        public ColonnPlayer create(StagePlayer player, int index) {
+            return new ColonnPlayer(player, index);
+        }
     }
 }

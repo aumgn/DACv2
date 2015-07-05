@@ -1,32 +1,25 @@
 package fr.aumgn.dac2.game;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
-import org.bukkit.OfflinePlayer;
-
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.stage.StagePlayer;
+import org.bukkit.OfflinePlayer;
+
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class GameParty<T extends GamePlayer> {
 
     // Come on..
     private final Class<T> clazz;
     private final Game game;
-
-    private T[] array;
     private final PlayersRefMap<T> map;
-
+    private T[] array;
     private int turn;
 
     public GameParty(Game game, Set<? extends StagePlayer> players,
-            GamePlayer.Factory<T> playerFactory) {
+                     GamePlayer.Factory<T> playerFactory) {
         this.clazz = playerFactory.getSubclass();
         this.game = game;
         this.array = newArray(players.size());
@@ -34,7 +27,7 @@ public class GameParty<T extends GamePlayer> {
 
         List<StagePlayer> roulette = new LinkedList<StagePlayer>(players);
         Random rand = Util.getRandom();
-        for (int i = 0; i< array.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             int j = rand.nextInt(roulette.size());
             T player = playerFactory.create(roulette.remove(j), i);
             array[i] = player;
@@ -113,7 +106,8 @@ public class GameParty<T extends GamePlayer> {
         if (index <= turn) {
             if (turn == 0) {
                 turn = array.length - 2;
-            } else {
+            }
+            else {
                 turn--;
             }
         }

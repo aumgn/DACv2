@@ -1,19 +1,18 @@
 package fr.aumgn.dac2.arena;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.arena.regions.SurroundingRegion;
 import fr.aumgn.dac2.exceptions.ArenaComponentUndefined;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class Arena {
 
@@ -50,12 +49,12 @@ public class Arena {
 
     /**
      * Checks if this arena is complete.
-     *
+     * <p/>
      * An arena is considered complete if it has :
      * <ul>
-     *   <li>A pool</li>
-     *   <li>A start region</li>
-     *   <li>A diving</li>
+     * <li>A pool</li>
+     * <li>A start region</li>
+     * <li>A diving</li>
      * </ul>
      */
     public boolean isComplete() {
@@ -66,12 +65,17 @@ public class Arena {
         return pool;
     }
 
+    public void setPool(Pool pool) {
+        this.pool = pool;
+        this.surrounding = null;
+    }
+
     /**
      * Returns the pool if defined or throws an exception if not.
      *
      * @param dac the main DAC instance.
-     * @throws ArenaComponentUndefined
      * @return the pool
+     * @throws ArenaComponentUndefined
      */
     public Pool safeGetPool(DAC dac) {
         if (pool == null) {
@@ -82,21 +86,20 @@ public class Arena {
         return pool;
     }
 
-    public void setPool(Pool pool) {
-        this.pool = pool;
-        this.surrounding = null;
-    }
-
     public StartRegion getStartRegion() {
         return startRegion;
+    }
+
+    public void setStartRegion(StartRegion region) {
+        this.startRegion = region;
     }
 
     /**
      * Returns the start region if defined or throws an exception if not.
      *
      * @param dac the main DAC instance.
-     * @throws ArenaComponentUndefined
      * @return the start region
+     * @throws ArenaComponentUndefined
      */
 
     public StartRegion safeGetStartRegion(DAC dac) {
@@ -108,20 +111,21 @@ public class Arena {
         return startRegion;
     }
 
-    public void setStartRegion(StartRegion region) {
-        this.startRegion = region;
-    }
-
     public Diving getDiving() {
         return diving;
+    }
+
+    public void setDiving(Diving diving) {
+        this.diving = diving;
+        this.surrounding = null;
     }
 
     /**
      * Returns the diving board if defined or throws an exception if not.
      *
      * @param dac the main DAC instance.
-     * @throws ArenaComponentUndefined
      * @return the diving board
+     * @throws ArenaComponentUndefined
      */
     public Diving safeGetDiving(DAC dac) {
         if (diving == null) {
@@ -130,11 +134,6 @@ public class Arena {
         }
 
         return diving;
-    }
-
-    public void setDiving(Diving diving) {
-        this.diving = diving;
-        this.surrounding = null;
     }
 
     public SurroundingRegion getSurroundingRegion() {
@@ -153,14 +152,27 @@ public class Arena {
     }
 
     /**
-     * Returns the surrounding region if defined or throws an exception if not.
+     * Sets the surrrounding region.
+     * <p/>
+     * This will override the region wich is automatically defined
+     * using the pool and the diving.
      *
+     * @param surrounding the new manually defined surrounding region.
+     */
+    public void setSurroundingRegion(SurroundingRegion surrounding) {
+        this.surrounding = surrounding;
+        this.autoSurrounding = null;
+    }
+
+    /**
+     * Returns the surrounding region if defined or throws an exception if not.
+     * <p/>
      * The surrounding region doesn't need to be manually defined.
      * It is also considered defined if the pool and the diving are.
      *
      * @param dac the main DAC instance.
-     * @throws ArenaComponentUndefined
      * @return the surrounding region
+     * @throws ArenaComponentUndefined
      */
     public SurroundingRegion safeGetSurroundingRegion(DAC dac) {
         SurroundingRegion region = getSurroundingRegion();
@@ -172,24 +184,11 @@ public class Arena {
         return region;
     }
 
-    /**
-     * Sets the surrrounding region.
-     *
-     * This will override the region wich is automatically defined
-     * using the pool and the diving.
-     * 
-     * @param surrounding the new manually defined surrounding region.
-     */
-    public void setSurroundingRegion(SurroundingRegion surrounding) {
-        this.surrounding = surrounding;
-        this.autoSurrounding = null;
-    }
-
     public Set<Player> getPlayersInRadius(int radius) {
         Vector startMin = startRegion.getShape().getMin();
         Vector startMax = startRegion.getShape().getMax();
-        Vector poolMin  = pool.getShape().getMin();
-        Vector poolMax  = pool.getShape().getMax();
+        Vector poolMin = pool.getShape().getMin();
+        Vector poolMax = pool.getShape().getMax();
         Vector divingVec = diving.getPosition();
 
         Vector min = new Vector(
@@ -199,7 +198,7 @@ public class Arena {
                         Math.min(poolMin.getY(), divingVec.getY())),
                 Math.min(startMin.getZ(),
                         Math.min(poolMin.getZ(), divingVec.getZ())))
-        .subtract(radius);
+                .subtract(radius);
 
         Vector max = new Vector(
                 Math.max(startMax.getX(),
@@ -208,7 +207,7 @@ public class Arena {
                         Math.max(poolMax.getY(), divingVec.getY())),
                 Math.max(startMax.getZ(),
                         Math.max(poolMax.getZ(), divingVec.getZ())))
-        .add(radius);
+                .add(radius);
 
         Set<Player> players = new HashSet<Player>();
         for (Player player : getWorld().getPlayers()) {

@@ -1,32 +1,11 @@
 package fr.aumgn.dac2.game.suddendeath;
 
-import java.util.Locale;
-
 import fr.aumgn.dac2.game.GamePlayer;
 import fr.aumgn.dac2.stage.StagePlayer;
 
+import java.util.Locale;
+
 public class SuddenDeathPlayer extends GamePlayer {
-
-    public static class Factory
-            implements GamePlayer.Factory<SuddenDeathPlayer> {
-
-        @Override
-        public Class<SuddenDeathPlayer> getSubclass() {
-            return SuddenDeathPlayer.class;
-        }
-
-        @Override
-        public SuddenDeathPlayer create(StagePlayer player, int index) {
-            return new SuddenDeathPlayer(player, index);
-        }
-    }
-
-    public enum Status {
-
-        Awaiting,
-        Failed,
-        Success;
-    }
 
     private Status status;
 
@@ -53,5 +32,24 @@ public class SuddenDeathPlayer extends GamePlayer {
 
     public String getLocalizationKeyForStatus() {
         return status.name().toLowerCase(Locale.US);
+    }
+
+    public enum Status {
+
+        Awaiting, Failed, Success;
+    }
+
+    public static class Factory
+            implements GamePlayer.Factory<SuddenDeathPlayer> {
+
+        @Override
+        public Class<SuddenDeathPlayer> getSubclass() {
+            return SuddenDeathPlayer.class;
+        }
+
+        @Override
+        public SuddenDeathPlayer create(StagePlayer player, int index) {
+            return new SuddenDeathPlayer(player, index);
+        }
     }
 }

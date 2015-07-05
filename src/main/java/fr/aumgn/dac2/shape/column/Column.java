@@ -1,17 +1,15 @@
 package fr.aumgn.dac2.shape.column;
 
-import java.util.Iterator;
-
+import com.google.common.collect.AbstractLinkedIterator;
+import fr.aumgn.bukkitutils.geom.Vector;
+import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.dac2.shape.FlatShape;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import com.google.common.collect.AbstractLinkedIterator;
-
-import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.dac2.shape.FlatShape;
+import java.util.Iterator;
 
 /**
  * Represents a column of block in a FlatShape.
@@ -50,10 +48,10 @@ public class Column implements Iterable<Vector> {
     }
 
     public boolean isADAC(World world) {
-        boolean water = false;
+        boolean water;
         Vector pt = pt2D.to3D(maxY);
 
-        water =  isWater(world, pt.subtractX(1));
+        water = isWater(world, pt.subtractX(1));
         water |= isWater(world, pt.addX(1));
         water |= isWater(world, pt.subtractZ(1));
         water |= isWater(world, pt.addZ(1));

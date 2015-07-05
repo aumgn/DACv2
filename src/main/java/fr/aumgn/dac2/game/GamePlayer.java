@@ -1,9 +1,5 @@
 package fr.aumgn.dac2.game;
 
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Directions;
 import fr.aumgn.bukkitutils.geom.Vector;
@@ -11,19 +7,15 @@ import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.UniformPattern;
 import fr.aumgn.dac2.stage.SimpleStagePlayer;
 import fr.aumgn.dac2.stage.StagePlayer;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 /**
  * Stores common data associated to player and
  * implements common behaviors.
  */
 public class GamePlayer extends SimpleStagePlayer {
-
-    public static interface Factory<T extends GamePlayer> {
-
-        public Class<T> getSubclass();
-
-        public T create(StagePlayer player, int index);
-    }
 
     private int index;
 
@@ -52,7 +44,7 @@ public class GamePlayer extends SimpleStagePlayer {
         if (player == null) {
             return;
         }
-;
+
         teleport(world, pos, Directions.fromPlayer(player));
     }
 
@@ -91,5 +83,12 @@ public class GamePlayer extends SimpleStagePlayer {
 
     void updateIndex(int index) {
         this.index = index;
+    }
+
+    public interface Factory<T extends GamePlayer> {
+
+        Class<T> getSubclass();
+
+        T create(StagePlayer player, int index);
     }
 }

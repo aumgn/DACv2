@@ -1,15 +1,14 @@
 package fr.aumgn.dac2.config;
 
-import java.text.MessageFormat;
-import java.util.Locale;
-
-import org.bukkit.Material;
-
 import fr.aumgn.bukkitutils.timer.TimerConfig;
 import fr.aumgn.bukkitutils.util.Util;
-import fr.aumgn.dac2.shape.column.UniformPattern;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
+import fr.aumgn.dac2.shape.column.UniformPattern;
 import fr.aumgn.dac2.utils.DACUtil;
+import org.bukkit.Material;
+
+import java.text.MessageFormat;
+import java.util.Locale;
 
 public class DACConfig {
 
@@ -89,7 +88,7 @@ public class DACConfig {
     }
 
     public double getColonnisationRatio() {
-        return ((double) colonnisationSetupPercent) / 100;
+        return colonnisationSetupPercent / 100d;
     }
 
     public ColumnPattern getNeutralPattern() {

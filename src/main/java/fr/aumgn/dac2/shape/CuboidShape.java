@@ -1,11 +1,11 @@
 package fr.aumgn.dac2.shape;
 
-import java.util.Iterator;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.iterator.CuboidColumnsIterator;
+
+import java.util.Iterator;
 
 @ShapeName("cuboid")
 public class CuboidShape implements FlatShape {

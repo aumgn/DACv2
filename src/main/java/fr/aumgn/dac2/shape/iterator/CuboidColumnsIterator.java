@@ -1,12 +1,10 @@
 package fr.aumgn.dac2.shape.iterator;
 
-import org.apache.commons.lang.Validate;
-
 import com.google.common.collect.AbstractIterator;
-
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.FlatShape;
 import fr.aumgn.dac2.shape.column.Column;
+import org.apache.commons.lang.Validate;
 
 public class CuboidColumnsIterator extends AbstractIterator<Column> {
 
@@ -42,11 +40,13 @@ public class CuboidColumnsIterator extends AbstractIterator<Column> {
         if (z >= maxZ) {
             if (x >= maxX) {
                 return null;
-            } else {
+            }
+            else {
                 z = minZ;
                 x++;
             }
-        } else {
+        }
+        else {
             z++;
         }
 

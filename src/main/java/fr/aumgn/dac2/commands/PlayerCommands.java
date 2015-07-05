@@ -1,10 +1,5 @@
 package fr.aumgn.dac2.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -14,6 +9,10 @@ import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.stage.Stage;
 import fr.aumgn.dac2.stage.join.JoinStage;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NestedCommands("dac2")
 public class PlayerCommands extends DACCommands {
@@ -35,7 +34,8 @@ public class PlayerCommands extends DACCommands {
         if (stage == null && sender.hasPermission("dac2.stage.init")) {
             stage = new JoinStage(dac, arena);
             dac.getStages().start(stage);
-        } else if (!(stage instanceof JoinStage)) {
+        }
+        else if (!(stage instanceof JoinStage)) {
             throw new CommandError(msg("join.notjoinable"));
         }
 

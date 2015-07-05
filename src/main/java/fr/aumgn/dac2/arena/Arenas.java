@@ -1,15 +1,5 @@
 package fr.aumgn.dac2.arena;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
@@ -19,6 +9,11 @@ import fr.aumgn.dac2.arena.regions.StartRegion;
 import fr.aumgn.dac2.exceptions.ArenaDeleteException;
 import fr.aumgn.dac2.exceptions.ArenaSaveException;
 import fr.aumgn.dac2.exceptions.ArenasFolderException;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.*;
 
 public class Arenas {
 
@@ -38,7 +33,8 @@ public class Arenas {
                 throw new ArenasFolderException(
                         folder.getPath() + " is not a directory.");
             }
-        } else if (!folder.mkdirs()) {
+        }
+        else if (!folder.mkdirs()) {
             throw new ArenasFolderException(
                     "Unable to create " + folder.getPath() + " directory.");
         }
@@ -62,20 +58,24 @@ public class Arenas {
 
         GsonLoader loader = dac.getPlugin().getGsonLoader();
         File folder = getFolder(dac.getPlugin());
-        for (File file : folder.listFiles()) {
-            try {
-                Arena arena = loader.load(file, Arena.class);
-                String nameFromFile = arenaNameFor(file);
-                if (!nameFromFile.equals(arena.getName())) {
-                    dac.getLogger().severe("Filename `" + nameFromFile
-                            + "` does not match arena's name `"
-                            + arena.getName() + "`. Skipping it.");
-                    continue;
+        File[] files = folder.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                try {
+                    Arena arena = loader.load(file, Arena.class);
+                    String nameFromFile = arenaNameFor(file);
+                    if (!nameFromFile.equals(arena.getName())) {
+                        dac.getLogger().severe("Filename `" + nameFromFile
+                                + "` does not match arena's name `"
+                                + arena.getName() + "`. Skipping it.");
+                        continue;
+                    }
+                    arenas.put(arena.getName(), arena);
                 }
-                arenas.put(arena.getName(), arena);
-            } catch (GsonLoadException exc) {
-                dac.getLogger().severe(
-                        "Unable to read " + file.getName() + " arena's file.");
+                catch (GsonLoadException exc) {
+                    dac.getLogger().severe(
+                            "Unable to read " + file.getName() + " arena's file.");
+                }
             }
         }
     }
@@ -88,7 +88,8 @@ public class Arenas {
         String filename = filenameFor(dac, arena);
         try {
             loader.write(filename, arena);
-        } catch (GsonLoadException _) {
+        }
+        catch (GsonLoadException _) {
             throw new ArenaSaveException("Unable to save " + filename + ".");
         }
     }
@@ -109,7 +110,7 @@ public class Arenas {
 
     /**
      * Gets the arena in whose start region the player is in.
-     *
+     * <p/>
      * If different arena defines start regions which overlap themselves,
      * the result is undefined.
      *
@@ -136,7 +137,7 @@ public class Arenas {
 
     public void delete(DAC dac, Arena arena) {
         arenas.remove(arena.getName());
-        String filename  = filenameFor(dac, arena);
+        String filename = filenameFor(dac, arena);
         File file = new File(dac.getPlugin().getDataFolder(), filename);
         if (!file.delete()) {
             throw new ArenaDeleteException("Unable to delete " + filename

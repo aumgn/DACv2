@@ -1,14 +1,5 @@
 package fr.aumgn.dac2.game.classic;
 
-import static fr.aumgn.dac2.utils.DACUtil.PLAYER_MAX_HEALTH;
-
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bukkit.World;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
@@ -18,6 +9,14 @@ import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static fr.aumgn.dac2.utils.DACUtil.PLAYER_MAX_HEALTH;
 
 public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
 
@@ -74,10 +73,12 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
                 }
                 nextTurn();
             }
-        } else {
+        }
+        else {
             if (isConfirmationTurn()) {
                 send("confirmationneeded", player.getDisplayName());
-            } else {
+            }
+            else {
                 send("playerturn", player.getDisplayName());
             }
             tpBeforeJump(player);
@@ -148,7 +149,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
             if (isADAC) {
                 send("jump.dacconfirmation", gamePlayer.getDisplayName());
                 send("jump.dacconfirmation2");
-            } else {
+            }
+            else {
                 send("jump.confirmation", gamePlayer.getDisplayName());
             }
             for (ClassicGamePlayer deadPlayer : party.iterable()) {
@@ -161,12 +163,14 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
                 }
             }
             onPlayerWin(gamePlayer);
-        } else {
+        }
+        else {
             if (isADAC) {
                 send("jump.dac", gamePlayer.getDisplayName());
                 gamePlayer.incrementLives();
                 send("livesafterdac", gamePlayer.getLives());
-            } else {
+            }
+            else {
                 send("jump.success", gamePlayer.getDisplayName());
             }
         }
@@ -174,7 +178,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
         tpAfterJumpSuccess(gamePlayer, column);
         if (arena.getPool().isFilled(world)) {
             onPoolFilled();
-        } else {
+        }
+        else {
             nextTurn();
         }
     }
@@ -189,7 +194,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
         if (health == PLAYER_MAX_HEALTH) {
             player.damage(1);
             player.setHealth(PLAYER_MAX_HEALTH);
-        } else {
+        }
+        else {
             player.setHealth(health + 1);
             player.damage(1);
         }
@@ -203,7 +209,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
                     deadPlayer.incrementLives();
                 }
             }
-        } else {
+        }
+        else {
             gamePlayer.onFail(position);
             if (!gamePlayer.isDead()) {
                 send("livesafterfail", gamePlayer.getLives());
@@ -229,7 +236,8 @@ public class ClassicGame extends AbstractGame<ClassicGamePlayer> {
             if (player.getLives() < maxLives) {
                 onPlayerLoss(player);
                 continue;
-            } else if (player.getLives() > maxLives) {
+            }
+            else if (player.getLives() > maxLives) {
                 maxLives = player.getLives();
                 for (ClassicGamePlayer looser : players) {
                     onPlayerLoss(looser);

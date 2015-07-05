@@ -1,18 +1,17 @@
 package fr.aumgn.dac2.game.colonnisation;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bukkit.World;
-import org.bukkit.block.Block;
-
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.arena.Arena;
 import fr.aumgn.dac2.arena.regions.Pool;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.shape.FlatShape;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PoolVisitor {
 
@@ -54,11 +53,7 @@ public class PoolVisitor {
     }
 
     private boolean isValid(Vector2D pos) {
-        if (!shape.contains2D(pos)) {
-            return false;
-        }
-
-        return isValidBlock(pos);
+        return shape.contains2D(pos) && isValidBlock(pos);
     }
 
     private boolean isValidBlock(Vector2D pos) {

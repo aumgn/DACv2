@@ -1,11 +1,10 @@
 package fr.aumgn.dac2.commands;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginDescriptionFile;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.dac2.DAC;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 @NestedCommands("dac2")
 public class AdminCommands extends DACCommands {

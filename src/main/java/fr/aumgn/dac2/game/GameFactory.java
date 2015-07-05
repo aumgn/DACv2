@@ -1,9 +1,5 @@
 package fr.aumgn.dac2.game;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.UnknownGameType;
 import fr.aumgn.dac2.game.classic.ClassicGame;
@@ -11,6 +7,9 @@ import fr.aumgn.dac2.game.colonnisation.Colonnisation;
 import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.game.suddendeath.SuddenDeath;
 import fr.aumgn.dac2.game.training.Training;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Manages all different game modes
@@ -21,48 +20,6 @@ public abstract class GameFactory {
             new HashMap<String, GameFactory>();
     private static Map<String, GameFactory> byAliases =
             new HashMap<String, GameFactory>();
-
-    /**
-     * Registers a GameFactory with the given name & aliases.
-     */
-    public static void register(String name, GameFactory factory,
-            String... aliases) {
-        factories.put(name, factory);
-
-        byAliases.put(name, factory);
-        for (String alias : aliases) {
-            byAliases.put(alias, factory);
-        }
-    }
-
-    public static GameFactory get(String name) {
-        return factories.get(name);
-    }
-
-    /**
-     * Gets the game factory registered for the given alias.
-     * 
-     * @throws UnknownGameType if the game factory can't be found.
-     */
-    public static GameFactory getByAlias(DAC dac, String alias) {
-        if (!byAliases.containsKey(alias)) {
-            throw new UnknownGameType(dac, alias);
-        }
-        return byAliases.get(alias);
-    }
-
-    /**
-     * The minimum required number of player to start
-     * a new game for this factory.
-     */
-    public int getMinimumPlayers() {
-        return 2;
-    }
-
-    /**
-     * Factory method which creates the game based on the given data.
-     */
-    public abstract Game createGame(DAC dac, GameStartData data);
 
     static {
         GameFactory.register("classic", new GameFactory() {
@@ -102,4 +59,46 @@ public abstract class GameFactory {
             }
         }, "sd");
     }
+
+    /**
+     * Registers a GameFactory with the given name & aliases.
+     */
+    public static void register(String name, GameFactory factory,
+                                String... aliases) {
+        factories.put(name, factory);
+
+        byAliases.put(name, factory);
+        for (String alias : aliases) {
+            byAliases.put(alias, factory);
+        }
+    }
+
+    public static GameFactory get(String name) {
+        return factories.get(name);
+    }
+
+    /**
+     * Gets the game factory registered for the given alias.
+     *
+     * @throws UnknownGameType if the game factory can't be found.
+     */
+    public static GameFactory getByAlias(DAC dac, String alias) {
+        if (!byAliases.containsKey(alias)) {
+            throw new UnknownGameType(dac, alias);
+        }
+        return byAliases.get(alias);
+    }
+
+    /**
+     * The minimum required number of player to start
+     * a new game for this factory.
+     */
+    public int getMinimumPlayers() {
+        return 2;
+    }
+
+    /**
+     * Factory method which creates the game based on the given data.
+     */
+    public abstract Game createGame(DAC dac, GameStartData data);
 }

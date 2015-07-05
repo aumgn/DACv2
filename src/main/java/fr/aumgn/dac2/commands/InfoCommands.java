@@ -1,13 +1,12 @@
 package fr.aumgn.dac2.commands;
 
-import org.bukkit.command.CommandSender;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.stage.Stage;
 import fr.aumgn.dac2.config.Color;
+import fr.aumgn.dac2.stage.Stage;
+import org.bukkit.command.CommandSender;
 
 @NestedCommands("dac2")
 public class InfoCommands extends DACCommands {
@@ -29,12 +28,13 @@ public class InfoCommands extends DACCommands {
         int i = 0;
         StringBuilder msg = new StringBuilder();
         for (Color color : dac.getColors()) {
-            msg.append(color.chat + color.name).append(" ");
+            msg.append(color.chat).append(color.name).append(" ");
             if (i == 2) {
                 sender.sendMessage(msg.toString());
                 i = 0;
                 msg = new StringBuilder();
-            } else {
+            }
+            else {
                 i++;
             }
         }

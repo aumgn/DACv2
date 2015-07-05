@@ -1,9 +1,5 @@
 package fr.aumgn.dac2.game.training;
 
-import org.bukkit.World;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.arena.regions.Pool;
@@ -12,6 +8,9 @@ import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Training extends AbstractGame<TrainingPlayer> {
 
@@ -55,7 +54,8 @@ public class Training extends AbstractGame<TrainingPlayer> {
             send("jump.dac", trainingPlayer.getDisplayName());
             trainingPlayer.incrementDacs();
             pattern = new GlassyPattern(pattern);
-        } else {
+        }
+        else {
             send("jump.success", trainingPlayer.getDisplayName());
             trainingPlayer.incrementSuccesses();
         }

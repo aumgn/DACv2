@@ -1,9 +1,8 @@
 package fr.aumgn.dac2.game.start;
 
-import org.bukkit.entity.Player;
-
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.stage.SimpleStagePlayer;
+import org.bukkit.entity.Player;
 
 public class StartStagePlayer extends SimpleStagePlayer {
 

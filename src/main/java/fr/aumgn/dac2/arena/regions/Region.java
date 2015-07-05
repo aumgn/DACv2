@@ -1,9 +1,8 @@
 package fr.aumgn.dac2.arena.regions;
 
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.dac2.shape.Shape;
+import org.bukkit.entity.Player;
 
 public abstract class Region {
 

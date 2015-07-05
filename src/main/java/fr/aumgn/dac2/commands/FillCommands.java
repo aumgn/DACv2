@@ -1,10 +1,5 @@
 package fr.aumgn.dac2.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -14,6 +9,10 @@ import fr.aumgn.dac2.arena.regions.PoolFilling;
 import fr.aumgn.dac2.config.Color;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.RandomPattern;
+import org.bukkit.command.CommandSender;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NestedCommands(value = { "dac2", "fill" }, defaultTo = "reset")
 public class FillCommands extends DACCommands {
@@ -28,7 +27,7 @@ public class FillCommands extends DACCommands {
         sender.sendMessage(msg("fill.reset.success"));
     }
 
-    @Command(name ="fully", min = 1, max = -1)
+    @Command(name = "fully", min = 1, max = -1)
     public void fully(CommandSender sender, CommandArgs args) {
         fillCommand(sender, args, new PoolFilling.Fully());
         sender.sendMessage(msg("fill.fully.success"));
@@ -54,12 +53,13 @@ public class FillCommands extends DACCommands {
     }
 
     private void fillCommand(CommandSender sender, CommandArgs args,
-            PoolFilling strategy) {
+                             PoolFilling strategy) {
         Arena arena = args.get(0, Arena).value();
         List<Color> colors;
         if (args.length() == 1) {
             colors = dac.getColors().asList();
-        } else {
+        }
+        else {
             colors = new ArrayList<Color>();
             for (int i = 1; i < args.length(); i++) {
                 colors.add(args.get(i, Color).value());

@@ -1,45 +1,39 @@
 package fr.aumgn.dac2.shape.worldedit;
 
-import static fr.aumgn.dac2.shape.worldedit.WEShapeUtils.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.sk89q.worldedit.BlockVector2D;
 import com.sk89q.worldedit.LocalWorld;
-import com.sk89q.worldedit.regions.CuboidRegionSelector;
-import com.sk89q.worldedit.regions.CylinderRegionSelector;
-import com.sk89q.worldedit.regions.EllipsoidRegionSelector;
-import com.sk89q.worldedit.regions.ExtendingCuboidRegionSelector;
-import com.sk89q.worldedit.regions.Polygonal2DRegionSelector;
-import com.sk89q.worldedit.regions.RegionSelector;
-import com.sk89q.worldedit.regions.SphereRegionSelector;
-
+import com.sk89q.worldedit.regions.*;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.DAC;
 import fr.aumgn.dac2.exceptions.InvalidSelectorForRegion;
 import fr.aumgn.dac2.exceptions.WESelectionNotSupported;
-import fr.aumgn.dac2.shape.CuboidShape;
-import fr.aumgn.dac2.shape.CylinderShape;
-import fr.aumgn.dac2.shape.EllipsoidShape;
-import fr.aumgn.dac2.shape.PolygonalShape;
-import fr.aumgn.dac2.shape.Shape;
+import fr.aumgn.dac2.shape.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static fr.aumgn.dac2.shape.worldedit.WEShapeUtils.bu2blockwe;
+import static fr.aumgn.dac2.shape.worldedit.WEShapeUtils.bu2we;
 
 public enum WESelector {
 
     Default {
         public RegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                     Shape shape) {
             if (shape instanceof CuboidShape) {
                 return WESelector.Cuboid.create(dac, world, shape);
-            } else if (shape instanceof PolygonalShape) {
+            }
+            else if (shape instanceof PolygonalShape) {
                 return WESelector.Polygonal.create(dac, world, shape);
-            } else if (shape instanceof CylinderShape) {
-                return WESelector.Cylinder.create(dac, world, shape); 
-            } else if (shape instanceof EllipsoidShape) {
+            }
+            else if (shape instanceof CylinderShape) {
+                return WESelector.Cylinder.create(dac, world, shape);
+            }
+            else if (shape instanceof EllipsoidShape) {
                 return WESelector.Ellipsoid.create(dac, world, shape);
-            } else {
+            }
+            else {
                 throw new WESelectionNotSupported(dac, shape.getClass());
             }
         }
@@ -47,7 +41,7 @@ public enum WESelector {
 
     Cuboid {
         public CuboidRegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                           Shape shape) {
             if (!(shape instanceof CuboidShape)) {
                 throw new InvalidSelectorForRegion(dac, this, shape.getClass());
             }
@@ -60,7 +54,7 @@ public enum WESelector {
 
     Extending {
         public ExtendingCuboidRegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                                    Shape shape) {
             if (!(shape instanceof CuboidShape)) {
                 throw new InvalidSelectorForRegion(dac, this, shape.getClass());
             }
@@ -73,7 +67,7 @@ public enum WESelector {
 
     Polygonal {
         public Polygonal2DRegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                                Shape shape) {
             if (!(shape instanceof PolygonalShape)) {
                 throw new InvalidSelectorForRegion(dac, this, shape.getClass());
             }
@@ -90,7 +84,7 @@ public enum WESelector {
 
     Cylinder {
         public CylinderRegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                             Shape shape) {
             if (!(shape instanceof CylinderShape)) {
                 throw new InvalidSelectorForRegion(dac, this, shape.getClass());
             }
@@ -98,13 +92,13 @@ public enum WESelector {
             CylinderShape cyl = (CylinderShape) shape;
             return new CylinderRegionSelector(world, bu2we(cyl.getCenter()),
                     bu2we(cyl.getRadius()), (int) cyl.getMinY(),
-                    (int) cyl.getMaxY()); 
+                    (int) cyl.getMaxY());
         }
     },
 
     Sphere {
         public SphereRegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                           Shape shape) {
             if (!(shape instanceof EllipsoidShape)) {
                 throw new InvalidSelectorForRegion(dac, this, shape.getClass());
             }
@@ -122,7 +116,7 @@ public enum WESelector {
 
     Ellipsoid {
         public EllipsoidRegionSelector create(DAC dac, LocalWorld world,
-                Shape shape) {
+                                              Shape shape) {
             if (!(shape instanceof EllipsoidShape)) {
                 throw new InvalidSelectorForRegion(dac, this, shape.getClass());
             }
@@ -135,5 +129,5 @@ public enum WESelector {
     };
 
     public abstract RegionSelector create(DAC dac, LocalWorld world,
-            Shape shape);
+                                          Shape shape);
 }

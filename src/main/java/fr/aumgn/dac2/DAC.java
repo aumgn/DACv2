@@ -1,13 +1,13 @@
 package fr.aumgn.dac2;
 
-import java.util.logging.Logger;
-
 import fr.aumgn.bukkitutils.localization.Localization;
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.dac2.arena.Arenas;
 import fr.aumgn.dac2.config.Colors;
 import fr.aumgn.dac2.config.DACConfig;
 import fr.aumgn.dac2.stage.Stages;
+
+import java.util.logging.Logger;
 
 /**
  * Main class which offers access to all components.

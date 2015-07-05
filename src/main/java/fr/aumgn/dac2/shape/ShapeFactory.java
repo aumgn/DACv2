@@ -1,17 +1,16 @@
 package fr.aumgn.dac2.shape;
 
-import org.bukkit.World;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.DAC;
+import org.bukkit.World;
 
 public enum ShapeFactory {
 
     Cuboid {
         @Override
         public Shape create(DAC dac, World world, Vector center,
-                int radius, int height) {
+                            int radius, int height) {
             return new CuboidShape(center.subtract(radius, 0, radius),
                     center.add(radius, height - 1, radius));
         }
@@ -20,7 +19,7 @@ public enum ShapeFactory {
     Cylinder {
         @Override
         public Shape create(DAC dac, World world, Vector center,
-                int radius, int height) {
+                            int radius, int height) {
             Vector2D radiusVec = new Vector2D(radius, radius);
             int y = center.getBlockY();
             return new CylinderShape(center.to2D(), radiusVec, y,
@@ -31,7 +30,7 @@ public enum ShapeFactory {
     Sphere {
         @Override
         public Shape create(DAC dac, World world, Vector center,
-                int radius, int height) {
+                            int radius, int height) {
             Vector radiusVec = new Vector(radius, radius, radius);
             return new EllipsoidShape(center, radiusVec);
         }
@@ -40,7 +39,7 @@ public enum ShapeFactory {
     Arbitrary {
         @Override
         public Shape create(DAC dac, World world, Vector center,
-                int radius, int height) {
+                            int radius, int height) {
             ArbitraryFlatShapeVisitor visitor =
                     new ArbitraryFlatShapeVisitor(dac, world, center);
             return visitor.visit();
@@ -48,5 +47,5 @@ public enum ShapeFactory {
     };
 
     public abstract Shape create(DAC dac, World world, Vector center,
-            int radius, int height);
+                                 int radius, int height);
 }

@@ -6,20 +6,6 @@ import fr.aumgn.dac2.stage.StagePlayer;
 
 public class TrainingPlayer extends GamePlayer {
 
-    public static class Factory
-            implements GamePlayer.Factory<TrainingPlayer> {
-
-        @Override
-        public Class<TrainingPlayer> getSubclass() {
-            return TrainingPlayer.class;
-        }
-
-        @Override
-        public TrainingPlayer create(StagePlayer player, int index) {
-            return new TrainingPlayer(player, index);
-        }
-    }
-
     private int successes;
     private int dacs;
     private int fails;
@@ -48,7 +34,7 @@ public class TrainingPlayer extends GamePlayer {
     }
 
     public int getDacs() {
-        return dacs;       
+        return dacs;
     }
 
     public int getFails() {
@@ -59,5 +45,19 @@ public class TrainingPlayer extends GamePlayer {
         sendMessage(messages.get("training.stats.successes", successes));
         sendMessage(messages.get("training.stats.dacs", dacs));
         sendMessage(messages.get("training.stats.fails", fails));
+    }
+
+    public static class Factory
+            implements GamePlayer.Factory<TrainingPlayer> {
+
+        @Override
+        public Class<TrainingPlayer> getSubclass() {
+            return TrainingPlayer.class;
+        }
+
+        @Override
+        public TrainingPlayer create(StagePlayer player, int index) {
+            return new TrainingPlayer(player, index);
+        }
     }
 }

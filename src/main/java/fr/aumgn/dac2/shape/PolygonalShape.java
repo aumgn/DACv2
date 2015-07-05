@@ -1,13 +1,13 @@
 package fr.aumgn.dac2.shape;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.iterator.ColumnsIterator;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 @ShapeName("polygonal")
 public class PolygonalShape implements FlatShape {
@@ -136,7 +136,8 @@ public class PolygonalShape implements FlatShape {
                 x2 = xNew;
                 z1 = zOld;
                 z2 = zNew;
-            } else {
+            }
+            else {
                 x1 = xNew;
                 x2 = xOld;
                 z1 = zNew;
@@ -146,8 +147,11 @@ public class PolygonalShape implements FlatShape {
                 crossproduct = ((long) targetZ - (long) z1) * (long) (x2 - x1)
                         - ((long) z2 - (long) z1) * (long) (targetX - x1);
                 if (crossproduct == 0) {
-                    if ((z1 <= targetZ) == (targetZ <= z2)) return true; //on edge
-                } else if (crossproduct < 0 && (x1 != targetX)) {
+                    if ((z1 <= targetZ) == (targetZ <= z2)) {
+                        return true; //on edge
+                    }
+                }
+                else if (crossproduct < 0 && (x1 != targetX)) {
                     inside = !inside;
                 }
             }
@@ -169,6 +173,6 @@ public class PolygonalShape implements FlatShape {
     }
 
     public List<Vector2D> getPoints() {
-        return Arrays.<Vector2D>asList(points);
+        return Arrays.asList(points);
     }
 }

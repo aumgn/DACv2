@@ -1,11 +1,5 @@
 package fr.aumgn.dac2.game.colonnisation;
 
-import java.util.Arrays;
-
-import org.bukkit.World;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.aumgn.bukkitutils.util.Util;
 import fr.aumgn.dac2.DAC;
@@ -16,6 +10,11 @@ import fr.aumgn.dac2.game.start.GameStartData;
 import fr.aumgn.dac2.shape.column.Column;
 import fr.aumgn.dac2.shape.column.ColumnPattern;
 import fr.aumgn.dac2.shape.column.GlassyPattern;
+import org.bukkit.World;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
@@ -103,7 +102,8 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
 
         if (force) {
             send("stopped");
-        } else {
+        }
+        else {
             send("finished");
         }
 
@@ -132,7 +132,8 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         if (isSetupTurn) {
             pattern = dac.getConfig().getNeutralPattern();
             send("setup.success", gamePlayer.getDisplayName());
-        } else {
+        }
+        else {
             pattern = gamePlayer.getColumnPattern();
             if (isADAC) {
                 gamePlayer.incrementMultiplier();
@@ -157,7 +158,8 @@ public class Colonnisation extends AbstractGame<ColonnPlayer> {
         tpAfterJumpSuccess(gamePlayer, column);
         if (pool.isFilled(world)) {
             dac.getStages().stop(this);
-        } else {
+        }
+        else {
             nextTurn();
         }
     }

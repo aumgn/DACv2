@@ -1,10 +1,9 @@
 package fr.aumgn.dac2.event.player;
 
-import org.bukkit.event.HandlerList;
-
 import fr.aumgn.dac2.event.DACGamePlayerEvent;
 import fr.aumgn.dac2.game.Game;
 import fr.aumgn.dac2.game.GamePlayer;
+import org.bukkit.event.HandlerList;
 
 public class DACPlayerWinEvent extends DACGamePlayerEvent {
 
@@ -14,12 +13,12 @@ public class DACPlayerWinEvent extends DACGamePlayerEvent {
         super(game, player);
     }
 
-    @Override
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlerList() {
         return handlers;
     }
 
-    public static HandlerList getHandlerList() {
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 }
