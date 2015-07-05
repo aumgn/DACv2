@@ -1,24 +1,18 @@
 package fr.aumgn.dac2.game;
 
+import fr.aumgn.bukkitutils.timer.Timer;
+import fr.aumgn.bukkitutils.util.Util;
+import fr.aumgn.dac2.DAC;
+import fr.aumgn.dac2.arena.Arena;
+import fr.aumgn.dac2.event.player.*;
+import fr.aumgn.dac2.game.start.GameStartData;
+import fr.aumgn.dac2.shape.column.Column;
+import fr.aumgn.dac2.stage.Spectators;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-
-import fr.aumgn.bukkitutils.timer.Timer;
-import fr.aumgn.bukkitutils.util.Util;
-import fr.aumgn.dac2.DAC;
-import fr.aumgn.dac2.arena.Arena;
-import fr.aumgn.dac2.event.player.DACJumpDACEvent;
-import fr.aumgn.dac2.event.player.DACJumpFailEvent;
-import fr.aumgn.dac2.event.player.DACJumpSuccessEvent;
-import fr.aumgn.dac2.event.player.DACPlayerEliminatedEvent;
-import fr.aumgn.dac2.event.player.DACPlayerQuitEvent;
-import fr.aumgn.dac2.event.player.DACPlayerWinEvent;
-import fr.aumgn.dac2.game.start.GameStartData;
-import fr.aumgn.dac2.shape.column.Column;
-import fr.aumgn.dac2.stage.Spectators;
 
 /**
  * Common base implementation of most game mode.
@@ -30,20 +24,19 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
     protected final DAC dac;
     protected final Arena arena;
     protected final Listener listener;
-    private final String l18nNamespace;
     protected final GameParty<T> party;
     protected final Spectators spectators;
-
+    private final String l18nNamespace;
     private final Runnable turnTimedOutRunnable;
     private Timer turnTimer;
 
     public AbstractGame(DAC dac, GameStartData data, String l18nNamespace,
-            GamePlayer.Factory<T> factory) {
+                        GamePlayer.Factory<T> factory) {
         this(dac, data, l18nNamespace, factory, true);
     }
 
     public AbstractGame(DAC dac, GameStartData data, String l18nNamespace,
-            GamePlayer.Factory<T> factory, boolean useTimer) {
+                        GamePlayer.Factory<T> factory, boolean useTimer) {
         this.dac = dac;
         this.arena = data.getArena();
         this.listener = new GameListener(this);
@@ -58,7 +51,8 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
                     turnTimedOut();
                 }
             };
-        } else {
+        }
+        else {
             this.turnTimedOutRunnable = null;
         }
         this.turnTimer = null;
@@ -106,7 +100,7 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
 
     /**
      * Check if it's the given player turn.
-     *
+     * <p/>
      * This is used by {@link GameListener} to check if events need to be
      * processed. So this method should be optimized as much as possible
      * because some events (like {@link PlayerMoveEvent}) are heavy.
@@ -205,18 +199,20 @@ public abstract class AbstractGame<T extends GamePlayer> implements Game {
         int delay = dac.getConfig().getTpAfterJumpFailDelay();
         if (delay == 0) {
             player.tpToStart();
-        } else if (delay > 0) {
+        }
+        else if (delay > 0) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(dac.getPlugin(),
                     player.delayedTpToStart(), delay);
         }
     }
 
     protected DACJumpSuccessEvent callJumpSuccessEvent(T player, Column column,
-            boolean dac) {
+                                                       boolean dac) {
         DACJumpSuccessEvent event;
         if (dac) {
             event = new DACJumpDACEvent(this, player, column);
-        } else {
+        }
+        else {
             event = new DACJumpSuccessEvent(this, player, column);
         }
         Util.callEvent(event);
